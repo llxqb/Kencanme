@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 首页订单状态-->
+    <string-array name="order_status">
+        <item>待配送</item>
+        <item>配送中</item>
+        <item>已送达</item>
+    </string-array>
+
+    <string-array name="select_map">
+        <item>高德地图</item>
+        <item>百度地图</item>
+    </string-array>
+</resources>

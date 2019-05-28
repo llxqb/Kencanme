@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="statusbarMain">#FF8632</color>
+
+    <color name="white">#ffffff</color>
+    <color name="app_color">#EB544D</color>
+    <color name="app_color_80">#80EB544D</color>
+    <color name="line_color">#E5E5E5</color>
+    <color name="app_bg_color">#F9F9F9</color>
+    <color name="color333">#333333</color>
+    <color name="color666">#666666</color>
+    <color name="color999">#999999</color>
+    <color name="color999_60">#60999999</color>
+    <color name="color_blue">#4397F7</color>
+    <color name="color_blue_80">#804397F7</color>
+    <color name="color_except_btn">#EB544D</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_login_red">#e93240</color>
+    <!--自定义吐司背景色-->
+    <color name="mytoast_bg">#99000000</color>
+</resources>
