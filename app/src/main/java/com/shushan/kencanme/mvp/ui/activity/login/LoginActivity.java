@@ -143,6 +143,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             LogUtils.e("signInResult:failed code=" + e.getStatusCode());
 //            updateUI(null);
+
         }
     }
 
