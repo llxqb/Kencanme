@@ -8,6 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerMainComponent;
+import com.shushan.kencanme.di.components.MainComponent;
+import com.shushan.kencanme.di.modules.ActivityModule;
+import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
@@ -18,10 +22,12 @@ import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener,MainControl.MainView {
 
 
     @BindView(R.id.main_bottom_navigation)
@@ -32,11 +38,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_MESSAGE_PAGE = 1;
     public static final int SWITCH_MINE_PAGE = 2;
 
+    @Inject
+    MainControl.MainView mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initInjectData();
         ButterKnife.bind(this);
         initView();
         initData();
@@ -89,4 +98,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         }
         return true;
     }
+
+    @Override
+    public void showErrMessage(Throwable e) {
+
+    }
+
+    private void initInjectData() {
+        MainComponent mMainComponent = DaggerMainComponent.builder().appComponent(getAppComponent())
+                .mainModule(new MainModule(MainActivity.this, this))
+                .activityModule(new ActivityModule(this)).build();
+        mMainComponent.inject(this);
+    }
+
+
 }

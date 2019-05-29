@@ -10,8 +10,7 @@ import retrofit2.http.POST;
  */
 
 public interface MainApi {
-
-    @POST("service/restful/basis")
-    Observable<String> bannerRequest(@Body String request);
+    @POST("teacher/user/login")
+    Observable<String> homeRequest(@Body String request);
 
 }

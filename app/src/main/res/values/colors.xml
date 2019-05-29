@@ -6,7 +6,7 @@
     <color name="statusbarMain">#FF8632</color>
 
     <color name="white">#ffffff</color>
-    <color name="app_color">#EB544D</color>
+    <color name="app_color">#6941FF</color>
     <color name="app_color_80">#80EB544D</color>
     <color name="line_color">#E5E5E5</color>
     <color name="app_bg_color">#F9F9F9</color>
@@ -26,4 +26,6 @@
     <color name="colorNormal">#7D7D7D</color>
     <color name="light_grey_dark">#212121</color>
     <color name="tab_text_normal">#212121</color>
+
+    <color name="first_text_color">#4A4A4A</color>
 </resources>

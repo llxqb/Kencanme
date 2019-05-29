@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 
 /**
- * Created by helei on 2017/4/28.
+ * Created by li.liu on 2019/05/28.
  * LoginModel
  */
 
