@@ -21,4 +21,9 @@
     <color name="color_login_red">#e93240</color>
     <!--自定义吐司背景色-->
     <color name="mytoast_bg">#99000000</color>
+
+    <color name="colorSelected">#FF97BD1A</color>
+    <color name="colorNormal">#7D7D7D</color>
+    <color name="light_grey_dark">#212121</color>
+    <color name="tab_text_normal">#212121</color>
 </resources>

@@ -162,4 +162,10 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     public void showErrMessage(Throwable e) {
         Log.e("ddd","e"+e.toString());
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        mPresenterLogin.onDestroy();
+//    }
 }
