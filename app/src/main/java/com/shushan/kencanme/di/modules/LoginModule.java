@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.kencanme.BuildConfig;
 import com.shushan.kencanme.di.scopes.PerActivity;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.ServerConstant;
 import com.shushan.kencanme.mvp.model.LoginModel;
 import com.shushan.kencanme.mvp.model.ModelTransform;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginControl;
@@ -46,7 +46,7 @@ public class LoginModule {
     LoginModel provideLoginModel(Gson gson, ModelTransform modelTransform) {
         return new LoginModel(new RetrofitUtil.Builder()
                 .context(activity)
-                .baseUrl(Constant.DISPATCH_SERVICE)
+                .baseUrl(ServerConstant.DISPATCH_SERVICE)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)

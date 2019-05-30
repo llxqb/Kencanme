@@ -28,4 +28,88 @@
         android:layout_marginBottom="@dimen/dp_2"
         android:layout_marginEnd="@dimen/dp_7"
         android:src="@mipmap/home_like" />
+
+    <ImageView
+        android:id="@+id/use_exposure_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_22"
+        android:padding="@dimen/dp_10"
+        android:src="@mipmap/home_super_exposure" />
+
+
+    <RelativeLayout
+        android:id="@+id/recommend_user_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_21"
+        android:layout_marginStart="@dimen/dp_15"
+        android:background="@drawable/home_user_bg"
+        android:gravity="center_vertical"
+        android:minWidth="@dimen/dp_150"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10">
+
+        <com.shushan.kencanme.mvp.views.CircleImageView
+            android:id="@+id/recommend_user_head_iv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentStart="true"
+            android:src="@mipmap/person_head_icon" />
+
+        <TextView
+            android:id="@+id/recommend_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/recommend_user_head_iv"
+            android:text="walta"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/recommend_user_sex_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_toEndOf="@id/recommend_user_name"
+            android:background="@mipmap/home_gender_female"
+            android:paddingStart="@dimen/dp_18"
+            android:text="23 years"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/recommend_user_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recommend_user_name"
+            android:layout_toEndOf="@id/recommend_user_head_iv"
+            android:drawableStart="@mipmap/home_address"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_2"
+            android:text="Jakarta"
+            android:drawablePadding="@dimen/dp_3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/active_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recommend_user_sex_year"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_toEndOf="@id/recommend_user_location"
+            android:text="active 3 minute ago"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

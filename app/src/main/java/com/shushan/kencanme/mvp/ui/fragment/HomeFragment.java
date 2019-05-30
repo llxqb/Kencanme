@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -17,13 +18,17 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
+import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
+import com.shushan.kencanme.mvp.views.dialog.UseExposureDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +54,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     ImageView homeMessageIv;
     @BindView(R.id.home_like_iv)
     ImageView homeLikeIv;
+    @BindView(R.id.use_exposure_iv)
+    ImageView mUseExposureIv;
+    @BindView(R.id.recommend_user_rl)
+    RelativeLayout mRecommendUserRl;
     private List<ViewGroup> viewPagerResponseList = new ArrayList<>();
 
     @Inject
@@ -75,8 +84,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
-        RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> showToast("聊天"));
-        RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> imgLike());
+        RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goChat());
+        RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goLike());
+        RxView.clicks(mUseExposureIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> useSuperExposure());
+        RxView.clicks(mRecommendUserRl).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goRecommendUser());
 
         homeViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -94,6 +105,45 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 JzvdStd.goOnPlayOnPause();
             }
         });
+    }
+
+
+    /**
+     * 去聊天
+     */
+    private void goChat() {
+        DialogFactory.showDialogContent(getActivity(), "Open Super free Chat?", Constant.DIALOG_TWO);
+    }
+
+    private void goLike() {
+//        HomeFragmentRequest loginRequest = new HomeFragmentRequest();
+//        loginRequest.deviceId = "868040033198091";
+//        loginRequest.mobile = "18684923583";
+//        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
+//        loginRequest.platform = "android";
+//        mPresenter.onRequestHome(loginRequest);
+
+//        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
+        BuyDialog buyDialog = BuyDialog.newInstance();
+//        buyDialog.setContent(content);
+        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
+    }
+
+    /**
+     * 使用超级曝光
+     */
+    private void useSuperExposure() {
+        //检查是否有超级曝光次数
+//        checkIsExposureTime();
+        UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
+        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
+    }
+
+    /**
+     * 去推荐人详情
+     */
+    private void goRecommendUser() {
+        startActivitys(RecommendUserInfoActivity.class);
     }
 
 //    @Override
@@ -132,16 +182,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         homeViewpager.setAdapter(adapter);
     }
 
-
-    private void imgLike() {
-//        HomeFragmentRequest loginRequest = new HomeFragmentRequest();
-//        loginRequest.deviceId = "868040033198091";
-//        loginRequest.mobile = "18684923583";
-//        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
-//        loginRequest.platform = "android";
-//        mPresenter.onRequestHome(loginRequest);
-        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
-    }
 
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {

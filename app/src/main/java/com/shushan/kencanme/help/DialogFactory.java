@@ -11,12 +11,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 
@@ -148,9 +144,10 @@ public class DialogFactory {
     }
 
 
-    public static CommonDialog showDialogContent(Context context, String content) {
+    public static CommonDialog showDialogContent(Context context, String content,int type) {
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setContent(content);
+        commonDialog.setStyle(type);
         DialogFactory.showDialogFragment(((BaseActivity)context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
         return commonDialog;
     }
@@ -175,4 +172,6 @@ public class DialogFactory {
 //        return loadingDialog;
         return null;
     }
+
+
 }

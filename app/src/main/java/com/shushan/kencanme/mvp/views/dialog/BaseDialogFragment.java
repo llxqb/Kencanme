@@ -1,5 +1,5 @@
 
-package com.shushan.kencanme.mvp.views;
+package com.shushan.kencanme.mvp.views.dialog;
 
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;

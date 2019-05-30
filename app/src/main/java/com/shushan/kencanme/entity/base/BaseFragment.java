@@ -71,6 +71,14 @@ public abstract class BaseFragment extends Fragment {
 //        showToast(mErrMessage);
 //    }
 
+    /**
+     * 启动activity
+     */
+    public void startActivitys(Class<?> tClass) {
+        Intent intent = new Intent(getActivity(), tClass);
+        startActivity(intent);
+    }
+
     public void showToast(String message) {
         ToastUtil.showToast(getContext(), message);
     }

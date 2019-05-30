@@ -1,4 +1,6 @@
 <resources>
+    <string name="this_is_desc">This is a description</string>
+
     <string name="app_name">Kencanme</string>
     <string name="main_bottom_home">首页</string>
     <string name="main_bottom_message">消息</string>
@@ -8,4 +10,13 @@
     <string name="dialog_sure">确定</string>
     <string name="dialog_cancal">取消</string>
     <string name="dialog_style2_hint">About VIP</string>
+
+    <!-- buyDialog-->
+    <string name="buy_dailog_title">Super exposure</string>
+    <!-- 要替换掉 -->
+    <string name="buy_dailog_hint">spare Hi-Beans:200</string>
+    <string name="buy_dialog_buy">Buy</string>
+    <!-- UseExposureDialog-->
+    <string name="use_exposure_dialog_hint">number of times</string>
+    <string name="use_exposure_dialog_use">Use once</string>
 </resources>

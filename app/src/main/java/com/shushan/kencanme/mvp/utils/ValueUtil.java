@@ -13,8 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.ServerConstant;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -375,7 +374,7 @@ public class ValueUtil {
         if (sb.length() > 0) {
             result = sb.substring(0, sb.length() - 1);
         }
-        String md5Sign = encryptToMD5(result + Constant.USER_KEY);
+        String md5Sign = encryptToMD5(result + ServerConstant.USER_KEY);
         String time = String.valueOf(System.currentTimeMillis()/1000);
         String finalResult = String.valueOf(Integer.valueOf(time))+ "," + md5Sign;
         return Base64.encodeToString(finalResult.getBytes(), Base64.DEFAULT).trim();
@@ -393,7 +392,7 @@ public class ValueUtil {
         if (sb.length() > 0) {
             result = sb.substring(0, sb.length() - 1)+APPSIGN;
         }
-        String md5Sign = encryptToMD5(result + Constant.USER_KEY);
+        String md5Sign = encryptToMD5(result + ServerConstant.USER_KEY);
         String time = String.valueOf(System.currentTimeMillis()/1000);
         String finalResult = String.valueOf(Integer.valueOf(time))+ "," + md5Sign;
         return Base64.encodeToString(finalResult.getBytes(), Base64.DEFAULT).trim();

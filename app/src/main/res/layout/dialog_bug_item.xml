@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_68"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_4">
+
+    <RelativeLayout
+        android:id="@+id/item_buy_rl"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_74"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@drawable/shape_line_white">
+
+        <RelativeLayout
+            android:id="@+id/exposure_time_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/dialog_buy_white_bg">
+
+            <TextView
+                android:id="@+id/exposure_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/five_text_color"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/time_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exposure_time_tv"
+                android:layout_centerHorizontal="true"
+                android:text="time" />
+
+            <ImageView
+                android:id="@+id/check_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:src="@mipmap/popup_button_choose"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exposure_time_rl"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:drawableStart="@mipmap/home_popup_hibeans_small"
+            android:textColor="@color/yellow_btn"
+            android:textSize="@dimen/sp_13" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/hot_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/home_popup_hot"
+        android:visibility="invisible" />
+</RelativeLayout>

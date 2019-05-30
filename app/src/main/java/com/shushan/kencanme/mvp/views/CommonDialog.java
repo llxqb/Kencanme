@@ -11,11 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.mvp.views.dialog.BaseDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -37,11 +40,21 @@ public class CommonDialog extends BaseDialogFragment {
     ImageView ivClose;
     @BindView(R.id.dialog_style_2_tv)
     TextView dialogStyle2Tv;
+    @BindView(R.id.dialog_style1_ll)
+    LinearLayout dialogStyle1ll;
+    @BindView(R.id.dialog_style_2_rl)
+    RelativeLayout dialogStyle2Rl;
     private CommonDialogListener dialogBtnListener;
     private String title, mContent;
+    private int mType;// 0 方式一  1 方式二
+    private Unbinder bind;
 
     public static CommonDialog newInstance() {
         return new CommonDialog();
+    }
+
+    public void setStyle(int type) {
+        this.mType = type;
     }
 
     public void setContent(String content) {
@@ -60,7 +73,14 @@ public class CommonDialog extends BaseDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_common, container, true);
-        ButterKnife.bind(this, view);
+        bind = ButterKnife.bind(this, view);
+        if (mType == Constant.DIALOG_ONE) {
+            dialogStyle1ll.setVisibility(View.VISIBLE);
+            dialogStyle2Rl.setVisibility(View.GONE);
+        } else if (mType == Constant.DIALOG_TWO) {
+            dialogStyle1ll.setVisibility(View.GONE);
+            dialogStyle2Rl.setVisibility(View.VISIBLE);
+        }
         commonDialogTitle.setText(mContent);
         return view;
     }
@@ -91,6 +111,7 @@ public class CommonDialog extends BaseDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        bind.unbind();
     }
 
     public interface CommonDialogListener {
