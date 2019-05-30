@@ -22,6 +22,7 @@ import com.shushan.kencanme.di.components.LoginComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.LoginModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.LogUtils;
@@ -64,14 +65,14 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     }
 
     private void appLogin() {
-//        LoginRequest loginRequest = new LoginRequest();
-//        loginRequest.deviceId = "868040033198091";
-//        loginRequest.mobile = "18684923583";
-//        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
-//        loginRequest.platform = "android";
-//        mPresenterLogin.onRequestLogin(loginRequest);
-        startActivitys(MainActivity.class);
-        finish();
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.deviceId = "868040033198091";
+        loginRequest.mobile = "18684923583";
+        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
+        loginRequest.platform = "android";
+        mPresenterLogin.onRequestLogin(loginRequest);
+//        startActivitys(MainActivity.class);
+//        finish();
     }
 
 

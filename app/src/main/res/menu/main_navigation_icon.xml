@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@mipmap/bottom_bar_home"
-        android:title="home"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/main_bottom_home"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_message"
         android:enabled="true"
         android:icon="@mipmap/tab_cart_normal"
-        android:title="message"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/main_bottom_message"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_mine"
         android:enabled="true"
         android:icon="@mipmap/tab_setting_normal"
-        android:title="mine"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/main_bottom_mine"
+        app:showAsAction="ifRoom" />
 </menu>

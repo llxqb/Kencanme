@@ -19,8 +19,8 @@ import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
-import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -72,10 +72,11 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     public void initView() {
         RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> showToast("聊天"));
-//        RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> imgLike());
+        RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> imgLike());
 
         homeViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,14 +133,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
 
-//    private void imgLike() {
+    private void imgLike() {
 //        HomeFragmentRequest loginRequest = new HomeFragmentRequest();
 //        loginRequest.deviceId = "868040033198091";
 //        loginRequest.mobile = "18684923583";
 //        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
 //        loginRequest.platform = "android";
 //        mPresenter.onRequestHome(loginRequest);
-//    }
+        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
+    }
 
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kencanme</string>
+    <string name="main_bottom_home">首页</string>
+    <string name="main_bottom_message">消息</string>
+    <string name="main_bottom_mine">我的</string>
+
+    <!-- dialog-->
+    <string name="dialog_sure">确定</string>
+    <string name="dialog_cancal">取消</string>
+    <string name="dialog_style2_hint">About VIP</string>
+</resources>

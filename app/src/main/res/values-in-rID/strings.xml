@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kencanme</string>
+    <string name="main_bottom_home">rumah</string>
+    <string name="main_bottom_message">pesan</string>
+    <string name="main_bottom_mine">saya</string>
+
+</resources>

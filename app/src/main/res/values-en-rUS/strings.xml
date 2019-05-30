@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kencanme</string>
+    <string name="main_bottom_home">home</string>
+    <string name="main_bottom_message">message</string>
+    <string name="main_bottom_mine">mine</string>
+
+    <!-- dialog-->
+    <string name="dialog_sure">sure</string>
+    <string name="dialog_cancal">cancal</string>
+
+</resources>

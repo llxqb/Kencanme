@@ -14,9 +14,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.util.Calendar;
 
@@ -125,21 +127,32 @@ public class DialogFactory {
             if (prev != null) {
                 ft.remove(prev);
             }
-            ft.add(dialogFragment, tag);
-            ft.commitAllowingStateLoss();
+            if (!dialogFragment.isAdded()) {
+                ft.add(dialogFragment, tag);
+                ft.commitAllowingStateLoss();
+                fragManager.executePendingTransactions();//加上这句话可以让add方法执行 相当于更新操作
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void dismissDialogFragment(FragmentManager fragManager, String tag) {
 
+    public static void dismissDialogFragment(FragmentManager fragManager, String tag) {
         FragmentTransaction ft = fragManager.beginTransaction();
         Fragment fragment = fragManager.findFragmentByTag(tag);
         if (fragment != null) {
             ft.remove(fragment);
             ft.commitAllowingStateLoss();
         }
+    }
+
+
+    public static CommonDialog showDialogContent(Context context, String content) {
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setContent(content);
+        DialogFactory.showDialogFragment(((BaseActivity)context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        return commonDialog;
     }
 
     public static ProgressDialog showProgressDialog(Context context, String msg) {
@@ -153,12 +166,13 @@ public class DialogFactory {
 
     public static Dialog showLoadingDialog(Context context, String msg) {
 //        LayoutInflater inflater = LayoutInflater.from(context);
-//        View v = inflater.inflate(R.layout.view_loading, (ViewGroup) ((BaseActivity)context).getWindow().getDecorView(),false);// 得到加载view
+//        View v = inflater.inflate(R.layout.view_loading, (ViewGroup) ((BaseActivity) context).getWindow().getDecorView(), false);// 得到加载view
+//        TextView loadingTvText = v.findViewById(R.id.loading_tv);
+//        loadingTvText.setText(msg);
 //        final Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
 //        loadingDialog.setCancelable(true);
 //        loadingDialog.setContentView(v);
 //        return loadingDialog;
-
         return null;
     }
 }
