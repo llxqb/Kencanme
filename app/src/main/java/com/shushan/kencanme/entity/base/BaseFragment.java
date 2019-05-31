@@ -11,9 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
-
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
+
+import javax.inject.Inject;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,8 +28,8 @@ import io.reactivex.schedulers.Schedulers;
  * 基类Fragement
  */
 public abstract class BaseFragment extends Fragment {
-//    @Inject
-//    protected ImageLoaderHelper mImageLoaderHelper;
+    @Inject
+    protected ImageLoaderHelper mImageLoaderHelper;
 //    @Inject
 //    protected BuProcessor mBuProcessor;
 

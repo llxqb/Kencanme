@@ -19,4 +19,7 @@
     <!-- UseExposureDialog-->
     <string name="use_exposure_dialog_hint">number of times</string>
     <string name="use_exposure_dialog_use">Use once</string>
+
+    <string name="album_vip_view">VIP can view</string>
+    <string name="album_hi_beans_view">Hi-beans photo</string>
 </resources>

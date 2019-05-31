@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.AppComponent;
+import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
+
+import javax.inject.Inject;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,8 +29,8 @@ import io.reactivex.schedulers.Schedulers;
  * 基类Activity
  */
 public abstract class BaseActivity extends AppCompatActivity {
-//    @Inject
-//    protected ImageLoaderHelper mImageLoaderHelper;
+    @Inject
+    protected ImageLoaderHelper mImageLoaderHelper;
 //    @Inject
 //    BuProcessor mBuProcessor;
 

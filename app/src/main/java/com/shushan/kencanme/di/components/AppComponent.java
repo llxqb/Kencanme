@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.kencanme.di.ComponetGraph;
 import com.shushan.kencanme.di.modules.AppModule;
+import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.model.ModelTransform;
 
 import javax.inject.Singleton;
@@ -31,8 +32,8 @@ public interface AppComponent extends ComponetGraph {
 
     ModelTransform modeTransform();
 
-//    ImageLoaderHelper imageLoaderHelper();
-//
+    ImageLoaderHelper imageLoaderHelper();
+
 //    DaoSession daoSession();
 //
 //    BuProcessor buProcessor();

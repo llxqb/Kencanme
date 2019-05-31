@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shushan.kencanme.KencanmeApp;
+import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.model.ModelTransform;
 
 import javax.inject.Singleton;
@@ -43,13 +44,13 @@ public class AppModule {
     ModelTransform provideModelTransform() {
         return new ModelTransform();
     }
-//
-//    @Provides
-//    @Singleton
-//    ImageLoaderHelper imageLoaderHelper() {
-//        return new ImageLoaderHelper(application);
-//    }
-//
+
+    @Provides
+    @Singleton
+    ImageLoaderHelper imageLoaderHelper() {
+        return new ImageLoaderHelper(application);
+    }
+
 //    @Provides
 //    @Singleton
 //    Sharedprefence sharePreference() {
