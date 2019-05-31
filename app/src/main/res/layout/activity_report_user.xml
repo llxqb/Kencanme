@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.reportUser.ReportUserActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@mipmap/top_background"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Anonymous report"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+
+    <!-- 头像资料作假-->
+    <TextView
+        android:id="@+id/data_fraud"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Head portraits, data fraud"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+    <!-- 广告、营销-->
+    <TextView
+        android:id="@+id/advertising_and_marketing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Advertising and marketing"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+    <!-- 诈骗、托儿-->
+    <TextView
+        android:id="@+id/fraud"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Fraud"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+    <!-- 色情低俗-->
+    <TextView
+        android:id="@+id/pornography_and_vulgarity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Pornography and vulgarity"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+    <!-- 语言不文明-->
+    <TextView
+        android:id="@+id/language_uncivilized"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Malicious harassment, Vulgar language"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+    <!-- 语言不文明-->
+    <TextView
+        android:id="@+id/other"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:text="Other"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_15"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tell us the reason for reporting, let's make Teasing APP better!"
+            android:textColor="@color/color_blue_btn"
+            android:textSize="@dimen/sp_11" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="(In order to protect your private business, we report it completely anonymously.
+ Please feel free to fill it in.)"
+            android:textColor="@color/color_80"
+            android:textSize="@dimen/sp_9" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -44,6 +44,14 @@ public class CommonDialog extends BaseDialogFragment {
     LinearLayout dialogStyle1ll;
     @BindView(R.id.dialog_style_2_rl)
     RelativeLayout dialogStyle2Rl;
+    @BindView(R.id.dialog_style_3_rl)
+    RelativeLayout dialogStyle3Rl;
+    @BindView(R.id.dialog_style_3_tv)
+    TextView dialogStyle3Tv;
+    @BindView(R.id.dialog_style_2_iv)
+    ImageView mDialogStyle2Iv;
+    @BindView(R.id.pop_contain)
+    LinearLayout mPopContain;
     private CommonDialogListener dialogBtnListener;
     private String title, mContent;
     private int mType;// 0 方式一  1 方式二
@@ -56,6 +64,7 @@ public class CommonDialog extends BaseDialogFragment {
     public void setStyle(int type) {
         this.mType = type;
     }
+
 
     public void setContent(String content) {
         this.mContent = content;
@@ -77,17 +86,23 @@ public class CommonDialog extends BaseDialogFragment {
         if (mType == Constant.DIALOG_ONE) {
             dialogStyle1ll.setVisibility(View.VISIBLE);
             dialogStyle2Rl.setVisibility(View.GONE);
+            dialogStyle3Rl.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_TWO) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.VISIBLE);
+            dialogStyle3Rl.setVisibility(View.GONE);
+        } else if (mType == Constant.DIALOG_THREE) {
+            dialogStyle1ll.setVisibility(View.GONE);
+            dialogStyle2Rl.setVisibility(View.GONE);
+            dialogStyle3Rl.setVisibility(View.VISIBLE);
         }
         commonDialogTitle.setText(mContent);
         return view;
     }
 
 
-    @OnClick({R.id.iv_close, R.id.common_dialog_sure, R.id.common_dialog_cancel, R.id.common_dialog_layout,
-    })
+    @OnClick({R.id.iv_close, R.id.common_dialog_sure, R.id.common_dialog_cancel,
+            R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
@@ -100,6 +115,14 @@ public class CommonDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.common_dialog_cancel:
+                closeCommonDialog();
+                break;
+            case R.id.dialog_style_2_rl:
+                break;
+            case R.id.dialog_style_3_rl:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.commonDialogBtnOkListener();
+                }
                 closeCommonDialog();
                 break;
             case R.id.common_dialog_layout:

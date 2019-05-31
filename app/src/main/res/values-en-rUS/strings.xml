@@ -5,7 +5,7 @@
     <string name="main_bottom_mine">mine</string>
 
     <!-- dialog-->
-    <string name="dialog_sure">sure</string>
-    <string name="dialog_cancal">cancal</string>
+    <string name="dialog_sure">Sure</string>
+    <string name="dialog_cancal">Cancal</string>
 
 </resources>

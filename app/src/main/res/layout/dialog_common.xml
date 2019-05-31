@@ -31,8 +31,10 @@
         <TextView
             android:id="@+id/common_dialog_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_12"
             android:gravity="center"
+            android:minHeight="@dimen/dp_80"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_16" />
         <!-- 弹框方式一!-->
@@ -74,9 +76,10 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/dialog_style_2"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/dialog_style_2_iv"
@@ -93,6 +96,30 @@
                 android:layout_marginStart="@dimen/dp_4"
                 android:layout_toEndOf="@id/dialog_style_2_iv"
                 android:text="@string/dialog_style2_hint"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+
+        <!-- 弹框方式三-->
+        <RelativeLayout
+            android:id="@+id/dialog_style_3_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/dialog_style_2_blue"
+            android:gravity="center_horizontal">
+
+
+            <TextView
+                android:id="@+id/dialog_style_3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_4"
+                android:text="@string/dialog_sure"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
         </RelativeLayout>

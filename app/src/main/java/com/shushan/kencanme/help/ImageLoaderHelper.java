@@ -32,7 +32,7 @@ public class ImageLoaderHelper extends GlideLoader {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(R.mipmap.ic_launcher)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.ic_launcher)
+//                .placeholder(R.mipmap.ic_launcher)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }

@@ -1,5 +1,6 @@
 package com.shushan.kencanme.help;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -144,11 +145,21 @@ public class DialogFactory {
     }
 
 
-    public static CommonDialog showDialogContent(Context context, String content,int type) {
+    /**
+     * 显示公共dialog
+     *
+     * @param context 上下文
+     * @param content 内容
+     * @param type    类型  1：底部左右两按钮   2;底部一按钮
+     * @param type    类型2  按钮背景色
+     * @return commonDialog
+     */
+    public static CommonDialog showCommonDialog(Activity context, String content, int type) {
         CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener((CommonDialog.CommonDialogListener) context);
         commonDialog.setContent(content);
         commonDialog.setStyle(type);
-        DialogFactory.showDialogFragment(((BaseActivity)context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
         return commonDialog;
     }
 

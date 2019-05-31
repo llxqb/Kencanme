@@ -40,8 +40,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.login.LoginActivity"></activity>
-        <activity android:name=".mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity"></activity>
+        <activity android:name=".mvp.ui.activity.login.LoginActivity" />
+        <activity android:name=".mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity" />
+        <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
+        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity"></activity>
     </application>
 
 </manifest>

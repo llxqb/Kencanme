@@ -46,7 +46,7 @@ import cn.jzvd.JzvdStd;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView {
+public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.home_viewpager)
     ViewPager homeViewpager;
@@ -112,7 +112,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      * 去聊天
      */
     private void goChat() {
-        DialogFactory.showDialogContent(getActivity(), "Open Super free Chat?", Constant.DIALOG_TWO);
+//        DialogFactory.showCommonDialog(getActivity(), "Open Super free Chat?", Constant.DIALOG_THREE);
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener(this);
+        commonDialog.setContent("Open Super free Chat?");
+        commonDialog.setStyle(Constant.DIALOG_THREE);
+        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
 
     private void goLike() {
@@ -198,5 +203,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
                 .homeFragmentModule(new HomeFragmentModule(this))
                 .build().inject(this);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+
     }
 }

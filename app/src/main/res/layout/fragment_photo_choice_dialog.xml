@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recharge_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000">
+
+    <Button
+        android:id="@+id/delete_user"
+        style="@style/person_center_photo_Style"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="Delete friends"
+        android:textColor="@color/red_color_btn"
+        android:textSize="@dimen/sp_16" />
+
+    <LinearLayout
+        style="@style/person_center_photo_Style"
+        android:layout_height="@dimen/dp_100"
+        android:layout_above="@id/delete_user"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/add_to_blacklist_btn"
+            style="@style/person_center_photo_Style"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Add to blacklist"
+            android:textColor="@color/server_text_color"
+            android:textSize="@dimen/sp_16" />
+
+        <View style="@style/line_height_1" />
+
+        <Button
+            android:id="@+id/report_btn"
+            style="@style/person_center_photo_Style"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Anonymous report"
+            android:textColor="@color/server_text_color"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+</RelativeLayout>
