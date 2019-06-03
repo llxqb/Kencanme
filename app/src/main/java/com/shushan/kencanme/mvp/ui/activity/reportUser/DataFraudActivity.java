@@ -191,7 +191,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         builder.setItems(choices, (dialog, which) -> {
             switch (which) {
                 case 0:
-                    //拍照并裁剪
+                    //拍照
                     takePhoto.onPickFromCapture(uri);
                     break;
                 case 1:

@@ -23,4 +23,8 @@
 
     <string name="album_vip_view">VIP can view</string>
     <string name="album_hi_beans_view">Hi-beans photo</string>
+
+
+    <!-- Activity 类 相关  返回箭头后title-->
+    <string name="AgreementActivity_title">Agreement</string>
 </resources>

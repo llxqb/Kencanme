@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.Person_info.EditPersonalInfoActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <!-- 昵称-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/dp_23"
+        android:paddingStart="@dimen/dp_23">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="name"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <EditText
+            android:id="@+id/user_nice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@null"
+            android:gravity="center_vertical|end"
+            android:hint="Please enter a name"
+            android:textColor="@color/color_blue_btn"
+            android:textColorHint="@color/color_9b"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <View style="@style/line_height_1" />
+    <!-- 性别-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_23"
+        android:paddingStart="@dimen/dp_23">
+
+        <TextView
+            android:id="@+id/sex_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Sex"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/sex_tv"
+            android:maxLines="1"
+            android:text="（After choosing the right sex, you can't modify it.）"
+            android:textColor="@color/color_9b"
+            android:textSize="@dimen/sp_12" />
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sex_tv"
+            android:layout_marginTop="@dimen/dp_15"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/male_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:text="Male"
+                android:textColor="@color/color_blue_btn"
+                android:textSize="@dimen/sp_16" />
+
+            <RadioButton
+                android:id="@+id/female_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_40"
+                android:button="@null"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:text="Female"
+                android:textColor="@color/first_text_color"
+                android:textSize="@dimen/sp_16" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <View style="@style/line_height_1" />
+
+    <!-- 生日-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/dp_23"
+        android:paddingStart="@dimen/dp_23">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Birthday"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@null"
+            android:gravity="center_vertical|end"
+            android:hint="09/11/1999"
+            android:textColor="@color/color_blue_btn"
+            android:textColorHint="@color/color_9b"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <View style="@style/line_height_1" />
+
+    <!-- 地址-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/dp_23"
+        android:paddingStart="@dimen/dp_23">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Address"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:background="@null"
+            android:gravity="center_vertical|end"
+            android:hint="Please enter the name of your city"
+            android:textColor="@color/color_blue_btn"
+            android:textColorHint="@color/color_9b"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <View style="@style/line_height_1" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:gravity="bottom|center_horizontal">
+
+        <Button
+            android:id="@+id/preserve_btn"
+            android:layout_width="@dimen/dp_228"
+            android:layout_height="@dimen/dp_35"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_blue2_round_20_selector"
+            android:text="Preserve" />
+    </LinearLayout>
+
+</LinearLayout>

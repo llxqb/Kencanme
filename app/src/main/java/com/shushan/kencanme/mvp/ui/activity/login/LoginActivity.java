@@ -4,18 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.di.components.LoginComponent;
@@ -24,22 +25,33 @@ import com.shushan.kencanme.di.modules.LoginModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
+import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.mvp.ui.activity.Person_info.EditPersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.LogUtils;
-
-import java.util.concurrent.TimeUnit;
+import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.views.dialog.LoginDialog;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity implements LoginControl.LoginView {
+public class LoginActivity extends BaseActivity implements LoginControl.LoginView, LoginDialog.LoginDialogListener {
 
-    @BindView(R.id.login_type_google)
-    TextView mLoginTypeGoogle;
-    @BindView(R.id.sign_in_button)
-    SignInButton signInButton;
+    @BindView(R.id.logo_iv)
+    ImageView mLogoIv;
+    @BindView(R.id.app_name_tv)
+    TextView mAppNameTv;
+    @BindView(R.id.login_hint_tv)
+    TextView mLoginHintTv;
+    @BindView(R.id.login_google_rl)
+    RelativeLayout mLoginGoogleRl;
+    @BindView(R.id.login_facebook_rl)
+    RelativeLayout mLoginFacebookRl;
+    @BindView(R.id.login_whats_app_rl)
+    RelativeLayout mLoginWhatsAppRl;
     private GoogleApiClient mGoogleApiClient;
 
     @Inject
@@ -50,6 +62,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        //设置有图片状态栏
+        StatusBarUtil.setTransparentForImageView(this, null);
         initializeInjector();
         initView();
         initData();
@@ -59,9 +73,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
-        mLoginTypeGoogle = findViewById(R.id.login_type_google);
-        RxView.clicks(mLoginTypeGoogle).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> appLogin());
-        RxView.clicks(signInButton).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> signInGoogle());
     }
 
     private void appLogin() {
@@ -79,6 +90,25 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void initData() {
 
+    }
+
+    @OnClick({R.id.login_google_rl, R.id.login_facebook_rl, R.id.login_whats_app_rl})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.login_google_rl:
+                //Google登录
+                LoginDialog loginDialog = LoginDialog.newInstance();
+                loginDialog.setListener(this);
+                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
+                break;
+            case R.id.login_facebook_rl:
+                //facebook登录
+                break;
+            case R.id.login_whats_app_rl:
+                //WhatsApp登录
+                startActivitys(MainActivity.class);
+                break;
+        }
     }
 
     /**
@@ -150,7 +180,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     }
 
 
-
     @Override
     public void loginSuccess(LoginResponse response) {
 
@@ -172,5 +201,12 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 .loginModule(new LoginModule(LoginActivity.this, this))
                 .activityModule(new ActivityModule(this)).build();
         mLoginComponent.inject(this);
+    }
+
+
+    @Override
+    public void loginDialogBtnOkListener() {
+        startActivitys(EditPersonalInfoActivity.class);
+//        finish();
     }
 }

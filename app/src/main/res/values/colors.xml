@@ -40,4 +40,7 @@
     <color name="color_80">#808080 </color>
     <color name="color_a9b1c2">#A9B1C2 </color>
     <color name="color_a9b1c2_press">#80A9B1C2 </color>
+    <color name="color_login_change">#763FD5</color>
+    <color name="color_9b">#9B9B9B</color>
+    <color name="color_e7e6ff">#E7E6FF</color>
 </resources>

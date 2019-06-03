@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.register.AgreementActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="Kencanme User Registration Pro
+-tocol"
+        android:textColor="@color/color_blue_btn"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="1. Acceptance and Amendment of Terms of Service
+1.1 This Agreement is about the user becoming a m
+ember of Kencanme VIP and using the VIP members
+hip service provided by Kencanme. This Agreement
+describes the rights and obligations between Kenca
+nme and VIP Members regarding software licensing,
+service use and related aspects. VIP Membership
+ or You refers to an individual or a single entity wh
+o enjoys the VIP membership services provided by
+Kencanme. This Service Agreement constitutes a pr
+erequisite for you (individual or unit) to use the VIP
+membership services provided by Kencanme. Unle
+ss you accept the terms of this agreement, you are
+not entitled to use the relevant services of this agre
+ement. Your use will be deemed to be subject to the
+terms and conditions of this Agreement."
+        android:textColor="@color/color_80"
+        android:textSize="@dimen/sp_13" />
+
+</LinearLayout>
