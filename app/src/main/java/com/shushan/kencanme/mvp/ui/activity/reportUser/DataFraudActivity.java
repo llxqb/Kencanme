@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,8 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     RecyclerView mRecyclerView;
     @BindView(R.id.data_fraud_content_ev)
     EditText mDataFraudContentEv;
+    @BindView(R.id.world_limit_text)
+    TextView mWorldLimitText;//最大限制100字
     @BindView(R.id.submit_btn)
     Button mSubmitBtn;
     private TakePhoto takePhoto;
@@ -81,6 +85,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
         cropOptions = new CropOptions.Builder().setOutputX(size).setOutputX(size).setWithOwnCrop(false).create();
+        mDataFraudContentEv.addTextChangedListener(search_text_OnChange);
         //设置RecyclerView第一张图片为默认图片
         photoList.add(null);
         photoAdapter = new PhotoAdapter(this, photoList, mImageLoaderHelper);
@@ -93,8 +98,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.photo_delete:
-                        photoList.remove(position + 1);
-                        photoAdapter.remove(position + 1);
+                        photoAdapter.remove(position);
                         photoAdapter.notifyDataSetChanged();
                         break;
                     case R.id.photo_item_rl:
@@ -220,5 +224,33 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     public void takeCancel() {
 
     }
+
+    public TextWatcher search_text_OnChange = new TextWatcher() {
+        private int selectionStart;
+        private int selectionEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = mDataFraudContentEv.getSelectionStart();
+            selectionEnd = mDataFraudContentEv.getSelectionEnd();
+            if (s.length() > 100) {
+                showToast("限制100字以内");
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionStart;
+                int worldTextNum = s.length();
+                mWorldLimitText.setText(worldTextNum + "/100");
+                mDataFraudContentEv.setSelection(tempSelection);
+            }
+        }
+    };
 
 }

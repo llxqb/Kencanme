@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
         android:background="@mipmap/top_background"
+        android:paddingTop="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_10">
 

@@ -4,10 +4,14 @@ package com.shushan.kencanme.mvp.views.dialog;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
+import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
 
@@ -57,5 +61,6 @@ public class BaseDialogFragment extends DialogFragment implements View.OnClickLi
     public void onClick(View v) {
 
     }
+
 
 }
