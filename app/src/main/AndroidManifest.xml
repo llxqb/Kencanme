@@ -44,9 +44,16 @@
         <activity android:name=".mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" />
-        <activity android:name=".mvp.ui.activity.Person_info.EditPersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.Person_info.CreatePersonalInfoActivity" />
         <activity android:name=".mvp.ui.activity.Person_info.PersonalInfoUploadPhotoActivity" />
-        <activity android:name=".mvp.ui.activity.register.AgreementActivity"></activity>
+        <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
+        <activity android:name=".mvp.ui.activity.vip.OpenVipActivity" />
+        <activity android:name=".mvp.ui.activity.pay.RechargeActivity" />
+        <activity android:name=".mvp.ui.activity.Person_info.EditMakeFriendsInfoActivity" />
+        <activity android:name=".mvp.ui.activity.Person_info.EditPersonalInfoActivity" />
+        <activity
+            android:name=".mvp.ui.activity.Person_info.EditLabelActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

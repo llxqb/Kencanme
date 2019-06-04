@@ -27,4 +27,8 @@
 
     <!-- Activity 类 相关  返回箭头后title-->
     <string name="AgreementActivity_title">Agreement</string>
+    <string name="RechargeActivity_title">Buy Hi-beans</string>
+    <string name="EditMakeFriendsInfoActivity_title">Editing Friendship Information</string>
+    <string name="EditPersonalInfoActivity_title">Editing personal information</string>
+    <string name="EditLabelActivity_title">Editing personal Tags</string>
 </resources>

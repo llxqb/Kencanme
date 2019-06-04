@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.Person_info.EditMakeFriendsInfoActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_375"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                android:src="@mipmap/guide_first" />
+
+            <RelativeLayout
+                android:id="@+id/head_icon_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_80">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:text="Head portrait"
+                    android:textColor="@color/first_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:id="@+id/head_icon_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_30"
+                    android:src="@mipmap/person_head_icon" />
+            </RelativeLayout>
+
+            <View style="@style/line_height_1" />
+
+
+            <RelativeLayout
+                android:id="@+id/user_name_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:text="name"
+                    android:textColor="@color/first_text_color"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/user_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp_30"
+                    android:text="Aaron Carter"
+                    android:textColor="@color/color_80"
+                    android:textSize="@dimen/sp_14" />
+            </RelativeLayout>
+
+            <View style="@style/line_height_1" />
+
+            <!-- 交友宣言-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="Declaration"
+                android:textColor="@color/first_text_color"
+                android:textSize="@dimen/sp_14" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_90"
+                android:layout_marginEnd="@dimen/dp_22"
+                android:layout_marginStart="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_12">
+
+                <EditText
+                    android:id="@+id/declaration_ev"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_declaration_bg"
+                    android:gravity="start|top"
+                    android:hint="Sincere friends, I hope you like me."
+                    android:padding="@dimen/dp_10"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/declaration_world_limit_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingBottom="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:text="0/80"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+            <!--保存 -->
+            <TextView
+                android:id="@+id/save_tv"
+                android:layout_width="@dimen/dp_228"
+                android:layout_height="@dimen/dp_35"
+                android:layout_margin="@dimen/dp_30"
+                android:background="@drawable/dialog_style_2_blue"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Preserve"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_18" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -10,7 +10,6 @@
     </item>
     <item android:state_pressed="true">
         <shape>
-            <stroke android:width="@dimen/dp_1" android:color="@color/color_blue_btn" />
             <solid android:color="@color/color_blue_btn_press" />
             <corners android:radius="@dimen/dp_20" />
         </shape>

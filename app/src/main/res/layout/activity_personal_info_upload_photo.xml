@@ -77,7 +77,8 @@ to get a match."
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:maxLength="100"
-                    android:padding="@dimen/dp_2"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:paddingBottom="@dimen/dp_4"
                     android:text="0/80"
                     android:textSize="@dimen/sp_12" />
             </RelativeLayout>

@@ -26,7 +26,7 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.help.DialogFactory;
-import com.shushan.kencanme.mvp.ui.activity.Person_info.EditPersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.Person_info.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -206,7 +206,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void loginDialogBtnOkListener() {
-        startActivitys(EditPersonalInfoActivity.class);
+        startActivitys(CreatePersonalInfoActivity.class);
 //        finish();
     }
 }
