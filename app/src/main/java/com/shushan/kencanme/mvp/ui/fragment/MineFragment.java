@@ -13,10 +13,11 @@ import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.mvp.ui.activity.Person_info.EditLabelActivity;
-import com.shushan.kencanme.mvp.ui.activity.Person_info.EditMakeFriendsInfoActivity;
-import com.shushan.kencanme.mvp.ui.activity.Person_info.EditPersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditContactWayActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditLabelActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditPersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 
@@ -139,6 +140,7 @@ public class MineFragment extends BaseFragment {
                 startActivitys(EditPersonalInfoActivity.class);
                 break;
             case R.id.contact_way_tv:
+                startActivitys(EditContactWayActivity.class);
                 break;
             case R.id.label_tv:
                 startActivitys(EditLabelActivity.class);

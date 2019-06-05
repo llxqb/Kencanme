@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.Person_info.EditMakeFriendsInfoActivity">
+    tools:context=".mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity">
 
     <include layout="@layout/common_toolbar" />
 

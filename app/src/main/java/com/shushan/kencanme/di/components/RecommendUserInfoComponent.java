@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RecommendUserInfoModule;
 import com.shushan.kencanme.di.scopes.PerActivity;
-import com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity;
-import com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo.RecommendUserInfoControl;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoControl;
 
 import dagger.Component;
 

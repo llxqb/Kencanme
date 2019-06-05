@@ -31,4 +31,6 @@
     <string name="EditMakeFriendsInfoActivity_title">Editing Friendship Information</string>
     <string name="EditPersonalInfoActivity_title">Editing personal information</string>
     <string name="EditLabelActivity_title">Editing personal Tags</string>
+    <string name="ReportUserActivity_title">Anonymous report</string>
+    <string name="EditContactWayActivity_title">Editorial contact information</string>
 </resources>

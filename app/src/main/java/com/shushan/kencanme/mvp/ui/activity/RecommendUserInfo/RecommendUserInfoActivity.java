@@ -1,4 +1,4 @@
-package com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo;
+package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 
 import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
@@ -83,7 +83,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @BindView(R.id.recommend_chat_iv)
     ImageView mRecommendChatIv;
     private List<RecommendUserInfoResponse.DataBean> recommendUserInfoLists = new ArrayList<>();
-
     private RecommendUserAlbumAdapter recommendUserAlbumAdapter;
     @Inject
     RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
@@ -136,7 +135,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         List<String> labelList = Arrays.asList(userLabel);
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
         mLabelRecyclerView.setLayoutManager(gridLayoutManager2);
-        RecommendUserLabelAdapter recommendUserLabelAdapter = new RecommendUserLabelAdapter(labelList);
+        RecommendUserLabelAdapter recommendUserLabelAdapter = new RecommendUserLabelAdapter(this,labelList);
         mLabelRecyclerView.setAdapter(recommendUserLabelAdapter);
     }
 

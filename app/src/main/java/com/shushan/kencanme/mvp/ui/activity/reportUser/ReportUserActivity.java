@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 举报用户
+ * desc:举报用户
  */
 public class ReportUserActivity extends BaseActivity {
 
@@ -47,7 +47,7 @@ public class ReportUserActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        mTitleName.setText(getResources().getString(R.string.ReportUserActivity_title));
     }
 
     @Override
@@ -59,6 +59,7 @@ public class ReportUserActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
+                finish();
                 break;
             case R.id.data_fraud:
                 //头像资料作假

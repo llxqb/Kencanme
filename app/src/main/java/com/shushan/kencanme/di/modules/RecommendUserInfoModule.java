@@ -8,8 +8,8 @@ import com.shushan.kencanme.di.scopes.PerActivity;
 import com.shushan.kencanme.entity.ServerConstant;
 import com.shushan.kencanme.mvp.model.ModelTransform;
 import com.shushan.kencanme.mvp.model.RecommendUserInfoModel;
-import com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo.RecommendUserInfoControl;
-import com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo.RecommendUserInfoPresenterImpl;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoControl;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoPresenterImpl;
 import com.shushan.kencanme.network.RetrofitUtil;
 import com.shushan.kencanme.network.networkapi.RecommendUserInfoApi;
 

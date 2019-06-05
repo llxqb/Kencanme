@@ -11,16 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
         android:background="@mipmap/top_background"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:paddingStart="@dimen/dp_10">
+        android:paddingTop="@dimen/dp_20">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_10"
             android:padding="@dimen/dp_10"
             android:src="@mipmap/back" />
 
@@ -29,9 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Anonymous report"
             android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dp_6"
             android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.shushan.kencanme.mvp.ui.activity.RecommendUserInfo;
+package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 
 
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;

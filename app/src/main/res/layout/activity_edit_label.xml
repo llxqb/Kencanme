@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.Person_info.EditLabelActivity">
+    tools:context=".mvp.ui.activity.personInfo.EditLabelActivity">
 
     <include layout="@layout/common_toolbar" />
 
@@ -18,17 +18,19 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/text_et"
             android:layout_width="@dimen/dp_240"
             android:layout_height="@dimen/dp_34"
             android:background="@drawable/label_search_bg1"
             android:gravity="start|center_vertical"
             android:paddingEnd="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
-            android:text="Please enter the label content"
-            android:textColorHint="#CACCD0"
+            android:hint="Please enter the label content"
+            android:textColorHint="@color/text_hint_color"
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/add_tv"
             android:layout_width="@dimen/dp_68"
             android:layout_height="@dimen/dp_34"
             android:background="@drawable/label_search_bg2"

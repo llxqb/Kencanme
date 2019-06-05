@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.Person_info.EditPersonalInfoActivity">
+    tools:context=".mvp.ui.activity.personInfo.EditPersonalInfoActivity">
 
     <include layout="@layout/common_toolbar" />
 
@@ -149,8 +149,8 @@
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
-        <EditText
-            android:id="@+id/edit_birthday_et"
+        <TextView
+            android:id="@+id/edit_birthday_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"

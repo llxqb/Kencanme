@@ -41,19 +41,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.RecommendUserInfo.RecommendUserInfoActivity" />
+        <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" />
-        <activity android:name=".mvp.ui.activity.Person_info.CreatePersonalInfoActivity" />
-        <activity android:name=".mvp.ui.activity.Person_info.PersonalInfoUploadPhotoActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity" />
         <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
         <activity android:name=".mvp.ui.activity.vip.OpenVipActivity" />
         <activity android:name=".mvp.ui.activity.pay.RechargeActivity" />
-        <activity android:name=".mvp.ui.activity.Person_info.EditMakeFriendsInfoActivity" />
-        <activity android:name=".mvp.ui.activity.Person_info.EditPersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.EditPersonalInfoActivity" />
         <activity
-            android:name=".mvp.ui.activity.Person_info.EditLabelActivity"
+            android:name=".mvp.ui.activity.personInfo.EditLabelActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".mvp.ui.activity.personInfo.EditContactWayActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp_15"
+    android:paddingStart="@dimen/dp_15"
+    android:paddingTop="@dimen/dp_15">
+
+    <TextView
+        android:id="@+id/contact_way_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Facebook"
+        android:textColor="@color/color_6941ff"
+        android:textSize="@dimen/sp_16" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/delete_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_6"
+            android:src="@mipmap/delete" />
+
+
+        <EditText
+            android:id="@+id/contact_value_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/delete_iv"
+            android:background="@null"
+            android:hint="Please enter your account number."
+            android:textColor="@color/first_text_color"
+            android:textColorHint="@color/text_hint_color"
+            android:textSize="@dimen/sp_18" />
+
+    </RelativeLayout>
+
+
+    <View
+        style="@style/line_height_1"
+        android:layout_marginTop="@dimen/dp_15" />
+
+</LinearLayout>
