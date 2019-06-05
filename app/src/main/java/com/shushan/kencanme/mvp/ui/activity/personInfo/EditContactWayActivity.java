@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
@@ -31,8 +32,8 @@ public class EditContactWayActivity extends BaseActivity {
     TextView mCommonTitleTv;
     @BindView(R.id.contact_recycler_view)
     RecyclerView mContactRecyclerView;
-    @BindView(R.id.add_more_tv)
-    TextView mAddMoreTv;
+    @BindView(R.id.add_more_ll)
+    LinearLayout mAddMoreLl;
     @BindView(R.id.save_btn)
     Button mSaveBtn;
     List<ContactWay> contactWayList = new ArrayList<>();
@@ -75,13 +76,16 @@ public class EditContactWayActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.common_back, R.id.add_more_tv, R.id.save_btn})
+    @OnClick({R.id.common_back, R.id.add_more_ll, R.id.save_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
                 finish();
                 break;
-            case R.id.add_more_tv:
+            case R.id.add_more_ll:
+                ContactWay contactWay = new ContactWay();
+                contactWay.ContactName = "google";//默认添加谷歌
+                contactWayAdapter.addData(contactWay);
                 break;
             case R.id.save_btn:
                 break;

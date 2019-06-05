@@ -114,8 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:paddingBottom="@dimen/dp_4"
-                    android:paddingEnd="@dimen/dp_4"
+                    android:padding="@dimen/dp_4"
                     android:text="0/80"
                     android:textSize="@dimen/sp_12" />
             </RelativeLayout>

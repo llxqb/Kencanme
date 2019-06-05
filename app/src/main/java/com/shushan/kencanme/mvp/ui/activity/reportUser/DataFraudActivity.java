@@ -18,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.mvp.ui.adapter.PhotoAdapter;
+import com.shushan.kencanme.mvp.ui.adapter.FraudPhotoAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -64,7 +64,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
 
     //选择照片的路径集合
     private ArrayList<TImage> photoList = new ArrayList<>();
-    PhotoAdapter photoAdapter;
+    FraudPhotoAdapter photoAdapter;
     //默认传8张
     private int maxPicNum = 8;
 
@@ -88,7 +88,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         mDataFraudContentEv.addTextChangedListener(search_text_OnChange);
         //设置RecyclerView第一张图片为默认图片
         photoList.add(null);
-        photoAdapter = new PhotoAdapter(this, photoList, mImageLoaderHelper);
+        photoAdapter = new FraudPhotoAdapter(this, photoList, mImageLoaderHelper);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(photoAdapter);

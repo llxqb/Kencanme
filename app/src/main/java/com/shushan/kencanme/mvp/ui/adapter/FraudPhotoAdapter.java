@@ -18,12 +18,12 @@ import java.util.ArrayList;
 /**
  * PhotoAdapter
  */
-public class PhotoAdapter extends BaseQuickAdapter<TImage, BaseViewHolder> {
+public class FraudPhotoAdapter extends BaseQuickAdapter<TImage, BaseViewHolder> {
 
     private ImageLoaderHelper mImageLoaderHelper;
     Context mContext;
 
-    public PhotoAdapter(Context context, @Nullable ArrayList<TImage> data, ImageLoaderHelper imageLoaderHelper) {
+    public FraudPhotoAdapter(Context context, @Nullable ArrayList<TImage> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.photo_item, data);
         mImageLoaderHelper = imageLoaderHelper;
         mContext = context;

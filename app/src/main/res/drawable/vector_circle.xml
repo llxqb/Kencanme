@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/dp_12"
+    android:height="@dimen/dp_12"
+    android:viewportHeight="48"
+    android:viewportWidth="48">
+    <!--
+    A（圆的x轴半径，y轴半径，x轴旋转角度，0/1-小/大弧度，0/1-逆/顺时针，圆的终点位置x点，圆的终点位置y点）
+    以起点(Mx,y A...)和终点(圆的终点位置x点，圆的终点位置y点)来确定一条直线，通过直线画一个半圆弧。
+起点和终点不能为同一个点，只能无限接近。因为两点才能有一条直线。
+圆的x轴半径，y轴半径 和 0/1-小/大弧度: 决定圆的大小
+0/1-逆/顺时针：决定画圆的方向
+作者：LeArn淡然
+来源：CSDN
+原文：https://blog.csdn.net/qq_35323561/article/details/80018898
+版权声明：本文为博主原创文章，转载请附上博文链接！
+-->
+    <path
+        android:pathData="M24 24 A 5,5 0 1 0 23.9,24.1"
+        android:strokeAlpha="1"
+        android:strokeColor="#FFFD53"
+        android:strokeLineCap="round"
+        android:strokeWidth="1" />
+
+</vector>

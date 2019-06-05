@@ -11,7 +11,10 @@
         android:id="@+id/contact_way_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableEnd="@mipmap/arrow_down"
+        android:drawablePadding="@dimen/dp_6"
         android:text="Facebook"
+        android:padding="@dimen/dp_4"
         android:textColor="@color/color_6941ff"
         android:textSize="@dimen/sp_16" />
 

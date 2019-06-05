@@ -33,4 +33,8 @@
     <string name="EditLabelActivity_title">Editing personal Tags</string>
     <string name="ReportUserActivity_title">Anonymous report</string>
     <string name="EditContactWayActivity_title">Editorial contact information</string>
+    <string name="SettingActivity_title">Install</string>
+    <string name="MessageReminderActivity_title">Message reminder</string>
+    <string name="ClearCacheActivity_title">Clear cache</string>
+    <string name="FeedbackProblemActivity_title">Feedback problem</string>
 </resources>

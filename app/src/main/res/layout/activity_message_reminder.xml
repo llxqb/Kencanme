@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.setting.MessageReminderActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <!-- 显示消息预览-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_22"
+        android:paddingStart="@dimen/dp_22">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Show message preview"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+
+        <ImageView
+            android:id="@+id/message_preview_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/mine_install_close" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_height_1" />
+    <!-- 振动-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_22"
+        android:paddingStart="@dimen/dp_22">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Shock"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+
+        <ImageView
+            android:id="@+id/shock_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/mine_install_close" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_height_1" />
+    <!-- 声音-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_22"
+        android:paddingStart="@dimen/dp_22">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Voice"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+
+        <ImageView
+            android:id="@+id/voice_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/mine_install_close" />
+
+    </RelativeLayout>
+
+    <View style="@style/line_height_1" />
+</LinearLayout>

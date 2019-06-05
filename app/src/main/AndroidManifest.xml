@@ -56,7 +56,16 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".mvp.ui.activity.personInfo.EditContactWayActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".mvp.ui.activity.setting.SettingActivity" />
+        <activity android:name=".mvp.ui.activity.setting.MessageReminderActivity" />
+        <activity android:name=".mvp.ui.activity.setting.ClearCacheActivity" />
+        <activity
+            android:name=".mvp.ui.activity.setting.FeedbackProblemActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".mvp.ui.activity.setting.AboutUsActivity" />
+        <activity android:name=".mvp.ui.activity.Photo.MyAlbumActivity" />
+        <activity android:name=".mvp.ui.activity.Photo.UploadPhotoActivity"></activity>
     </application>
 
 </manifest>
