@@ -10,9 +10,12 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.MyAlbumAdapter;
+import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyAlbumActivity extends BaseActivity {
+public class MyAlbumActivity extends BaseActivity implements CommonDialog.CommonDialogListener {
 
     @BindView(R.id.back)
     ImageView mBack;
@@ -30,6 +33,7 @@ public class MyAlbumActivity extends BaseActivity {
     @BindView(R.id.album_recycler_view)
     RecyclerView mAlbumRecyclerView;
     List<PhotoBean> photoBeanList;
+    MyAlbumAdapter myAlbumAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,15 @@ public class MyAlbumActivity extends BaseActivity {
         initData();
     }
 
+    int deletePos;
+
     @Override
     public void initView() {
         photoBeanList = new ArrayList<>();
         //设置RecyclerView第一张图片为默认图片
         photoBeanList.add(null);
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        MyAlbumAdapter myAlbumAdapter = new MyAlbumAdapter(this, photoBeanList, mImageLoaderHelper);
+        myAlbumAdapter = new MyAlbumAdapter(this, photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(myAlbumAdapter);
 
         mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -54,9 +60,10 @@ public class MyAlbumActivity extends BaseActivity {
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.photo_delete:
-                        showToast("delete");
-                        myAlbumAdapter.remove(position);
-                        myAlbumAdapter.notifyDataSetChanged();
+                        deletePos = position;
+//                        myAlbumAdapter.remove(position);
+//                        myAlbumAdapter.notifyDataSetChanged();
+                        DialogFactory.showCommonDialog(MyAlbumActivity.this, "Are you sure to delete the photo/video?", Constant.DIALOG_ONE);
                         break;
                     case R.id.photo_item_rl:
                         if (position == 0) {
@@ -94,10 +101,18 @@ public class MyAlbumActivity extends BaseActivity {
                 photoBeanList.add(photoBean);
             }
         }
+//        myAlbumAdapter.addData(photoBeanList);
+
     }
 
     @OnClick(R.id.back)
     public void onViewClicked() {
         finish();
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+        myAlbumAdapter.remove(deletePos);
+        myAlbumAdapter.notifyDataSetChanged();
     }
 }

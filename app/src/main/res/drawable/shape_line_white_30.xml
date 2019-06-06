@@ -3,12 +3,16 @@
 
     <item android:state_pressed="false">
         <shape>
-            <solid android:color="@color/color_blue_btn" />
+            <!-- 边框-->
+            <stroke android:width="@dimen/dp_1" android:color="@color/color_blue_btn" />
+            <!-- 填充-->
+            <solid android:color="@color/white" />
             <corners android:radius="@dimen/dp_30" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape>
+            <stroke android:width="@dimen/dp_1" android:color="@color/color_blue_btn" />
             <solid android:color="@color/color_blue_btn_press" />
             <corners android:radius="@dimen/dp_30" />
         </shape>

@@ -158,6 +158,7 @@ public class MineFragment extends BaseFragment {
                 startActivitys(EditMakeFriendsInfoActivity.class);
                 break;
             case R.id.barn_hi_beans:
+                showToast("暂未开放此功能");
                 break;
             case R.id.recharge:
                 //充值
