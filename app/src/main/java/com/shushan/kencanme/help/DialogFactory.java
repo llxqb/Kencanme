@@ -12,8 +12,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 
@@ -173,16 +177,14 @@ public class DialogFactory {
     }
 
     public static Dialog showLoadingDialog(Context context, String msg) {
-//        LayoutInflater inflater = LayoutInflater.from(context);
-//        View v = inflater.inflate(R.layout.view_loading, (ViewGroup) ((BaseActivity) context).getWindow().getDecorView(), false);// 得到加载view
-//        TextView loadingTvText = v.findViewById(R.id.loading_tv);
-//        loadingTvText.setText(msg);
-//        final Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
-//        loadingDialog.setCancelable(true);
-//        loadingDialog.setContentView(v);
-//        return loadingDialog;
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.view_loading, (ViewGroup) ((BaseActivity) context).getWindow().getDecorView(), false);// 得到加载view
+        TextView loadingTvText = v.findViewById(R.id.loading_tv);
+        loadingTvText.setText(msg);
+        final Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+        loadingDialog.setCancelable(true);
+        loadingDialog.setContentView(v);
+        return loadingDialog;
     }
-
 
 }

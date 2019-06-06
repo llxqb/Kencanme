@@ -10,25 +10,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.di.components.LoginComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.LoginModule;
+import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
-import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
-import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.dialog.LoginDialog;
 
@@ -52,10 +47,11 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     RelativeLayout mLoginFacebookRl;
     @BindView(R.id.login_whats_app_rl)
     RelativeLayout mLoginWhatsAppRl;
-    private GoogleApiClient mGoogleApiClient;
 
     @Inject
     LoginControl.PresenterLogin mPresenterLogin;
+    @Inject
+    GoogleLoginHelper googleLoginHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +63,13 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         initializeInjector();
         initView();
         initData();
-        initGoogleLogin();
+
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
+//        initGoogleLogin();
     }
 
     private void appLogin() {
@@ -97,9 +94,11 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         switch (view.getId()) {
             case R.id.login_google_rl:
                 //Google登录
-                LoginDialog loginDialog = LoginDialog.newInstance();
-                loginDialog.setListener(this);
-                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
+//                LoginDialog loginDialog = LoginDialog.newInstance();
+//                loginDialog.setListener(this);
+//                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
+                showLoading("登录中");
+                googleLoginHelper.googleLogin(this);
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
@@ -111,71 +110,34 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         }
     }
 
-    /**
-     * 初始化谷歌登录信息
-     */
-    private void initGoogleLogin() {
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .requestId()
-//                .requestProfile()
-//                .build();
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestId()
-                .requestProfile()
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, connectionResult -> {
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // 已登录 account 不为空
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        // 已登录 account 不为空
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//    }
 
     /**
-     * 进行谷歌登录
+     * 登录回调
      */
-    private void signInGoogle() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, 100);
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(intent, 100);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == 100) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+        dismissLoading();
+        if (requestCode == Constant.GOOGLE_LOGIN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            LogUtils.e("account=" + new Gson().toJson(account));
-            // Signed in successfully, show authenticated UI.
-//            updateUI(account);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            LogUtils.e("signInResult:failed code=" + e.getStatusCode());
-//            updateUI(null);
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.e("ddd", "handleSignInResult----" + result.isSuccess());
+        if (result.isSuccess()) {
+            GoogleSignInAccount account = result.getSignInAccount();
+            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl());
+            startActivitys(MainActivity.class);
+            finish();
         }
     }
 

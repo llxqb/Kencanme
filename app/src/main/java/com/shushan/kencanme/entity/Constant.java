@@ -15,4 +15,7 @@ public class Constant {
     //键盘延时100
     public static final int DELAYTIME = 100;
 
+    //Google登录回调
+    public static final int GOOGLE_LOGIN = 100;
+
 }

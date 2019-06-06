@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerSettingComponent;
+import com.shushan.kencanme.di.modules.ActivityModule;
+import com.shushan.kencanme.di.modules.SettingModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.ui.adapter.PushSexAdapter;
 import com.shushan.kencanme.mvp.views.TwoWayRattingBar;
@@ -53,6 +56,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        initializeInjector();
         initView();
         initData();
     }
@@ -97,6 +101,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                 startActivitys(AboutUsActivity.class);
                 break;
             case R.id.logout_tv:
+                exitLogin(this);
                 break;
         }
     }
@@ -111,5 +116,11 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
             ageSelectValue = leftProgress + "-" + rightProgress;
         }
         mAgeSelectTv.setText(ageSelectValue);
+    }
+
+    private void initializeInjector() {
+        DaggerSettingComponent.builder().appComponent(getAppComponent())
+                .settingModule(new SettingModule(SettingActivity.this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
     }
 }

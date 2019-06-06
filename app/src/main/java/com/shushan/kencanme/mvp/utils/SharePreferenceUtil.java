@@ -9,14 +9,13 @@ import javax.inject.Inject;
 
 /**
  * SharePreference常量类
- *  使用：SharedPreferences mySharedprefence = getSharedPreferences("setting", Activity.MODE_PRIVATE);
-    SharedPreferences.Editor editor = mySharedprefence.edit();
-    editor.putString("ll","");
-    editor.apply();//commit();
+ * 使用：SharedPreferences mySharedprefence = getSharedPreferences("setting", Activity.MODE_PRIVATE);
+ * SharedPreferences.Editor editor = mySharedprefence.edit();
+ * editor.putString("ll","");
+ * editor.apply();//commit();
  */
 public class SharePreferenceUtil {
-    private static final String TAG = "SharePreferenceUtil";
-    private static final String projectKey = "menggoda_cache";
+    private static final String projectKey = "kencanme_cache";
     private Sharedprefence mSharedprefence;
 
     @Inject
@@ -26,6 +25,7 @@ public class SharePreferenceUtil {
 
     /**
      * sp 存数据
+     *
      * @param key
      * @param value
      */
@@ -35,6 +35,7 @@ public class SharePreferenceUtil {
 
     /**
      * sp 取出本地数据
+     *
      * @param key
      */
     public String getData(String key) {
@@ -43,6 +44,7 @@ public class SharePreferenceUtil {
 
     /**
      * 写入对象
+     *
      * @param key
      * @param o
      */
@@ -52,10 +54,18 @@ public class SharePreferenceUtil {
 
     /**
      * 读取对象
+     *
      * @param key
      */
     public Object readObjData(String key) {
         return mSharedprefence.readObject(projectKey, key);
+    }
+
+    /**
+     * 清除sp
+     */
+    public void clearData() {
+        mSharedprefence.ClearSharedPreferences(projectKey);
     }
 
 }

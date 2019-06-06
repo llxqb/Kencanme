@@ -1,5 +1,6 @@
 package com.shushan.kencanme.entity.base;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,7 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.AppComponent;
+import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
+import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
+import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
 
@@ -31,6 +36,10 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     protected ImageLoaderHelper mImageLoaderHelper;
+    @Inject
+    protected SharePreferenceUtil sharePreferenceUtil;
+    @Inject
+    GoogleLoginHelper googleLoginHelper;
 //    @Inject
 //    BuProcessor mBuProcessor;
 
@@ -52,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setStatusBar() {
 //        StatusBarUtil.setColor(this, getResources().getColor(R.color.white));
-        StatusBarUtil.setColorNoTranslucent(this,getResources().getColor(R.color.app_color));
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.app_color));
     }
 
     public abstract void initView();
@@ -96,18 +105,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    void supportActionBar(Toolbar toolbar, boolean isShowIcon) {
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setDisplayShowHomeEnabled(true);
-//        }
-//        if (isShowIcon) {
-//            toolbar.setNavigationIcon(R.drawable.vector_arrow_left);
-//            toolbar.setNavigationOnClickListener(v -> onBackPressed());
-//        }
-//    }
 
 //    public void showErrMessage(Throwable e) {
 //        LogUtils.i("e=" + e.toString());
@@ -129,9 +126,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showLoading(String msg) {
-//        dismissLoading();
-//        mProgressDialog = DialogFactory.showLoadingDialog(this, msg);
-//        mProgressDialog.show();
+        dismissLoading();
+        mProgressDialog = DialogFactory.showLoadingDialog(this, msg);
+        mProgressDialog.show();
     }
 
     public void dismissLoading() {
@@ -143,6 +140,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public Context getContext() {
         return this;
+    }
+
+
+    /**
+     * 退出登录
+     */
+    public void exitLogin(Context context) {
+        sharePreferenceUtil.clearData();
+        //TODO 退出有问题
+        //googleLoginHelper.exitGoogleLogin();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
+        intent.putExtra("exitLogin", true);
+        context.startActivity(intent);
+        ((Activity) context).finish();
     }
 
     /**

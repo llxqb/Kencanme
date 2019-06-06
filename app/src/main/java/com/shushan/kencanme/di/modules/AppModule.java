@@ -5,8 +5,11 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shushan.kencanme.KencanmeApp;
+import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
+import com.shushan.kencanme.help.Sharedprefence;
 import com.shushan.kencanme.mvp.model.ModelTransform;
+import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 
 import javax.inject.Singleton;
 
@@ -51,18 +54,24 @@ public class AppModule {
         return new ImageLoaderHelper(application);
     }
 
-//    @Provides
-//    @Singleton
-//    Sharedprefence sharePreference() {
-//        return new Sharedprefence(application);
-//    }
-//
-//    @Provides
-//    @Singleton
-//    SharePreferenceUtil sharePreferenceUtil(Sharedprefence sharedprefence) {
-//        return new SharePreferenceUtil(application, sharedprefence);
-//    }
-//
+    @Provides
+    @Singleton
+    GoogleLoginHelper googleLoginHelper() {
+        return new GoogleLoginHelper();
+    }
+
+    @Provides
+    @Singleton
+    Sharedprefence sharePreference() {
+        return new Sharedprefence(application);
+    }
+
+    @Provides
+    @Singleton
+    SharePreferenceUtil sharePreferenceUtil(Sharedprefence sharedprefence) {
+        return new SharePreferenceUtil(application, sharedprefence);
+    }
+
 //    @Provides
 //    @Singleton
 //    BuProcessor buProcessor(SharePreferenceUtil sharePerferenceUtil) {
