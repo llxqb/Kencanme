@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
 
@@ -90,8 +91,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             connect(rToken);
         }
 
-        //设置会话界面的功能
-//        RongIM.getInstance().startConversation(this, Conversation.ConversationType.CHATROOM,"","我的");
     }
 
     /**

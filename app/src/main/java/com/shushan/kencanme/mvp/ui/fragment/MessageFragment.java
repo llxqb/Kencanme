@@ -7,13 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.mvp.ui.fragment.message.MessageFragment2;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.ConversationListFragment;
 import com.shushan.kencanme.mvp.ui.fragment.message.MyFriendsFragment;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class MessageFragment extends BaseFragment {
 
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
+    @BindView(R.id.tabLayout_rl)
+    RelativeLayout mTabLayoutRl;
     @BindView(R.id.message_viewpager)
     ViewPager mMessageViewpager;
     Unbinder unbinder;
@@ -57,6 +61,28 @@ public class MessageFragment extends BaseFragment {
         mMessageViewpager.setOffscreenPageLimit(2);
         mMessageViewpager.setAdapter(new MyPageAdapter(getChildFragmentManager()));
         mTabLayout.setupWithViewPager(mMessageViewpager);
+//
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.e("ddd",""+tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    mTabLayoutRl.setBackgroundResource(R.mipmap.message_top_left);
+
+                } else {
+                    mTabLayoutRl.setBackgroundResource(R.mipmap.message_top_right);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     @Override
@@ -69,11 +95,11 @@ public class MessageFragment extends BaseFragment {
         private final String[] titles = {"Message", "My friend"};
         private List<Fragment> fragments = new ArrayList<Fragment>();
 
-         MyPageAdapter(FragmentManager fm) {
+        MyPageAdapter(FragmentManager fm) {
             super(fm);
-            MessageFragment2 messageFragment2 = new MessageFragment2();
+            ConversationListFragment conversationListFragment = new ConversationListFragment();
             MyFriendsFragment myFriendsFragment = new MyFriendsFragment();
-            fragments.add(messageFragment2);
+            fragments.add(conversationListFragment);
             fragments.add(myFriendsFragment);
         }
 

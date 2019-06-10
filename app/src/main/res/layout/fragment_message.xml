@@ -9,21 +9,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/top_background">
+        android:gravity="center_horizontal"
+        android:background="@mipmap/top_background"
+        android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/tabLayout_rl"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_30"
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_30"
             android:layout_marginStart="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_20"
-            app:tabIndicatorColor="@color/color_transparent"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/first_text_color">
+            android:layout_marginTop="@dimen/dp_30"
+            android:background="@mipmap/message_top_left">
 
-        </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/color_transparent"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="@color/first_text_color" />
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 
