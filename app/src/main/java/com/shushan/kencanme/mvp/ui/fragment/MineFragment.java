@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.mvp.ui.activity.Photo.MyAlbumActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumActivity;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditContactWayActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditLabelActivity;

@@ -1,4 +1,4 @@
-package com.shushan.kencanme.mvp.ui.activity.Photo;
+package com.shushan.kencanme.mvp.ui.activity.photo;
 
 import android.os.Bundle;
 

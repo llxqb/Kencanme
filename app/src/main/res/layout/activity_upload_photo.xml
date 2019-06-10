@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.Photo.UploadPhotoActivity">
+    tools:context=".mvp.ui.activity.photo.UploadPhotoActivity">
 
     <include layout="@layout/common_toolbar" />
 

@@ -1,4 +1,4 @@
-package com.shushan.kencanme.mvp.ui.activity.Photo;
+package com.shushan.kencanme.mvp.ui.activity.photo;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;

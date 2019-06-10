@@ -21,7 +21,6 @@ import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
-import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -50,8 +49,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Inject
     LoginControl.PresenterLogin mPresenterLogin;
-    @Inject
-    GoogleLoginHelper googleLoginHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +95,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 //                loginDialog.setListener(this);
 //                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
                 showLoading("登录中");
-                googleLoginHelper.googleLogin(this);
+//                new GoogleLoginHelper(this).googleLogin();
+                mGoogleLoginHelper.googleLogin(this);
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
@@ -123,7 +121,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        dismissLoading();
         if (requestCode == Constant.GOOGLE_LOGIN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -133,6 +130,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.e("ddd", "handleSignInResult----" + result.isSuccess());
+        dismissLoading();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl());

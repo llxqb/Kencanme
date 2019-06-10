@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.shushan.kencanme.R;
@@ -13,6 +15,7 @@ import com.shushan.kencanme.di.components.MainComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
@@ -26,8 +29,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener,MainControl.MainView {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
 
 
     @BindView(R.id.main_bottom_navigation)
@@ -67,6 +72,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
 
+        connectRongCloud();
+
+
     }
 
     @Override
@@ -74,11 +82,79 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     }
 
+    private void connectRongCloud() {
+//        String rToken = mSharePreferenceUtil.getData("rToken");
+        String rToken = "MbbN5DyzAEs2Vruc4Sirkac3QJl342gyNW2NyYV7fKr3kEu705lRicWjNXyo5Ok1T7F5rN+y/6ypnXiFpNArqFxA4Ai8GBqr";
+        //连接融云
+        if (!TextUtils.isEmpty(rToken)) {
+            connect(rToken);
+        }
+
+        //设置会话界面的功能
+//        RongIM.getInstance().startConversation(this, Conversation.ConversationType.CHATROOM,"","我的");
+    }
+
+    /**
+     * 建立与融云服务器的连接
+     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在 {@link #init(Context)} 之后调用。</p>
+     * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
+     * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
+     *
+     * @param token    从服务端获取的用户身份令牌（Token）。
+     * @return RongIM  客户端核心类的实例。
+     */
+    private   void connect(String token) {
+        /**
+         * IMKit SDK调用第二步,建立与服务器的连接
+         */
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            /**
+             * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
+             */
+            @Override
+            public void onTokenIncorrect() {
+                Log.e("ddd","--onTokenIncorrect");
+            }
+
+            /**
+             * 连接融云成功
+             *
+             * @param userid 当前 token
+             */
+            @Override
+            public void onSuccess(String userid) {
+                Log.e("ddd","--onSuccess" + userid);
+            }
+
+            /**
+             * 连接融云失败
+             *
+             * @param errorCode 错误码，可到官网 查看错误码对应的注释
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("ddd","--onError" + errorCode);
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getBooleanExtra("exitLogin", false)) {
             //退出登录
+            startActivitys(LoginActivity.class);
             finish();
         }
     }

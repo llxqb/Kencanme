@@ -37,9 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     protected ImageLoaderHelper mImageLoaderHelper;
     @Inject
-    protected SharePreferenceUtil sharePreferenceUtil;
+    protected SharePreferenceUtil mSharePreferenceUtil;
     @Inject
-    GoogleLoginHelper googleLoginHelper;
+    protected GoogleLoginHelper mGoogleLoginHelper;
 //    @Inject
 //    BuProcessor mBuProcessor;
 
@@ -147,7 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 退出登录
      */
     public void exitLogin(Context context) {
-        sharePreferenceUtil.clearData();
+        mSharePreferenceUtil.clearData();
         //TODO 退出有问题
         //googleLoginHelper.exitGoogleLogin();
         Intent intent = new Intent(context, MainActivity.class);

@@ -106,4 +106,6 @@ dependencies {
 //    implementation 'com.contrarywind:Android-PickerView:4.1.8'
     //gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+    //融云
+    implementation project(':IMKit')
 }
