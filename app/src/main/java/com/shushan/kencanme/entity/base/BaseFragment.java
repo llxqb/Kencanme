@@ -11,11 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -36,8 +39,8 @@ public abstract class BaseFragment extends Fragment {
     protected SharePreferenceUtil sharePreferenceUtil;
     @Inject
     protected GoogleLoginHelper mGoogleLoginHelper;
-//    @Inject
-//    protected BuProcessor mBuProcessor;
+    @Inject
+    protected BuProcessor mBuProcessor;
 
     private CompositeDisposable mDisposable;
     private Dialog mProgressDialog;
@@ -47,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addFilter();
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, mFilter);
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).registerReceiver(mReceiver, mFilter);
     }
 
     public abstract void initView();

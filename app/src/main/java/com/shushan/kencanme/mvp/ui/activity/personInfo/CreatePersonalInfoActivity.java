@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,9 +9,20 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerPersonalInfoComponent;
+import com.shushan.kencanme.di.modules.ActivityModule;
+import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
+import com.shushan.kencanme.mvp.utils.DateUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +31,7 @@ import butterknife.OnClick;
 /**
  * 创建个人信息资料
  */
-public class CreatePersonalInfoActivity extends BaseActivity {
+public class CreatePersonalInfoActivity extends BaseActivity implements PersonalInfoControl.PersonalInfoView {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -37,12 +49,17 @@ public class CreatePersonalInfoActivity extends BaseActivity {
     EditText mAddress;
     @BindView(R.id.preserve_btn)
     Button mPreserveBtn;
+    String mToken;
+
+    @Inject
+    PersonalInfoControl.PresenterPersonalInfo mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_personal_info);
         StatusBarUtil.setTranslucent(this);
+        initializeInjector();
         ButterKnife.bind(this);
         initView();
         initData();
@@ -51,15 +68,19 @@ public class CreatePersonalInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         mCommonTitleTv.setText("Personal information");
+        if (!mBuProcessor.isValidLogin()) {
+            startActivitys(LoginActivity.class);
+            finish();
+        } else {
+            mToken = mBuProcessor.getToken();
+        }
         //定义底部标签图片大小和位置
 //        Drawable drawableMale = getResources().getDrawable(R.drawable.radiobutton_bg);
 //        //第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-//        drawableMale.setBounds(0, 0, 60, 50);
+//        drawableMale.setBounds(0, 0, 50, 50);
 //        //设置图片在文字的哪个方向
-//        mMaleRb.setCompoundDrawables(null, drawableMale, null, null);
-//        mFemaleRb.setCompoundDrawables(null, drawableMale, null, null);
-        mMaleRb.setButtonDrawable(R.drawable.radiobutton_bg);
-        mFemaleRb.setButtonDrawable(R.drawable.radiobutton_bg);
+//        mMaleRb.setCompoundDrawables(drawableMale, null, null, null);
+//        mFemaleRb.setCompoundDrawables(drawableMale, null, null, null);
     }
 
     @Override
@@ -80,13 +101,90 @@ public class CreatePersonalInfoActivity extends BaseActivity {
             case R.id.female_rb:
                 break;
             case R.id.birthday:
+                showBirthdayDialog();
                 break;
             case R.id.address:
                 break;
             case R.id.preserve_btn:
-                startActivitys(PersonalInfoUploadPhotoActivity.class);
+                if (isValidEmpty()) {
+                    //开始创建信息接口
+                    PersonalInfoRequest request = new PersonalInfoRequest();
+                    request.nickname = mUserNice.getText().toString();
+                    request.sex = mMaleRb.isChecked() ? "1" : "2";// 1男2女
+                    request.birthday = mBirthday.getText().toString();
+                    request.city = mAddress.getText().toString();
+                    request.token = mToken;
+                    mPresenter.onRequestPersonalInfo(request);
+                }
                 break;
         }
     }
+
+    /**
+     * 选择生日弹框
+     */
+    private void showBirthdayDialog() {
+        TimePickerView pvTime = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            mBirthday.setText(DateUtil.dateTranString(date, "yyyy/MM/dd"));
+        })
+                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+                .setCancelText("cancel")//取消按钮文字
+                .setSubmitText("sure")//确认按钮文字
+                .setTitleSize(16)//标题文字大小
+                .setTitleText("Your Birthday")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(true)//是否循环滚动
+                .setTitleColor(getResources().getColor(R.color.first_text_color))//标题文字颜色
+                .setSubmitColor(getResources().getColor(R.color.yellow_btn))//确定按钮文字颜色
+                .setCancelColor(getResources().getColor(R.color.first_text_color))//取消按钮文字颜色
+//                        .setRangDate(startDate,endDate)//起始终止年月日设定
+                .setLabel("year", "month", "day", "hour", "minute", "second")//默认设置为年月日时分秒
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+        pvTime.show();
+    }
+
+
+    /**
+     * 验证资料是否填满
+     */
+    private boolean isValidEmpty() {
+        if (TextUtils.isEmpty(mUserNice.getText())) {
+            showToast(getResources().getString(R.string.CreatePersonalInfoActivity_nice_is_empty));
+            return false;
+        }
+        if (!mMaleRb.isChecked() && !mFemaleRb.isChecked()) {
+            showToast(getResources().getString(R.string.CreatePersonalInfoActivity_sex_is_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(mBirthday.getText())) {
+            showToast(getResources().getString(R.string.CreatePersonalInfoActivity_birthday_is_empty));
+            return false;
+        }
+        if (TextUtils.isEmpty(mAddress.getText())) {
+            showToast(getResources().getString(R.string.CreatePersonalInfoActivity_address_is_empty));
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void updateSuccess(PersonalInfoResponse response) {
+        showToast("修改成功");
+        startActivitys(PersonalInfoUploadPhotoActivity.class);
+    }
+
+    @Override
+    public void updateFail(String errorMsg) {
+
+    }
+
+    private void initializeInjector() {
+        DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
+                .personalInfoModule(new PersonalInfoModule(CreatePersonalInfoActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 
 }

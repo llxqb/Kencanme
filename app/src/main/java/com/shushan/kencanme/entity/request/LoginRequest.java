@@ -5,8 +5,16 @@ package com.shushan.kencanme.entity.request;
  * date: 2019-05-28
  */
 public class LoginRequest {
-    public String mobile;
-    public String password;
+    /**
+     * google token
+     */
+    public String access_token;
+    /**
+     * 设备id
+     */
     public String deviceId;
-    public String platform;
+    /**
+     * 设备 android 和 ios
+     */
+    public String from;
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shushan.kencanme.KencanmeApp;
+import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.help.Sharedprefence;
@@ -72,11 +73,11 @@ public class AppModule {
         return new SharePreferenceUtil(application, sharedprefence);
     }
 
-//    @Provides
-//    @Singleton
-//    BuProcessor buProcessor(SharePreferenceUtil sharePerferenceUtil) {
-//        return new BuProcessor(application, sharePerferenceUtil);
-//    }
+    @Provides
+    @Singleton
+    BuProcessor buProcessor(SharePreferenceUtil sharePerferenceUtil) {
+        return new BuProcessor(application, sharePerferenceUtil);
+    }
 //
 //    @Provides
 //    @Singleton

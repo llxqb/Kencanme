@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.AppComponent;
+import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
@@ -40,8 +41,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected SharePreferenceUtil mSharePreferenceUtil;
     @Inject
     protected GoogleLoginHelper mGoogleLoginHelper;
-//    @Inject
-//    BuProcessor mBuProcessor;
+    @Inject
+    protected BuProcessor mBuProcessor;
 
     private CompositeDisposable mDisposable;
     private Dialog mProgressDialog;
@@ -123,6 +124,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showLoading() {
+    }
+
+    public void showErrMessage(Throwable e){
+
     }
 
     public void showLoading(String msg) {

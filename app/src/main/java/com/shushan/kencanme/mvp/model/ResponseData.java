@@ -10,30 +10,30 @@ public class ResponseData {
 
     private static final Gson sGson = new GsonBuilder().create();
     public Integer resultCode;
-    public String errorDesc;
+    public String errorMsg;
     public String result;
     public Object parsedData;
 
     public ResponseData() {
         resultCode = 110;
-        errorDesc = "信息获取失败";
+        errorMsg = "信息获取失败";
     }
 
     public ResponseData(JSONObject jsonObject) throws JSONException {
-        resultCode = jsonObject.optInt("ret");
-        errorDesc = jsonObject.optString("msg");
+        resultCode = jsonObject.optInt("error");
+        errorMsg = jsonObject.optString("msg");
         result = jsonObject.optString("data");
     }
 
 
-    public ResponseData(JSONObject jsonObject, Integer flag) throws JSONException {
-        if(flag==1){//会员接口
-            resultCode = jsonObject.getInt("errcode");
-            errorDesc = jsonObject.getString("errmsg");
-            result = jsonObject.optString("data");
-        }
-
-    }
+//    public ResponseData(JSONObject jsonObject, Integer flag) throws JSONException {
+//        if(flag==1){//会员接口
+//            resultCode = jsonObject.getInt("errcode");
+//            errorDesc = jsonObject.getString("errmsg");
+//            result = jsonObject.optString("data");
+//        }
+//
+//    }
 
 
     public <T> T parseData(Class<T> objectClass) {

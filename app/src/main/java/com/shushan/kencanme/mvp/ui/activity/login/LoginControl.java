@@ -13,6 +13,7 @@ import com.shushan.kencanme.mvp.presenter.Presenter;
 public class LoginControl {
     public interface LoginView extends LoadDataView {
         void loginSuccess(LoginResponse response);
+        void loginFail(String errorMsg);
 
     }
 

@@ -9,7 +9,7 @@ import retrofit2.http.POST;
  * LoginApi
  */
 
-public interface LoginApi {
-    @POST("menggoda/login")
-    Observable<String> loginRequest(@Body String request);
+public interface PersonalInfoApi {
+    @POST("menggoda/user/setuserinfo")
+    Observable<String> createPersonalInfoRequest(@Body String request);
 }

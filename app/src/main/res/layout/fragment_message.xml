@@ -30,7 +30,7 @@
                 app:tabIndicatorColor="@color/color_transparent"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/TabLayoutTextStyle"
-                app:tabTextColor="@color/first_text_color" />
+                app:tabTextColor="@color/second_text_color" />
         </RelativeLayout>
 
 

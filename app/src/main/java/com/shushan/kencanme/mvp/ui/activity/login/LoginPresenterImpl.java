@@ -2,7 +2,6 @@ package com.shushan.kencanme.mvp.ui.activity.login;
 
 import android.content.Context;
 
-
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -32,7 +31,7 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
     }
 
     /**
-     *new RetryWithDelay(3, 3000) 总共重试3次，重试间隔3000毫秒
+     * new RetryWithDelay(3, 3000) 总共重试3次，重试间隔3000毫秒
      * subscribe订阅
      * mLoginView.showErrMessage(throwable)加载出错 ，若加载集合数据用 mLoginView.loadFail(throwable)
      * ::全局作用域符号,修饰方法而不是变量
@@ -52,7 +51,7 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
             LoginResponse response = (LoginResponse) responseData.parsedData;
             mLoginView.loginSuccess(response);
         } else {
-            mLoginView.showToast(responseData.errorDesc);
+            mLoginView.loginFail(responseData.errorMsg);
         }
     }
 
@@ -64,6 +63,8 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
     public void onDestroy() {
         mLoginView = null;
     }
+
+
 
 
 }

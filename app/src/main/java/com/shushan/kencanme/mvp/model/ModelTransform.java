@@ -22,15 +22,15 @@ public class ModelTransform {
         return responseData;
     }
 
-    //会员接口
-    public ResponseData transformTypeTwo(String response) {
-        ResponseData responseData;
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            responseData = new ResponseData(jsonObject, 1);
-        } catch (JSONException e) {
-            responseData = new ResponseData();
-        }
-        return responseData;
-    }
+//    //会员接口
+//    public ResponseData transformTypeTwo(String response) {
+//        ResponseData responseData;
+//        try {
+//            JSONObject jsonObject = new JSONObject(response);
+//            responseData = new ResponseData(jsonObject, 1);
+//        } catch (JSONException e) {
+//            responseData = new ResponseData();
+//        }
+//        return responseData;
+//    }
 }

@@ -33,18 +33,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.ui.activity.main.MainActivity" />
+        <activity android:name=".mvp.ui.activity.main.MainActivity" >
+
+        </activity>
         <activity android:name=".mvp.ui.activity.login.LoginActivity">
+
+        </activity>
+        <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
+        <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
+        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
-        <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
-        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" />
-        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity" />
         <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity" />
         <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
         <activity android:name=".mvp.ui.activity.vip.OpenVipActivity" />

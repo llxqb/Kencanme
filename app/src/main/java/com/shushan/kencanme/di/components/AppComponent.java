@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.kencanme.di.ComponetGraph;
 import com.shushan.kencanme.di.modules.AppModule;
+import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.help.Sharedprefence;
@@ -43,9 +44,10 @@ public interface AppComponent extends ComponetGraph {
 
     SharePreferenceUtil sharePreferenceUtil();
 
+    BuProcessor buProcessor();
+
+
 //    DaoSession daoSession();
-//
-//    BuProcessor buProcessor();
 //
 //    AMapLocationClient aMapLocationClient();//MainActivity  有用到  @Inject AMapLocationClient mAMapLocationClient;
 //

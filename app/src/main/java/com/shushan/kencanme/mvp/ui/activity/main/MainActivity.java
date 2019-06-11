@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMainComponent;
@@ -15,6 +16,7 @@ import com.shushan.kencanme.di.components.MainComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
@@ -31,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
 
@@ -60,6 +61,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initView() {
+//        LoginUser loginUser = (LoginUser) mSharePreferenceUtil.readObjData("user");
+//        if (loginUser==null || TextUtils.isEmpty(loginUser.token)) {
+//            startActivitys(LoginActivity.class);
+//            finish();
+//        }
+        if(!mBuProcessor.isValidLogin()){
+            startActivitys(LoginActivity.class);
+            finish();
+        }
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
         MessageFragment messageFragment = MessageFragment.newInstance();
@@ -72,10 +82,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setOffscreenPageLimit(fragments.size());
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
-
         connectRongCloud();
-
-
     }
 
     @Override
@@ -99,10 +106,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
      * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
      * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
      *
-     * @param token    从服务端获取的用户身份令牌（Token）。
+     * @param token 从服务端获取的用户身份令牌（Token）。
      * @return RongIM  客户端核心类的实例。
      */
-    private   void connect(String token) {
+    private void connect(String token) {
         /**
          * IMKit SDK调用第二步,建立与服务器的连接
          */
@@ -112,7 +119,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onTokenIncorrect() {
-                Log.e("ddd","--onTokenIncorrect");
+                Log.e("ddd", "--onTokenIncorrect");
             }
 
             /**
@@ -122,7 +129,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onSuccess(String userid) {
-                Log.e("ddd","--onSuccess" + userid);
+                Log.e("ddd", "--onSuccess" + userid);
             }
 
             /**
@@ -132,20 +139,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.e("ddd","--onError" + errorCode);
+                Log.e("ddd", "--onError" + errorCode);
             }
         });
 
     }
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -172,11 +170,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
         }
         return true;
-    }
-
-    @Override
-    public void showErrMessage(Throwable e) {
-
     }
 
     private void initInjectData() {

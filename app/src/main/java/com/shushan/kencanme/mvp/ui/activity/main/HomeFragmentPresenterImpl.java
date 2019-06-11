@@ -52,7 +52,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
             HomeFragmentResponse response = (HomeFragmentResponse) responseData.parsedData;
             mHomeView.getInfoSuccess(response);
         } else {
-            mHomeView.showToast(responseData.errorDesc);
+            mHomeView.showToast(responseData.errorMsg);
         }
     }
 

@@ -13,6 +13,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imlib.model.Conversation;
 
+/**
+ * 打开消息界面
+ */
 public class ConversationActivity extends BaseActivity {
 
     @BindView(R.id.common_back)

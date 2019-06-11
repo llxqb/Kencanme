@@ -25,6 +25,14 @@
     <string name="album_hi_beans_view">Hi-beans photo</string>
 
 
+    <!-- CreatePersonalInfoActivity-->
+    <string name="CreatePersonalInfoActivity_nice_is_empty">昵称不能为空</string>
+    <string name="CreatePersonalInfoActivity_sex_is_empty">性别不能为空</string>
+    <string name="CreatePersonalInfoActivity_birthday_is_empty">生日不能为空</string>
+    <string name="CreatePersonalInfoActivity_address_is_empty">地址不能为空</string>
+
+
+
     <!-- Activity 类 相关  返回箭头后title-->
     <string name="AgreementActivity_title">Agreement</string>
     <string name="RechargeActivity_title">Buy Hi-beans</string>

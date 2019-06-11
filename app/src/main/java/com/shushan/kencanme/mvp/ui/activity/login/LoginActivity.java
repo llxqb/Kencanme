@@ -21,6 +21,7 @@ import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -60,24 +61,11 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         initializeInjector();
         initView();
         initData();
-
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
-//        initGoogleLogin();
-    }
-
-    private void appLogin() {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.deviceId = "868040033198091";
-        loginRequest.mobile = "18684923583";
-        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
-        loginRequest.platform = "android";
-        mPresenterLogin.onRequestLogin(loginRequest);
-//        startActivitys(MainActivity.class);
-//        finish();
     }
 
 
@@ -130,43 +118,66 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.e("ddd", "handleSignInResult----" + result.isSuccess());
+//        Log.e("ddd",new Gson().toJson(result));
         dismissLoading();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl());
-            startActivitys(MainActivity.class);
-            finish();
+//            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
+            //登录后台系统
+            appLogin(account.getIdToken());
         }
     }
 
 
+    private void appLogin(String accessToken) {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.deviceId = "868040033198091";
+        loginRequest.access_token = accessToken;
+        loginRequest.from = "android";
+        mPresenterLogin.onRequestLogin(loginRequest);
+    }
+
     @Override
     public void loginSuccess(LoginResponse response) {
-
+        LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
+        tranLoginUser(userinfoBean);
+        startActivitys(CreatePersonalInfoActivity.class);
+        finish();
     }
 
     @Override
-    public void showErrMessage(Throwable e) {
-        Log.e("ddd", "e" + e.toString());
+    public void loginFail(String errorMsg) {
+        showToast(errorMsg);
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        mPresenterLogin.onDestroy();
-//    }
-
-    private void initializeInjector() {
-        LoginComponent mLoginComponent = DaggerLoginComponent.builder().appComponent(getAppComponent())
-                .loginModule(new LoginModule(LoginActivity.this, this))
-                .activityModule(new ActivityModule(this)).build();
-        mLoginComponent.inject(this);
-    }
 
 
     @Override
     public void loginDialogBtnOkListener() {
         startActivitys(CreatePersonalInfoActivity.class);
 //        finish();
+    }
+
+    /**
+     * 把LoginResponse.UserinfoBean 转换为LoginUser
+     *
+     * @param userinfoBean UserinfoBean
+     */
+    private void tranLoginUser(LoginResponse.UserinfoBean userinfoBean) {
+        if (userinfoBean != null) {
+            LoginUser loginUser = new LoginUser();
+            loginUser.token = userinfoBean.getToken();
+            loginUser.nickname = userinfoBean.getNickname();
+            loginUser.rongyun_token = userinfoBean.getRongyun_token();
+//            mSharePreferenceUtil.saveObjData("user", loginUser);
+            mBuProcessor.setLoginUser(loginUser);
+        }
+    }
+
+    private void initializeInjector() {
+        LoginComponent mLoginComponent = DaggerLoginComponent.builder().appComponent(getAppComponent())
+                .loginModule(new LoginModule(LoginActivity.this, this))
+                .activityModule(new ActivityModule(this)).build();
+        mLoginComponent.inject(this);
     }
 }

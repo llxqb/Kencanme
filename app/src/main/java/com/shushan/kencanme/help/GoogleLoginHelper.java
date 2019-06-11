@@ -22,16 +22,17 @@ public class GoogleLoginHelper {
     public void googleLogin(Context context) {
         //初始化
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestId()
-                .requestProfile()
                 .requestEmail()
+                .requestIdToken("611870031660-21c3miohhpbfd40v8t2ou30e3eshmf7a.apps.googleusercontent.com")
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(context)
-                .enableAutoManage((FragmentActivity) context, connectionResult -> {
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        if(mGoogleApiClient == null){
+            mGoogleApiClient = new GoogleApiClient.Builder(context)
+                    .enableAutoManage((FragmentActivity) context, connectionResult -> {
+                    })
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
+        }
 
         //进行谷歌登录
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -47,4 +48,31 @@ public class GoogleLoginHelper {
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
         }
     }
+
+
+    /**
+     * 退出登录
+     */
+//    private void signOut() {
+//        mGoogleSignInClient.signOut()
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // ...
+//                    }
+//                });
+//    }
+
+    /**
+     * 断开账户
+     */
+//    private void revokeAccess() {
+//        mGoogleSignInClient.revokeAccess()
+//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        // ...
+//                    }
+//                });
+//    }
 }
