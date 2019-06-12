@@ -16,8 +16,8 @@ import com.shushan.kencanme.di.components.DaggerPersonalInfoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.entity.request.PersonalInfoRequest;
-import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.utils.DateUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -74,13 +74,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
         } else {
             mToken = mBuProcessor.getToken();
         }
-        //定义底部标签图片大小和位置
-//        Drawable drawableMale = getResources().getDrawable(R.drawable.radiobutton_bg);
-//        //第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-//        drawableMale.setBounds(0, 0, 50, 50);
-//        //设置图片在文字的哪个方向
-//        mMaleRb.setCompoundDrawables(drawableMale, null, null, null);
-//        mFemaleRb.setCompoundDrawables(drawableMale, null, null, null);
+
     }
 
     @Override
@@ -108,13 +102,15 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
             case R.id.preserve_btn:
                 if (isValidEmpty()) {
                     //开始创建信息接口
-                    PersonalInfoRequest request = new PersonalInfoRequest();
+                    UpdatePersonalInfoRequest request = new UpdatePersonalInfoRequest();
                     request.nickname = mUserNice.getText().toString();
                     request.sex = mMaleRb.isChecked() ? "1" : "2";// 1男2女
                     request.birthday = mBirthday.getText().toString();
                     request.city = mAddress.getText().toString();
                     request.token = mToken;
-                    mPresenter.onRequestPersonalInfo(request);
+//                    mPresenter.onRequestPersonalInfo(request);
+                    PersonalInfoUploadPhotoActivity.start(this, request);
+//                    finish();
                 }
                 break;
         }
@@ -170,13 +166,34 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
     }
 
     @Override
-    public void updateSuccess(PersonalInfoResponse response) {
+    public void updateSuccess(UpdatePersonalInfoResponse response) {
         showToast("修改成功");
         startActivitys(PersonalInfoUploadPhotoActivity.class);
     }
 
     @Override
     public void updateFail(String errorMsg) {
+
+    }
+
+    @Override
+    public void uploadVideoSuccess(String videoPath) {
+
+    }
+
+    @Override
+    public void uploadVideoFail(String msg) {
+
+    }
+
+
+    @Override
+    public void uploadImageSuccess(String picPath) {
+
+    }
+
+    @Override
+    public void uploadImageFail(String msg) {
 
     }
 

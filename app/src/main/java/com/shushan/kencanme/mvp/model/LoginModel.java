@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.LoginRequest;
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.network.networkapi.LoginApi;
 
 import javax.inject.Inject;
@@ -25,9 +26,12 @@ public class LoginModel {
         mTransform = transform;
     }
 
-
     public Observable<ResponseData> LoginRequest(LoginRequest request) {
         return mLoginApi.loginRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    public Observable<ResponseData> onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
+        return mLoginApi.onRequestPersonalInfo(mGson.toJson(personalInfoRequest)).map(mTransform::transformCommon);
     }
 
 }

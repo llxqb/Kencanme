@@ -7,6 +7,7 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.di.scopes.PerActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity;
 
 import dagger.Component;
 
@@ -20,6 +21,7 @@ import dagger.Component;
 public interface PersonalInfoComponent extends ActivityComponent {
     //对LoginActivity进行依赖注入
     void inject(CreatePersonalInfoActivity settingActivity);
+    void inject(PersonalInfoUploadPhotoActivity personalInfoUploadPhotoActivity);
     AppCompatActivity activity();
 
 }

@@ -20,11 +20,13 @@ import com.shushan.kencanme.di.modules.LoginModule;
 import com.shushan.kencanme.entity.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
-import com.shushan.kencanme.entity.user.LoginUser;
+import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.utils.SystemUtils;
 import com.shushan.kencanme.mvp.views.dialog.LoginDialog;
 
 import javax.inject.Inject;
@@ -115,7 +117,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         }
     }
 
-
+    //处理google回调
     private void handleSignInResult(GoogleSignInResult result) {
         Log.e("ddd", "handleSignInResult----" + result.isSuccess());
 //        Log.e("ddd",new Gson().toJson(result));
@@ -124,14 +126,14 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             GoogleSignInAccount account = result.getSignInAccount();
 //            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
             //登录后台系统
-            appLogin(account.getIdToken());
+            appLogin(account.getId(), account.getIdToken());
         }
     }
 
-
-    private void appLogin(String accessToken) {
+    private void appLogin(String gId, String accessToken) {
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.deviceId = "868040033198091";
+        loginRequest.id = gId;
+        loginRequest.deviceId = SystemUtils.getDeviceId(this);
         loginRequest.access_token = accessToken;
         loginRequest.from = "android";
         mPresenterLogin.onRequestLogin(loginRequest);
@@ -140,9 +142,10 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void loginSuccess(LoginResponse response) {
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
-        tranLoginUser(userinfoBean);
-        startActivitys(CreatePersonalInfoActivity.class);
-        finish();
+        //根据token请求个人信息
+        PersonalInfoRequest request = new PersonalInfoRequest();
+        request.token = userinfoBean.getToken();
+        mPresenterLogin.onRequestPersonalInfo(request);
     }
 
     @Override
@@ -150,6 +153,24 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         showToast(errorMsg);
     }
 
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
+        //保存用户信息
+        mBuProcessor.setLoginUser(personalInfoResponse);
+        //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity
+        if (mBuProcessor.isFinishFirstWrite()) {
+            startActivitys(MainActivity.class);
+            finish();
+        } else {
+            startActivitys(CreatePersonalInfoActivity.class);
+            finish();
+        }
+    }
+
+    @Override
+    public void personalInfoFail(String errorMsg) {
+
+    }
 
 
     @Override
@@ -158,21 +179,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 //        finish();
     }
 
-    /**
-     * 把LoginResponse.UserinfoBean 转换为LoginUser
-     *
-     * @param userinfoBean UserinfoBean
-     */
-    private void tranLoginUser(LoginResponse.UserinfoBean userinfoBean) {
-        if (userinfoBean != null) {
-            LoginUser loginUser = new LoginUser();
-            loginUser.token = userinfoBean.getToken();
-            loginUser.nickname = userinfoBean.getNickname();
-            loginUser.rongyun_token = userinfoBean.getRongyun_token();
-//            mSharePreferenceUtil.saveObjData("user", loginUser);
-            mBuProcessor.setLoginUser(loginUser);
-        }
-    }
 
     private void initializeInjector() {
         LoginComponent mLoginComponent = DaggerLoginComponent.builder().appComponent(getAppComponent())

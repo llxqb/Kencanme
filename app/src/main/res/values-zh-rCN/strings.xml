@@ -31,6 +31,8 @@
     <string name="CreatePersonalInfoActivity_birthday_is_empty">生日不能为空</string>
     <string name="CreatePersonalInfoActivity_address_is_empty">地址不能为空</string>
 
+    <!-- PersonalInfoUploadPhotoActivity-->
+    <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">请输入交友宣言</string>
 
 
     <!-- Activity 类 相关  返回箭头后title-->

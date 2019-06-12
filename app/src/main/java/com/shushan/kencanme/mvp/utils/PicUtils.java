@@ -1,0 +1,92 @@
+package com.shushan.kencanme.mvp.utils;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.support.annotation.NonNull;
+import android.util.Base64;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.io.ByteArrayOutputStream;
+import java.security.MessageDigest;
+
+import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
+
+public class PicUtils {
+
+    /**
+     * 图片转Base64字符串
+     */
+    public static String convertIconToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();// outputstream
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, baos);
+        byte[] appicon = baos.toByteArray();// 转为byte数组
+        return Base64.encodeToString(appicon, Base64.DEFAULT);
+    }
+
+
+
+    /**
+     *  context 上下文
+     *  uri 视频地址
+     *  imageView 设置image
+     *  frameTimeMicros 获取某一时间帧
+     */
+    public static void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros) {
+        RequestOptions requestOptions = RequestOptions.frameOf(frameTimeMicros);
+        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
+        requestOptions.transform(new BitmapTransformation() {
+            @Override
+            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+                return toTransform;
+            }
+            @Override
+            public void updateDiskCacheKey(MessageDigest messageDigest) {
+                try {
+                    messageDigest.update((context.getPackageName() + "RotateTransform").getBytes("utf-8"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
+    }
+
+
+
+    //retrofit上传文件
+    private void file_img(String path){
+//        Retrofit retrofitUpload = new Retrofit.Builder()
+//                .baseUrl(ServerConstant.DISPATCH_SERVICE)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//
+//
+//        PersonalInfoApi service = retrofitUpload.create(PersonalInfoApi.class);
+//        File file = new File(path);
+//        //设置Content-Type:application/octet-stream
+//        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+//        //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
+//        MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+//        //添加参数用户名和密码，并且是文本类型
+//        Call<ResponseData> loadCall = service.uploadVideoRequest(photo);
+//        loadCall.enqueue(new Callback<ResponseData>() {
+//            @Override
+//            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+//                Log.e("APP", response.body().resultCode+"");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+    }
+
+}

@@ -12,4 +12,7 @@ import retrofit2.http.POST;
 public interface LoginApi {
     @POST("menggoda/login")
     Observable<String> loginRequest(@Body String request);
+
+    @POST("menggoda/user")
+    Observable<String> onRequestPersonalInfo(@Body String token);
 }

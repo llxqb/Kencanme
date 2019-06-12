@@ -151,12 +151,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         startActivitys(RecommendUserInfoActivity.class);
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        //home back
-//        JzvdStd.goOnPlayOnResume();
-//    }
 
     @Override
     public void onPause() {

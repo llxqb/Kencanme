@@ -6,6 +6,10 @@ package com.shushan.kencanme.entity.request;
  */
 public class LoginRequest {
     /**
+     * google id
+     */
+    public String id;
+    /**
      * google token
      */
     public String access_token;

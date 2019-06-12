@@ -3,7 +3,9 @@ package com.shushan.kencanme.mvp.ui.activity.login;
 import android.content.Context;
 
 import com.shushan.kencanme.entity.request.LoginRequest;
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
+import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.LoginModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
@@ -45,6 +47,15 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
         mLoginView.addSubscription(disposable);
     }
 
+    @Override
+    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
+        mLoginView.showLoading("加载中...");
+        Disposable disposable = mLoginModel.onRequestPersonalInfo(personalInfoRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPersonalInfoSuccess, throwable -> mLoginView.showErrMessage(throwable),
+                        () -> mLoginView.dismissLoading());
+        mLoginView.addSubscription(disposable);
+    }
+
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(LoginResponse.class);
@@ -52,6 +63,16 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
             mLoginView.loginSuccess(response);
         } else {
             mLoginView.loginFail(responseData.errorMsg);
+        }
+    }
+
+    private void requestPersonalInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(PersonalInfoResponse.class);
+            PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+            mLoginView.personalInfoSuccess(response);
+        } else {
+            mLoginView.personalInfoFail(responseData.errorMsg);
         }
     }
 
@@ -63,8 +84,6 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
     public void onDestroy() {
         mLoginView = null;
     }
-
-
 
 
 }

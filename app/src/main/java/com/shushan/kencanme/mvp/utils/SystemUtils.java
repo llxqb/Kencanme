@@ -1,5 +1,7 @@
 package com.shushan.kencanme.mvp.utils;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
@@ -7,9 +9,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.LocationManager;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+
+import java.util.Objects;
 
 /**
  * Created by li.liu on 2018/10/16.
@@ -130,5 +136,19 @@ public class SystemUtils {
                 .getSystemService(Context.LOCATION_SERVICE);
         isOpen = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
         return isOpen;
+    }
+
+
+    /**
+     * 获取设备id
+     */
+    @SuppressLint("HardwareIds")
+    public static String getDeviceId(Context context){
+        String  deviceId = null;
+        if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            deviceId = Objects.requireNonNull(tm).getDeviceId();
+        }
+        return deviceId;
     }
 }

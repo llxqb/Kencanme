@@ -1,12 +1,14 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
-import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.network.networkapi.PersonalInfoApi;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 /**
  * Created by li.liu on 2019/05/28.
@@ -26,8 +28,17 @@ public class PersonalInfoModel {
     }
 
 
-    public Observable<ResponseData> createPersonalInfoRequest(PersonalInfoRequest request) {
+    public Observable<ResponseData> createPersonalInfoRequest(UpdatePersonalInfoRequest request) {
         return mPersonalInfoApi.createPersonalInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    public Observable<ResponseData> uploadVideoRequest(MultipartBody.Part uploadVideo) {
+        return mPersonalInfoApi.uploadVideoRequest(uploadVideo).map(mTransform::transformCommon);
+//        return null;
+    }
+
+    public Observable<ResponseData> uploadImageRequest(UploadImage uploadImage) {
+        return mPersonalInfoApi.uploadImageRequest(mGson.toJson(uploadImage)).map(mTransform::transformCommon);
     }
 
 }

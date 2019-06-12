@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMainComponent;
@@ -16,7 +15,6 @@ import com.shushan.kencanme.di.components.MainComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
@@ -102,7 +100,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     /**
      * 建立与融云服务器的连接
-     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在 {@link #init(Context)} 之后调用。</p>
+     * <p>连接服务器，在整个应用程序全局，只需要调用一次，需在 {link #init(Context)} 之后调用。</p>
      * <p>如果调用此接口遇到连接失败，SDK 会自动启动重连机制进行最多10次重连，分别是1, 2, 4, 8, 16, 32, 64, 128, 256, 512秒后。
      * 在这之后如果仍没有连接成功，还会在当检测到设备网络状态变化时再次进行重连。</p>
      *
