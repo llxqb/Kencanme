@@ -1,16 +1,25 @@
 package com.shushan.kencanme.mvp.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.shushan.kencanme.R;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
@@ -30,21 +39,23 @@ public class PicUtils {
     }
 
 
-
     /**
-     *  context 上下文
-     *  uri 视频地址
-     *  imageView 设置image
-     *  frameTimeMicros 获取某一时间帧
+     *   context 上下文
+     *   uri 视频地址
+     *   imageView 设置image
+     *   frameTimeMicros 获取某一时间帧
      */
+    @SuppressLint("CheckResult")
     public static void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros) {
         RequestOptions requestOptions = RequestOptions.frameOf(frameTimeMicros);
+        requestOptions.placeholder(R.mipmap.album_photo_loading);
         requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
         requestOptions.transform(new BitmapTransformation() {
             @Override
             protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
                 return toTransform;
             }
+
             @Override
             public void updateDiskCacheKey(MessageDigest messageDigest) {
                 try {
@@ -54,13 +65,33 @@ public class PicUtils {
                 }
             }
         });
-        Glide.with(context).load(uri).apply(requestOptions).into(imageView);
+
+        RequestListener requestListener = new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
+                float scale = (float) vw / (float) resource.getIntrinsicWidth();
+                int vh = Math.round(resource.getIntrinsicHeight() * scale);
+                params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
+                imageView.setLayoutParams(params);
+                return false;
+            }
+        };
+        Glide.with(context).load(uri).listener(requestListener).apply(requestOptions).into(imageView);
     }
 
 
-
     //retrofit上传文件
-    private void file_img(String path){
+    private void file_img(String path) {
 //        Retrofit retrofitUpload = new Retrofit.Builder()
 //                .baseUrl(ServerConstant.DISPATCH_SERVICE)
 //                .addConverterFactory(GsonConverterFactory.create())

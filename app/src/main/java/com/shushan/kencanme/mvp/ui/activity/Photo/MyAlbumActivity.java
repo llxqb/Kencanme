@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.R;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.help.DialogFactory;

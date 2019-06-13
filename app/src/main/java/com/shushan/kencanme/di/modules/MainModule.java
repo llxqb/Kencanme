@@ -12,6 +12,8 @@ import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentPresenterImpl;
 import com.shushan.kencanme.mvp.ui.activity.main.MainControl;
 import com.shushan.kencanme.mvp.ui.activity.main.MainPresenterImpl;
+import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
+import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentPresenterImpl;
 import com.shushan.kencanme.network.RetrofitUtil;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
@@ -24,7 +26,7 @@ import dagger.Provides;
 @Module
 public class MainModule {
     private final AppCompatActivity activity;
-    private  MainControl.MainView view;
+    private MainControl.MainView view;
 
     public MainModule(AppCompatActivity activity, MainControl.MainView view) {
         this.activity = activity;
@@ -74,5 +76,10 @@ public class MainModule {
         return homeFragmentPresenter;
     }
 
+    @Provides
+    @PerActivity
+    MineFragmentControl.mineFragmentPresenter providePresenterMinerFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
+        return mineFragmentPresenter;
+    }
 
 }

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMainComponent;
 import com.shushan.kencanme.di.components.MainComponent;
@@ -34,7 +35,6 @@ import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
 
-
     @BindView(R.id.main_bottom_navigation)
     BottomNavigationView mMainBottomNavigation;
     @BindView(R.id.main_viewpager)
@@ -59,14 +59,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initView() {
-//        LoginUser loginUser = (LoginUser) mSharePreferenceUtil.readObjData("user");
-//        if (loginUser==null || TextUtils.isEmpty(loginUser.token)) {
-//            startActivitys(LoginActivity.class);
-//            finish();
-//        }
-        if(!mBuProcessor.isValidLogin()){
+        if (!mBuProcessor.isValidLogin()) {
             startActivitys(LoginActivity.class);
             finish();
+        } else {
+            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
         }
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
@@ -127,7 +124,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onSuccess(String userid) {
-                Log.e("ddd", "--onSuccess" + userid);
+                Log.e("ddd", "--onSuccess");
             }
 
             /**

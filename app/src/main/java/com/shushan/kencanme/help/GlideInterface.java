@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by lei.he on 2017/7/10.
+ * Created by li.liu on 2017/7/10.
  * GlideInterface
  */
 

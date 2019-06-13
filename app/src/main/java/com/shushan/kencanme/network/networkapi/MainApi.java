@@ -10,7 +10,7 @@ import retrofit2.http.POST;
  */
 
 public interface MainApi {
-    @POST("teacher/user/login")
-    Observable<String> homeRequest(@Body String request);
+    @POST("menggoda")
+    Observable<String> onRequestInfo(@Body String request);
 
 }

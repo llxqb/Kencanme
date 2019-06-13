@@ -13,6 +13,9 @@ public interface LoginApi {
     @POST("menggoda/login")
     Observable<String> loginRequest(@Body String request);
 
+    /**
+     * 我的
+     */
     @POST("menggoda/user")
     Observable<String> onRequestPersonalInfo(@Body String token);
 }

@@ -49,7 +49,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
             UpdatePersonalInfoResponse response = (UpdatePersonalInfoResponse) responseData.parsedData;
             mPersonalInfoView.updateSuccess(response);
         } else {
-//            mCreatePersonalInfoView.loginFail(responseData.errorMsg);
+            mPersonalInfoView.updateFail(responseData.errorMsg);
         }
     }
 

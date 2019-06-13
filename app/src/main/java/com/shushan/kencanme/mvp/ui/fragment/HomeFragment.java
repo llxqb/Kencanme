@@ -10,22 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
+import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
+import com.shushan.kencanme.mvp.utils.LogUtils;
+import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.views.CircleImageView;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
 import com.shushan.kencanme.mvp.views.dialog.UseExposureDialog;
@@ -56,10 +61,20 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     ImageView homeLikeIv;
     @BindView(R.id.use_exposure_iv)
     ImageView mUseExposureIv;
-    @BindView(R.id.recommend_user_rl)
+    //----viewPager 布局
+    ImageView mViewpagerItemIv;
+    CircleImageView mRecommendUserHeadIv;
+    TextView mRecommendUserName;
+    TextView mRecommendUserSexYear;
+    TextView mRecommendUserLocation;
+    TextView mActiveTime;
     RelativeLayout mRecommendUserRl;
-    private List<ViewGroup> viewPagerResponseList = new ArrayList<>();
+    JzvdStd mJzVideo;
+    //----viewPager 布局
 
+    private List<ViewGroup> viewPagerResponseList = new ArrayList<>();
+    private List<HomeFragmentResponse.ListBean> dataList = new ArrayList<>();
+    private HomeViewPagerAdapter homeViewPagerAdapter;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
 
@@ -87,7 +102,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goChat());
         RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goLike());
         RxView.clicks(mUseExposureIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> useSuperExposure());
-        RxView.clicks(mRecommendUserRl).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goRecommendUser());
+        homeViewPagerAdapter = new HomeViewPagerAdapter(viewPagerResponseList);
+        homeViewpager.setAdapter(homeViewPagerAdapter);
 
         homeViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -96,7 +112,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
             @Override
             public void onPageSelected(int position) {
-
             }
 
             @Override
@@ -105,6 +120,87 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 JzvdStd.goOnPlayOnPause();
             }
         });
+    }
+
+
+    @Override
+    public void initData() {
+        HomeFragmentRequest homeFragmentRequest = new HomeFragmentRequest();
+        homeFragmentRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestInfo(homeFragmentRequest);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JzvdStd.goOnPlayOnPause();
+    }
+
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getInfoSuccess(HomeFragmentResponse response) {
+        LogUtils.d("response:" + new Gson().toJson(response));
+        dataList = response.getList();
+        for (HomeFragmentResponse.ListBean listBean : dataList) {
+            ViewGroup viewGroup = (ViewGroup) View.inflate(getActivity(), R.layout.viewpager_item_layout, null);
+            mViewpagerItemIv = viewGroup.findViewById(R.id.viewpager_item_iv);
+            mRecommendUserHeadIv = viewGroup.findViewById(R.id.recommend_user_head_iv);
+            mRecommendUserName = viewGroup.findViewById(R.id.recommend_user_name);
+            mRecommendUserSexYear = viewGroup.findViewById(R.id.recommend_user_sex_year);
+            mRecommendUserLocation = viewGroup.findViewById(R.id.recommend_user_location);
+            mActiveTime = viewGroup.findViewById(R.id.active_time);
+            mRecommendUserRl = viewGroup.findViewById(R.id.recommend_user_rl);
+            mJzVideo = viewGroup.findViewById(R.id.jz_video);
+            RxView.clicks(mRecommendUserRl).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goRecommendUser());
+
+            if (listBean.getCover().trim().contains(".mp4")) {
+                //视频
+                mJzVideo.setVisibility(View.VISIBLE);
+                mViewpagerItemIv.setVisibility(View.GONE);
+                mJzVideo.setUp(listBean.getCover(), "");
+                PicUtils.loadVideoScreenshot(getActivity(), listBean.getCover(), mJzVideo.thumbImageView, 0);
+            } else {
+                mJzVideo.setVisibility(View.GONE);
+                mViewpagerItemIv.setVisibility(View.VISIBLE);
+                mImageLoaderHelper.displayMatchImage(getActivity(), listBean.getCover(), mViewpagerItemIv);
+            }
+            setUserData(listBean);
+            viewPagerResponseList.add(viewGroup);
+        }
+        homeViewPagerAdapter.notifyDataSetChanged();
+
+    }
+
+
+    /**
+     * 设置推荐人信息
+     */
+    private void setUserData(HomeFragmentResponse.ListBean listBean) {
+        mRecommendUserName.setText(listBean.getNickname());
+        mImageLoaderHelper.displayImage(getActivity(), listBean.getTrait(), mRecommendUserHeadIv);
+        if (listBean.getSex() == 1) {
+            //1男2女
+            mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_male);
+        } else {
+            mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
+        }
+        String mRecommendUserSexYearValue = listBean.getAge() + " years";
+        String mActiveTimeValue = "active "+listBean.getActive_time()+" minute ago";
+        mRecommendUserSexYear.setText(mRecommendUserSexYearValue);
+        mRecommendUserLocation.setText(listBean.getCity());
+        mActiveTime.setText(mActiveTimeValue);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+
+    }
+
+    @Override
+    public void getInfoFail(String errMsg) {
+        showToast(errMsg);
     }
 
 
@@ -117,21 +213,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         commonDialog.setListener(this);
         commonDialog.setContent("Open Super free Chat?");
         commonDialog.setStyle(Constant.DIALOG_THREE);
-        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
 
     private void goLike() {
-//        HomeFragmentRequest loginRequest = new HomeFragmentRequest();
-//        loginRequest.deviceId = "868040033198091";
-//        loginRequest.mobile = "18684923583";
-//        loginRequest.password = "e10adc3949ba59abbe56e057f20f883e";
-//        loginRequest.platform = "android";
-//        mPresenter.onRequestHome(loginRequest);
-
 //        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
         BuyDialog buyDialog = BuyDialog.newInstance();
 //        buyDialog.setContent(content);
-        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
+        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
     }
 
     /**
@@ -141,7 +230,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         //检查是否有超级曝光次数
 //        checkIsExposureTime();
         UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
-        DialogFactory.showDialogFragment(getActivity().getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
+        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
     }
 
     /**
@@ -152,46 +241,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        JzvdStd.goOnPlayOnPause();
-    }
-
-    @Override
-    public void initData() {
-        for (int i = 0; i < 2; i++) {
-            ViewGroup viewGroup = (ViewGroup) View.inflate(getActivity(), R.layout.viewpager_item_layout, null);
-            ImageView viewpagerItemIv = viewGroup.findViewById(R.id.viewpager_item_iv);
-            JzvdStd jzvdStd = viewGroup.findViewById(R.id.jz_video);
-            if (i == 0) {
-                jzvdStd.setUp("http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4"
-                        , "饺子闭眼睛");
-                Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(jzvdStd.thumbImageView);
-                jzvdStd.setVisibility(View.VISIBLE);
-                viewpagerItemIv.setVisibility(View.GONE);
-            } else {
-                jzvdStd.setVisibility(View.GONE);
-                viewpagerItemIv.setVisibility(View.VISIBLE);
-                Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(viewpagerItemIv);
-            }
-            viewPagerResponseList.add(viewGroup);
-        }
-        HomeViewPagerAdapter adapter = new HomeViewPagerAdapter(getActivity(), viewPagerResponseList);
-        homeViewpager.setAdapter(adapter);
-    }
-
-
-    @Override
-    public void getInfoSuccess(HomeFragmentResponse response) {
-
-    }
-
-    @Override
-    public void showErrMessage(Throwable e) {
-
-    }
-
     private void initializeInjector() {
         DaggerHomeFragmentComponent.builder().appComponent(((KencanmeApp) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
@@ -199,8 +248,5 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 .build().inject(this);
     }
 
-    @Override
-    public void commonDialogBtnOkListener() {
 
-    }
 }

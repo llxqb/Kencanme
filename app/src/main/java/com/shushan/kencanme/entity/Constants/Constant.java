@@ -1,4 +1,4 @@
-package com.shushan.kencanme.entity;
+package com.shushan.kencanme.entity.Constants;
 
 /**
  * Created by li.liu on 2017/12/18.

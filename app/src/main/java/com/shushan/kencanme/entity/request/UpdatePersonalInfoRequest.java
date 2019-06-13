@@ -16,8 +16,8 @@ public class UpdatePersonalInfoRequest implements Parcelable{
     public String declaration;
     //头像
     public String trait;
-    public String height;
-    public String weight;
+    public int height;
+    public int weight;
     public String bust;
     //职业
     public String occupation;
@@ -39,21 +39,21 @@ public class UpdatePersonalInfoRequest implements Parcelable{
     /**
      * 推送性别 0不限1男2女
      */
-    public String pushing_gender;
+    public int pushing_gender;
     /**
      * 性别 1男2女
      */
-    public String sex;
+    public int sex;
 
 
-    public UpdatePersonalInfoRequest(Parcel in) {
+    protected UpdatePersonalInfoRequest(Parcel in) {
         token = in.readString();
         nickname = in.readString();
         cover = in.readString();
         declaration = in.readString();
         trait = in.readString();
-        height = in.readString();
-        weight = in.readString();
+        height = in.readInt();
+        weight = in.readInt();
         bust = in.readString();
         occupation = in.readString();
         birthday = in.readString();
@@ -62,8 +62,34 @@ public class UpdatePersonalInfoRequest implements Parcelable{
         label = in.readString();
         pushing_small_age = in.readString();
         pushing_large_age = in.readString();
-        pushing_gender = in.readString();
-        sex = in.readString();
+        pushing_gender = in.readInt();
+        sex = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(token);
+        dest.writeString(nickname);
+        dest.writeString(cover);
+        dest.writeString(declaration);
+        dest.writeString(trait);
+        dest.writeInt(height);
+        dest.writeInt(weight);
+        dest.writeString(bust);
+        dest.writeString(occupation);
+        dest.writeString(birthday);
+        dest.writeString(city);
+        dest.writeString(contact);
+        dest.writeString(label);
+        dest.writeString(pushing_small_age);
+        dest.writeString(pushing_large_age);
+        dest.writeInt(pushing_gender);
+        dest.writeInt(sex);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UpdatePersonalInfoRequest> CREATOR = new Creator<UpdatePersonalInfoRequest>() {
@@ -77,32 +103,4 @@ public class UpdatePersonalInfoRequest implements Parcelable{
             return new UpdatePersonalInfoRequest[size];
         }
     };
-
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(token);
-        dest.writeString(nickname);
-        dest.writeString(cover);
-        dest.writeString(declaration);
-        dest.writeString(trait);
-        dest.writeString(height);
-        dest.writeString(weight);
-        dest.writeString(bust);
-        dest.writeString(occupation);
-        dest.writeString(birthday);
-        dest.writeString(city);
-        dest.writeString(contact);
-        dest.writeString(label);
-        dest.writeString(pushing_small_age);
-        dest.writeString(pushing_large_age);
-        dest.writeString(pushing_gender);
-        dest.writeString(sex);
-    }
 }

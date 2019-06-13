@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 
 import javax.inject.Inject;
 

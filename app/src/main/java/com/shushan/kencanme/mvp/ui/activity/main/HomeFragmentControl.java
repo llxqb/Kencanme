@@ -13,12 +13,13 @@ import com.shushan.kencanme.mvp.presenter.Presenter;
 public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
         void getInfoSuccess(HomeFragmentResponse response);
+        void getInfoFail(String errMsg);
 
     }
 
     public interface homeFragmentPresenter extends Presenter<HomeView> {
         //这个名字得改  home可能不止一个接口
-        void onRequestHome(HomeFragmentRequest homeFragmentRequest);
+        void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
     }
 
 

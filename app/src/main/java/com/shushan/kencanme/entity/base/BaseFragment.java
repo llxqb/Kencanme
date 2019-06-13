@@ -11,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.bumptech.glide.load.HttpException;
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.GoogleLoginHelper;
@@ -18,6 +20,7 @@ import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
 
+import java.net.ConnectException;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -44,7 +47,7 @@ public abstract class BaseFragment extends Fragment {
 
     private CompositeDisposable mDisposable;
     private Dialog mProgressDialog;
-    final IntentFilter mFilter = new IntentFilter();
+   protected final IntentFilter mFilter = new IntentFilter();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,23 +67,22 @@ public abstract class BaseFragment extends Fragment {
         }
     };
 
-    void onReceivePro(Context context, Intent intent) {
+   public void onReceivePro(Context context, Intent intent) {
     }
 
-    void addFilter() {
+    public void addFilter() {
     }
 
-//    public void showErrMessage(Throwable e) {
-//        LogUtils.i("e=" + e.toString());
-//        dismissLoading();
-//        String mErrMessage;
-//        if (e instanceof HttpException || e instanceof ConnectException) {
-//            mErrMessage = getString(R.string.text_check_internet);
-//        } else {
-//            mErrMessage = getString(R.string.text_wait_try);
-//        }
-//        showToast(mErrMessage);
-//    }
+    public void showErrMessage(Throwable e) {
+        dismissLoading();
+        String mErrMessage;
+        if (e instanceof HttpException || e instanceof ConnectException) {
+            mErrMessage = getString(R.string.text_check_internet);
+        } else {
+            mErrMessage = getString(R.string.text_wait_try);
+        }
+        showToast(mErrMessage);
+    }
 
     /**
      * 启动activity

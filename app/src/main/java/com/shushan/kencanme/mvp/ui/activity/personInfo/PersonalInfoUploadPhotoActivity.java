@@ -23,7 +23,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerPersonalInfoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.PersonalInfoModule;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
@@ -97,7 +97,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void initView() {
         mToken = mBuProcessor.getToken();
-        Log.e("ddd", "mToken:" + mToken);
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
         if (getIntent() != null) {
             mPersonalInfoRequest = getIntent().getParcelableExtra("personalInfoRequest");
@@ -142,6 +141,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
      */
     private void showVideoDialog() {
         //弹出框框
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select video or photo");
         String[] choices = {"Video", "Photo"};

@@ -1,13 +1,26 @@
 package com.shushan.kencanme.help;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.mvp.utils.TranTools;
 
@@ -30,9 +43,9 @@ public class ImageLoaderHelper extends GlideLoader {
     public void displayImage(Context context, Object path, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.album_photo_loading)
                 .skipMemoryCache(true)
-//                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.album_photo_loading)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -42,10 +55,10 @@ public class ImageLoaderHelper extends GlideLoader {
     public void displayImage(Context context, Object path, ImageView imageView, int res) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.album_photo_loading)
                 .skipMemoryCache(true)
                 .error(res)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.album_photo_loading)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -55,9 +68,9 @@ public class ImageLoaderHelper extends GlideLoader {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, 8)))//设置圆角大小
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.ic_launcher)
+                .error(R.mipmap.album_photo_loading)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.album_photo_loading)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -68,8 +81,8 @@ public class ImageLoaderHelper extends GlideLoader {
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, size)))//设置圆角大小
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.ic_launcher)
-                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.album_photo_loading)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -83,43 +96,60 @@ public class ImageLoaderHelper extends GlideLoader {
                 )// radius 越大越模糊
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.ic_launcher)
-                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.album_photo_loading)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
+
+    //设置背景图片
+    public void displayBackgroundImage(Context context, Object path, View imageView) {
+        Glide.with(context).asBitmap().load(path)//签到整体 背景
+                .into(new SimpleTarget<Bitmap>(180, 180) {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Drawable drawable = new BitmapDrawable(resource);
+                        imageView.setBackground(drawable);    //设置背景
+                    }
+                });
+    }
+
+    /**
+     * 设置自适应图片
+     */
     @Override
     public void displayMatchImage(Context context, Object path, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.mipmap.album_photo_loading)
+                .skipMemoryCache(true)
+                .placeholder(R.mipmap.album_photo_loading)
+                .dontAnimate();
 
-//        Glide.with(context)
-//                .load((String) path)
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .listener(new RequestListener<String, GlideDrawable>() {
-//                    @Override
-//                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                        if (imageView == null) {
-//                            return false;
-//                        }
-//                        if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
-//                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//                        }
-//                        ViewGroup.LayoutParams params = imageView.getLayoutParams();
-//                        int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
-//                        float scale = (float) vw / (float) resource.getIntrinsicWidth();
-//                        int vh = Math.round(resource.getIntrinsicHeight() * scale);
-//                        params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
-//                        imageView.setLayoutParams(params);
-//                        return false;
-//                    }
-//                })
-//                .placeholder(R.mipmap.ic_launcher)
-//                .error(R.mipmap.ic_launcher)
-//                .into(imageView);
+        RequestListener requestListener = new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
+                float scale = (float) vw / (float) resource.getIntrinsicWidth();
+                int vh = Math.round(resource.getIntrinsicHeight() * scale);
+                params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
+                imageView.setLayoutParams(params);
+                return false;
+            }
+        };
+        Glide.with(context).load(path).listener(requestListener)
+                .apply(options).into(imageView);
     }
+
+
 }

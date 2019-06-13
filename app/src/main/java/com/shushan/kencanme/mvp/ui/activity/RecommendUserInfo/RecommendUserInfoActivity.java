@@ -16,7 +16,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerRecommendUserInfoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RecommendUserInfoModule;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.DialogFactory;

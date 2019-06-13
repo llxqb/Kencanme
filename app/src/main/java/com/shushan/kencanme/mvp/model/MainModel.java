@@ -2,7 +2,6 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
-import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
 import javax.inject.Inject;
@@ -27,8 +26,8 @@ public class MainModel {
     }
 
 
-    public Observable<ResponseData> bannerRequest(HomeFragmentRequest request) {
-        return mMainApi.homeRequest(mGson.toJson(request)).map(mTransform::transformCommon);//会员接口
+    public Observable<ResponseData> onRequestInfo(HomeFragmentRequest request) {
+        return mMainApi.onRequestInfo(mGson.toJson(request)).map(mTransform::transformCommon);//会员接口
     }
 
 }

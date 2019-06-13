@@ -17,7 +17,7 @@ import com.shushan.kencanme.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.di.components.LoginComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.LoginModule;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
@@ -25,6 +25,7 @@ import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
+import com.shushan.kencanme.mvp.utils.LoginUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.SystemUtils;
 import com.shushan.kencanme.mvp.views.dialog.LoginDialog;
@@ -156,7 +157,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
         //保存用户信息
-        mBuProcessor.setLoginUser(personalInfoResponse);
+        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity
         if (mBuProcessor.isFinishFirstWrite()) {
             startActivitys(MainActivity.class);

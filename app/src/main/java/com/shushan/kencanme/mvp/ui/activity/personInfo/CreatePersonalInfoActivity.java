@@ -104,7 +104,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
                     //开始创建信息接口
                     UpdatePersonalInfoRequest request = new UpdatePersonalInfoRequest();
                     request.nickname = mUserNice.getText().toString();
-                    request.sex = mMaleRb.isChecked() ? "1" : "2";// 1男2女
+                    request.sex = mMaleRb.isChecked() ? 1 : 2;// 1男2女
                     request.birthday = mBirthday.getText().toString();
                     request.city = mAddress.getText().toString();
                     request.token = mToken;

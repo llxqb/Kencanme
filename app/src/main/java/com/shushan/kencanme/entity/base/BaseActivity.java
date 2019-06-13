@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bumptech.glide.load.HttpException;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.AppComponent;
@@ -21,6 +22,8 @@ import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
+
+import java.net.ConnectException;
 
 import javax.inject.Inject;
 
@@ -107,17 +110,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-//    public void showErrMessage(Throwable e) {
-//        LogUtils.i("e=" + e.toString());
-//        dismissLoading();
-//        String mErrMessage;
-//        if (e instanceof HttpException || e instanceof ConnectException) {
-//            mErrMessage = getString(R.string.text_check_internet);
-//        } else {
-//            mErrMessage = getString(R.string.text_wait_try);
-//        }
-//        showToast(mErrMessage);
-//    }
+    public void showErrMessage(Throwable e) {
+        dismissLoading();
+        String mErrMessage;
+        if (e instanceof HttpException || e instanceof ConnectException) {
+            mErrMessage = getString(R.string.text_check_internet);
+        } else {
+            mErrMessage = getString(R.string.text_wait_try);
+        }
+        showToast(mErrMessage);
+    }
 
     public void showToast(String message) {
         ToastUtil.showToast(getContext(), message);
@@ -126,9 +128,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showLoading() {
     }
 
-    public void showErrMessage(Throwable e){
-
-    }
 
     public void showLoading(String msg) {
         dismissLoading();

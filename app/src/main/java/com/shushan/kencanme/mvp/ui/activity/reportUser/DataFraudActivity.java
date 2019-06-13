@@ -3,7 +3,6 @@ package com.shushan.kencanme.mvp.ui.activity.reportUser;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -18,8 +17,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.FraudPhotoAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.views.dialog.PhotoDialog;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -35,6 +36,7 @@ import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +45,7 @@ import butterknife.OnClick;
 /**
  * 举报头像资料作假
  */
-public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
+public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PhotoDialog.PhotoDialogListener {
     @BindView(R.id.back)
     ImageView mBack;
     @BindView(R.id.title_name)
@@ -185,25 +187,10 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
      */
     private void showDialog() {
         //弹出框框
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog);
-        builder.setTitle("选择照片");
-        String[] choices = {"拍照", "从相机里选择"};
-        builder.setItems(choices, (dialog, which) -> {
-            switch (which) {
-                case 0:
-                    //拍照
-                    takePhoto.onPickFromCapture(uri);
-                    break;
-                case 1:
-                    if (maxPicNum > 0) {
-                        takePhoto.onPickMultiple(maxPicNum);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        });
-        builder.show();
+        PhotoDialog photoDialog = PhotoDialog.newInstance();
+        photoDialog.setListener(this);
+        photoDialog.setData(getResources().getString(R.string.PhotoDialog_title),getResources().getString(R.string.PhotoDialog_photo),getResources().getString(R.string.PhotoDialog_album));
+        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 
     @Override
@@ -253,4 +240,15 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         }
     };
 
+    @Override
+    public void photoDialogBtnOkListener() {
+        takePhoto.onPickFromCapture(uri);
+    }
+
+    @Override
+    public void albumDialogBtnOkListener() {
+        if (maxPicNum > 0) {
+            takePhoto.onPickMultiple(maxPicNum);
+        }
+    }
 }

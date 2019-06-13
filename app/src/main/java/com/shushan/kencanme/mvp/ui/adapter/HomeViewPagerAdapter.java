@@ -1,12 +1,10 @@
 package com.shushan.kencanme.mvp.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,11 +12,9 @@ import java.util.List;
  * Desciption: //homeFragment viewpager
  */
 public class HomeViewPagerAdapter extends PagerAdapter {
-    Context mContext;
-    private List<ViewGroup> mViewPagerResponseList = new ArrayList<>();
+    private List<ViewGroup> mViewPagerResponseList;
 
-    public HomeViewPagerAdapter(Context context, List<ViewGroup> viewPagerResponseList) {
-        mContext = context;
+    public HomeViewPagerAdapter( List<ViewGroup> viewPagerResponseList) {
         mViewPagerResponseList = viewPagerResponseList;
     }
 
@@ -32,8 +28,9 @@ public class HomeViewPagerAdapter extends PagerAdapter {
         return view == o;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = mViewPagerResponseList.get(position);
 //        View view = LayoutInflater.from(mContext).inflate(R.layout.viewpager_item_layout, null);
         container.addView(view);
@@ -41,7 +38,7 @@ public class HomeViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, Object object) {
         container.removeView(mViewPagerResponseList.get(position));
     }
 }

@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
-import com.shushan.kencanme.entity.Constant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.views.dialog.BaseDialogFragment;
 

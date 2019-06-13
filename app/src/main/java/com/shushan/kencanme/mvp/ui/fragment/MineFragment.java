@@ -1,33 +1,47 @@
 package com.shushan.kencanme.mvp.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerMineFragmentComponent;
+import com.shushan.kencanme.di.modules.MainModule;
+import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumActivity;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditContactWayActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditLabelActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditPersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyAlbumAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +100,21 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.label_recycler_view)
     RecyclerView mLabelRecyclerView;
     Unbinder unbinder;
+    //个人资料
+    @BindView(R.id.personal_info_ll)
+    LinearLayout mPersonalInfoLl;
+    @BindView(R.id.avator)
+    CircleImageView mAvator;
+    @BindView(R.id.username)
+    TextView mUsername;
+    @BindView(R.id.sex_year_tv)
+    TextView mSexYearTv;
+    @BindView(R.id.svip_icon)
+    ImageView mSVipIcon;
+    @BindView(R.id.desc_tv)
+    TextView mDescTv;
+    //我的照片
+    private List<PhotoBean> photoBeanList = new ArrayList<>();
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -98,51 +127,113 @@ public class MineFragment extends BaseFragment {
         //设置有图片状态栏
         StatusBarUtil.setTransparentForImageView(getActivity(), null);
         unbinder = ButterKnife.bind(this, view);
+        initializeInjector();
         initView();
         initData();
         return view;
     }
 
+
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
+            setUserInfo();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_USER_INFO);
+    }
+
     @Override
     public void initView() {
-        List<PhotoBean> photoBeanList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            if (i % 3 == 0) {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = true;
-                photoBean.picType = 0;
-                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-                photoBeanList.add(photoBean);
-            } else if (i % 3 == 1) {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = false;
-                photoBean.picType = 1;
-                photoBean.picPath = "http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4";
-                photoBeanList.add(photoBean);
-            } else {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = true;
-                photoBean.picType = 2;
-                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-                photoBeanList.add(photoBean);
-            }
-        }
+//        for (int i = 0; i < 7; i++) {
+//            if (i % 3 == 0) {
+//                PhotoBean photoBean = new PhotoBean();
+//                photoBean.isPic = true;
+//                photoBean.picType = 0;
+//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
+//                photoBeanList.add(photoBean);
+//            } else if (i % 3 == 1) {
+//                PhotoBean photoBean = new PhotoBean();
+//                photoBean.isPic = false;
+//                photoBean.picType = 1;
+//                photoBean.picPath = "http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4";
+//                photoBeanList.add(photoBean);
+//            } else {
+//                PhotoBean photoBean = new PhotoBean();
+//                photoBean.isPic = true;
+//                photoBean.picType = 2;
+//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
+//                photoBeanList.add(photoBean);
+//            }
+//        }
+        photoBeanList.add(null);
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         MyAlbumAdapter myAlbumAdapter = new MyAlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(myAlbumAdapter);
+
+        mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.photo_delete:
+                        myAlbumAdapter.remove(position);
+                        myAlbumAdapter.notifyDataSetChanged();
+                        break;
+                    case R.id.photo_item_rl:
+                        if (position == 0) {
+                            startActivitys(UploadPhotoActivity.class);
+                        } else {
+                            showToast("" + position);
+                            //查看大图
+                        }
+                        break;
+                }
+            }
+        });
     }
 
     @Override
     public void initData() {
-
+        setUserInfo();
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    /**
+     * 设置用户信息
+     */
+    private void setUserInfo() {
+        LoginUser mLoginUser = mBuProcessor.getLoginUser();
+        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator);
+        mUsername.setText(mLoginUser.nickname);
+        if (mLoginUser.sex == 1) {
+            mSexYearTv.setBackgroundResource(R.mipmap.message_gender_male);
+        } else {
+            mSexYearTv.setBackgroundResource(R.mipmap.message_gender_female);
+        }
+        String mSexYearTvValue = mLoginUser.age + " years";
+        mSexYearTv.setText(mSexYearTvValue);
+        //svip不为0显示图标
+        if (mLoginUser.svip == 0) {
+            mSVipIcon.setVisibility(View.GONE);
+            //不是svip 判断是否是vip
+            if (mLoginUser.vip == 1) {
+                mVipTimeTv.setText(mLoginUser.vip_time);
+            } else {
+                mVipTimeTv.setText("Become VIP");
+            }
+        } else {
+            mSVipIcon.setVisibility(View.VISIBLE);
+            mVipTimeTv.setText("Hi~SVIP");
+        }
+        mDescTv.setText(mLoginUser.declaration);
+        mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl);
+        mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
     }
+
 
     @OnClick({R.id.mine_set_up, R.id.line_customer, R.id.edit_personal_info_fab, R.id.barn_hi_beans, R.id.recharge, R.id.vip_time_rl, R.id.album_tv,
             R.id.personal_info_tv, R.id.contact_way_tv, R.id.label_tv})
@@ -182,4 +273,18 @@ public class MineFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    private void initializeInjector() {
+        DaggerMineFragmentComponent.builder().appComponent(((KencanmeApp) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
+                .mainModule(new MainModule((AppCompatActivity) getActivity()))
+//                .mineFragmentModule(new MineFragmentModule(this))
+                .build().inject(this);
+    }
+
 }

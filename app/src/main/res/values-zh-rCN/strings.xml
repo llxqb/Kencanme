@@ -1,17 +1,17 @@
 <resources>
-    <string name="this_is_desc">This is a description</string>
+    <!--网络相关 -->
+    <string name="text_check_internet">请检查网络</string>
+    <string name="text_wait_try">请稍后重试</string>
 
+    <!-- app相关-->
+    <string name="this_is_desc">This is a description</string>
     <string name="app_name">Kencanme</string>
-    <string name="main_bottom_home">首页</string>
-    <string name="main_bottom_message">消息</string>
-    <string name="main_bottom_mine">我的</string>
     <string name="submit">Submit</string>
 
-    <!-- dialog-->
+    <!-- dialog 相关-->
     <string name="dialog_sure">确定</string>
     <string name="dialog_cancal">取消</string>
     <string name="dialog_style2_hint">About VIP</string>
-
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->
@@ -20,19 +20,31 @@
     <!-- UseExposureDialog-->
     <string name="use_exposure_dialog_hint">number of times</string>
     <string name="use_exposure_dialog_use">Use once</string>
-
     <string name="album_vip_view">VIP can view</string>
     <string name="album_hi_beans_view">Hi-beans photo</string>
+    <!--PhotoDialog -->
+    <string name="PhotoDialog_title">请选择</string>
+    <string name="PhotoDialog_photo">拍照</string>
+    <string name="PhotoDialog_album">从相册中选取</string>
 
+
+    <!--Activity 相关 -->
+
+    <!--MainActivity -->
+    <string name="main_bottom_home">首页</string>
+    <string name="main_bottom_message">消息</string>
+    <string name="main_bottom_mine">我的</string>
 
     <!-- CreatePersonalInfoActivity-->
+    <!--Empty -->
     <string name="CreatePersonalInfoActivity_nice_is_empty">昵称不能为空</string>
     <string name="CreatePersonalInfoActivity_sex_is_empty">性别不能为空</string>
     <string name="CreatePersonalInfoActivity_birthday_is_empty">生日不能为空</string>
     <string name="CreatePersonalInfoActivity_address_is_empty">地址不能为空</string>
-
-    <!-- PersonalInfoUploadPhotoActivity-->
     <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">请输入交友宣言</string>
+    <!-- app hint语句 -->
+    <string name="app_nice_hint">请输入昵称</string>
+
 
 
     <!-- Activity 类 相关  返回箭头后title-->
@@ -47,4 +59,5 @@
     <string name="MessageReminderActivity_title">Message reminder</string>
     <string name="ClearCacheActivity_title">Clear cache</string>
     <string name="FeedbackProblemActivity_title">Feedback problem</string>
+
 </resources>
