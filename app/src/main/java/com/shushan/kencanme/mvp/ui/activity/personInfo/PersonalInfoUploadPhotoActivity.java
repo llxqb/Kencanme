@@ -1,7 +1,6 @@
 package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +26,10 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.PicUtils;
+import com.shushan.kencanme.mvp.views.dialog.PhotoDialog;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -42,6 +42,7 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -57,7 +58,7 @@ import okhttp3.RequestBody;
 /**
  * 上传照片
  */
-public class PersonalInfoUploadPhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PersonalInfoControl.PersonalInfoView {
+public class PersonalInfoUploadPhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PersonalInfoControl.PersonalInfoView,PhotoDialog.PhotoDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -141,26 +142,12 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
      */
     private void showVideoDialog() {
         //弹出框框
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select video or photo");
-        String[] choices = {"Video", "Photo"};
-        builder.setItems(choices, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        //打开视频
-                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, 100);
-                        break;
-                    case 1:
-                        takePhoto.onPickFromGallery();
-                }
-            }
-        });
-        builder.show();
+        PhotoDialog photoDialog = PhotoDialog.newInstance();
+        photoDialog.setListener(this);
+        photoDialog.setData("Select video or photo", "Video", "Photo");
+        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -290,6 +277,11 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     }
 
+    @Override
+    public void updateMyAlbumSuccess(String msg) {
+
+    }
+
     public static void start(Context context, UpdatePersonalInfoRequest personalInfoRequest) {
         Intent intent = new Intent(context, PersonalInfoUploadPhotoActivity.class);
         intent.putExtra("personalInfoRequest", personalInfoRequest);
@@ -300,5 +292,18 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
                 .personalInfoModule(new PersonalInfoModule(PersonalInfoUploadPhotoActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+
+    @Override
+    public void photoDialogBtnOkListener() {
+        //打开视频
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void albumDialogBtnOkListener() {
+        takePhoto.onPickFromGallery();
     }
 }

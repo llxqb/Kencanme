@@ -11,8 +11,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.Constant;
-import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.MyAlbumAdapter;
 import com.shushan.kencanme.mvp.views.CommonDialog;
@@ -32,7 +32,7 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
     TextView mTitleName;
     @BindView(R.id.album_recycler_view)
     RecyclerView mAlbumRecyclerView;
-    List<PhotoBean> photoBeanList;
+    List<UpdateAlbumRequest> photoBeanList;
     MyAlbumAdapter myAlbumAdapter;
 
     @Override
@@ -80,27 +80,27 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
 
     @Override
     public void initData() {
-        for (int i = 0; i < 7; i++) {
-            if (i % 3 == 0) {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = true;
-                photoBean.picType = 0;
-                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-                photoBeanList.add(photoBean);
-            } else if (i % 3 == 1) {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = false;
-                photoBean.picType = 1;
-                photoBean.picPath = "http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4";
-                photoBeanList.add(photoBean);
-            } else {
-                PhotoBean photoBean = new PhotoBean();
-                photoBean.isPic = true;
-                photoBean.picType = 2;
-                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-                photoBeanList.add(photoBean);
-            }
-        }
+//        for (int i = 0; i < 7; i++) {
+//            if (i % 3 == 0) {
+//                UpdateAlbumRequest photoBean = new UpdateAlbumRequest();
+//                photoBean.isVideo = false;
+//                photoBean.picType = 0;
+//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
+//                photoBeanList.add(photoBean);
+//            } else if (i % 3 == 1) {
+//                PhotoBean photoBean = new PhotoBean();
+//                photoBean.isVideo = true;
+//                photoBean.picType = 1;
+//                photoBean.picPath = "http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4";
+//                photoBeanList.add(photoBean);
+//            } else {
+//                PhotoBean photoBean = new PhotoBean();
+//                photoBean.isVideo = false;
+//                photoBean.picType = 2;
+//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
+//                photoBeanList.add(photoBean);
+//            }
+//        }
 //        myAlbumAdapter.addData(photoBeanList);
 
     }

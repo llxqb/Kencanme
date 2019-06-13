@@ -51,6 +51,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -111,6 +112,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditMakeFriendsInfoActivity_title));
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
@@ -327,6 +329,11 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void uploadImageFail(String msg) {
         showToast(msg);
+    }
+
+    @Override
+    public void updateMyAlbumSuccess(String msg) {
+
     }
 
 

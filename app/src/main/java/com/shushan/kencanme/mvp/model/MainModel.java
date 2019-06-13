@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
+import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
 import javax.inject.Inject;
@@ -26,8 +27,14 @@ public class MainModel {
     }
 
 
+    //请求首页数据
     public Observable<ResponseData> onRequestInfo(HomeFragmentRequest request) {
-        return mMainApi.onRequestInfo(mGson.toJson(request)).map(mTransform::transformCommon);//会员接口
+        return mMainApi.onRequestInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    //请求我的相册数据
+    public Observable<ResponseData> onRequestMyAlbum(MyAlbumRequest request) {
+        return mMainApi.onRequestMyAlbum(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

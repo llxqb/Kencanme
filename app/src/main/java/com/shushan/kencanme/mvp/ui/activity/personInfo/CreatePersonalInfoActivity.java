@@ -197,6 +197,11 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
 
     }
 
+    @Override
+    public void updateMyAlbumSuccess(String msg) {
+
+    }
+
     private void initializeInjector() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
                 .personalInfoModule(new PersonalInfoModule(CreatePersonalInfoActivity.this, this))

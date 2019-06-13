@@ -63,7 +63,6 @@ public class PersonalInfoResponse implements Serializable{
     private String token;
     private int age;
     private int forbidden;
-    private String pushing_age;
     /**
      * 最小推送年龄
      */
@@ -222,14 +221,6 @@ public class PersonalInfoResponse implements Serializable{
 
     public void setForbidden(int forbidden) {
         this.forbidden = forbidden;
-    }
-
-    public String getPushing_age() {
-        return pushing_age;
-    }
-
-    public void setPushing_age(String pushing_age) {
-        this.pushing_age = pushing_age;
     }
 
     public int getPushing_gender() {

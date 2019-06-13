@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
 
+import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
@@ -16,15 +17,16 @@ import okhttp3.MultipartBody;
 public class PersonalInfoControl {
     public interface PersonalInfoView extends LoadDataView {
         void updateSuccess(UpdatePersonalInfoResponse response);
-
         void updateFail(String errorMsg);
 
         void uploadVideoSuccess(String videoPath);
-
         void uploadVideoFail(String msg);
-        void uploadImageSuccess(String picPath);
 
+        void uploadImageSuccess(String picPath);
         void uploadImageFail(String msg);
+
+
+        void updateMyAlbumSuccess(String msg);
 
     }
 
@@ -35,6 +37,8 @@ public class PersonalInfoControl {
         void uploadVideo(MultipartBody.Part uploadVideo);
         //上传图片
         void uploadImage(UploadImage uploadImage);
+        //我的相册增加、修改
+        void updateMyAlbum(UpdateAlbumRequest updateAlbumRequest);
 
     }
 

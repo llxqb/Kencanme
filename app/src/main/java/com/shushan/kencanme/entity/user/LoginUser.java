@@ -36,7 +36,6 @@ public class LoginUser  implements Serializable {
     public String token;
     public int age;
     public int forbidden;
-    public String pushing_age;
     /**
      * 最小推送年龄
      */

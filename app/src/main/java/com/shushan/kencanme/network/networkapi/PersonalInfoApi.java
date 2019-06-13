@@ -13,6 +13,9 @@ import retrofit2.http.Part;
  */
 
 public interface PersonalInfoApi {
+    /**
+     * 更新用户资料
+     */
     @POST("menggoda/user/setuserinfo")
     Observable<String> createPersonalInfoRequest(@Body String request);
 
@@ -28,7 +31,12 @@ public interface PersonalInfoApi {
      */
     @POST("menggoda/upload")
     Observable<String> uploadImageRequest(@Body String request);
-//    @Multipart
-//    @POST("menggoda/upload")
-//    Observable<String>uploadImageRequest(@Part("dir") RequestBody dir, @Part MultipartBody.Part file);
+
+    /**
+     * 增加、修改 我的相册
+     */
+    @POST("menggoda/user/album_add")
+    Observable<String> updateMyAlbum(@Body String request);
+
+
 }

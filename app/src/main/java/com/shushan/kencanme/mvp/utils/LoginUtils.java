@@ -30,7 +30,6 @@ public class LoginUtils {
         loginUser.token = personalInfoResponse.getToken();
         loginUser.age = personalInfoResponse.getAge();
         loginUser.forbidden = personalInfoResponse.getForbidden();
-//        loginUser.pushing_age = personalInfoResponse.getPushing_age();
         loginUser.pushing_small_age = personalInfoResponse.pushing_small_age;
         loginUser.pushing_large_age = personalInfoResponse.pushing_large_age;
         loginUser.pushing_gender = personalInfoResponse.getPushing_gender();

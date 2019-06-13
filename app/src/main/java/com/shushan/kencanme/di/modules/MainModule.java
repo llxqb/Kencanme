@@ -78,7 +78,7 @@ public class MainModule {
 
     @Provides
     @PerActivity
-    MineFragmentControl.mineFragmentPresenter providePresenterMinerFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
+    MineFragmentControl.mineFragmentPresenter providePresenterMineFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
         return mineFragmentPresenter;
     }
 

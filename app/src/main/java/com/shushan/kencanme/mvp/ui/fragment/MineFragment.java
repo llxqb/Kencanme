@@ -22,26 +22,32 @@ import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMineFragmentComponent;
 import com.shushan.kencanme.di.modules.MainModule;
+import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
-import com.shushan.kencanme.entity.PhotoBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
+import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditContactWayActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditLabelActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditPersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.mvp.ui.adapter.MyAlbumAdapter;
+import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
+import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,8 +59,7 @@ import butterknife.Unbinder;
  * 我的
  */
 
-public class MineFragment extends BaseFragment {
-
+public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
     @BindView(R.id.mine_set_up)
     ImageView mMineSetUp;
     @BindView(R.id.line_customer)
@@ -114,7 +119,11 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.desc_tv)
     TextView mDescTv;
     //我的照片
-    private List<PhotoBean> photoBeanList = new ArrayList<>();
+    private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
+    private AlbumAdapter mAlbumAdapter;
+
+    @Inject
+    MineFragmentControl.mineFragmentPresenter mPresenter;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -133,11 +142,15 @@ public class MineFragment extends BaseFragment {
         return view;
     }
 
-
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
             setUserInfo();
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM)) {
+            //更新我的相册
+//            UpdateAlbumRequest updateAlbumRequest = intent.getParcelableExtra("updateAlbumRequest");
+//            photoBeanList.add(updateAlbumRequest);
+//            mAlbumAdapter.notifyDataSetChanged();
         }
         super.onReceivePro(context, intent);
     }
@@ -146,50 +159,32 @@ public class MineFragment extends BaseFragment {
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_USER_INFO);
+        mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM);
     }
 
     @Override
     public void initView() {
-//        for (int i = 0; i < 7; i++) {
-//            if (i % 3 == 0) {
-//                PhotoBean photoBean = new PhotoBean();
-//                photoBean.isPic = true;
-//                photoBean.picType = 0;
-//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-//                photoBeanList.add(photoBean);
-//            } else if (i % 3 == 1) {
-//                PhotoBean photoBean = new PhotoBean();
-//                photoBean.isPic = false;
-//                photoBean.picType = 1;
-//                photoBean.picPath = "http://tb-video.bdstatic.com/tieba-smallvideo-transcode/2148489_1c9d8082c70caa732fc0648a21be383c_1.mp4";
-//                photoBeanList.add(photoBean);
-//            } else {
-//                PhotoBean photoBean = new PhotoBean();
-//                photoBean.isPic = true;
-//                photoBean.picType = 2;
-//                photoBean.picPath = "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png";
-//                photoBeanList.add(photoBean);
-//            }
-//        }
         photoBeanList.add(null);
-        mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        MyAlbumAdapter myAlbumAdapter = new MyAlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
-        mAlbumRecyclerView.setAdapter(myAlbumAdapter);
-
+        mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
+        mAlbumRecyclerView.setAdapter(mAlbumAdapter);
         mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.photo_delete:
-                        myAlbumAdapter.remove(position);
-                        myAlbumAdapter.notifyDataSetChanged();
+                        mAlbumAdapter.remove(position);
+                        mAlbumAdapter.notifyDataSetChanged();
                         break;
                     case R.id.photo_item_rl:
                         if (position == 0) {
-                            startActivitys(UploadPhotoActivity.class);
+                            if (mAlbumAdapter.getItemCount() >= 13) {
+                                showToast("最多传12张");
+                            } else {
+                                startActivitys(UploadPhotoActivity.class);//上传图片
+                            }
                         } else {
-                            showToast("" + position);
-                            //查看大图
+                            startActivitys(LookPhotoActivity.class);//查看大图
                         }
                         break;
                 }
@@ -200,6 +195,9 @@ public class MineFragment extends BaseFragment {
     @Override
     public void initData() {
         setUserInfo();
+        MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
+        myAlbumRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestMyAlbum(myAlbumRequest);
     }
 
     /**
@@ -275,6 +273,13 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void getMyAlbumSuccess(MyAlbumResponse response) {
+        photoBeanList = response.getData();
+
+    }
+
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -283,8 +288,9 @@ public class MineFragment extends BaseFragment {
     private void initializeInjector() {
         DaggerMineFragmentComponent.builder().appComponent(((KencanmeApp) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
-//                .mineFragmentModule(new MineFragmentModule(this))
+                .mineFragmentModule(new MineFragmentModule(this))
                 .build().inject(this);
     }
+
 
 }

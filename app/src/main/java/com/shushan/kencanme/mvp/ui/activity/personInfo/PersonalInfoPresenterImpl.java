@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
 import android.content.Context;
 
+import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
@@ -71,11 +72,20 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
         mPersonalInfoView.addSubscription(disposable);
     }
 
+    @Override
+    public void updateMyAlbum(UpdateAlbumRequest updateAlbumRequest) {
+        mPersonalInfoView.showLoading("Loading...");
+        Disposable disposable = mPersonalInfoModel.updateMyAlbum(updateAlbumRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::updateMyAlbumSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+
+    }
 
     private void requestVideoSuccess(ResponseData responseData) {
         mPersonalInfoView.dismissLoading();
-        responseData.parseData(UploadImageResponse.class);
         if (responseData.resultCode == 0) {
+            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadVideoSuccess(responseData.result);
         } else {
             mPersonalInfoView.uploadVideoFail(responseData.errorMsg);
@@ -83,11 +93,19 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     }
 
     private void requestImageSuccess(ResponseData responseData) {
-        responseData.parseData(UploadImageResponse.class);
         if (responseData.resultCode == 0) {
+            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadImageSuccess(responseData.result);
         } else {
             mPersonalInfoView.uploadImageFail(responseData.errorMsg);
+        }
+    }
+
+    private void updateMyAlbumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mPersonalInfoView.updateMyAlbumSuccess("success");
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
         }
     }
 

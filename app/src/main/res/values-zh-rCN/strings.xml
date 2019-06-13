@@ -59,5 +59,6 @@
     <string name="MessageReminderActivity_title">Message reminder</string>
     <string name="ClearCacheActivity_title">Clear cache</string>
     <string name="FeedbackProblemActivity_title">Feedback problem</string>
+    <string name="UploadPhotoActivity_title">Upload my real photo or video</string>
 
 </resources>

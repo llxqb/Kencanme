@@ -20,11 +20,19 @@
 
             <ImageView
                 android:id="@+id/photo_iv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_345"
-                android:layout_marginEnd="@dimen/dp_15"
-                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_18"
+                android:layout_marginStart="@dimen/dp_18"
                 android:src="@mipmap/upload_photos" />
+
+            <cn.jzvd.JzvdStd
+                android:id="@+id/jz_video"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_345"
+                android:layout_marginEnd="@dimen/dp_18"
+                android:layout_marginStart="@dimen/dp_18"
+                android:visibility="gone" />
 
 
             <TextView
@@ -33,6 +41,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Please upload vivid photos or videos with clear facial features."
                 android:textColor="@color/first_text_color"
+                android:layout_marginTop="@dimen/dp_5"
                 android:textSize="@dimen/sp_11" />
 
             <TextView
@@ -51,14 +60,15 @@
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center_vertical"
                 android:layout_marginEnd="@dimen/dp_22"
-                android:layout_marginStart="@dimen/dp_22"
+                android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_20"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/ordinary_photo_check_iv"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_5"
                     android:src="@drawable/pay_hibeans_no_choose" />
 
                 <TextView
@@ -86,13 +96,14 @@
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center_vertical"
                 android:layout_marginEnd="@dimen/dp_22"
-                android:layout_marginStart="@dimen/dp_22"
+                android:layout_marginStart="@dimen/dp_15"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/vip_photo_check_iv"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_5"
                     android:src="@drawable/pay_hibeans_no_choose" />
 
                 <TextView
@@ -121,14 +132,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_22"
-                android:layout_marginStart="@dimen/dp_22"
+                android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_20"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/private_photo_check_iv"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_22"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_5"
                     android:src="@drawable/pay_hibeans_no_choose" />
 
                 <TextView

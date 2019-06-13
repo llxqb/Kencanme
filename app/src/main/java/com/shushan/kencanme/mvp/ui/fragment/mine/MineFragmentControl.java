@@ -1,6 +1,8 @@
 package com.shushan.kencanme.mvp.ui.fragment.mine;
 
 
+import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
 
@@ -10,13 +12,12 @@ import com.shushan.kencanme.mvp.presenter.Presenter;
 
 public class MineFragmentControl {
     public interface MineView extends LoadDataView {
-//        void getInfoSuccess(HomeFragmentResponse response);
-//        void getInfoFail(String errMsg);
-
+        void getMyAlbumSuccess(MyAlbumResponse response);
     }
 
     public interface mineFragmentPresenter extends Presenter<MineView> {
+        //查看我的相册
+        void onRequestMyAlbum(MyAlbumRequest myAlbumRequest);
     }
-
 
 }

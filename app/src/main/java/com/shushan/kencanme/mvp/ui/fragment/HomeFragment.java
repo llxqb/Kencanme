@@ -30,6 +30,7 @@ import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.utils.TranTools;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
@@ -155,7 +156,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mJzVideo = viewGroup.findViewById(R.id.jz_video);
             RxView.clicks(mRecommendUserRl).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goRecommendUser());
 
-            if (listBean.getCover().trim().contains(".mp4")) {
+            if (TranTools.isVideo(listBean.getCover())) {
                 //视频
                 mJzVideo.setVisibility(View.VISIBLE);
                 mViewpagerItemIv.setVisibility(View.GONE);

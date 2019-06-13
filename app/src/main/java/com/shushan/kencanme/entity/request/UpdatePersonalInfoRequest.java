@@ -46,7 +46,7 @@ public class UpdatePersonalInfoRequest implements Parcelable{
     public int sex;
 
 
-    protected UpdatePersonalInfoRequest(Parcel in) {
+    private UpdatePersonalInfoRequest(Parcel in) {
         token = in.readString();
         nickname = in.readString();
         cover = in.readString();

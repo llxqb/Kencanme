@@ -235,7 +235,6 @@ I hope you like me."
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/vip_time_hint"
-                    android:text="expire on 2020-10-01"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_17" />
 
@@ -272,9 +271,9 @@ I hope you like me."
                 android:id="@+id/album_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_12" />
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_10" />
 
             <View
                 android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import com.shushan.kencanme.di.scopes.PerActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
 
 import dagger.Component;
 
@@ -26,6 +27,8 @@ public interface PersonalInfoComponent extends ActivityComponent {
     void inject(PersonalInfoUploadPhotoActivity personalInfoUploadPhotoActivity);
 
     void inject(EditMakeFriendsInfoActivity editMakeFriendsInfoActivity);
+
+    void inject(UploadPhotoActivity uploadPhotoActivity);
 
     AppCompatActivity activity();
 
