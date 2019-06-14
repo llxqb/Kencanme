@@ -45,4 +45,9 @@ public interface PersonalInfoApi {
     Observable<String> deleteMyAlbum(@Body String request);
 
 
+    //我的 - 我的相册list
+    @POST("menggoda/user/album")
+    Observable<String> onRequestMyAlbum(@Body String request);
+
+
 }

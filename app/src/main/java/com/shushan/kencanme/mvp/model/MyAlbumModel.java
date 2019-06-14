@@ -1,7 +1,8 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
-import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
+import com.shushan.kencanme.entity.request.DeleteMyAlbumRequest;
+import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.network.networkapi.PersonalInfoApi;
 
 import javax.inject.Inject;
@@ -25,8 +26,13 @@ public class MyAlbumModel {
         mTransform = transform;
     }
 
-    public Observable<ResponseData> deleteAlbumRequest(UpdateAlbumRequest request) {
+    public Observable<ResponseData> deleteAlbumRequest(DeleteMyAlbumRequest request) {
         return mPersonalInfoApi.deleteMyAlbum(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    //请求我的相册数据
+    public Observable<ResponseData> onRequestMyAlbum(MyAlbumRequest request) {
+        return mPersonalInfoApi.onRequestMyAlbum(mGson.toJson(request)).map(mTransform::transformListType);
     }
 
 }

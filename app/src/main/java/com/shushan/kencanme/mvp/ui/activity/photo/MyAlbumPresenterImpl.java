@@ -2,10 +2,17 @@ package com.shushan.kencanme.mvp.ui.activity.photo;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.DeleteMyAlbumRequest;
+import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.response.MyAlbumResponse;
+import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.MyAlbumModel;
+import com.shushan.kencanme.mvp.model.ResponseData;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by li.liu on 2019/5/28.
@@ -27,8 +34,41 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
 
     @Override
     public void deleteMyAlbum(DeleteMyAlbumRequest deleteMyAlbumRequest) {
-
+        mMyAlbumView.showLoading("Loading...");
+        Disposable disposable = mMyAlbumModel.deleteAlbumRequest(deleteMyAlbumRequest).compose(mMyAlbumView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestDataSuccess, throwable -> mMyAlbumView.showErrMessage(throwable),
+                        () -> mMyAlbumView.dismissLoading());
+        mMyAlbumView.addSubscription(disposable);
     }
+
+    @Override
+    public void onRequestMyAlbum(MyAlbumRequest myAlbumRequest) {
+        mMyAlbumView.showLoading("加载中...");
+        Disposable disposable = mMyAlbumModel.onRequestMyAlbum(myAlbumRequest).compose(mMyAlbumView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestMyAlbumSuccess, throwable -> mMyAlbumView.showErrMessage(throwable),
+                        () -> mMyAlbumView.dismissLoading());
+        mMyAlbumView.addSubscription(disposable);
+    }
+    
+    
+    private void requestDataSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mMyAlbumView.deleteSuccess("success");
+        } else {
+            mMyAlbumView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    private void requestMyAlbumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            MyAlbumResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MyAlbumResponse.class);
+            mMyAlbumView.getMyAlbumSuccess(response);
+        } else {
+            mMyAlbumView.showToast(responseData.errorMsg);
+        }
+    }
+
 
     @Override
     public void onCreate() {
@@ -38,7 +78,6 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
     public void onDestroy() {
         mMyAlbumView = null;
     }
-
 
 
 }

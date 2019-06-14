@@ -390,9 +390,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     @Override
     public void updateMyAlbumSuccess(String msg) {
         showToast(msg);
-        Intent intent = new Intent(ActivityConstant.UPDATE_MY_ALBUM);
-        intent.putExtra("updateAlbumRequest", updateAlbumRequest);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MY_ALBUM));
         finish();
     }
 

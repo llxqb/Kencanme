@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,7 +22,7 @@ import cn.jzvd.JzvdStd;
  */
 public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, BaseViewHolder> {
     private ImageLoaderHelper mImageLoaderHelper;
-    Context mContext;
+    private Context mContext;
 
     public MyAlbumAdapter(Context context, @Nullable List<MyAlbumResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.item_my_album, data);
@@ -34,13 +35,14 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
     protected void convert(BaseViewHolder helper, MyAlbumResponse.DataBean item) {
         helper.addOnClickListener(R.id.photo_delete).addOnClickListener(R.id.photo_item_rl);
         ImageView imageView = helper.getView(R.id.photo_iv);
-        if (helper.getPosition() == 0 && item == null) {
-            helper.setVisible(R.id.photo_delete, false);
-        } else {
-            helper.setVisible(R.id.photo_delete, true);
-        }
+        if (item == null) return;
+        if (!TextUtils.isEmpty(item.getAlbum_url())) {
+            if (helper.getPosition() == 0) {
+                helper.setVisible(R.id.photo_delete, false);
+            } else {
+                helper.setVisible(R.id.photo_delete, true);
+            }
 
-        if (item != null) {
             if (TranTools.isVideo(item.getAlbum_url())) {
                 helper.setVisible(R.id.album_jz_video, true);
                 helper.setVisible(R.id.photo_iv, false);
@@ -66,7 +68,12 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
                     helper.setText(R.id.photo_hint_tv, "Hi-Beans can look");
                     break;
             }
-
+        } else {
+            helper.setVisible(R.id.album_jz_video, false);
+            helper.setVisible(R.id.photo_delete, false);
+            helper.setVisible(R.id.photo_iv, true);
+            //加载第一张+图片
+            mImageLoaderHelper.displayImage(mContext, R.mipmap.report_add_photo, imageView);
         }
     }
 }
