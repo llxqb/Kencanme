@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -21,7 +22,7 @@ import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
-import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.ContactWayAdapter;
@@ -52,12 +53,18 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     LinearLayout mAddMoreLl;
     @BindView(R.id.save_btn)
     Button mSaveBtn;
-    List<PersonalInfoResponse.ContactBean> contactWayList = new ArrayList<>();
+    List<ContactWay> contactWayList = new ArrayList<>();
     ContactWayAdapter contactWayAdapter = null;
     UpdatePersonalInfoRequest updatePersonalInfoRequest;
 
     @Inject
     PersonalInfoControl.PresenterPersonalInfo mPresenter;
+
+    public static void start(Context context, ArrayList<ContactWay> contactWayList) {
+        Intent intent = new Intent(context, EditContactWayActivity.class);
+        intent.putParcelableArrayListExtra("contactWayList", contactWayList);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,9 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditContactWayActivity_title));
+        if (getIntent() != null) {
+            contactWayList = getIntent().getParcelableArrayListExtra("contactWayList");
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mContactRecyclerView.setLayoutManager(linearLayoutManager);
         contactWayAdapter = new ContactWayAdapter(this, contactWayList);
@@ -82,7 +92,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
         mContactRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                PersonalInfoResponse.ContactBean contactWay = (PersonalInfoResponse.ContactBean) adapter.getItem(position);
+                ContactWay contactWay = (ContactWay) adapter.getItem(position);
                 currentPos = position;
                 switch (view.getId()) {
                     case R.id.contact_way_tv:
@@ -90,7 +100,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                         break;
                     case R.id.delete_iv:
                         assert contactWay != null;
-                        contactWay.setContactValue("");
+                        contactWay.contactValue = "";
                         adapter.notifyItemChanged(position);
                         break;
                 }
@@ -110,9 +120,9 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                 finish();
                 break;
             case R.id.add_more_ll:
-                PersonalInfoResponse.ContactBean contactWay = new PersonalInfoResponse.ContactBean();
-                contactWay.setContactName("google");//默认添加谷歌
-                contactWay.setContactValue("");
+                ContactWay contactWay = new ContactWay();
+                contactWay.contactName = "google";//默认添加谷歌
+                contactWay.contactValue = "";
                 contactWayAdapter.addData(contactWay);
                 break;
             case R.id.save_btn:
@@ -142,25 +152,25 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     @Override
     public void photoDialogBtnOkListener() {
         //google
-        PersonalInfoResponse.ContactBean contactWay = new PersonalInfoResponse.ContactBean();
-        contactWay.setContactName("google");
-        contactWay.setContactValue("");
+        ContactWay contactWay = new ContactWay();
+        contactWay.contactName = "google";
+        contactWay.contactValue = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 
     @Override
     public void albumDialogBtnOkListener() {
-        PersonalInfoResponse.ContactBean contactWay = new PersonalInfoResponse.ContactBean();
-        contactWay.setContactName("facebook");
-        contactWay.setContactValue("");
+        ContactWay contactWay = new ContactWay();
+        contactWay.contactName = "facebook";
+        contactWay.contactValue = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 
     @Override
     public void photoDialogBtn3OkListener() {
-        PersonalInfoResponse.ContactBean contactWay = new PersonalInfoResponse.ContactBean();
-        contactWay.setContactName("WhatsApp");
-        contactWay.setContactValue("");
+        ContactWay contactWay = new ContactWay();
+        contactWay.contactName = "WhatsApp";
+        contactWay.contactValue = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 

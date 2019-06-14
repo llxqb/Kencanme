@@ -41,6 +41,8 @@ public class BuProcessor {
         mSharePreferenceUtil.saveObjData(SpConstant.LOGIN_USER, loginUser);
     }
 
+
+
     /**
      * 验证是否第一次完善资料
      * 用cover字段判断

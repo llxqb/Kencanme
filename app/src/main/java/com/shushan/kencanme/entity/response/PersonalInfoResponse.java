@@ -1,13 +1,15 @@
 package com.shushan.kencanme.entity.response;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * 登录成功/进入首页会执行
  * 个人资料
  */
-public class PersonalInfoResponse implements Serializable {
+public class PersonalInfoResponse implements Parcelable {
 
 
     /**
@@ -67,8 +69,49 @@ public class PersonalInfoResponse implements Serializable {
     private String pushing_small_age;
     private String pushing_large_age;
     private List<?> label;
-    private List<ContactBean> contact;
+    private List<ContactWay> contact;
     private List<AlbumBean> album;
+
+    protected PersonalInfoResponse(Parcel in) {
+        uid = in.readInt();
+        nickname = in.readString();
+        cover = in.readString();
+        sex = in.readInt();
+        birthday = in.readString();
+        city = in.readString();
+        declaration = in.readString();
+        vip = in.readInt();
+        vip_time = in.readInt();
+        svip = in.readInt();
+        height = in.readInt();
+        weight = in.readString();
+        bust = in.readString();
+        occupation = in.readString();
+        beans = in.readInt();
+        token = in.readString();
+        age = in.readInt();
+        forbidden = in.readInt();
+        pushing_age = in.readString();
+        pushing_gender = in.readInt();
+        exposure = in.readInt();
+        last_login_time = in.readInt();
+        trait = in.readString();
+        pushing_small_age = in.readString();
+        pushing_large_age = in.readString();
+        contact = in.createTypedArrayList(ContactWay.CREATOR);
+    }
+
+    public static final Creator<PersonalInfoResponse> CREATOR = new Creator<PersonalInfoResponse>() {
+        @Override
+        public PersonalInfoResponse createFromParcel(Parcel in) {
+            return new PersonalInfoResponse(in);
+        }
+
+        @Override
+        public PersonalInfoResponse[] newArray(int size) {
+            return new PersonalInfoResponse[size];
+        }
+    };
 
     public int getUid() {
         return uid;
@@ -278,11 +321,11 @@ public class PersonalInfoResponse implements Serializable {
         this.label = label;
     }
 
-    public List<ContactBean> getContact() {
+    public List<ContactWay> getContact() {
         return contact;
     }
 
-    public void setContact(List<ContactBean> contact) {
+    public void setContact(List<ContactWay> contact) {
         this.contact = contact;
     }
 
@@ -294,30 +337,39 @@ public class PersonalInfoResponse implements Serializable {
         this.album = album;
     }
 
-    public static class ContactBean implements Serializable{
-        /**
-         * contactName : google
-         * contactValue :
-         */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        private String contactName;
-        private String contactValue;
-
-        public String getContactName() {
-            return contactName;
-        }
-
-        public void setContactName(String contactName) {
-            this.contactName = contactName;
-        }
-
-        public String getContactValue() {
-            return contactValue;
-        }
-
-        public void setContactValue(String contactValue) {
-            this.contactValue = contactValue;
-        }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(uid);
+        dest.writeString(nickname);
+        dest.writeString(cover);
+        dest.writeInt(sex);
+        dest.writeString(birthday);
+        dest.writeString(city);
+        dest.writeString(declaration);
+        dest.writeInt(vip);
+        dest.writeInt(vip_time);
+        dest.writeInt(svip);
+        dest.writeInt(height);
+        dest.writeString(weight);
+        dest.writeString(bust);
+        dest.writeString(occupation);
+        dest.writeInt(beans);
+        dest.writeString(token);
+        dest.writeInt(age);
+        dest.writeInt(forbidden);
+        dest.writeString(pushing_age);
+        dest.writeInt(pushing_gender);
+        dest.writeInt(exposure);
+        dest.writeInt(last_login_time);
+        dest.writeString(trait);
+        dest.writeString(pushing_small_age);
+        dest.writeString(pushing_large_age);
+        dest.writeTypedList(contact);
     }
 
     public static class AlbumBean {

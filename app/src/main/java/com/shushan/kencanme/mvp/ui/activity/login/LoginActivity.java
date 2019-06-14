@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.di.components.LoginComponent;
@@ -25,6 +26,7 @@ import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.SystemUtils;
@@ -157,6 +159,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
+        LogUtils.e("personalInfoResponse:"+new Gson().toJson(personalInfoResponse));
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity

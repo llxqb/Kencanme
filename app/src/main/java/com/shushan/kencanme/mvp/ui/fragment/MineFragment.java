@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMineFragmentComponent;
@@ -26,6 +29,7 @@ import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
@@ -44,6 +48,7 @@ import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -121,6 +126,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     TextView mDescTv;
     //我的照片
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
+    List<ContactWay> contactWayList;//联系方式集合
     private AlbumAdapter mAlbumAdapter;
     private MimeContactWayAdapter mimeContactWayAdapter;
 
@@ -168,6 +174,14 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void initView() {
+        /**
+         * 转换联系方式为list
+         */
+        String contactWayString = mBuProcessor.getLoginUser().contact;
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<ContactWay>>() {
+        }.getType();
+        contactWayList = gson.fromJson(contactWayString, listType);
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
@@ -184,6 +198,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
             }
         });
+        mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mimeContactWayAdapter = new MimeContactWayAdapter(contactWayList);
+        mContactRecyclerView.setAdapter(mimeContactWayAdapter);
     }
 
     @Override
@@ -270,7 +287,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(EditPersonalInfoActivity.class);
                 break;
             case R.id.contact_way_tv:
-                startActivitys(EditContactWayActivity.class);
+                EditContactWayActivity.start(getActivity(), (ArrayList<ContactWay>) contactWayList);
+//                startActivitys(EditContactWayActivity.class);
                 break;
             case R.id.label_tv:
                 startActivitys(EditLabelActivity.class);

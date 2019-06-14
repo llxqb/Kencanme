@@ -60,4 +60,8 @@ public class LoginUser  implements Serializable {
      */
     public String contact;
 
+
+
+
+
 }

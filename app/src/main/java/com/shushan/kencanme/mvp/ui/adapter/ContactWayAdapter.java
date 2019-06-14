@@ -9,28 +9,28 @@ import android.widget.EditText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shushan.kencanme.R;
-import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.entity.response.ContactWay;
 
 import java.util.List;
 
 /**
  * RechargeAdapter
  */
-public class ContactWayAdapter extends BaseQuickAdapter<PersonalInfoResponse.ContactBean, BaseViewHolder> {
+public class ContactWayAdapter extends BaseQuickAdapter<ContactWay, BaseViewHolder> {
 
     private Context mContext;
-    public ContactWayAdapter(Context context, @Nullable List<PersonalInfoResponse.ContactBean> data) {
+    public ContactWayAdapter(Context context, @Nullable List<ContactWay> data) {
         super(R.layout.item_contact_way, data);
         mContext = context;
     }
 
 
     @Override
-    protected void convert(BaseViewHolder helper, PersonalInfoResponse.ContactBean item) {
+    protected void convert(BaseViewHolder helper, ContactWay item) {
         helper.addOnClickListener(R.id.contact_way_tv).addOnClickListener(R.id.delete_iv);
         if (item != null) {
-            helper.setText(R.id.contact_way_tv, item.getContactName());
-            helper.setText(R.id.contact_value_et, item.getContactValue());
+            helper.setText(R.id.contact_way_tv, item.contactName);
+            helper.setText(R.id.contact_value_et, item.contactValue);
         }
         EditText contactValueEt = helper.getView(R.id.contact_value_et);
         contactValueEt.addTextChangedListener(new CustomTextWatcher(helper.getAdapterPosition(),item));
@@ -39,9 +39,9 @@ public class ContactWayAdapter extends BaseQuickAdapter<PersonalInfoResponse.Con
 
     class CustomTextWatcher implements TextWatcher {
         int index;
-        PersonalInfoResponse.ContactBean mItem;
+        ContactWay mItem;
 
-        public CustomTextWatcher(int index,PersonalInfoResponse.ContactBean item) {
+        public CustomTextWatcher(int index,ContactWay item) {
             this.index = index;
             this.mItem = item;
         }
@@ -67,7 +67,7 @@ public class ContactWayAdapter extends BaseQuickAdapter<PersonalInfoResponse.Con
         @Override
         public void afterTextChanged(Editable editable) {
             if (editable != null) {
-                mItem.setContactValue(editable.toString());
+                mItem.contactValue = editable.toString();
             }
         }
     }
