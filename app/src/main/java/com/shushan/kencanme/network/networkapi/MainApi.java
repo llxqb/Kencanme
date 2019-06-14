@@ -10,6 +10,12 @@ import retrofit2.http.POST;
  */
 
 public interface MainApi {
+    /**
+     * 请求个人信息
+     */
+    @POST("menggoda/user")
+    Observable<String> onRequestPersonalInfo(@Body String request);
+
     //首页list数据
     @POST("menggoda")
     Observable<String> onRequestInfo(@Body String request);

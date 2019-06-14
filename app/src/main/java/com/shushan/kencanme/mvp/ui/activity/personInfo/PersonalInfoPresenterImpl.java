@@ -5,7 +5,6 @@ import android.content.Context;
 import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.entity.response.UploadImageResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.PersonalInfoModel;
@@ -46,11 +45,11 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(UpdatePersonalInfoResponse.class);
-            UpdatePersonalInfoResponse response = (UpdatePersonalInfoResponse) responseData.parsedData;
-            mPersonalInfoView.updateSuccess(response);
+//            responseData.parseData(UpdatePersonalInfoResponse.class);
+//            UpdatePersonalInfoResponse response = (UpdatePersonalInfoResponse) responseData.parsedData;
+            mPersonalInfoView.updateSuccess("success");
         } else {
-            mPersonalInfoView.updateFail(responseData.errorMsg);
+            mPersonalInfoView.showToast(responseData.errorMsg);
         }
     }
 
@@ -88,7 +87,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
             responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadVideoSuccess(responseData.result);
         } else {
-            mPersonalInfoView.uploadVideoFail(responseData.errorMsg);
+            mPersonalInfoView.showToast(responseData.errorMsg);
         }
     }
 
@@ -97,7 +96,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
             responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadImageSuccess(responseData.result);
         } else {
-            mPersonalInfoView.uploadImageFail(responseData.errorMsg);
+            mPersonalInfoView.showToast(responseData.errorMsg);
         }
     }
 

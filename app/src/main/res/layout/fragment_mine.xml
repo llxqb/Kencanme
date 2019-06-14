@@ -308,7 +308,6 @@ I hope you like me."
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/dp_6"
                     android:drawableStart="@mipmap/details_page_address"
-                    android:text="Jakarta"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -320,7 +319,6 @@ I hope you like me."
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_toEndOf="@id/user_location"
                     android:gravity="start"
-                    android:text="Height: 168cm"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -330,7 +328,6 @@ I hope you like me."
                     android:layout_height="wrap_content"
                     android:layout_below="@id/user_location"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="Weight: 46kg"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -344,7 +341,6 @@ I hope you like me."
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toEndOf="@id/user_weight"
                     android:gravity="start"
-                    android:text="Chest:38D"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -354,7 +350,6 @@ I hope you like me."
                     android:layout_height="wrap_content"
                     android:layout_below="@id/user_weight"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="Birthday: 90/08/09"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -368,7 +363,6 @@ I hope you like me."
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_toEndOf="@id/user_birthday"
                     android:gravity="start"
-                    android:text="Professional:model"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
             </RelativeLayout>

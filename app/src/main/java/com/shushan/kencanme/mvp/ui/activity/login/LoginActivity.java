@@ -143,7 +143,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void loginSuccess(LoginResponse response) {
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
-        //根据token请求个人信息
+        mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
+        //根据token请求个人信息   TODO 在MainActivity 中也会请求个人信息 会存在重复请求
         PersonalInfoRequest request = new PersonalInfoRequest();
         request.token = userinfoBean.getToken();
         mPresenterLogin.onRequestPersonalInfo(request);

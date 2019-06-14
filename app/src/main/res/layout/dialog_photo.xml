@@ -48,6 +48,16 @@
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_15" />
 
+        <Button
+            android:id="@+id/dialog_text3_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_8"
+            android:background="@drawable/btn_photo_bg"
+            android:textColor="@color/first_text_color"
+            android:visibility="gone"
+            android:textSize="@dimen/sp_15" />
+
     </LinearLayout>
 
 </RelativeLayout>

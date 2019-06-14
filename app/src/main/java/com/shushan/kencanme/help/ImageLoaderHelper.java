@@ -135,8 +135,8 @@ public class ImageLoaderHelper extends GlideLoader {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                if (imageView.getScaleType() != ImageView.ScaleType.CENTER_CROP) {
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 }
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();

@@ -18,7 +18,6 @@ public class HomeFragmentControl {
     }
 
     public interface homeFragmentPresenter extends Presenter<HomeView> {
-        //这个名字得改  home可能不止一个接口
         void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
     }
 

@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerPersonalInfoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
@@ -25,7 +24,6 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.PicUtils;
@@ -235,16 +233,10 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     }
 
     @Override
-    public void updateSuccess(UpdatePersonalInfoResponse response) {
-        Log.e("ddd", "response:" + new Gson().toJson(response));
+    public void updateSuccess(String response) {
         showToast("创建成功");
         startActivitys(MainActivity.class);
         finish();
-    }
-
-    @Override
-    public void updateFail(String errorMsg) {
-        showToast("保存失败");
     }
 
     @Override
@@ -257,11 +249,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         mPersonalInfoRequest.cover = videoPath;
     }
 
-    @Override
-    public void uploadVideoFail(String msg) {
-        showToast(msg);
-    }
-
 
     @Override
     public void uploadImageSuccess(String picPath) {
@@ -272,10 +259,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         mPersonalInfoRequest.cover = picPath;
     }
 
-    @Override
-    public void uploadImageFail(String msg) {
-
-    }
 
     @Override
     public void updateMyAlbumSuccess(String msg) {
@@ -286,12 +269,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         Intent intent = new Intent(context, PersonalInfoUploadPhotoActivity.class);
         intent.putExtra("personalInfoRequest", personalInfoRequest);
         context.startActivity(intent);
-    }
-
-    private void initializeInjector() {
-        DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
-                .personalInfoModule(new PersonalInfoModule(PersonalInfoUploadPhotoActivity.this, this))
-                .activityModule(new ActivityModule(this)).build().inject(this);
     }
 
 
@@ -305,5 +282,16 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void albumDialogBtnOkListener() {
         takePhoto.onPickFromGallery();
+    }
+
+    @Override
+    public void photoDialogBtn3OkListener() {
+
+    }
+
+    private void initializeInjector() {
+        DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())
+                .personalInfoModule(new PersonalInfoModule(PersonalInfoUploadPhotoActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
     }
 }

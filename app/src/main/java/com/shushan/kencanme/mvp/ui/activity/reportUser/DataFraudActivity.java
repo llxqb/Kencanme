@@ -251,4 +251,9 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             takePhoto.onPickMultiple(maxPicNum);
         }
     }
+
+    @Override
+    public void photoDialogBtn3OkListener() {
+
+    }
 }

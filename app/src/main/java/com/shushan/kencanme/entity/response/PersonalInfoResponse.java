@@ -4,80 +4,71 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 登录成功/进入首页会执行
  * 个人资料
  */
-public class PersonalInfoResponse implements Serializable{
+public class PersonalInfoResponse implements Serializable {
 
 
     /**
      * uid : 6
-     * nickname : yyy
-     * cover : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190612/5d0053fa8a97c.png
+     * nickname : yuu234
+     * cover : https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/9ac885d2a646c393ba6bad6c7a8513f3.mp4
      * sex : 1
-     * birthday : 2010/06/12
-     * city : yyyyy
-     * declaration : yyyyy
+     * birthday : 2014/06/14
+     * city : yy123
+     * declaration : yyyyy123
      * vip : 0
      * vip_time : 0
      * svip : 0
-     * height : 0
-     * weight : 0
-     * bust :
-     * occupation :
+     * height : 176
+     * weight : 72
+     * bust : 35D
+     * occupation : 护士
      * label : []
      * beans : 0
-     * contact : []
-     * token : 9a3085d5b9557a308e23fcae7ecfd64c
+     * contact : [{"contactName":"google","contactValue":""},{"contactName":"google","contactValue":""},{"contactName":"google"}]
+     * token : 7f6a2acf8aa4b8e85210ffc73866db58
      * age : 49
      * forbidden : 0
      * pushing_age : 18-30
      * pushing_gender : 2
      * exposure : 0
-     * last_login_time : 1560322633
-     * trait :
-     * album : []
+     * last_login_time : 1560498405
+     * trait : https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190613/5d01ba17036ed.png
+     * album : [{"id":9,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/3f9a8da5fae43abaee47d8f248ab1162.mp4","album_type":3,"cost":5},{"id":11,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0302fbed536.png","album_type":2,"cost":0},{"id":13,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190614/b7002fe81d9e1dc43f92c116f95c9dbd.mp4","album_type":3,"cost":8},{"id":14,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030d28409de.png","album_type":1,"cost":0},{"id":17,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030fa70cb4d.png","album_type":1,"cost":0},{"id":18,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d031012d7ddf.png","album_type":3,"cost":5},{"id":19,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03122d1254c.png","album_type":2,"cost":0},{"id":21,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0315e970293.png","album_type":1,"cost":0},{"id":24,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03264968790.png","album_type":1,"cost":0},{"id":25,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0326d82ff92.png","album_type":2,"cost":0}]
+     * pushing_small_age : 18
+     * pushing_large_age : 30
      */
 
     private int uid;
     private String nickname;
-    //封面
     private String cover;
-    //1男2女
     private int sex;
     private String birthday;
     private String city;
-    //交友宣言
     private String declaration;
-    //0 非vip 1vip
     private int vip;
     private int vip_time;
     private int svip;
     private int height;
-    private int weight;
+    private String weight;
     private String bust;
     private String occupation;
-    /**
-     * 嗨豆数
-     */
     private int beans;
     private String token;
     private int age;
     private int forbidden;
-    /**
-     * 最小推送年龄
-     */
-    public String pushing_small_age;
-    /**
-     * 最大推送年龄
-     */
-    public String pushing_large_age;
+    private String pushing_age;
     private int pushing_gender;
     private int exposure;
     private int last_login_time;
     private String trait;
+    private String pushing_small_age;
+    private String pushing_large_age;
     private List<?> label;
-    private List<?> contact;
-    private List<?> album;
+    private List<ContactBean> contact;
+    private List<AlbumBean> album;
 
     public int getUid() {
         return uid;
@@ -167,11 +158,11 @@ public class PersonalInfoResponse implements Serializable{
         this.height = height;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -223,6 +214,14 @@ public class PersonalInfoResponse implements Serializable{
         this.forbidden = forbidden;
     }
 
+    public String getPushing_age() {
+        return pushing_age;
+    }
+
+    public void setPushing_age(String pushing_age) {
+        this.pushing_age = pushing_age;
+    }
+
     public int getPushing_gender() {
         return pushing_gender;
     }
@@ -255,6 +254,22 @@ public class PersonalInfoResponse implements Serializable{
         this.trait = trait;
     }
 
+    public String getPushing_small_age() {
+        return pushing_small_age;
+    }
+
+    public void setPushing_small_age(String pushing_small_age) {
+        this.pushing_small_age = pushing_small_age;
+    }
+
+    public String getPushing_large_age() {
+        return pushing_large_age;
+    }
+
+    public void setPushing_large_age(String pushing_large_age) {
+        this.pushing_large_age = pushing_large_age;
+    }
+
     public List<?> getLabel() {
         return label;
     }
@@ -263,19 +278,91 @@ public class PersonalInfoResponse implements Serializable{
         this.label = label;
     }
 
-    public List<?> getContact() {
+    public List<ContactBean> getContact() {
         return contact;
     }
 
-    public void setContact(List<?> contact) {
+    public void setContact(List<ContactBean> contact) {
         this.contact = contact;
     }
 
-    public List<?> getAlbum() {
+    public List<AlbumBean> getAlbum() {
         return album;
     }
 
-    public void setAlbum(List<?> album) {
+    public void setAlbum(List<AlbumBean> album) {
         this.album = album;
+    }
+
+    public static class ContactBean implements Serializable{
+        /**
+         * contactName : google
+         * contactValue :
+         */
+
+        private String contactName;
+        private String contactValue;
+
+        public String getContactName() {
+            return contactName;
+        }
+
+        public void setContactName(String contactName) {
+            this.contactName = contactName;
+        }
+
+        public String getContactValue() {
+            return contactValue;
+        }
+
+        public void setContactValue(String contactValue) {
+            this.contactValue = contactValue;
+        }
+    }
+
+    public static class AlbumBean {
+        /**
+         * id : 9
+         * album_url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/3f9a8da5fae43abaee47d8f248ab1162.mp4
+         * album_type : 3
+         * cost : 5
+         */
+
+        private int id;
+        private String album_url;
+        private int album_type;
+        private int cost;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getAlbum_url() {
+            return album_url;
+        }
+
+        public void setAlbum_url(String album_url) {
+            this.album_url = album_url;
+        }
+
+        public int getAlbum_type() {
+            return album_type;
+        }
+
+        public void setAlbum_type(int album_type) {
+            this.album_type = album_type;
+        }
+
+        public int getCost() {
+            return cost;
+        }
+
+        public void setCost(int cost) {
+            this.cost = cost;
+        }
     }
 }

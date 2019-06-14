@@ -7,7 +7,9 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.di.scopes.PerActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditContactWayActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.EditPersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
 
@@ -29,6 +31,14 @@ public interface PersonalInfoComponent extends ActivityComponent {
     void inject(EditMakeFriendsInfoActivity editMakeFriendsInfoActivity);
 
     void inject(UploadPhotoActivity uploadPhotoActivity);
+
+    void inject(EditPersonalInfoActivity editPersonalInfoActivity);
+
+    /**
+     * 编辑联系方式
+     */
+    void inject(EditContactWayActivity editContactWayActivity);
+
 
     AppCompatActivity activity();
 

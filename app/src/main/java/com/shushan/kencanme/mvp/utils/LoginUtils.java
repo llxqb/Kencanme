@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.utils;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
@@ -22,7 +23,7 @@ public class LoginUtils {
         loginUser.vip = personalInfoResponse.getVip();
         loginUser.vip_time = personalInfoResponse.getVip_time();
         loginUser.svip = personalInfoResponse.getSvip();
-        loginUser.height = personalInfoResponse.getHeight();
+        loginUser.height = String.valueOf(personalInfoResponse.getHeight());
         loginUser.weight = personalInfoResponse.getWeight();
         loginUser.bust = personalInfoResponse.getBust();
         loginUser.occupation = personalInfoResponse.getOccupation();
@@ -30,16 +31,18 @@ public class LoginUtils {
         loginUser.token = personalInfoResponse.getToken();
         loginUser.age = personalInfoResponse.getAge();
         loginUser.forbidden = personalInfoResponse.getForbidden();
-        loginUser.pushing_small_age = personalInfoResponse.pushing_small_age;
-        loginUser.pushing_large_age = personalInfoResponse.pushing_large_age;
+        loginUser.pushing_small_age = personalInfoResponse.getPushing_small_age();
+        loginUser.pushing_large_age = personalInfoResponse.getPushing_large_age();
         loginUser.pushing_gender = personalInfoResponse.getPushing_gender();
         loginUser.exposure = personalInfoResponse.getExposure();
         loginUser.last_login_time = personalInfoResponse.getLast_login_time();
+        loginUser.contact = new Gson().toJson(personalInfoResponse.getContact());
         return loginUser;
     }
 
     /**
      * LoginUser 转换为 UpdatePersonalInfoRequest
+     * 只在登录才用到
      */
     public static UpdatePersonalInfoRequest tranPersonalInfoResponse(LoginUser loginUser) {
         UpdatePersonalInfoRequest updatePersonalInfoRequest = new UpdatePersonalInfoRequest();

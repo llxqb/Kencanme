@@ -24,7 +24,6 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
@@ -144,7 +143,6 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
                 finish();
                 break;
             case R.id.cover_iv:
-//                takePhoto.onPickFromGallery();
                 showVideoDialog();
                 break;
             case R.id.head_icon_rl:
@@ -285,19 +283,14 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
 
 
     @Override
-    public void updateSuccess(UpdatePersonalInfoResponse response) {
-        showToast("保存成功");
+    public void updateSuccess(String response) {
+        showToast(response);
         //更新用户信息
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         mLoginUser.nickname = mUserNameEv.getText().toString();
         mLoginUser.declaration = mDeclarationEv.getText().toString();
         mBuProcessor.setLoginUser(mLoginUser);
         finish();
-    }
-
-    @Override
-    public void updateFail(String errorMsg) {
-        showToast(errorMsg);
     }
 
     @Override
@@ -310,10 +303,6 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         mLoginUser.cover = videoPath;
     }
 
-    @Override
-    public void uploadVideoFail(String msg) {
-        showToast(msg);
-    }
 
     @Override
     public void uploadImageSuccess(String picPath) {
@@ -324,11 +313,6 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
             mImageLoaderHelper.displayImage(this, picPath, mCoverIv,Constant.LOADING_MIDDLE);
             mLoginUser.cover = picPath;
         }
-    }
-
-    @Override
-    public void uploadImageFail(String msg) {
-        showToast(msg);
     }
 
     @Override
@@ -359,6 +343,11 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
             //从相册中选取
             takePhoto.onPickFromGallery();
         }
+    }
+
+    @Override
+    public void photoDialogBtn3OkListener() {
+
     }
 
     private void initializeInjector() {

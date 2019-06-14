@@ -17,7 +17,6 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
-import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.utils.DateUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -166,25 +165,17 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
     }
 
     @Override
-    public void updateSuccess(UpdatePersonalInfoResponse response) {
-        showToast("修改成功");
+    public void updateSuccess(String response) {
+        showToast(response);
         startActivitys(PersonalInfoUploadPhotoActivity.class);
     }
 
-    @Override
-    public void updateFail(String errorMsg) {
-
-    }
 
     @Override
     public void uploadVideoSuccess(String videoPath) {
 
     }
 
-    @Override
-    public void uploadVideoFail(String msg) {
-
-    }
 
 
     @Override
@@ -192,10 +183,6 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
 
     }
 
-    @Override
-    public void uploadImageFail(String msg) {
-
-    }
 
     @Override
     public void updateMyAlbumSuccess(String msg) {

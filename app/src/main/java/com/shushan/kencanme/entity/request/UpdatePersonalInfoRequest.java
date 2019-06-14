@@ -16,8 +16,8 @@ public class UpdatePersonalInfoRequest implements Parcelable{
     public String declaration;
     //头像
     public String trait;
-    public int height;
-    public int weight;
+    public String height;
+    public String weight;
     public String bust;
     //职业
     public String occupation;
@@ -46,19 +46,18 @@ public class UpdatePersonalInfoRequest implements Parcelable{
     public int sex;
 
 
-    private UpdatePersonalInfoRequest(Parcel in) {
+    protected UpdatePersonalInfoRequest(Parcel in) {
         token = in.readString();
         nickname = in.readString();
         cover = in.readString();
         declaration = in.readString();
         trait = in.readString();
-        height = in.readInt();
-        weight = in.readInt();
+        height = in.readString();
+        weight = in.readString();
         bust = in.readString();
         occupation = in.readString();
         birthday = in.readString();
         city = in.readString();
-        contact = in.readString();
         label = in.readString();
         pushing_small_age = in.readString();
         pushing_large_age = in.readString();
@@ -73,13 +72,12 @@ public class UpdatePersonalInfoRequest implements Parcelable{
         dest.writeString(cover);
         dest.writeString(declaration);
         dest.writeString(trait);
-        dest.writeInt(height);
-        dest.writeInt(weight);
+        dest.writeString(height);
+        dest.writeString(weight);
         dest.writeString(bust);
         dest.writeString(occupation);
         dest.writeString(birthday);
         dest.writeString(city);
-        dest.writeString(contact);
         dest.writeString(label);
         dest.writeString(pushing_small_age);
         dest.writeString(pushing_large_age);

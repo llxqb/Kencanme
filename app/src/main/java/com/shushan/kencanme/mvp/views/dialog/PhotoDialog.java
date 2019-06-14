@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +33,12 @@ public class PhotoDialog extends BaseDialogFragment {
     Button mDialogPhoto;
     @BindView(R.id.dialog_album)
     Button mDialogAlbum;
+    @BindView(R.id.dialog_text3_btn)
+    Button mDialogBtn3;
     Unbinder unbinder;
     private PhotoDialogListener dialogBtnListener;
     private String mTitle, mPhoto, mAlbum;
+    private String mBtn3Text;
 
     public static PhotoDialog newInstance() {
         return new PhotoDialog();
@@ -44,6 +48,13 @@ public class PhotoDialog extends BaseDialogFragment {
         mTitle = title;
         mPhoto = photo;
         mAlbum = album;
+    }
+
+    public void setData(String title, String photo, String album, String btn3Text) {
+        mTitle = title;
+        mPhoto = photo;
+        mAlbum = album;
+        mBtn3Text = btn3Text;
     }
 
     public void setListener(PhotoDialogListener photoBtnListener) {
@@ -58,6 +69,12 @@ public class PhotoDialog extends BaseDialogFragment {
         mDialogTitle.setText(mTitle);
         mDialogPhoto.setText(mPhoto);
         mDialogAlbum.setText(mAlbum);
+        if (!TextUtils.isEmpty(mBtn3Text)) {
+            mDialogBtn3.setVisibility(View.VISIBLE);
+            mDialogBtn3.setText(mBtn3Text);
+        } else {
+            mDialogBtn3.setVisibility(View.GONE);
+        }
         return view;
     }
 
@@ -68,7 +85,7 @@ public class PhotoDialog extends BaseDialogFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.dialog_photo, R.id.dialog_album, R.id.dialog_photo_layout})
+    @OnClick({R.id.dialog_photo, R.id.dialog_album, R.id.dialog_photo_layout, R.id.dialog_text3_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.dialog_photo:
@@ -83,6 +100,12 @@ public class PhotoDialog extends BaseDialogFragment {
                 }
                 closeCommonDialog();
                 break;
+            case R.id.dialog_text3_btn:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.photoDialogBtn3OkListener();
+                }
+                closeCommonDialog();
+                break;
             case R.id.dialog_photo_layout:
                 closeCommonDialog();
                 break;
@@ -94,6 +117,8 @@ public class PhotoDialog extends BaseDialogFragment {
         void photoDialogBtnOkListener();
 
         void albumDialogBtnOkListener();
+
+        void photoDialogBtn3OkListener();
     }
 
 

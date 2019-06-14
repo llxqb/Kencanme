@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
+import com.shushan.kencanme.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
@@ -120,6 +122,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     //我的照片
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
     private AlbumAdapter mAlbumAdapter;
+    private MimeContactWayAdapter mimeContactWayAdapter;
+
 
     @Inject
     MineFragmentControl.mineFragmentPresenter mPresenter;
@@ -145,7 +149,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
             setUserInfo();
-        } else if (intent.getAction() != null && (intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM ) || intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM ))) {
+        } else if (intent.getAction() != null && (intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM) || intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM))) {
             //更新我的相册
             MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
             myAlbumRequest.token = mBuProcessor.getToken();
@@ -220,6 +224,18 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mDescTv.setText(mLoginUser.declaration);
         mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl, Constant.LOADING_MIDDLE);
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
+        //Personal Information
+        mUserLocation.setText(mLoginUser.city);
+        String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? "Height: " + mLoginUser.height + "cm" : "Height: ";
+        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? "Weight: " + mLoginUser.weight + "kg" : "Weight: ";
+        String mUserChestValue = "Chest:" + mLoginUser.bust;
+        String mUserBirthdayValue = "Birthday:" + mLoginUser.birthday;
+        String mUserProfessionalValue = "Professional:" + mLoginUser.occupation;
+        mUserHeight.setText(mUserHeightValue);
+        mUserWeight.setText(mUserWeightValue);
+        mUserChest.setText(mUserChestValue);
+        mUserBirthday.setText(mUserBirthdayValue);
+        mUserProfessional.setText(mUserProfessionalValue);
     }
 
 

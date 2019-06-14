@@ -2,7 +2,9 @@ package com.shushan.kencanme.mvp.ui.activity.main;
 
 import android.content.Context;
 
-
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.MainModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
 
@@ -28,26 +30,25 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         mMainView = mainView;
     }
 
+    @Override
+    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
+        mMainView.showLoading("加载中...");
+        Disposable disposable = mMainModel.onRequestPersonalInfo(personalInfoRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPersonalInfoSuccess, throwable -> mMainView.showErrMessage(throwable),
+                        () -> mMainView.dismissLoading());
+        mMainView.addSubscription(disposable);
+    }
 
-//    @Override
-//    public void onRequestBanner(MainBannerRequest request) {
-//        mMainView.showLoading("加载中...");
-//        Disposable disposable = mMainModel.bannerRequest(request).compose(mMainView.applySchedulers())
-//                .subscribe(this::requestBannerSuccess, throwable -> mMainView.showErrMessage(throwable),
-//                        () -> mMainView.dismissLoading());
-//        mMainView.addSubscription(disposable);
-//    }
-//
-//    private void requestBannerSuccess(ResponseData responseData) {
-//        if (responseData.resultCode == 0) {
-//            responseData.parseData(MainBannerResponse.class);
-//            MainBannerResponse response = (MainBannerResponse) responseData.parsedData;
-//            mMainView.bannerSuccess(response);
-//        } else {
-//            mMainView.showToast(responseData.errorDesc);
-//        }
-//    }
-
+    private void requestPersonalInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(PersonalInfoResponse.class);
+            PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+            mMainView.personalInfoSuccess(response);
+        } else {
+            mMainView.showToast(responseData.errorMsg);
+        }
+    }
+    
     @Override
     public void onCreate() {
     }

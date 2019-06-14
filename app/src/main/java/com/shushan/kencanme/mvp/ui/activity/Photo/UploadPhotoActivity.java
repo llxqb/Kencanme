@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +27,6 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
-import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.PersonalInfoControl;
 import com.shushan.kencanme.mvp.utils.PicUtils;
@@ -347,16 +345,17 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     }
 
     @Override
-    public void updateSuccess(UpdatePersonalInfoResponse response) {
+    public void photoDialogBtn3OkListener() {
+
     }
 
     @Override
-    public void updateFail(String errorMsg) {
+    public void updateSuccess(String response) {
     }
 
     @Override
     public void uploadVideoSuccess(String videoPath) {
-        Log.e("ddd", "videoPath:" + videoPath);
+//        Log.e("ddd", "videoPath:" + videoPath);
         photoUrl = videoPath;
         mJzVideo.setVisibility(View.VISIBLE);
         mPhotoIv.setVisibility(View.GONE);
@@ -366,23 +365,13 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     }
 
     @Override
-    public void uploadVideoFail(String msg) {
-        showToast(msg);
-    }
-
-    @Override
     public void uploadImageSuccess(String picPath) {
-        Log.e("ddd", "picPath:" + picPath);
+//        Log.e("ddd", "picPath:" + picPath);
         photoUrl = picPath;
         mJzVideo.setVisibility(View.GONE);
         mPhotoIv.setVisibility(View.VISIBLE);
         mImageLoaderHelper.displayMatchImage(this, picPath, mPhotoIv, Constant.LOADING_MIDDLE);
 //        mPersonalInfoRequest.cover = picPath;
-    }
-
-    @Override
-    public void uploadImageFail(String msg) {
-        showToast(msg);
     }
 
     /**

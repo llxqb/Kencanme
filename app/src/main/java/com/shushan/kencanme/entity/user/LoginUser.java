@@ -27,9 +27,15 @@ public class LoginUser  implements Serializable {
     public int vip_time;
     //0 非svip 1 svip svip没有到期时间
     public int svip;
-    public int height;
-    public int weight;
+    public String height;
+    public String weight;
+    /**
+     * 胸围
+     */
     public String bust;
+    /**
+     * 职业
+     */
     public String occupation;
     //嗨豆数
     public int beans;
@@ -49,5 +55,9 @@ public class LoginUser  implements Serializable {
     //曝光
     public int exposure;
     public int last_login_time;
+    /**
+     * 联系方式
+     */
+    public String contact;
 
 }
