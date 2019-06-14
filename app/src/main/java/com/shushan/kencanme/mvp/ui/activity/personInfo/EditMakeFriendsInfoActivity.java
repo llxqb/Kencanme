@@ -130,9 +130,9 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         } else {
             mJzVideo.setVisibility(View.GONE);
             mCoverIv.setVisibility(View.VISIBLE);
-            mImageLoaderHelper.displayImage(this, mLoginUser.cover, mCoverIv);
+            mImageLoaderHelper.displayImage(this, mLoginUser.cover, mCoverIv,Constant.LOADING_MIDDLE);
         }
-        mImageLoaderHelper.displayImage(this, mLoginUser.trait, mHeadIconIv);
+        mImageLoaderHelper.displayImage(this, mLoginUser.trait, mHeadIconIv,Constant.LOADING_SMALL);
         mUserNameEv.setText(mLoginUser.nickname);
         mDeclarationEv.setText(mLoginUser.declaration);
     }
@@ -318,10 +318,10 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void uploadImageSuccess(String picPath) {
         if (photoOrVideo == 0) {
-            mImageLoaderHelper.displayImage(this, picPath, mHeadIconIv);
+            mImageLoaderHelper.displayImage(this, picPath, mHeadIconIv,Constant.LOADING_SMALL);
             mLoginUser.trait = picPath;
         } else {
-            mImageLoaderHelper.displayImage(this, picPath, mCoverIv);
+            mImageLoaderHelper.displayImage(this, picPath, mCoverIv,Constant.LOADING_MIDDLE);
             mLoginUser.cover = picPath;
         }
     }

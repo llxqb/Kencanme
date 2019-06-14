@@ -22,6 +22,7 @@ import com.shushan.kencanme.di.components.DaggerMineFragmentComponent;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
@@ -194,7 +195,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
      */
     private void setUserInfo() {
         LoginUser mLoginUser = mBuProcessor.getLoginUser();
-        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator);
+        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_SMALL);
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.sex == 1) {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_male);
@@ -217,7 +218,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mVipTimeTv.setText("Hi~SVIP");
         }
         mDescTv.setText(mLoginUser.declaration);
-        mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl);
+        mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl, Constant.LOADING_MIDDLE);
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
     }
 

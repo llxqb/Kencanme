@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.PicUtils;
@@ -52,7 +53,7 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
             } else {
                 helper.setVisible(R.id.album_jz_video, false);
                 helper.setVisible(R.id.photo_iv, true);
-                mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView);
+                mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
             }
 
             switch (item.getAlbum_type()) {
@@ -72,8 +73,7 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
             helper.setVisible(R.id.album_jz_video, false);
             helper.setVisible(R.id.photo_delete, false);
             helper.setVisible(R.id.photo_iv, true);
-            //加载第一张+图片
-            mImageLoaderHelper.displayImage(mContext, R.mipmap.report_add_photo, imageView);
+            mImageLoaderHelper.displayImage(mContext, R.mipmap.report_add_photo, imageView,R.mipmap.report_add_photo);//加载第一张+图片
         }
     }
 }

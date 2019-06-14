@@ -40,55 +40,55 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView) {
+    public void displayImage(Context context, Object path, ImageView imageView,int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.loading_middle)
+                .error(loadPic)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.loading_middle)
+                .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
 
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView, int res) {
+    public void displayImage(Context context, Object path, ImageView imageView, int res,int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.loading_middle)
+                .error(loadPic)
                 .skipMemoryCache(true)
                 .error(res)
-                .placeholder(R.mipmap.loading_middle)
+                .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
     @Override
-    public void displayCircularImage(Context context, Object path, ImageView imageView) {
+    public void displayCircularImage(Context context, Object path, ImageView imageView,int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, 8)))//设置圆角大小
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.loading_middle)
+                .error(loadPic)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.loading_middle)
+                .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
     @Override
-    public void displayRoundedCornerImage(Context context, Object path, ImageView imageView, Integer size) {
+    public void displayRoundedCornerImage(Context context, Object path, ImageView imageView, Integer size,int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, size)))//设置圆角大小
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.loading_middle)
-                .placeholder(R.mipmap.loading_middle)
+                .error(loadPic)
+                .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
     //设置圆角毛玻璃效果
-    public void displayGlassImage(Context context, Object path, ImageView imageView) {
+    public void displayGlassImage(Context context, Object path, ImageView imageView,int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new MultiTransformation<>(new BlurTransformation(30, 3)
 //                        new RoundedCorners(TranTools.dip2px(context, 8))
@@ -96,15 +96,15 @@ public class ImageLoaderHelper extends GlideLoader {
                 )// radius 越大越模糊
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.loading_middle)
-                .placeholder(R.mipmap.loading_middle)
+                .error(loadPic)
+                .placeholder(loadPic)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
 
 
     //设置背景图片
-    public void displayBackgroundImage(Context context, Object path, View imageView) {
+    public void displayBackgroundImage(Context context, Object path, View imageView,int loadPic) {
         Glide.with(context).asBitmap().load(path)//签到整体 背景
                 .into(new SimpleTarget<Bitmap>(180, 180) {
                     @Override
@@ -119,7 +119,7 @@ public class ImageLoaderHelper extends GlideLoader {
      * 设置自适应图片
      */
     @Override
-    public void displayMatchImage(Context context, Object path, ImageView imageView) {
+    public void displayMatchImage(Context context, Object path, ImageView imageView,int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(R.mipmap.loading_big)

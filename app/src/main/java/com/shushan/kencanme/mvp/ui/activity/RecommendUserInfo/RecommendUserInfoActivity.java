@@ -165,7 +165,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 break;
             case R.id.recommend_like_iv:
                 showToast("已喜欢");
-                mImageLoaderHelper.displayImage(this, R.mipmap.home_liked, mRecommendLikeIv);
+                mImageLoaderHelper.displayImage(this, R.mipmap.home_liked, mRecommendLikeIv,Constant.LOADING_SMALL);
                 break;
             case R.id.recommend_chat_iv:
                 break;

@@ -165,7 +165,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             } else {
                 mJzVideo.setVisibility(View.GONE);
                 mViewpagerItemIv.setVisibility(View.VISIBLE);
-                mImageLoaderHelper.displayMatchImage(getActivity(), listBean.getCover(), mViewpagerItemIv);
+                mImageLoaderHelper.displayMatchImage(getActivity(), listBean.getCover(), mViewpagerItemIv,Constant.LOADING_BIG);
             }
             setUserData(listBean);
             viewPagerResponseList.add(viewGroup);
@@ -180,7 +180,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     private void setUserData(HomeFragmentResponse.ListBean listBean) {
         mRecommendUserName.setText(listBean.getNickname());
-        mImageLoaderHelper.displayImage(getActivity(), listBean.getTrait(), mRecommendUserHeadIv);
+        mImageLoaderHelper.displayImage(getActivity(), listBean.getTrait(), mRecommendUserHeadIv,Constant.LOADING_SMALL);
         if (listBean.getSex() == 1) {
             //1男2女
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_male);

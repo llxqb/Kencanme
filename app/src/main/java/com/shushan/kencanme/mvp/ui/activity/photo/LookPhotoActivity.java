@@ -11,6 +11,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerLookPhotoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.LookPhotoModule;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
@@ -63,7 +64,7 @@ public class LookPhotoActivity extends BaseActivity {
             } else {
                 mJzVideo.setVisibility(View.GONE);
                 mPhotoIv.setVisibility(View.VISIBLE);
-                mImageLoaderHelper.displayMatchImage(this, path, mPhotoIv);
+                mImageLoaderHelper.displayMatchImage(this, path, mPhotoIv, Constant.LOADING_BIG);
             }
         }
     }

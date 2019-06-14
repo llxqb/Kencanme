@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 
@@ -50,7 +51,7 @@ public class RecommendUserAlbumAdapter extends BaseQuickAdapter<RecommendUserInf
                     }else {
                         helper.setVisible(R.id.album_item_iv,true);
                         helper.setVisible(R.id.album_jz_video,false);
-                        mImageLoaderHelper.displayRoundedCornerImage(mContext, item.picPath, imageView, 8);
+                        mImageLoaderHelper.displayRoundedCornerImage(mContext, item.picPath, imageView, 8,Constant.LOADING_SMALL);
                     }
                     break;
                 case 2:
@@ -67,7 +68,7 @@ public class RecommendUserAlbumAdapter extends BaseQuickAdapter<RecommendUserInf
                     }else {
                         helper.setVisible(R.id.album_item_iv,true);
                         helper.setVisible(R.id.album_jz_video,false);
-                        mImageLoaderHelper.displayGlassImage(mContext, item.picPath, imageView);
+                        mImageLoaderHelper.displayGlassImage(mContext, item.picPath, imageView, Constant.LOADING_SMALL);
                     }
                     break;
                 case 3:
@@ -84,7 +85,7 @@ public class RecommendUserAlbumAdapter extends BaseQuickAdapter<RecommendUserInf
                     }else {
                         helper.setVisible(R.id.album_jz_video,false);
                         helper.setVisible(R.id.album_item_iv,true);
-                        mImageLoaderHelper.displayGlassImage(mContext, item.picPath, imageView);
+                        mImageLoaderHelper.displayGlassImage(mContext, item.picPath, imageView,Constant.LOADING_SMALL);
                     }
                     break;
             }

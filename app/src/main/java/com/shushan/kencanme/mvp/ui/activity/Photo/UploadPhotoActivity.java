@@ -135,6 +135,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     public void initData() {
 
     }
+
     @OnClick({R.id.common_back, R.id.photo_iv, R.id.jz_video, R.id.ordinary_photo_check_iv, R.id.vip_photo_check_iv,
             R.id.private_photo_check_iv, R.id.save_btn, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev})
     public void onViewClicked(View view) {
@@ -375,7 +376,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         photoUrl = picPath;
         mJzVideo.setVisibility(View.GONE);
         mPhotoIv.setVisibility(View.VISIBLE);
-        mImageLoaderHelper.displayMatchImage(this, picPath, mPhotoIv);
+        mImageLoaderHelper.displayMatchImage(this, picPath, mPhotoIv, Constant.LOADING_MIDDLE);
 //        mPersonalInfoRequest.cover = picPath;
     }
 

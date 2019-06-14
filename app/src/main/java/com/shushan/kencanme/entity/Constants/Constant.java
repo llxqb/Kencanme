@@ -1,5 +1,7 @@
 package com.shushan.kencanme.entity.Constants;
 
+import com.shushan.kencanme.R;
+
 /**
  * Created by li.liu on 2017/12/18.
  */
@@ -22,5 +24,10 @@ public class Constant {
     public static final int PIC_AVATOR = 1;
     public static final int PIC_COVER = 2;
     public static final int PIC_ALBUM = 2;
+
+    //占位图图片资源
+    public static final int LOADING_SMALL = R.mipmap.loading_small;
+    public static final int LOADING_MIDDLE = R.mipmap.loading_middle;
+    public static final int LOADING_BIG = R.mipmap.loading_big;
 
 }

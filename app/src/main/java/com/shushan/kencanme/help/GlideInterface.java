@@ -9,15 +9,15 @@ import android.view.View;
  */
 
 public interface GlideInterface<T extends View> {
-    void displayImage(Context context, Object path, T imageView);
+    void displayImage(Context context, Object path, T imageView,int loadPic);
 
-    void displayImage(Context context, Object path, T imageView, int res);
+    void displayImage(Context context, Object path, T imageView, int res,int loadPic);
 
-    void displayCircularImage(Context context, Object path, T imageView);
+    void displayCircularImage(Context context, Object path, T imageView,int loadPic);
 
-    void displayRoundedCornerImage(Context context, Object path, T imageView, Integer size);
+    void displayRoundedCornerImage(Context context, Object path, T imageView, Integer size,int loadPic);
 
-    void displayMatchImage(Context context, Object path, T imageView);
+    void displayMatchImage(Context context, Object path, T imageView,int loadPic);
 
     T createImageView(Context context);
 }
