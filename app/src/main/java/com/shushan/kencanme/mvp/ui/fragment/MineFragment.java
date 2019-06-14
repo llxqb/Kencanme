@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMineFragmentComponent;
@@ -26,6 +24,7 @@ import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
@@ -148,9 +147,13 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             setUserInfo();
         } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM)) {
             //更新我的相册
-//            UpdateAlbumRequest updateAlbumRequest = intent.getParcelableExtra("updateAlbumRequest");
-//            photoBeanList.add(updateAlbumRequest);
-//            mAlbumAdapter.notifyDataSetChanged();
+            UpdateAlbumRequest updateAlbumRequest = intent.getParcelableExtra("updateAlbumRequest");
+            MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
+            dataBean.setAlbum_type(updateAlbumRequest.album_type);
+            dataBean.setAlbum_url(updateAlbumRequest.album_url);
+            dataBean.setCost(updateAlbumRequest.cost);
+//            photoBeanList.add(dataBean);
+            mAlbumAdapter.addData(dataBean);
         }
         super.onReceivePro(context, intent);
     }
@@ -164,30 +167,22 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void initView() {
+        //设置一条空数据
         photoBeanList.add(null);
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
-        mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.photo_delete:
-                        mAlbumAdapter.remove(position);
-                        mAlbumAdapter.notifyDataSetChanged();
-                        break;
-                    case R.id.photo_item_rl:
-                        if (position == 0) {
-                            if (mAlbumAdapter.getItemCount() >= 13) {
-                                showToast("最多传12张");
-                            } else {
-                                startActivitys(UploadPhotoActivity.class);//上传图片
-                            }
-                        } else {
-                            startActivitys(LookPhotoActivity.class);//查看大图
-                        }
-                        break;
+        mAlbumAdapter.setOnItemClickListener((adapter, view, position) -> {
+            MyAlbumResponse.DataBean dataBean = (MyAlbumResponse.DataBean) adapter.getItem(position);
+            if (position == 0) {
+                if (mAlbumAdapter.getItemCount() >= 13) {
+                    showToast("最多传12张");
+                } else {
+                    startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
                 }
+            } else {
+                assert dataBean != null;
+                LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
             }
         });
     }
@@ -257,7 +252,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(OpenVipActivity.class);
                 break;
             case R.id.album_tv:
-                startActivitys(MyAlbumActivity.class);
+                MyAlbumActivity.start(getActivity(), photoBeanList);
                 break;
             case R.id.personal_info_tv:
                 //编辑个人信息
@@ -275,7 +270,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @Override
     public void getMyAlbumSuccess(MyAlbumResponse response) {
         photoBeanList = response.getData();
-
+        mAlbumAdapter.addData(photoBeanList);
     }
 
 

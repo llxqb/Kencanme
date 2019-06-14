@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.ui.activity.photo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -7,11 +8,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
+import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.response.UpdatePersonalInfoResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.PersonalInfoControl;
@@ -82,16 +86,24 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     TextView mPrivatePhotoTv;
     @BindView(R.id.save_btn)
     Button mSaveBtn;
+    @BindView(R.id.beans_one)
+    TextView mBeansOne;
+    @BindView(R.id.beans_five)
+    TextView mBeansFive;
+    @BindView(R.id.beans_custom_ev)
+    EditText mBeansCustomEv;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     //成功照片路径  用于点击完成时候判断资源是否为Empty
     private String photoUrl;
     //选择上传的图片类型  1 普通 2 VIP 3 私密
     private int picType = 0;
+    //如果是私密照片 需支付嗨豆数量
+    private int beansNumber = 0;
     private UpdateAlbumRequest updateAlbumRequest;
-
     @Inject
     PersonalInfoControl.PresenterPersonalInfo mPresenter;
+    private MyAlbumResponse.DataBean dataBean = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,18 +116,27 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         initData();
     }
 
+    public static void start(Context context, MyAlbumResponse.DataBean dataBean) {
+        Intent intent = new Intent(context, UploadPhotoActivity.class);
+        intent.putExtra("dataBean", dataBean);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.UploadPhotoActivity_title));
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
+        if (getIntent() != null) {
+            dataBean = getIntent().getParcelableExtra("dataBean");
+        }
     }
 
     @Override
     public void initData() {
 
     }
-
-    @OnClick({R.id.common_back, R.id.photo_iv, R.id.jz_video, R.id.ordinary_photo_check_iv, R.id.vip_photo_check_iv, R.id.private_photo_check_iv, R.id.save_btn})
+    @OnClick({R.id.common_back, R.id.photo_iv, R.id.jz_video, R.id.ordinary_photo_check_iv, R.id.vip_photo_check_iv,
+            R.id.private_photo_check_iv, R.id.save_btn, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
@@ -148,14 +169,40 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
                 if (isValidEmpty()) {
                     updateAlbumRequest = new UpdateAlbumRequest();
                     updateAlbumRequest.token = mBuProcessor.getToken();
-                    updateAlbumRequest.album_type = String.valueOf(picType);
+                    updateAlbumRequest.album_type = picType;
                     updateAlbumRequest.album_url = photoUrl;
                     updateAlbumRequest.isVideo = TranTools.isVideo(photoUrl);
-                    //todo
+                    if (dataBean != null) {
+                        updateAlbumRequest.id = dataBean.getId(); //从我的--相册跳转过来   进行图片修改更新   否则是增加图片
+                    }
+                    if (picType == 3) {
+                        updateAlbumRequest.cost = beansNumber;  //嗨豆数量
+                    }
                     mPresenter.updateMyAlbum(updateAlbumRequest);
                 }
                 break;
+            case R.id.beans_one:
+                initBeansBg();
+                mBeansOne.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                beansNumber = 1;
+                break;
+            case R.id.beans_five:
+                initBeansBg();
+                mBeansFive.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                beansNumber = 5;
+                break;
+            case R.id.beans_custom_ev:
+                initBeansBg();
+                mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
+                break;
         }
+    }
+
+    private void initBeansBg() {
+        mBeansOne.setBackgroundResource(R.drawable.bg_beans_selector_5);
+        mBeansFive.setBackgroundResource(R.drawable.bg_beans_selector_5);
+        mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selector_5);
     }
 
     @Override
@@ -171,6 +218,12 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         if (picType == 0) {
             showToast("请选择照片类型");
             return false;
+        }
+        if (picType == 3) {
+            if (beansNumber == 0) {
+                showToast("请选择嗨豆数量");
+                return false;
+            }
         }
         return true;
     }
@@ -241,7 +294,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //以下代码为处理Android6.0、7.0动态权限所需
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -283,7 +336,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     @Override
     public void photoDialogBtnOkListener() {
         //打开视频
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 100);
     }
 
@@ -333,7 +386,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
 
     /**
      * 图片增加/修改成功
-     * @param msg
      */
     @Override
     public void updateMyAlbumSuccess(String msg) {

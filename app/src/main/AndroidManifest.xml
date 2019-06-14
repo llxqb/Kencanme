@@ -65,7 +65,8 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".mvp.ui.activity.setting.AboutUsActivity" />
         <activity android:name=".mvp.ui.activity.photo.MyAlbumActivity" />
-        <activity android:name=".mvp.ui.activity.photo.UploadPhotoActivity" />
+        <activity android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".mvp.ui.activity.rongCloud.ConversationActivity"
             android:screenOrientation="portrait"

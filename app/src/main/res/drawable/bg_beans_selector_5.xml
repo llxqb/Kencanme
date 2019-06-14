@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <shape>
+            <!-- 边线-->
+            <stroke android:width="@dimen/dp_1" android:color="#9B9B9B" />
+            <!-- 填充-->
+            <corners android:radius="@dimen/dp_5" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+            <stroke android:width="@dimen/dp_1" android:color="#FF7007" />
+            <corners android:radius="@dimen/dp_5" />
+        </shape>
+    </item>
+
+</selector>

@@ -3,7 +3,6 @@ package com.shushan.kencanme.mvp.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ResponseData {
@@ -13,18 +12,24 @@ public class ResponseData {
     public String errorMsg;
     public String result;
     public Object parsedData;
+    public JSONObject mJsonObject;
 
     public ResponseData() {
         resultCode = 110;
         errorMsg = "信息获取失败";
     }
 
-    public ResponseData(JSONObject jsonObject) throws JSONException {
+    public ResponseData(JSONObject jsonObject) {
         resultCode = jsonObject.optInt("error");
         errorMsg = jsonObject.optString("msg");
         result = jsonObject.optString("data");
     }
 
+    public ResponseData(JSONObject jsonObject,boolean isList){
+        resultCode = jsonObject.optInt("error");
+        errorMsg = jsonObject.optString("msg");
+        mJsonObject = jsonObject;
+    }
 
 //    public ResponseData(JSONObject jsonObject, Integer flag) throws JSONException {
 //        if(flag==1){//会员接口
@@ -34,7 +39,6 @@ public class ResponseData {
 //        }
 //
 //    }
-
 
     public <T> T parseData(Class<T> objectClass) {
         T t = null;

@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.fragment.mine;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -41,8 +42,7 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.mineFragme
 
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(MyAlbumResponse.class);
-            MyAlbumResponse response = (MyAlbumResponse) responseData.parsedData;
+            MyAlbumResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MyAlbumResponse.class);
             mMineView.getMyAlbumSuccess(response);
         } else {
             mMineView.showToast(responseData.errorMsg);

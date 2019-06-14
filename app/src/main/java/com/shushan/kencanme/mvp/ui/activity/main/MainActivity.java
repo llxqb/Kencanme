@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onTokenIncorrect() {
-                Log.e("ddd", "--onTokenIncorrect");
+//                Log.e("ddd", "--onTokenIncorrect");
             }
 
             /**
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
              */
             @Override
             public void onSuccess(String userid) {
-                Log.e("ddd", "--onSuccess");
+//                Log.e("ddd", "--onSuccess");
             }
 
             /**

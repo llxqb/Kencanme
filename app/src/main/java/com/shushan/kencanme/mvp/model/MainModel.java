@@ -34,7 +34,7 @@ public class MainModel {
 
     //请求我的相册数据
     public Observable<ResponseData> onRequestMyAlbum(MyAlbumRequest request) {
-        return mMainApi.onRequestMyAlbum(mGson.toJson(request)).map(mTransform::transformCommon);
+        return mMainApi.onRequestMyAlbum(mGson.toJson(request)).map(mTransform::transformListType);
     }
 
 }

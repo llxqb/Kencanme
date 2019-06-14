@@ -39,6 +39,7 @@ public class TranTools {
      * 判断是否是mp4类型
      */
     public static boolean isVideo(String path) {
+        assert path != null;
         return path.toLowerCase().contains(".mp4");
     }
 }

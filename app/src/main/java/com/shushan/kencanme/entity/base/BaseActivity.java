@@ -27,6 +27,7 @@ import java.net.ConnectException;
 
 import javax.inject.Inject;
 
+import cn.jzvd.Jzvd;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -60,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         addFilter();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, mFilter);
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
         setStatusBar();
     }
 
@@ -95,10 +97,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     };
 
-    void onReceivePro(Context context, Intent intent) {
+   public void onReceivePro(Context context, Intent intent) {
     }
 
-    void addFilter() {
+   public void addFilter() {
     }
 
     /**

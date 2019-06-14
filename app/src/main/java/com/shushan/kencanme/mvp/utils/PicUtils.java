@@ -48,7 +48,7 @@ public class PicUtils {
     @SuppressLint("CheckResult")
     public static void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros) {
         RequestOptions requestOptions = RequestOptions.frameOf(frameTimeMicros);
-        requestOptions.placeholder(R.mipmap.album_photo_loading);
+        requestOptions.placeholder(R.mipmap.loading_middle);
         requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
         requestOptions.transform(new BitmapTransformation() {
             @Override

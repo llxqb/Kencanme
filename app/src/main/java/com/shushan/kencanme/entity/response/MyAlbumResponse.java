@@ -1,5 +1,8 @@
 package com.shushan.kencanme.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -41,7 +44,7 @@ public class MyAlbumResponse {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable{
         /**
          * id : 6
          * album_url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190613/5d02066162657.png
@@ -53,6 +56,28 @@ public class MyAlbumResponse {
         private String album_url;
         private int album_type;
         private int cost;
+
+        public DataBean() {
+        }
+
+        protected DataBean(Parcel in) {
+            id = in.readInt();
+            album_url = in.readString();
+            album_type = in.readInt();
+            cost = in.readInt();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel in) {
+                return new DataBean(in);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
 
         public int getId() {
             return id;
@@ -84,6 +109,19 @@ public class MyAlbumResponse {
 
         public void setCost(int cost) {
             this.cost = cost;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(id);
+            dest.writeString(album_url);
+            dest.writeInt(album_type);
+            dest.writeInt(cost);
         }
     }
 }

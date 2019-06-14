@@ -43,9 +43,9 @@ public class ImageLoaderHelper extends GlideLoader {
     public void displayImage(Context context, Object path, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_middle)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.loading_middle)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -55,10 +55,10 @@ public class ImageLoaderHelper extends GlideLoader {
     public void displayImage(Context context, Object path, ImageView imageView, int res) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_middle)
                 .skipMemoryCache(true)
                 .error(res)
-                .placeholder(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.loading_middle)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -68,9 +68,9 @@ public class ImageLoaderHelper extends GlideLoader {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, 8)))//设置圆角大小
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_middle)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.loading_middle)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -81,8 +81,8 @@ public class ImageLoaderHelper extends GlideLoader {
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, size)))//设置圆角大小
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.album_photo_loading)
-                .placeholder(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_middle)
+                .placeholder(R.mipmap.loading_middle)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -96,8 +96,8 @@ public class ImageLoaderHelper extends GlideLoader {
                 )// radius 越大越模糊
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.mipmap.album_photo_loading)
-                .placeholder(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_middle)
+                .placeholder(R.mipmap.loading_middle)
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
@@ -122,9 +122,9 @@ public class ImageLoaderHelper extends GlideLoader {
     public void displayMatchImage(Context context, Object path, ImageView imageView) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.album_photo_loading)
+                .error(R.mipmap.loading_big)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.album_photo_loading)
+                .placeholder(R.mipmap.loading_big)
                 .dontAnimate();
 
         RequestListener requestListener = new RequestListener<Drawable>() {
@@ -135,8 +135,8 @@ public class ImageLoaderHelper extends GlideLoader {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                if (imageView.getScaleType() != ImageView.ScaleType.CENTER_CROP) {
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();

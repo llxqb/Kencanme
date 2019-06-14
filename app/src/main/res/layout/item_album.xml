@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/photo_item_rl"
-    android:layout_width="@dimen/dp_120"
-    android:layout_height="@dimen/dp_120">
+    android:layout_width="@dimen/dp_84"
+    android:layout_height="@dimen/dp_84">
 
 
     <cn.jzvd.JzvdStd
         android:id="@+id/album_jz_video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
         android:background="@drawable/bg_white_round_5"
         android:visibility="gone" />
 
     <ImageView
         android:id="@+id/photo_iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
         android:background="@drawable/bg_white_round_5"
         android:scaleType="centerCrop"
         android:src="@mipmap/report_add_photo" />
@@ -29,22 +29,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_2"
         android:padding="@dimen/dp_4"
-        android:src="@mipmap/delete" />
+        android:src="@mipmap/delete"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/photo_hint_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_26"
+        android:layout_height="@dimen/dp_18"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_5"
         android:background="#70000000"
         android:gravity="center"
-        android:paddingBottom="@dimen/dp_3"
-        android:paddingTop="@dimen/dp_3"
-        android:text="VIP can look"
+        android:padding="@dimen/dp_2"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_11"
         android:visibility="gone" />

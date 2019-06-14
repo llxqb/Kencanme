@@ -26,7 +26,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
     private Context mContext;
 
     public AlbumAdapter(Context context, @Nullable List<MyAlbumResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
-        super(R.layout.item_my_album, data);
+        super(R.layout.item_album, data);
         mContext = context;
         mImageLoaderHelper = imageLoaderHelper;
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
@@ -35,13 +35,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, MyAlbumResponse.DataBean item) {
-        helper.addOnClickListener(R.id.photo_delete).addOnClickListener(R.id.photo_item_rl);
         ImageView imageView = helper.getView(R.id.photo_iv);
-        if (helper.getPosition() == 0 && item == null) {
-            helper.setVisible(R.id.photo_delete, false);
-        } else {
-            helper.setVisible(R.id.photo_delete, true);
-        }
         if (item != null) {
             if (TranTools.isVideo(item.getAlbum_url())) {
                 helper.setVisible(R.id.album_jz_video, true);
@@ -68,6 +62,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                     helper.setText(R.id.photo_hint_tv, "Hi-Beans can look");
                     break;
             }
+
         }
     }
 }
