@@ -19,6 +19,9 @@ public class HomeFragmentControl {
     }
 
     public interface homeFragmentPresenter extends Presenter<HomeView> {
+        /**
+         * 请求homeFragment list 数据
+         */
         void onRequestInfo(HomeFragmentRequest homeFragmentRequest);
 
         //喜欢

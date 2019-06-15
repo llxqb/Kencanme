@@ -138,7 +138,7 @@ public class BuyDialog extends BaseDialogFragment {
     }
 
     public interface CommonDialogListener {
-        void commonDialogBtnOkListener();
+        void buyDialogBtnOkListener();
     }
 
 

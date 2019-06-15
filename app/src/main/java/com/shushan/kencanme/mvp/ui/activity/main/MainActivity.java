@@ -16,7 +16,11 @@ import com.shushan.kencanme.di.components.MainComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.RongCloudHelper;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
@@ -45,7 +49,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_MINE_PAGE = 2;
 
     @Inject
-    MainControl.MainView mPresenter;
+    MainControl.PresenterMain mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-
+        PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
+        personalInfoRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestPersonalInfo(personalInfoRequest);
     }
 
     private void connectRongCloud() {
@@ -122,6 +128,35 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         return true;
     }
 
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+        //保存用户信息
+        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
+        requestHomeUserInfo();
+    }
+
+    @Override
+    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        LoginUser loginUser = mBuProcessor.getLoginUser();
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        //把另外几项LoginUser加入进来
+        loginUser.exposure_type = userBean.getExposure_type();
+        loginUser.exposure_time = userBean.getExposure_time();
+        loginUser.today_like = userBean.getToday_like();
+        loginUser.today_chat = userBean.getToday_chat();
+        loginUser.today_see_contact = userBean.getToday_see_contact();
+        mBuProcessor.setLoginUser(loginUser);
+    }
+
+    /**
+     * 首页用户信息
+     */
+    private void requestHomeUserInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    }
+
     private void initInjectData() {
         MainComponent mMainComponent = DaggerMainComponent.builder().appComponent(getAppComponent())
                 .mainModule(new MainModule(MainActivity.this, this))
@@ -130,9 +165,4 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
 
-    @Override
-    public void personalInfoSuccess(PersonalInfoResponse response) {
-        //保存用户信息
-        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
-    }
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * sp保存对象必须序列化
  */
 
-public class LoginUser  implements Serializable {
+public class LoginUser implements Serializable {
 
     public int uid;
     public String nickname;
@@ -52,7 +52,9 @@ public class LoginUser  implements Serializable {
     public String pushing_large_age;
     //推送性别   推送性别 0不限1男2女
     public int pushing_gender;
-    //曝光
+    /**
+     * 曝光次数
+     */
     public int exposure;
     public int last_login_time;
     /**
@@ -65,6 +67,27 @@ public class LoginUser  implements Serializable {
     public String label;
 
 
+    //下面是新增首页用户信息
+    /**
+     * 曝光类型
+     */
+    public int exposure_type;
+    /**
+     * 曝光时长
+     */
+    public int exposure_time;
+    /**
+     * 今日可免费喜欢数
+     */
+    public int today_like;
+    /**
+     * 今日可免费聊天数
+     */
+    public int today_chat;
+    /**
+     * 今日可免费查看联系方式数
+     */
+    public int today_see_contact;
 
 
 }

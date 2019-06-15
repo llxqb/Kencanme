@@ -16,9 +16,15 @@ public interface MainApi {
     @POST("menggoda/user")
     Observable<String> onRequestPersonalInfo(@Body String request);
 
+    /**
+     * 用户首页信息
+     */
+    @POST("menggoda/index/user_exposure")
+    Observable<String> onRequestHomeUserInfo(@Body String request);
+
     //首页list数据
     @POST("menggoda")
-    Observable<String> onRequestInfo(@Body String request);
+    Observable<String> onRequestHomeInfo(@Body String request);
 
 
     //我的 - 我的相册list

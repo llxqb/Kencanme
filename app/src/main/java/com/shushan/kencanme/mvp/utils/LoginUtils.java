@@ -8,6 +8,7 @@ import com.shushan.kencanme.entity.user.LoginUser;
 public class LoginUtils {
 
     /**
+     * 请求个人信息时调用
      * PersonalInfoResponse 转换位LoginUser
      */
     public static LoginUser tranLoginUser(PersonalInfoResponse personalInfoResponse) {
@@ -64,4 +65,6 @@ public class LoginUtils {
         updatePersonalInfoRequest.pushing_gender = loginUser.pushing_gender;
         return updatePersonalInfoRequest;
     }
+
+
 }
