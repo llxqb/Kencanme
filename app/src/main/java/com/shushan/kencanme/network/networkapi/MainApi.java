@@ -20,8 +20,15 @@ public interface MainApi {
     @POST("menggoda")
     Observable<String> onRequestInfo(@Body String request);
 
+
     //我的 - 我的相册list
     @POST("menggoda/user/album")
     Observable<String> onRequestMyAlbum(@Body String request);
+
+    /**
+     * 喜欢
+     */
+    @POST("menggoda/Operation")
+    Observable<String> onRequestLike(@Body String request);
 
 }

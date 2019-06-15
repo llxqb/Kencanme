@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
+import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.network.networkapi.MainApi;
@@ -41,6 +42,11 @@ public class MainModel {
     //请求我的相册数据
     public Observable<ResponseData> onRequestMyAlbum(MyAlbumRequest request) {
         return mMainApi.onRequestMyAlbum(mGson.toJson(request)).map(mTransform::transformListType);
+    }
+
+    //添加喜欢
+    public Observable<ResponseData> onRequestLike(LikeRequest request) {
+        return mMainApi.onRequestLike(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

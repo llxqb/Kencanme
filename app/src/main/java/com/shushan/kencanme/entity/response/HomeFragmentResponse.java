@@ -27,7 +27,7 @@ public class HomeFragmentResponse {
          * age : 22
          * rongyun_token :
          * active_time : 43
-         * is_like : 0
+         * is_like : 0   0未喜欢1喜欢
          */
 
         private int uid;

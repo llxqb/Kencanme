@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,8 +34,6 @@ import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.utils.TranTools;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 import com.shushan.kencanme.mvp.views.CommonDialog;
-import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
-import com.shushan.kencanme.mvp.views.dialog.UseExposureDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +55,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @BindView(R.id.home_viewpager)
     ViewPager homeViewpager;
-    @BindView(R.id.home_message_iv)
-    ImageView homeMessageIv;
-    @BindView(R.id.home_like_iv)
-    ImageView homeLikeIv;
     @BindView(R.id.use_exposure_iv)
     ImageView mUseExposureIv;
     //----viewPager 布局
@@ -71,10 +66,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     TextView mActiveTime;
     RelativeLayout mRecommendUserRl;
     JzvdStd mJzVideo;
+    ImageView homeLikeIv;
+    ImageView homeMessageIv;
     //----viewPager 布局
+    //当前发起更新的位置
+    private int currentUpdatePos = 0;
 
     private List<ViewGroup> viewPagerResponseList = new ArrayList<>();
-    private List<HomeFragmentResponse.ListBean> dataList = new ArrayList<>();
     private HomeViewPagerAdapter homeViewPagerAdapter;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
@@ -86,7 +84,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(), null);
         ButterKnife.bind(this, view);
@@ -100,8 +98,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
-        RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goChat());
-        RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goLike());
         RxView.clicks(mUseExposureIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> useSuperExposure());
         homeViewPagerAdapter = new HomeViewPagerAdapter(viewPagerResponseList);
         homeViewpager.setAdapter(homeViewPagerAdapter);
@@ -109,10 +105,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         homeViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
             public void onPageSelected(int position) {
+                if ((position + 1) % 4 == 0 && position > currentUpdatePos) {//回滑的时候不刷新
+                    currentUpdatePos = position;
+                    requestHomeData();
+                }
             }
 
             @Override
@@ -126,25 +127,29 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void initData() {
+        requestHomeData();
+    }
+
+    private void requestHomeData() {
         HomeFragmentRequest homeFragmentRequest = new HomeFragmentRequest();
         homeFragmentRequest.token = mBuProcessor.getToken();
         mPresenter.onRequestInfo(homeFragmentRequest);
     }
-
 
     @Override
     public void onPause() {
         super.onPause();
         JzvdStd.goOnPlayOnPause();
     }
-
+    HomeFragmentResponse.ListBean mListBean;
 
     @SuppressLint("CheckResult")
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {
         LogUtils.d("response:" + new Gson().toJson(response));
-        dataList = response.getList();
+        List<HomeFragmentResponse.ListBean> dataList = response.getList();
         for (HomeFragmentResponse.ListBean listBean : dataList) {
+            mListBean = listBean;
             ViewGroup viewGroup = (ViewGroup) View.inflate(getActivity(), R.layout.viewpager_item_layout, null);
             mViewpagerItemIv = viewGroup.findViewById(R.id.viewpager_item_iv);
             mRecommendUserHeadIv = viewGroup.findViewById(R.id.recommend_user_head_iv);
@@ -154,8 +159,19 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mActiveTime = viewGroup.findViewById(R.id.active_time);
             mRecommendUserRl = viewGroup.findViewById(R.id.recommend_user_rl);
             mJzVideo = viewGroup.findViewById(R.id.jz_video);
+            homeLikeIv = viewGroup.findViewById(R.id.home_like_iv);
+            homeMessageIv = viewGroup.findViewById(R.id.home_message_iv);
             RxView.clicks(mRecommendUserRl).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goRecommendUser());
-
+            RxView.clicks(homeMessageIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goChat());
+//            RxView.clicks(homeLikeIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> goLike(listBean.getUid(), listBean.getIs_like()));
+            homeLikeIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    mImageLoaderHelper.displayImage(getActivity(), R.mipmap.home_like, homeLikeIv, R.mipmap.home_like);
+                    listBean.setIs_like(1);
+                    homeViewPagerAdapter.notifyDataSetChanged();
+                }
+            });
             if (TranTools.isVideo(listBean.getCover())) {
                 //视频
                 mJzVideo.setVisibility(View.VISIBLE);
@@ -165,13 +181,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             } else {
                 mJzVideo.setVisibility(View.GONE);
                 mViewpagerItemIv.setVisibility(View.VISIBLE);
-                mImageLoaderHelper.displayMatchImage(getActivity(), listBean.getCover(), mViewpagerItemIv,Constant.LOADING_BIG);
+                mImageLoaderHelper.displayMatchImage(getActivity(), listBean.getCover(), mViewpagerItemIv, Constant.LOADING_BIG);
+
             }
             setUserData(listBean);
             viewPagerResponseList.add(viewGroup);
         }
         homeViewPagerAdapter.notifyDataSetChanged();
-
     }
 
 
@@ -180,7 +196,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     private void setUserData(HomeFragmentResponse.ListBean listBean) {
         mRecommendUserName.setText(listBean.getNickname());
-        mImageLoaderHelper.displayImage(getActivity(), listBean.getTrait(), mRecommendUserHeadIv,Constant.LOADING_SMALL);
+        mImageLoaderHelper.displayImage(getActivity(), listBean.getTrait(), mRecommendUserHeadIv, Constant.LOADING_SMALL);
         if (listBean.getSex() == 1) {
             //1男2女
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_male);
@@ -188,22 +204,17 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
         }
         String mRecommendUserSexYearValue = listBean.getAge() + " years";
-        String mActiveTimeValue = "active "+listBean.getActive_time()+" minute ago";
+        String mActiveTimeValue = "active " + listBean.getActive_time() + " minute ago";
         mRecommendUserSexYear.setText(mRecommendUserSexYearValue);
         mRecommendUserLocation.setText(listBean.getCity());
         mActiveTime.setText(mActiveTimeValue);
+        if (listBean.getIs_like() == 0) {
+            mImageLoaderHelper.displayImage(getActivity(), R.mipmap.home_liked, homeLikeIv, R.mipmap.home_liked);
+        } else {
+            mImageLoaderHelper.displayImage(getActivity(), R.mipmap.home_like, homeLikeIv, R.mipmap.home_like);
+        }
+
     }
-
-    @Override
-    public void commonDialogBtnOkListener() {
-
-    }
-
-    @Override
-    public void getInfoFail(String errMsg) {
-        showToast(errMsg);
-    }
-
 
     /**
      * 去聊天
@@ -217,21 +228,33 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
 
-    private void goLike() {
-//        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
-        BuyDialog buyDialog = BuyDialog.newInstance();
-//        buyDialog.setContent(content);
-        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
+    private void goLike(int uId, int isLike) {
+////        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
+//        BuyDialog buyDialog = BuyDialog.newInstance();
+////        buyDialog.setContent(content);
+//        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
+
+//        if (isLike == 0) {//0为不喜欢  1喜欢
+//            LikeRequest likeRequest = new LikeRequest();
+//            likeRequest.token = mBuProcessor.getToken();
+//            likeRequest.likeid = uId;
+//            mPresenter.onRequestLike(likeRequest);
+//        }
+//        mRecommendUserName.setText("111");
+
+        mListBean.setIs_like(1);
+        setUserData(mListBean);
+//        homeViewPagerAdapter.notifyDataSetChanged();
     }
 
     /**
      * 使用超级曝光
      */
     private void useSuperExposure() {
-        //检查是否有超级曝光次数
-//        checkIsExposureTime();
-        UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
-        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
+//        //检查是否有超级曝光次数
+////        checkIsExposureTime();
+//        UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
+//        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
     }
 
     /**
@@ -239,6 +262,24 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     private void goRecommendUser() {
         startActivitys(RecommendUserInfoActivity.class);
+    }
+
+
+    @Override
+    public void commonDialogBtnOkListener() {
+
+    }
+
+    @Override
+    public void getInfoFail(String errMsg) {
+        showToast(errMsg);
+    }
+
+    @Override
+    public void getLikeSuccess(String msg) {
+        showToast(msg);
+        mRecommendUserName.setText("111");
+        mImageLoaderHelper.displayImage(getActivity(), R.mipmap.home_like, homeLikeIv, R.mipmap.home_liked);
     }
 
 
