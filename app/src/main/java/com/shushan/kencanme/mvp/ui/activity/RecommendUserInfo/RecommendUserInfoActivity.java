@@ -18,6 +18,7 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RecommendUserInfoModule;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.LabelBean;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.reportUser.ReportUserActivity;
@@ -30,7 +31,6 @@ import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -87,7 +87,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Inject
     RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
     private String userLabel[] = {"haokan", "sexy", "graceful beauty"};
-
+    List<LabelBean> labelList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +132,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         mAlbumRecyclerView.setAdapter(recommendUserAlbumAdapter);
 
         //label adapter
-        List<String> labelList = Arrays.asList(userLabel);
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
         mLabelRecyclerView.setLayoutManager(gridLayoutManager2);
         RecommendUserLabelAdapter recommendUserLabelAdapter = new RecommendUserLabelAdapter(this,labelList);
@@ -142,6 +141,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void initData() {
         mPresenter.onRequestRecommendUserInfo(null);
+        for (String anUserLabel : userLabel) {
+            LabelBean labelBean = new LabelBean();
+            labelBean.name = anUserLabel;
+            labelList.add(labelBean);
+        }
     }
 
     @OnClick({R.id.back_iv, R.id.more_iv, R.id.look_over_tv, R.id.recommend_like_iv, R.id.recommend_chat_iv})

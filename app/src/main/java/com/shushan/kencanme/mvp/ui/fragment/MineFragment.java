@@ -28,6 +28,7 @@ import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
+import com.shushan.kencanme.entity.request.LabelBean;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
@@ -44,6 +45,7 @@ import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.MimeContactWayAdapter;
+import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
@@ -127,9 +129,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     //我的照片
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
     List<ContactWay> contactWayList;//联系方式集合
+    List<LabelBean> labelList;//联系方式集合
     private AlbumAdapter mAlbumAdapter;
     private MimeContactWayAdapter mimeContactWayAdapter;
-
+    private RecommendUserLabelAdapter recommendUserLabelAdapter;
 
     @Inject
     MineFragmentControl.mineFragmentPresenter mPresenter;
@@ -172,16 +175,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM);
     }
 
+    Gson gson;
+
     @Override
     public void initView() {
-        /**
-         * 转换联系方式为list
-         */
-        String contactWayString = mBuProcessor.getLoginUser().contact;
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<ContactWay>>() {
-        }.getType();
-        contactWayList = gson.fromJson(contactWayString, listType);
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
@@ -201,6 +198,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mimeContactWayAdapter = new MimeContactWayAdapter(contactWayList);
         mContactRecyclerView.setAdapter(mimeContactWayAdapter);
+
+        mLabelRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recommendUserLabelAdapter = new RecommendUserLabelAdapter(getActivity(), labelList);
+        mLabelRecyclerView.setAdapter(recommendUserLabelAdapter);
     }
 
     @Override
@@ -215,6 +216,20 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
      * 设置用户信息
      */
     private void setUserInfo() {
+        //contactWay
+        String contactWayString = mBuProcessor.getLoginUser().contact; //转换联系方式为list
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<ContactWay>>() {
+        }.getType();
+        contactWayList = gson.fromJson(contactWayString, listType);
+        mimeContactWayAdapter.setNewData(contactWayList);
+        //label
+        String labelString = mBuProcessor.getLoginUser().label; //转换联系方式为list
+        Gson gson2 = new Gson();
+        Type labelListType = new TypeToken<List<LabelBean>>() {
+        }.getType();
+        labelList = gson2.fromJson(labelString, labelListType);
+        recommendUserLabelAdapter.setNewData(labelList);
         LoginUser mLoginUser = mBuProcessor.getLoginUser();
         mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_SMALL);
         mUsername.setText(mLoginUser.nickname);
@@ -288,7 +303,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 break;
             case R.id.contact_way_tv:
                 EditContactWayActivity.start(getActivity(), (ArrayList<ContactWay>) contactWayList);
-//                startActivitys(EditContactWayActivity.class);
                 break;
             case R.id.label_tv:
                 startActivitys(EditLabelActivity.class);
@@ -318,6 +332,5 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 .mineFragmentModule(new MineFragmentModule(this))
                 .build().inject(this);
     }
-
 
 }

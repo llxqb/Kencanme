@@ -37,6 +37,7 @@ public class LoginUtils {
         loginUser.exposure = personalInfoResponse.getExposure();
         loginUser.last_login_time = personalInfoResponse.getLast_login_time();
         loginUser.contact = new Gson().toJson(personalInfoResponse.getContact());
+        loginUser.label = new Gson().toJson(personalInfoResponse.getLabel());
         return loginUser;
     }
 

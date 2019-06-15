@@ -59,7 +59,10 @@ public class LoginUser  implements Serializable {
      * 联系方式
      */
     public String contact;
-
+    /**
+     * 个人标签
+     */
+    public String label;
 
 
 

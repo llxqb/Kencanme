@@ -88,7 +88,6 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
         mContactRecyclerView.setLayoutManager(linearLayoutManager);
         contactWayAdapter = new ContactWayAdapter(this, contactWayList);
         mContactRecyclerView.setAdapter(contactWayAdapter);
-
         mContactRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
