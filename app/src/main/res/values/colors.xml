@@ -29,6 +29,7 @@
 
     <color name="first_text_color">#4A4A4A</color>
     <color name="second_text_color">#22242C</color>
+    <color name="third_text_color">#858B97</color>
     <color name="five_text_color">#B6BDC6</color>
     <color name="six_text_color">#EAE6FF</color>
     <color name="server_text_color">#262626</color>

@@ -1,4 +1,4 @@
-package com.shushan.kencanme.entity;
+package com.shushan.kencanme.entity.Constants;
 
 public class ServerConstant {
     public static final String DISPATCH_SERVICE = "http://test.shushanbao.com/";

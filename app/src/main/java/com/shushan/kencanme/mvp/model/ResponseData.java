@@ -25,6 +25,7 @@ public class ResponseData {
         result = jsonObject.optString("data");
     }
 
+    //list
     public ResponseData(JSONObject jsonObject,boolean isList){
         resultCode = jsonObject.optInt("error");
         errorMsg = jsonObject.optString("msg");

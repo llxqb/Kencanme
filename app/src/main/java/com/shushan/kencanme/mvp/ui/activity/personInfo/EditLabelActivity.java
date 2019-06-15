@@ -6,7 +6,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +25,6 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LabelBean;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
-import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
@@ -60,7 +58,6 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     TextView mAddTv;
     @BindView(R.id.text_et)
     EditText mTextEt;
-    private List<RecommendUserInfoResponse.DataBean> recommendUserInfoLists = new ArrayList<>();
     RecommendUserLabelAdapter recommendUserLabelAdapter;
     List<LabelBean> labelList;
     int deletePos;
@@ -152,7 +149,6 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     }
 
     private void saveLabel() {
-        Log.e("ddd", "labelList:" + new Gson().toJson(labelList));
         if (labelList.size() > 0) {
             updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
             updatePersonalInfoRequest.token = mBuProcessor.getToken();
@@ -170,7 +166,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         if (isPreserveLabel) {
             finish();
-        }else {
+        } else {
             recommendUserLabelAdapter.remove(deletePos);
         }
     }

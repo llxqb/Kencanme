@@ -13,7 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.shushan.kencanme.entity.ServerConstant;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;

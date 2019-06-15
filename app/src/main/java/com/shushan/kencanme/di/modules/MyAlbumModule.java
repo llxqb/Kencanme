@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.kencanme.BuildConfig;
 import com.shushan.kencanme.di.scopes.PerActivity;
-import com.shushan.kencanme.entity.ServerConstant;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.mvp.model.ModelTransform;
 import com.shushan.kencanme.mvp.model.MyAlbumModel;
 import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumControl;

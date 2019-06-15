@@ -22,7 +22,7 @@ public class ModelTransform {
         return responseData;
     }
 
-//    //会员接口
+//   list
     public ResponseData transformListType(String response) {
         ResponseData responseData;
         try {

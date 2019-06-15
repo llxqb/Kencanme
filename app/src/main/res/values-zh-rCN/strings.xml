@@ -2,6 +2,7 @@
     <!--网络相关 -->
     <string name="text_check_internet">请检查网络</string>
     <string name="text_wait_try">请稍后重试</string>
+    <string name="loading">加载中...</string>
 
     <!-- app相关-->
     <string name="this_is_desc">This is a description</string>
@@ -76,5 +77,6 @@
     <string name="ClearCacheActivity_title">Clear cache</string>
     <string name="FeedbackProblemActivity_title">Feedback problem</string>
     <string name="UploadPhotoActivity_title">Upload my real photo or video</string>
+    <string name="OpenVipActivity_title">Open VIP</string>
 
 </resources>

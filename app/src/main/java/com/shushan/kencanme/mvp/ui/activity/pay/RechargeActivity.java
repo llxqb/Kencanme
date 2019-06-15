@@ -10,8 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerRechargeComponent;
+import com.shushan.kencanme.di.modules.ActivityModule;
+import com.shushan.kencanme.di.modules.RechargeBeansModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.entity.response.RechargeBean;
+import com.shushan.kencanme.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.mvp.ui.activity.register.AgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.RechargeAdapter;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
@@ -19,14 +23,16 @@ import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 充值Activity
+ * desc:购买嗨豆Activity
  */
-public class RechargeActivity extends BaseActivity {
+public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -42,14 +48,18 @@ public class RechargeActivity extends BaseActivity {
     TextView mRechargeAgreement;
     @BindView(R.id.contact_customer)
     TextView mContactCustomer;
-    private List<RechargeBean> rechargeBeanList = new ArrayList<>();
+    private List<ReChargeBeansInfoResponse.BeansinfoBean> rechargeBeanList = new ArrayList<>();
     private RechargeAdapter rechargeAdapter;
+
+    @Inject
+    RechargeControl.PresenterRecharge mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge);
         ButterKnife.bind(this);
+        initializeInjector();
         StatusBarUtil.setTransparentForImageView(this, null);
         initView();
         initData();
@@ -62,7 +72,6 @@ public class RechargeActivity extends BaseActivity {
         mRechargeAgreement.getPaint().setAntiAlias(true);//抗锯齿
         mContactCustomer.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         mContactCustomer.getPaint().setAntiAlias(true);//抗锯齿
-
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
         rechargeAdapter = new RechargeAdapter(this, rechargeBeanList);
@@ -71,35 +80,10 @@ public class RechargeActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        for (int i = 0; i < 6; i++) {
-            if (i == 0) {
-                RechargeBean rechargeBean = new RechargeBean();
-                rechargeBean.HiBeanNum = 588;
-                rechargeBean.desc = "First recharge gift of 100";
-                rechargeBean.isRecommendLabel = false;
-                rechargeBean.rpMoney = "Rp 588";
-                rechargeBeanList.add(rechargeBean);
-            } else {
-                if (i % 2 == 0) {
-                    RechargeBean rechargeBean = new RechargeBean();
-                    rechargeBean.HiBeanNum = 2888;
-                    rechargeBean.desc = "Give 100 / ";
-                    rechargeBean.vipDesc = "VIP give 200";
-                    rechargeBean.rpMoney = "Rp 1000";
-                    rechargeBean.isRecommendLabel = false;
-                    rechargeBeanList.add(rechargeBean);
-                } else if (i % 2 == 1) {
-                    RechargeBean rechargeBean = new RechargeBean();
-                    rechargeBean.HiBeanNum = 7888;
-                    rechargeBean.desc = "Give 300 / ";
-                    rechargeBean.vipDesc = "VIP give 600";
-                    rechargeBean.rpMoney = "Rp 5000";
-                    rechargeBean.isRecommendLabel = true;
-                    rechargeBeanList.add(rechargeBean);
-                }
-            }
-        }
-//        rechargeAdapter.addData(rechargeBeanList);
+        mCurrentHiBeansNum.setText(String.valueOf(mBuProcessor.getLoginUser().beans));
+        ReChargeBeansInfoRequest reChargeBeansInfoRequest = new ReChargeBeansInfoRequest();
+        reChargeBeansInfoRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestBeansInfo(reChargeBeansInfoRequest);
     }
 
     @OnClick({R.id.common_back, R.id.common_iv_right, R.id.recharge_agreement, R.id.contact_customer})
@@ -114,8 +98,22 @@ public class RechargeActivity extends BaseActivity {
                 startActivitys(AgreementActivity.class);
                 break;
             case R.id.contact_customer:
+                showToast("联系客服");
                 break;
         }
     }
+
+    @Override
+    public void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse) {
+        rechargeBeanList =    reChargeBeansInfoResponse.getBeansinfo();
+        rechargeAdapter.addData(rechargeBeanList);
+    }
+
+    private void initializeInjector() {
+        DaggerRechargeComponent.builder().appComponent(getAppComponent())
+                .rechargeBeansModule(new RechargeBeansModule(RechargeActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 
 }

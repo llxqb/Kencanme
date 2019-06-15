@@ -175,7 +175,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM);
     }
 
-    Gson gson;
 
     @Override
     public void initView() {

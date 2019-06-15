@@ -7,11 +7,11 @@ import com.shushan.kencanme.BuildConfig;
 import com.shushan.kencanme.di.scopes.PerActivity;
 import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.mvp.model.ModelTransform;
-import com.shushan.kencanme.mvp.model.RecommendUserInfoModel;
-import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoControl;
-import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoPresenterImpl;
+import com.shushan.kencanme.mvp.model.ReChargeBeansModel;
+import com.shushan.kencanme.mvp.ui.activity.pay.RechargeControl;
+import com.shushan.kencanme.mvp.ui.activity.pay.RechargePresenterImpl;
 import com.shushan.kencanme.network.RetrofitUtil;
-import com.shushan.kencanme.network.networkapi.RecommendUserInfoApi;
+import com.shushan.kencanme.network.networkapi.BuyApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,11 +20,11 @@ import dagger.Provides;
  * Created by li.liu on 19/05/28.
  */
 @Module
-public class RecommendUserInfoModule {
+public class RechargeBeansModule {
     private final AppCompatActivity activity;
-    private final RecommendUserInfoControl.RecommendUserInfoView view;
+    private final RechargeControl.RechargeView view;
 
-    public RecommendUserInfoModule(AppCompatActivity activity, RecommendUserInfoControl.RecommendUserInfoView view) {
+    public RechargeBeansModule(AppCompatActivity activity, RechargeControl.RechargeView view) {
         this.activity = activity;
         this.view = view;
     }
@@ -37,26 +37,26 @@ public class RecommendUserInfoModule {
 
     @Provides
     @PerActivity
-    RecommendUserInfoControl.RecommendUserInfoView view() {
+    RechargeControl.RechargeView view() {
         return this.view;
     }
 
     @Provides
     @PerActivity
-    RecommendUserInfoModel provideRecommendUserInfoModel(Gson gson, ModelTransform modelTransform) {
-        return new RecommendUserInfoModel(new RetrofitUtil.Builder()
+    ReChargeBeansModel provideRechargeBeansModel(Gson gson, ModelTransform modelTransform) {
+        return new ReChargeBeansModel(new RetrofitUtil.Builder()
                 .context(activity)
                 .baseUrl(ServerConstant.DISPATCH_SERVICE)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)
                 .builder()
-                .create(RecommendUserInfoApi.class), gson, modelTransform);
+                .create(BuyApi.class), gson, modelTransform);
     }
 
     @Provides
     @PerActivity
-    RecommendUserInfoControl.PresenterRecommendUserInfo providePresenterRecommendUserInfo(RecommendUserInfoPresenterImpl recommendUserInfoPresenter) {
-        return recommendUserInfoPresenter;
+    RechargeControl.PresenterRecharge providePresenterRecharge(RechargePresenterImpl rechargePresenter) {
+        return rechargePresenter;
     }
 }
