@@ -37,4 +37,22 @@ public interface MainApi {
     @POST("menggoda/Operation")
     Observable<String> onRequestLike(@Body String request);
 
+    /**
+     * 曝光次数嗨豆购买规则
+     * 曝光次数嗨豆购买规则 (列表)
+     */
+    @POST("menggoda/order/exposure_beans_rule")
+    Observable<String> onRequestBuyExposureTimeList(@Body String request);
+
+    /**
+     * 嗨豆购买曝光次数
+     */
+    @POST("menggoda/order/buy_exposure")
+    Observable<String> onRequestBuyExposureTime(@Body String request);
+    /**
+     * 进行超级曝光
+     */
+    @POST("menggoda/user/exposure_open")
+    Observable<String> onRequestExposure(@Body String request);
+
 }

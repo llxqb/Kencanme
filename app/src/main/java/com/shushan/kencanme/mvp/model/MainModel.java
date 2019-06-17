@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
@@ -53,6 +54,19 @@ public class MainModel {
     //添加喜欢
     public Observable<ResponseData> onRequestLike(LikeRequest request) {
         return mMainApi.onRequestLike(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    // 曝光次数嗨豆购买规则 (列表)
+    public Observable<ResponseData> onRequestBuyExposureTimeList(TokenRequest request) {
+        return mMainApi.onRequestBuyExposureTimeList(mGson.toJson(request)).map(mTransform::transformListType);
+    }
+    // 嗨豆购买曝光次数
+    public Observable<ResponseData> onRequestBuyExposureTime(BuyExposureTimeRequest request) {
+        return mMainApi.onRequestBuyExposureTime(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    // 进行超级曝光
+    public Observable<ResponseData> onRequestExposure(TokenRequest request) {
+        return mMainApi.onRequestExposure(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

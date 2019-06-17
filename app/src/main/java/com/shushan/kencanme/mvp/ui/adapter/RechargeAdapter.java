@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,7 +28,8 @@ public class RechargeAdapter extends BaseQuickAdapter<ReChargeBeansInfoResponse.
     protected void convert(BaseViewHolder helper, ReChargeBeansInfoResponse.BeansinfoBean item) {
         if (item != null) {
             helper.setText(R.id.hi_beans_num, String.valueOf(item.getAmount()));
-            helper.setText(R.id.desc, item.getDescribe() + "/");
+            String describeValue = !TextUtils.isEmpty(item.getDescribe()) ? item.getDescribe() + "/" : "";
+            helper.setText(R.id.desc, describeValue);
             helper.setText(R.id.vip_desc, "VIP give" + String.valueOf(item.getVip_give()));
             helper.setText(R.id.rp_money, String.valueOf(item.getPrice()));
         }

@@ -18,11 +18,12 @@
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->
-    <string name="buy_dailog_hint">spare Hi-Beans:200</string>
+    <string name="buy_dailog_hint">spare Hi-Beans:</string>
     <string name="buy_dialog_buy">Buy</string>
     <!-- UseExposureDialog-->
     <string name="use_exposure_dialog_hint">number of times</string>
     <string name="use_exposure_dialog_use">Use once</string>
+    <string name="use_exposure_dialog_desc">Matchmaker! 10 times more people will see you in 30 minutes!</string>
     <string name="album_vip_view">VIP can view</string>
     <string name="album_hi_beans_view">Hi-beans photo</string>
     <!--PhotoDialog -->

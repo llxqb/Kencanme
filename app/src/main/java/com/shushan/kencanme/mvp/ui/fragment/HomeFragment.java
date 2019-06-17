@@ -19,10 +19,15 @@ import com.shushan.kencanme.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.Constants.Constant;
+import com.shushan.kencanme.entity.DialogBuyBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
+import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
@@ -51,7 +56,8 @@ import cn.jzvd.JzvdStd;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, HomeViewPagerAdapter.HomeViewPagerListener, BuyDialog.CommonDialogListener {
+public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, HomeViewPagerAdapter.HomeViewPagerListener,
+        BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener {
 
     @BindView(R.id.home_viewpager)
     ViewPager homeViewpager;
@@ -180,28 +186,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         startActivitys(RecommendUserInfoActivity.class);
     }
 
-//    private void goLike(int uId, int isLike) {
-//////        DialogFactory.showDialogContent(getActivity(), "are you wang open it?");
-////        BuyDialog buyDialog = BuyDialog.newInstance();
-//////        buyDialog.setContent(content);
-////        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, CommonDialog.TAG);
-//    }
-
     /**
      * 使用超级曝光
      */
     private void useSuperExposure() {
-//        //检查是否有超级曝光次数
-        if (mLoginUser.exposure > 0) {
-            UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
-            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, CommonDialog.TAG);
-        } else {
-            BuyDialog buyDialog = BuyDialog.newInstance();
-            buyDialog.setListener(this);
-            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, BuyDialog.TAG);
-        }
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestBuyExposureTimeList(tokenRequest);
     }
-
 
     @Override
     public void commonDialogBtnOkListener() {
@@ -217,21 +209,93 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void getLikeSuccess(String msg) {
         showToast(msg);
         homeViewPagerAdapter.setLikeImg();
-        mLoginUser.today_like = mLoginUser.today_like - 1;
+//        mLoginUser.today_like = mLoginUser.today_like - 1;
+        requestHomeUserInfo();
     }
 
+    @Override
+    public void getBuyExposureTimeList(DialogBuyBean dialogBuyBean) {
+        //检查是否有超级曝光次数
+        if (mLoginUser.exposure > 0) {
+            UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
+            useExposureDialog.setListener(this);
+            useExposureDialog.setContentData(mLoginUser.beans, mLoginUser.exposure);
+            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, UseExposureDialog.TAG);
+        } else {
+            BuyDialog buyDialog = BuyDialog.newInstance();
+            buyDialog.setListener(this);
+            buyDialog.setBugData(dialogBuyBean, mLoginUser.beans);
+            buyDialog.setContent("Matchmaker! 10 times more people will see you in 30 minutes!");
+            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, BuyDialog.TAG);
+        }
+    }
+
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+    }
+
+    /**
+     * 重新查询，更新用户信息(首页)
+     */
+    private void requestHomeUserInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    }
+
+    @Override
+    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        LogUtils.e("userBean:" + new Gson().toJson(userBean));
+        //把另外几项LoginUser加入进来
+        mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.exposure_type = userBean.getExposure_type();
+        mLoginUser.exposure_time = userBean.getExposure_time();
+        mLoginUser.today_like = userBean.getToday_like();
+        mLoginUser.today_chat = userBean.getToday_chat();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        mBuProcessor.setLoginUser(mLoginUser);
+    }
+
+    //购买超级曝光
+    @Override
+    public void buyDialogBtnOkListener(int beansMoney) {
+        BuyExposureTimeRequest buyExposureTimeRequest = new BuyExposureTimeRequest();
+        buyExposureTimeRequest.token = mBuProcessor.getToken();
+        buyExposureTimeRequest.beans = String.valueOf(beansMoney);
+        mPresenter.onRequestBuyExposureTime(buyExposureTimeRequest);
+    }
+
+    /**
+     * 购买超级曝光 成功
+     */
+    @Override
+    public void getBuyExposureTime(String msg) {
+        showToast(msg);
+        requestHomeUserInfo();
+    }
+
+    /**
+     * 使用超级曝光
+     */
+    @Override
+    public void useExposureBtnOkListener() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestExposure(tokenRequest);
+    }
+
+    @Override
+    public void exposureSuccess(String msg) {
+        showToast(msg);
+        //进行更新
+        requestHomeUserInfo();
+    }
 
     private void initializeInjector() {
         DaggerHomeFragmentComponent.builder().appComponent(((KencanmeApp) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent())
                 .mainModule(new MainModule((AppCompatActivity) getActivity()))
                 .homeFragmentModule(new HomeFragmentModule(this))
                 .build().inject(this);
-    }
-
-
-    //购买超级曝光
-    @Override
-    public void buyDialogBtnOkListener() {
-
     }
 }

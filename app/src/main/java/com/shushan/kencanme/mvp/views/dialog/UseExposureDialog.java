@@ -10,11 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
-import com.shushan.kencanme.entity.DialogBuyBean;
 import com.shushan.kencanme.help.DialogFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,28 +33,28 @@ public class UseExposureDialog extends BaseDialogFragment {
     TextView mUseDialogContentTv;
     @BindView(R.id.dialog_buy_use_exposure)
     TextView mDialogBuyUseExposure;
+    @BindView(R.id.use_exposure_dialog_beans_tv)
+    TextView mDialogUseExposureBeansTv;
+    @BindView(R.id.beans_tv)
+    TextView mBeansTv;
     @BindView(R.id.pop_contain)
     LinearLayout mPopContain;
     @BindView(R.id.dialog_buy_layout)
     RelativeLayout mDialogBuyLayout;
-    private CommonDialogListener dialogBtnListener;
-    private String title, mContent;
+    private UseExposureDialogListener dialogBtnListener;
+    private int mBeans, mExposure;
     private Unbinder bind;
-    private List<DialogBuyBean> dialogBuyBeans = new ArrayList<>();
 
     public static UseExposureDialog newInstance() {
         return new UseExposureDialog();
     }
 
-    public void setContent(String content) {
-        this.mContent = content;
+    public void setContentData(int beans, int exposure) {
+        this.mBeans = beans;
+        mExposure = exposure;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setListener(CommonDialogListener dialogBtnListener) {
+    public void setListener(UseExposureDialogListener dialogBtnListener) {
         this.dialogBtnListener = dialogBtnListener;
     }
 
@@ -65,6 +63,8 @@ public class UseExposureDialog extends BaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_use_exposure, container, true);
         bind = ButterKnife.bind(this, view);
+        mDialogUseExposureBeansTv.setText(String.valueOf(mExposure));
+        mBeansTv.setText(getResources().getString(R.string.buy_dailog_hint) + String.valueOf(mBeans));
         return view;
     }
 
@@ -82,15 +82,19 @@ public class UseExposureDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.dialog_buy_use_exposure:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.useExposureBtnOkListener();
+                }
                 closeCommonDialog();
                 break;
             case R.id.dialog_buy_layout:
+                closeCommonDialog();
                 break;
         }
     }
 
-    public interface CommonDialogListener {
-        void commonDialogBtnOkListener();
+    public interface UseExposureDialogListener {
+        void useExposureBtnOkListener();
     }
 
 
@@ -98,7 +102,7 @@ public class UseExposureDialog extends BaseDialogFragment {
         try {
             this.dismiss();
         } catch (Exception e) {
-            DialogFactory.dismissDialogFragment(getActivity().getSupportFragmentManager(), TAG);
+            DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
 }
