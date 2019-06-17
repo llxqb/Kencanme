@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/recommend_bottom_ll"
-        android:layout_alignParentTop="true"
-        app:contentScrim="?attr/colorPrimary">
+        android:layout_alignParentTop="true">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -24,14 +23,14 @@
                 android:id="@+id/collapsingToolbarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="@color/color_blue_btn"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
                 <!-- 个人资料头部-->
                 <LinearLayout
+                    android:id="@+id/recommend_user_head_bg"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_375"
-                    android:background="@mipmap/guide_first"
                     android:orientation="vertical"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">
@@ -103,7 +102,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="waltz"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_18" />
 
@@ -119,9 +117,9 @@
                         android:id="@+id/more_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="end"
                         android:layout_marginEnd="@dimen/dp_10"
                         android:padding="@dimen/dp_10"
-                        android:layout_gravity="end"
                         android:src="@mipmap/more" />
 
                 </android.support.v7.widget.Toolbar>
@@ -141,11 +139,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/photo_album_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:text="Photo Album"
+                    android:text="@string/MineFragment_photo_album_hint"
                     android:textColor="@color/second_text_color"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
@@ -165,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_25"
-                    android:text="Personal Information"
+                    android:text="@string/MineFragment_personal_information_hint"
                     android:textColor="@color/second_text_color"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
@@ -183,7 +182,6 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/dp_6"
                         android:drawableStart="@mipmap/details_page_address"
-                        android:text="Jakarta"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
 
@@ -195,7 +193,6 @@
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_toEndOf="@id/recommend_user_location"
                         android:gravity="start"
-                        android:text="Height: 168cm"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
 
@@ -205,7 +202,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recommend_user_location"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="Weight: 46kg"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
 
@@ -219,7 +215,6 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_toEndOf="@id/recommend_user_weight"
                         android:gravity="start"
-                        android:text="Chest:38D"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
 
@@ -229,7 +224,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recommend_user_weight"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="Birthday: 90/08/09"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
 
@@ -243,54 +237,62 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_toEndOf="@id/recommend_user_birthday"
                         android:gravity="start"
-                        android:text="Professional:model"
                         android:textColor="@color/first_text_color"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
 
 
                 <!-- 联系方式-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:text="Contact Way"
-                    android:textColor="@color/second_text_color"
-                    android:textSize="@dimen/sp_15"
-                    android:textStyle="bold" />
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dp_20">
 
                     <TextView
-                        android:id="@+id/contact_way"
-                        android:layout_width="@dimen/dp_180"
-                        android:layout_height="@dimen/dp_28"
-                        android:background="@drawable/bg_blue_round_5"
-                        android:gravity="center"
-                        android:text="13262253731"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/MineFragment_contact_way_hint"
+                        android:textColor="@color/second_text_color"
+                        android:textSize="@dimen/sp_15"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/look_over_tv"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_28"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/dp_20"
-                        android:background="@drawable/bg_blue_round_5_selector"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:drawableStart="@mipmap/look_over"
                         android:gravity="center"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
                         android:text="Look over"
                         android:textColor="@color/color_blue_btn"
                         android:textSize="@dimen/sp_15" />
-                </LinearLayout>
+                </RelativeLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/contact_way_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20" />
+
+                <!--<TextView-->
+                <!--android:id="@+id/contact_way"-->
+                <!--android:layout_width="@dimen/dp_180"-->
+                <!--android:layout_height="@dimen/dp_28"-->
+                <!--android:background="@drawable/bg_blue_round_5"-->
+                <!--android:gravity="center"-->
+                <!--android:text="13262253731"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/sp_15" />-->
 
 
                 <!-- 标签-->

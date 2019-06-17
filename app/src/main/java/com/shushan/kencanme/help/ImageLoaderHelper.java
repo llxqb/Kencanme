@@ -95,7 +95,7 @@ public class ImageLoaderHelper extends GlideLoader {
                         )
                 )// radius 越大越模糊
                 .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(loadPic)
                 .placeholder(loadPic)
                 .dontAnimate();
@@ -106,7 +106,7 @@ public class ImageLoaderHelper extends GlideLoader {
     //设置背景图片
     public void displayBackgroundImage(Context context, Object path, View imageView,int loadPic) {
         Glide.with(context).asBitmap().load(path)//签到整体 背景
-                .into(new SimpleTarget<Bitmap>(180, 180) {
+                .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         Drawable drawable = new BitmapDrawable(resource);

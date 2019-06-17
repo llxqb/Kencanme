@@ -11,13 +11,14 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.help.ImageLoaderHelper;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
+import com.shushan.kencanme.mvp.views.MyJzvdStd;
 
 import java.util.List;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 
 /**
  * Mime 页面 MyAlbumAdapter
@@ -38,32 +39,72 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
     @Override
     protected void convert(BaseViewHolder helper, MyAlbumResponse.DataBean item) {
         ImageView imageView = helper.getView(R.id.photo_iv);
+        MyJzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
         if (item != null) {
             if (!TextUtils.isEmpty(item.getAlbum_url())) {
                 if (TranTools.isVideo(item.getAlbum_url())) {
+                    //video
                     helper.setVisible(R.id.album_jz_video, true);
                     helper.setVisible(R.id.photo_iv, false);
-                    JzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
-                    jzvdStd.setUp(item.getAlbum_url(), "");
-                    PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                    switch (item.getAlbum_type()) {
+                        case 1:
+                            helper.setVisible(R.id.photo_hint_tv, false);
+                            jzvdStd.setUp(item.getAlbum_url(), "");
+                            PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                            break;
+                        case 2:
+                            helper.setVisible(R.id.photo_hint_tv, true);
+                            helper.setText(R.id.photo_hint_tv, "VIP can view");
+                            if (mContext instanceof RecommendUserInfoActivity) {
+                                //设置毛玻璃效果
+                                jzvdStd.setUp(item.getAlbum_url(), "");
+                                mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
+                            } else {
+                                //显示第一帧
+                                jzvdStd.setUp(item.getAlbum_url(), "");
+                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                            }
+                            break;
+                        case 3:
+                            helper.setVisible(R.id.photo_hint_tv, true);
+                            helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
+                            if (mContext instanceof RecommendUserInfoActivity) {
+                                jzvdStd.setUp(item.getAlbum_url(), "");
+                                mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
+                            } else {
+                                jzvdStd.setUp(item.getAlbum_url(), "");
+                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                            }
+                            break;
+                    }
                 } else {
+                    //photo
                     helper.setVisible(R.id.album_jz_video, false);
                     helper.setVisible(R.id.photo_iv, true);
-                    mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView,Constant.LOADING_SMALL);
-                }
-
-                switch (item.getAlbum_type()) {
-                    case 1:
-                        helper.setVisible(R.id.photo_hint_tv, false);
-                        break;
-                    case 2:
-                        helper.setVisible(R.id.photo_hint_tv, true);
-                        helper.setText(R.id.photo_hint_tv, "VIP can look");
-                        break;
-                    case 3:
-                        helper.setVisible(R.id.photo_hint_tv, true);
-                        helper.setText(R.id.photo_hint_tv, "Hi-Beans can look");
-                        break;
+                    switch (item.getAlbum_type()) {
+                        case 1:
+                            helper.setVisible(R.id.photo_hint_tv, false);
+                            mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
+                            break;
+                        case 2:
+                            helper.setVisible(R.id.photo_hint_tv, true);
+                            helper.setText(R.id.photo_hint_tv, "VIP can view");
+                            if (mContext instanceof RecommendUserInfoActivity) {
+                                mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
+                            } else {
+                                mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
+                            }
+                            break;
+                        case 3:
+                            helper.setVisible(R.id.photo_hint_tv, true);
+                            helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
+                            if (mContext instanceof RecommendUserInfoActivity) {
+                                mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
+                            } else {
+                                mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
+                            }
+                            break;
+                    }
                 }
             } else {
                 helper.setVisible(R.id.photo_delete, false);
@@ -73,4 +114,5 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
             }
         }
     }
+
 }

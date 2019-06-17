@@ -42,6 +42,7 @@ public class LoginUtils {
         return loginUser;
     }
 
+
     /**
      * LoginUser 转换为 UpdatePersonalInfoRequest
      * 只在登录才用到

@@ -49,6 +49,11 @@
     <!-- app hint语句 -->
     <string name="app_nice_hint">请输入昵称</string>
 
+    <!-- MineFragment-->
+    <string name="MineFragment_photo_album_hint">Photo Album</string>
+    <string name="MineFragment_personal_information_hint">Personal Information</string>
+    <string name="MineFragment_contact_way_hint">Contact Way</string>
+
 
     <!--EditPersonalInfoActivity-->
     <string name="EditPersonalInfoActivity_Address">Address</string>

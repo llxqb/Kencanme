@@ -29,8 +29,8 @@ public class ContactWayAdapter extends BaseQuickAdapter<ContactWay, BaseViewHold
     protected void convert(BaseViewHolder helper, ContactWay item) {
         helper.addOnClickListener(R.id.contact_way_tv).addOnClickListener(R.id.delete_iv);
         if (item != null) {
-            helper.setText(R.id.contact_way_tv, item.contactName);
-            helper.setText(R.id.contact_value_et, item.contactValue);
+            helper.setText(R.id.contact_way_tv, item.name);
+            helper.setText(R.id.contact_value_et, item.email);
         }
         EditText contactValueEt = helper.getView(R.id.contact_value_et);
         contactValueEt.addTextChangedListener(new CustomTextWatcher(helper.getAdapterPosition(),item));
@@ -67,7 +67,7 @@ public class ContactWayAdapter extends BaseQuickAdapter<ContactWay, BaseViewHold
         @Override
         public void afterTextChanged(Editable editable) {
             if (editable != null) {
-                mItem.contactValue = editable.toString();
+                mItem.email = editable.toString();
             }
         }
     }

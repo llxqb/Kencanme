@@ -68,7 +68,7 @@ public class PersonalInfoResponse implements Parcelable {
     private String trait;
     private String pushing_small_age;
     private String pushing_large_age;
-    private List<?> label;
+    private List<String> label;
     private List<ContactWay> contact;
     private List<AlbumBean> album;
 
@@ -313,11 +313,11 @@ public class PersonalInfoResponse implements Parcelable {
         this.pushing_large_age = pushing_large_age;
     }
 
-    public List<?> getLabel() {
+    public List<String> getLabel() {
         return label;
     }
 
-    public void setLabel(List<?> label) {
+    public void setLabel(List<String> label) {
         this.label = label;
     }
 

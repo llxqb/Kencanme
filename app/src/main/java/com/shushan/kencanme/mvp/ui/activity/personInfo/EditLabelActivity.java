@@ -23,11 +23,11 @@ import com.shushan.kencanme.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.entity.request.LabelBean;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.lang.reflect.Type;
@@ -59,7 +59,8 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     @BindView(R.id.text_et)
     EditText mTextEt;
     RecommendUserLabelAdapter recommendUserLabelAdapter;
-    List<LabelBean> labelList;
+    List<String> labelList = new ArrayList<>();
+    ;
     int deletePos;
     /**
      * 是否是保存  false是指执行删除
@@ -82,7 +83,6 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditLabelActivity_title));
-        labelList = new ArrayList<>();
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
         mLabelRecyclerView.setLayoutManager(gridLayoutManager2);
         recommendUserLabelAdapter = new RecommendUserLabelAdapter(this, labelList);
@@ -116,9 +116,9 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     @Override
     public void initData() {
         String labelString = mBuProcessor.getLoginUser().label; //转换联系方式为list
-        if (!TextUtils.isEmpty(labelString)) {
+        if (!TextUtils.isEmpty(labelString) && !labelString.equals("null")) {
             Gson gson = new Gson();
-            Type labelListType = new TypeToken<List<LabelBean>>() {
+            Type labelListType = new TypeToken<List<String>>() {
             }.getType();
             labelList = gson.fromJson(labelString, labelListType);
             recommendUserLabelAdapter.setNewData(labelList);
@@ -133,9 +133,9 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
                 break;
             case R.id.add_tv:
                 if (!TextUtils.isEmpty(mTextEt.getText())) {
-                    LabelBean labelBean = new LabelBean();
-                    labelBean.name = mTextEt.getText().toString();
-                    recommendUserLabelAdapter.addData(labelBean);
+//                    LabelBean labelBean = new LabelBean();
+//                    labelBean.name = mTextEt.getText().toString();
+                    recommendUserLabelAdapter.addData(mTextEt.getText().toString());
                     mTextEt.setText("");
                 } else {
                     showToast("please add label");
@@ -149,15 +149,24 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     }
 
     private void saveLabel() {
-        if (labelList.size() > 0) {
+        if (labelList != null && labelList.size() > 0) {
             updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
             updatePersonalInfoRequest.token = mBuProcessor.getToken();
-            updatePersonalInfoRequest.label = new Gson().toJson(labelList);
+            updatePersonalInfoRequest.label = new Gson().toJson(recommendUserLabelAdapter.getData());
+            LogUtils.e("updatePersonalInfoRequest:" + new Gson().toJson(updatePersonalInfoRequest));
             mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
         } else {
             showToast("please add label");
         }
     }
+
+    private void deleteLabel(){
+        updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
+        updatePersonalInfoRequest.token = mBuProcessor.getToken();
+        updatePersonalInfoRequest.label = new Gson().toJson(recommendUserLabelAdapter.getData());
+        mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
+    }
+
 
     @Override
     public void updateSuccess(String msg) {
@@ -166,8 +175,6 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         if (isPreserveLabel) {
             finish();
-        } else {
-            recommendUserLabelAdapter.remove(deletePos);
         }
     }
 
@@ -177,6 +184,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     private void updatLoginUser() {
         LoginUser loginUser = mBuProcessor.getLoginUser();
         loginUser.label = updatePersonalInfoRequest.label;
+        LogUtils.e("loginUser" + new Gson().toJson(loginUser));
         mBuProcessor.setLoginUser(loginUser);
     }
 
@@ -204,6 +212,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
 
     @Override
     public void commonDialogBtnOkListener() {
-        saveLabel();
+        recommendUserLabelAdapter.remove(deletePos);
+        deleteLabel();
     }
 }

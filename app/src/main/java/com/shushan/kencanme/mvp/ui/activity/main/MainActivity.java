@@ -28,6 +28,7 @@ import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MineFragment;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
+import com.shushan.kencanme.mvp.views.MyJzvdStd;
 import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, MyJzvdStd.MyjzvdListener {
 
     @BindView(R.id.main_bottom_navigation)
     BottomNavigationView mMainBottomNavigation;
@@ -165,4 +166,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
 
+    @Override
+    public void jzvdClickListener(int clickPos) {
+//        ToastUtil.showToast(this,"sssssssss");
+        showToast(""+clickPos);
+//        LookPhotoActivity.start(this, "");//查看大图
+    }
 }

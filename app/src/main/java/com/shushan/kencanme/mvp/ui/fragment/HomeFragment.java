@@ -65,6 +65,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     ImageView mUseExposureIv;
     //当前发起更新的位置
     private int currentUpdatePos = 0;
+    private int currentPagePos;
 
     private List<HomeFragmentResponse.ListBean> viewPagerResponseList = new ArrayList<>();
     private HomeViewPagerAdapter homeViewPagerAdapter;
@@ -104,6 +105,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
             @Override
             public void onPageSelected(int position) {
+                currentPagePos = position;
                 if ((position + 1) % 4 == 0 && position > currentUpdatePos) {//回滑的时候不刷新
                     currentUpdatePos = position;
                     requestHomeData();
@@ -170,7 +172,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void goChat(int uId) {
-//        DialogFactory.showCommonDialog(getActivity(), "Open Super free Chat?", Constant.DIALOG_THREE);
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setListener(this);
         commonDialog.setContent("Open Super free Chat?");
@@ -183,7 +184,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void goRecommendUser() {
-        startActivitys(RecommendUserInfoActivity.class);
+        RecommendUserInfoActivity.start(getActivity(),viewPagerResponseList.get(currentPagePos));
     }
 
     /**
@@ -209,7 +210,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void getLikeSuccess(String msg) {
         showToast(msg);
         homeViewPagerAdapter.setLikeImg();
-//        mLoginUser.today_like = mLoginUser.today_like - 1;
         requestHomeUserInfo();
     }
 
@@ -298,4 +298,5 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 .homeFragmentModule(new HomeFragmentModule(this))
                 .build().inject(this);
     }
+
 }

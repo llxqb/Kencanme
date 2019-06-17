@@ -1,5 +1,8 @@
 package com.shushan.kencanme.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class HomeFragmentResponse {
@@ -14,7 +17,7 @@ public class HomeFragmentResponse {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Parcelable{
         /**
          * uid : 829
          * nickname : somili
@@ -42,6 +45,36 @@ public class HomeFragmentResponse {
         private String rongyun_token;
         private int active_time;
         private int is_like;
+
+        public ListBean() {
+        }
+
+        protected ListBean(Parcel in) {
+            uid = in.readInt();
+            nickname = in.readString();
+            trait = in.readString();
+            cover = in.readString();
+            sex = in.readInt();
+            city = in.readString();
+            last_login_time = in.readInt();
+            exposure_time = in.readInt();
+            age = in.readInt();
+            rongyun_token = in.readString();
+            active_time = in.readInt();
+            is_like = in.readInt();
+        }
+
+        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
+            @Override
+            public ListBean createFromParcel(Parcel in) {
+                return new ListBean(in);
+            }
+
+            @Override
+            public ListBean[] newArray(int size) {
+                return new ListBean[size];
+            }
+        };
 
         public int getUid() {
             return uid;
@@ -137,6 +170,27 @@ public class HomeFragmentResponse {
 
         public void setIs_like(int is_like) {
             this.is_like = is_like;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(uid);
+            dest.writeString(nickname);
+            dest.writeString(trait);
+            dest.writeString(cover);
+            dest.writeInt(sex);
+            dest.writeString(city);
+            dest.writeInt(last_login_time);
+            dest.writeInt(exposure_time);
+            dest.writeInt(age);
+            dest.writeString(rongyun_token);
+            dest.writeInt(active_time);
+            dest.writeInt(is_like);
         }
     }
 }

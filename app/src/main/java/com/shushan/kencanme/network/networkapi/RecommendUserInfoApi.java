@@ -10,6 +10,6 @@ import retrofit2.http.POST;
  */
 
 public interface RecommendUserInfoApi {
-    @POST("teacher/user/login")
+    @POST("menggoda/operation/user")
     Observable<String> recommendUserInfoRequest(@Body String request);
 }

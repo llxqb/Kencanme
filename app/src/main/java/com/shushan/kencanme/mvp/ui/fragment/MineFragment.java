@@ -28,7 +28,6 @@ import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
-import com.shushan.kencanme.entity.request.LabelBean;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
@@ -104,6 +103,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     TextView mUserBirthday;
     @BindView(R.id.user_professional)
     TextView mUserProfessional;
+    @BindView(R.id.contact_way_hint_tv)
+    TextView mContactWayHintTv;
+    @BindView(R.id.label_hint_tv)
+    TextView mLabelHintTv;
     @BindView(R.id.contact_way_tv)
     TextView mContactWayTv;
     @BindView(R.id.label_tv)
@@ -129,7 +132,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     //我的照片
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
     List<ContactWay> contactWayList;//联系方式集合
-    List<LabelBean> labelList;//联系方式集合
+    List<String> labelList;//联系方式集合
     private AlbumAdapter mAlbumAdapter;
     private MimeContactWayAdapter mimeContactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
@@ -197,7 +200,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mimeContactWayAdapter = new MimeContactWayAdapter(contactWayList);
         mContactRecyclerView.setAdapter(mimeContactWayAdapter);
-
         mLabelRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recommendUserLabelAdapter = new RecommendUserLabelAdapter(getActivity(), labelList);
         mLabelRecyclerView.setAdapter(recommendUserLabelAdapter);
@@ -220,17 +222,32 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         Gson gson = new Gson();
         Type listType = new TypeToken<List<ContactWay>>() {
         }.getType();
-        contactWayList = gson.fromJson(contactWayString, listType);
+        if (!TextUtils.isEmpty(contactWayString)) {
+            contactWayList = gson.fromJson(contactWayString, listType);
+        }
         mimeContactWayAdapter.setNewData(contactWayList);
+        if (contactWayList!=null && contactWayList.size() == 0) {
+            mContactWayHintTv.setVisibility(View.VISIBLE);
+        } else {
+            mContactWayHintTv.setVisibility(View.GONE);
+        }
         //label
         String labelString = mBuProcessor.getLoginUser().label; //转换联系方式为list
         Gson gson2 = new Gson();
-        Type labelListType = new TypeToken<List<LabelBean>>() {
+        Type labelListType = new TypeToken<List<String>>() {
         }.getType();
-        labelList = gson2.fromJson(labelString, labelListType);
+        if (!TextUtils.isEmpty(labelString)) {
+            labelList = gson2.fromJson(labelString, labelListType);
+        }
         recommendUserLabelAdapter.setNewData(labelList);
+        if (labelList!=null && labelList.size() == 0) {
+            mLabelHintTv.setVisibility(View.VISIBLE);
+        } else {
+            mLabelHintTv.setVisibility(View.GONE);
+        }
+
         LoginUser mLoginUser = mBuProcessor.getLoginUser();
-        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_SMALL);
+        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_AVATOR);
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.sex == 1) {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_male);

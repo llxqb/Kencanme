@@ -2,13 +2,15 @@ package com.shushan.kencanme.mvp.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import cn.jzvd.JzvdStd;
 
 public class MyJzvdStd extends JzvdStd {
+
+    private static boolean mIsClick = false;
+    private static MyjzvdListener mMyjzvdListener;
+    private static int mClickPos;
 
     public MyJzvdStd(Context context) {
         super(context);
@@ -18,27 +20,25 @@ public class MyJzvdStd extends JzvdStd {
         super(context, attrs);
     }
 
+    public interface MyjzvdListener {
+        void jzvdClickListener(int clickPos);
+    }
+
+    public static  void setClick(MyjzvdListener myjzvdListener, boolean isClick, int clickPos) {
+        mIsClick = isClick;
+        mMyjzvdListener = myjzvdListener;
+        mClickPos = clickPos;
+    }
+
     @Override
     public void onClick(View v) {
-//        super.onClick(v);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                Log.e("ddd","ACTION_DOWN");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.e("ddd","ACTION_UP");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.e("ddd","ACTION_MOVE");
-                break;
+        if (mIsClick) {
+            super.onClick(v);
+        } else {
+            if (mMyjzvdListener != null) {
+                mMyjzvdListener.jzvdClickListener( mClickPos);
+            }
         }
-        return false;
     }
-
-
 
 }

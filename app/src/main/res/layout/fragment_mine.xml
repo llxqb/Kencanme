@@ -59,7 +59,6 @@
                         android:layout_height="wrap_content"
                         android:background="@mipmap/home_gender_female"
                         android:paddingStart="@dimen/dp_18"
-                        android:text="23 years"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_10" />
 
@@ -100,9 +99,9 @@ I hope you like me."
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
                     android:paddingBottom="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
                     android:src="@mipmap/icon_set_up" />
 
                 <!-- 在线客服-->
@@ -124,8 +123,8 @@ I hope you like me."
         android:id="@+id/edit_personal_info_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_m_10"
         android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_m_10"
         android:scaleType="center"
         android:src="@mipmap/mine_edit"
         app:backgroundTint="@color/app_color"
@@ -290,7 +289,7 @@ I hope you like me."
                 android:drawableEnd="@mipmap/next_step"
                 android:paddingEnd="@dimen/dp_20"
                 android:paddingStart="@dimen/dp_20"
-                android:text="Personal Information"
+                android:text="@string/MineFragment_personal_information_hint"
                 android:textColor="@color/second_text_color"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold" />
@@ -382,30 +381,28 @@ I hope you like me."
                 android:drawableEnd="@mipmap/next_step"
                 android:paddingEnd="@dimen/dp_22"
                 android:paddingStart="@dimen/dp_22"
-                android:text="Contact Way"
+                android:text="@string/MineFragment_contact_way_hint"
                 android:textColor="@color/second_text_color"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/contact_way_hint_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Add your contact way"
+                android:visibility="gone" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/contact_recycler_view"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_20"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <!--<TextView-->
-                <!--android:id="@+id/contact_way"-->
-                <!--android:layout_width="@dimen/dp_180"-->
-                <!--android:layout_height="@dimen/dp_28"-->
-                <!--android:layout_marginStart="@dimen/dp_20"-->
-                <!--android:layout_marginTop="@dimen/dp_10"-->
-                <!--android:background="@drawable/bg_blue_round_5"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:paddingEnd="@dimen/dp_5"-->
-                <!--android:paddingStart="@dimen/dp_5"-->
-                <!--android:text="13262253731"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/sp_15" />-->
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10" />
 
             <View
                 android:layout_width="match_parent"
@@ -426,6 +423,16 @@ I hope you like me."
                 android:textColor="@color/second_text_color"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/label_hint_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="Add your personality label"
+                android:visibility="gone" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/label_recycler_view"

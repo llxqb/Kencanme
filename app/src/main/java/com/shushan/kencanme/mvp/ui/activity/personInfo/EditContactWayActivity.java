@@ -99,7 +99,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                         break;
                     case R.id.delete_iv:
                         assert contactWay != null;
-                        contactWay.contactValue = "";
+                        contactWay.email = "";
                         adapter.notifyItemChanged(position);
                         break;
                 }
@@ -120,8 +120,8 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                 break;
             case R.id.add_more_ll:
                 ContactWay contactWay = new ContactWay();
-                contactWay.contactName = "google";//默认添加谷歌
-                contactWay.contactValue = "";
+                contactWay.name = "google";//默认添加谷歌
+                contactWay.email = "";
                 contactWayAdapter.addData(contactWay);
                 break;
             case R.id.save_btn:
@@ -152,24 +152,24 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     public void photoDialogBtnOkListener() {
         //google
         ContactWay contactWay = new ContactWay();
-        contactWay.contactName = "google";
-        contactWay.contactValue = "";
+        contactWay.name = "google";
+        contactWay.email = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 
     @Override
     public void albumDialogBtnOkListener() {
         ContactWay contactWay = new ContactWay();
-        contactWay.contactName = "facebook";
-        contactWay.contactValue = "";
+        contactWay.name = "facebook";
+        contactWay.email = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 
     @Override
     public void photoDialogBtn3OkListener() {
         ContactWay contactWay = new ContactWay();
-        contactWay.contactName = "WhatsApp";
-        contactWay.contactValue = "";
+        contactWay.name = "WhatsApp";
+        contactWay.email = "";
         contactWayAdapter.setData(currentPos, contactWay);
     }
 

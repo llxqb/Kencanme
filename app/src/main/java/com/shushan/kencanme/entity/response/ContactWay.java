@@ -12,13 +12,17 @@ public  class ContactWay implements Parcelable{
      * contactValue :
      */
 
-    public String contactName;
-    public String contactValue;
+    public String name;
+    public String email;
+    /**
+     * 是否显示可以查看
+     */
+    public boolean isShow = false;
 
 
     protected ContactWay(Parcel in) {
-        contactName = in.readString();
-        contactValue = in.readString();
+        name = in.readString();
+        email = in.readString();
     }
 
     public ContactWay() {
@@ -26,8 +30,8 @@ public  class ContactWay implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(contactName);
-        dest.writeString(contactValue);
+        dest.writeString(name);
+        dest.writeString(email);
     }
 
     @Override

@@ -8,7 +8,7 @@ import com.shushan.kencanme.R;
 
 public class Constant {
     /**
-     * 公共弹框选择方式1和2,3
+     * 公共弹框选择方式1和2,3,4
      */
     public static final int DIALOG_ONE = 1;
     public static final int DIALOG_TWO = 2;
@@ -29,5 +29,6 @@ public class Constant {
     public static final int LOADING_SMALL = R.mipmap.loading_small;
     public static final int LOADING_MIDDLE = R.mipmap.loading_middle;
     public static final int LOADING_BIG = R.mipmap.loading_big;
+    public static final int LOADING_AVATOR = R.mipmap.head_photo_loading;
 
 }
