@@ -3,6 +3,9 @@ package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 import android.content.Context;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.request.BlackUserRequest;
+import com.shushan.kencanme.entity.request.DeleteUserRequest;
+import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -46,11 +49,73 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
         mRecommendUserInfoView.addSubscription(disposable);
     }
 
+
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(RecommendUserInfoResponse.class);
             RecommendUserInfoResponse response = (RecommendUserInfoResponse) responseData.parsedData;
             mRecommendUserInfoView.getRecommendUserInfoSuccess(response);
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 加入黑名单
+     */
+    @Override
+    public void onRequestBlackUser(BlackUserRequest blackUserRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestBlackUser(blackUserRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestBlackUserSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+
+    private void requestBlackUserSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.getBlackUserSuccess("success");
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 删除好友
+     */
+    @Override
+    public void onRequestDeleteUser(DeleteUserRequest deleteUserRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestDeleteUser(deleteUserRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestDeleteUserSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestDeleteUserSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.getDeleteUserSuccess("success");
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 喜欢
+     */
+    @Override
+    public void onRequestLike(LikeRequest likeRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestLike(likeRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestLikeSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestLikeSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.getLikeSuccess("已添加喜欢");
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

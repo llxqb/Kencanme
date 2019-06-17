@@ -336,13 +336,14 @@
                 android:id="@+id/recommend_like_iv"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_60"
-                android:src="@mipmap/home_like" />
+                android:src="@mipmap/home_liked" />
 
             <TextView
+                android:id="@+id/recommend_like_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Like"
-                android:textColor="@color/red_color_btn"
+                android:textColor="@color/five_text_color"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
 

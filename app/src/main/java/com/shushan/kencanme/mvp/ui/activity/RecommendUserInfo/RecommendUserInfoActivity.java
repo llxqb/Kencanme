@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,15 +18,20 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerRecommendUserInfoComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RecommendUserInfoModule;
+import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.BlackUserRequest;
+import com.shushan.kencanme.entity.request.DeleteUserRequest;
+import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
-import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.reportUser.ReportUserActivity;
+import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
@@ -39,6 +45,7 @@ import com.shushan.kencanme.mvp.views.dialog.UseBeansDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -50,7 +57,7 @@ import butterknife.OnClick;
  * 推荐用户资料详情
  */
 public class RecommendUserInfoActivity extends BaseActivity implements RecommendUserInfoControl.RecommendUserInfoView, CommonChoiceDialog.commonChoiceDialogListener,
-        CommonDialog.CommonDialogListener ,MyJzvdStd.MyjzvdListener,UseBeansDialog.UseBeansDialogListener{
+        CommonDialog.CommonDialogListener, MyJzvdStd.MyjzvdListener, UseBeansDialog.UseBeansDialogListener {
     @BindView(R.id.back_iv)
     ImageView mBackIv;
     @BindView(R.id.more_iv)
@@ -91,6 +98,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     RecyclerView mLabelRecyclerView;
     @BindView(R.id.recommend_like_iv)
     ImageView mRecommendLikeIv;
+    @BindView(R.id.recommend_like_tv)
+    TextView mRecommendLikeTv;
     @BindView(R.id.recommend_chat_iv)
     ImageView mRecommendChatIv;
     private List<MyAlbumResponse.DataBean> albumInfoLists = new ArrayList<>();
@@ -98,13 +107,20 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     private AlbumAdapter albumAdapter;
     private MimeContactWayAdapter contactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
+    int mUid;
+    /**
+     * 1 加入黑名单  2 删除好友  3 喜欢好友
+     */
+    int operationType;
     @Inject
     RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
     List<String> labelList = new ArrayList<>();
+    private RecommendUserInfoResponse recommendUserInfoResponse;
+    private LoginUser mLoginUser;
 
-    public static void start(Context context, HomeFragmentResponse.ListBean listBean) {
+    public static void start(Context context, int uid) {
         Intent intent = new Intent(context, RecommendUserInfoActivity.class);
-        intent.putExtra("listBean", listBean);
+        intent.putExtra("uid", uid);
         context.startActivity(intent);
     }
 
@@ -125,7 +141,62 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         initAdapter();
         albumAdapter.setOnItemClickListener((adapter, view, position) -> {
             MyAlbumResponse.DataBean bean = albumAdapter.getItem(position);
+
         });
+    }
+
+
+    private void initAdapter() {
+        //图片adapter
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+        mAlbumRecyclerView.setLayoutManager(gridLayoutManager);
+        albumAdapter = new AlbumAdapter(this, albumInfoLists, mImageLoaderHelper);
+        mAlbumRecyclerView.setAdapter(albumAdapter);
+
+        //联系方式adapter
+        mContactWayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        contactWayAdapter = new MimeContactWayAdapter(contactWayList);
+        mContactWayRecyclerView.setAdapter(contactWayAdapter);
+        //label adapter
+        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
+        mLabelRecyclerView.setLayoutManager(gridLayoutManager2);
+        recommendUserLabelAdapter = new RecommendUserLabelAdapter(this, labelList);
+        mLabelRecyclerView.setAdapter(recommendUserLabelAdapter);
+    }
+
+    @Override
+    public void initData() {
+        mLoginUser = mBuProcessor.getLoginUser();
+        if (getIntent() != null) {
+            mUid = getIntent().getIntExtra("uid", 0);
+            //查询用户详细信息
+            RecommendUserInfoRequest recommendUserInfoRequest = new RecommendUserInfoRequest();
+            recommendUserInfoRequest.token = mBuProcessor.getToken();
+            recommendUserInfoRequest.uid = String.valueOf(mUid);
+            mPresenter.onRequestRecommendUserInfo(recommendUserInfoRequest);
+        }
+    }
+
+    @OnClick({R.id.back_iv, R.id.more_iv, R.id.look_over_tv, R.id.recommend_like_iv, R.id.recommend_chat_iv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_iv:
+                finish();
+                break;
+            case R.id.more_iv:
+                CommonChoiceDialog commonChoiceDialog = CommonChoiceDialog.newInstance();
+                commonChoiceDialog.setListener(this);
+                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), commonChoiceDialog, CommonChoiceDialog.TAG);
+                break;
+            case R.id.look_over_tv:
+                showContactWay();
+                break;
+            case R.id.recommend_like_iv:
+                likeIv();
+                break;
+            case R.id.recommend_chat_iv:
+                break;
+        }
     }
 
     /**
@@ -160,69 +231,53 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         mRecommendUserChest.setText(mUserChestValue);
         mRecommendUserBirthday.setText(mUserBirthdayValue);
         mRecommendUserProfessional.setText(mUserProfessionalValue);
-
+        //1 喜欢2互相喜欢（好友）3黑名单
+        if (recommendUserInfoResponse.getRelation() == 1 || recommendUserInfoResponse.getRelation() == 2) {
+            likedBg();
+        } else {
+            unlikedBg();
+        }
     }
 
-    private void initAdapter() {
-        //图片adapter
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
-        mAlbumRecyclerView.setLayoutManager(gridLayoutManager);
-        albumAdapter = new AlbumAdapter(this, albumInfoLists, mImageLoaderHelper);
-        mAlbumRecyclerView.setAdapter(albumAdapter);
+    private void likedBg() {
+        mImageLoaderHelper.displayImage(this, R.mipmap.home_like, mRecommendLikeIv, R.mipmap.home_liked);
+        mRecommendLikeTv.setTextColor(getResources().getColor(R.color.red_color_btn));
+    }
 
-        //联系方式adapter
-        mContactWayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        contactWayAdapter = new MimeContactWayAdapter(contactWayList);
-        mContactWayRecyclerView.setAdapter(contactWayAdapter);
-        //label adapter
-        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
-        mLabelRecyclerView.setLayoutManager(gridLayoutManager2);
-        recommendUserLabelAdapter = new RecommendUserLabelAdapter(this, labelList);
-        mLabelRecyclerView.setAdapter(recommendUserLabelAdapter);
+    private void unlikedBg() {
+        mImageLoaderHelper.displayImage(this, R.mipmap.home_liked, mRecommendLikeIv, R.mipmap.home_liked);
+        mRecommendLikeTv.setTextColor(getResources().getColor(R.color.five_text_color));
+    }
 
-
+    /**
+     * Go喜欢
+     */
+    private void likeIv() {
+        operationType = 3;
+        //TODO 判断用户类型
+//        if(AppUtils.userType(mLoginUser.svip,mLoginUser.vip,mLoginUser.sex)==2){
+//        }
+        if (mLoginUser != null && mLoginUser.today_like < 20) {
+            LikeRequest likeRequest = new LikeRequest();
+            likeRequest.token = mBuProcessor.getToken();
+            likeRequest.likeid = mUid;
+            mPresenter.onRequestLike(likeRequest);
+        } else {
+            CommonDialog commonDialog = CommonDialog.newInstance();
+            commonDialog.setListener(this);
+            commonDialog.setContent("Today's favorite number has been used up. Open members can enjoy unlimited ~");
+            commonDialog.setStyle(Constant.DIALOG_TWO);
+            DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        }
     }
 
     @Override
-    public void initData() {
-        if (getIntent() != null) {
-            HomeFragmentResponse.ListBean listBean = getIntent().getParcelableExtra("listBean");
-            if (listBean != null) {
-                //查询用户详细信息
-                RecommendUserInfoRequest recommendUserInfoRequest = new RecommendUserInfoRequest();
-                recommendUserInfoRequest.token = mBuProcessor.getToken();
-                recommendUserInfoRequest.uid = String.valueOf(listBean.getUid());
-                mPresenter.onRequestRecommendUserInfo(recommendUserInfoRequest);
-            }
-        }
-    }
-
-    @OnClick({R.id.back_iv, R.id.more_iv, R.id.look_over_tv, R.id.recommend_like_iv, R.id.recommend_chat_iv})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.back_iv:
-                finish();
-                break;
-            case R.id.more_iv:
-//                CommonChoiceDialog commonChoiceDialog = CommonChoiceDialog.newInstance();
-//                commonChoiceDialog.setListener(this);
-//                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), commonChoiceDialog, CommonChoiceDialog.TAG);
-                DialogFactory.showCommonDialog(this, "Determine to blacklist the us\n" +
-                        "-er? After joining the blacklist, \n" +
-                        "the user will no longer be pus\n" +
-                        "-hed for you.?", Constant.DIALOG_THREE);
-                break;
-            case R.id.look_over_tv:
-//                mContactWay.setText("13262253731");
-                showContactWay();
-                break;
-            case R.id.recommend_like_iv:
-                showToast("已喜欢");
-                mImageLoaderHelper.displayImage(this, R.mipmap.home_liked, mRecommendLikeIv, Constant.LOADING_SMALL);
-                break;
-            case R.id.recommend_chat_iv:
-                break;
-        }
+    public void getLikeSuccess(String msg) {
+        showToast(msg);
+        likedBg();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+//        requestHomeUserInfo();
+        //更新用户数据
     }
 
     private void showContactWay() {
@@ -238,18 +293,9 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     @Override
-    public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response1) {
-        LogUtils.e("response:" + new Gson().toJson(response1));
-        String ss = "{\"active_time\":-1,\"age\":23,\"album\":[{\"id\":6,\"album_url\":\"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190613/5d02066162657.png\",\"album_type\":1,\"cost\":0},\n" +
-                "{\n" +
-                "            \"id\":8,\n" +
-                "            \"album_url\":\"http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4\",\n" +
-                "            \"album_type\":2,\n" +
-                "            \"cost\":0\n" +
-                "        },\n" +
-                "{\"id\":7,\"album_url\":\"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190613/5d020b7c814df.png\",\"album_type\":2,\"cost\":0}],\"beans\":0,\"birthday\":\"820512000\",\"bust\":\"38B\",\"city\":\"Bandung\",\"contact\":[{\"contactName\":\"google\",\"contactValue\":\"123g\"},{\"contactName\":\"facebook\",\"contactValue\":\"qqqq\"}],\"cover\":\"https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/21077236_1847543632225383_3255788874175109773_n.jpg?_nc_cat\\u003d100\\u0026_nc_ht\\u003dscontent-hkg3-1.xx\\u0026oh\\u003df3a4c2a70deecce2692f7ca2826a69bb\\u0026oe\\u003d5D968C5C\",\"declaration\":\"\",\"exposure\":0,\"forbidden\":0,\"height\":163,\"is_friend\":0,\"is_see_contact\":0,\"label\":[{\"name\":\"yyyyy\"},{\"name\":\"uuu\"},{\"name\":\"哈哈哈哈\"}],\"last_login_time\":0,\"nickname\":\"july\",\"occupation\":\"actress\",\"pushing_age\":\"18-30\",\"pushing_gender\":2,\"pushing_large_age\":\"30\",\"pushing_small_age\":\"18\",\"relation\":0,\"rongyun_userid\":\"Kencanme770\",\"sex\":2,\"svip\":0,\"token\":\"\",\"trait\":\"https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-9/22008153_1861299764183103_3678657400557544971_n.jpg?_nc_cat\\u003d105\\u0026_nc_ht\\u003dscontent-hkg3-1.xx\\u0026oh\\u003da6136cd7368f4279828a49b5cdbba16d\\u0026oe\\u003d5D56FE47\",\"uid\":770,\"vip\":0,\"vip_time\":0,\"weight\":\"46\",\"wrong_login_num\":0,\"wrong_time\":0}\n";
-        RecommendUserInfoResponse response = new Gson().fromJson(ss, RecommendUserInfoResponse.class);
-
+    public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response) {
+        recommendUserInfoResponse = response;
+        LogUtils.e("response:" + new Gson().toJson(response));
         setUserData(response);
         for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
             MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
@@ -266,33 +312,56 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         recommendUserLabelAdapter.setNewData(labelList);
     }
 
+    @Override
+    public void blackUserListener() {
+        operationType = 1;
+        //显示加入黑名单弹框
+        DialogFactory.showCommonDialog(this, "Determine to blacklist the user? After joining the blacklist, the user will no longer be pushed for you.?", Constant.DIALOG_THREE);
+    }
 
     @Override
     public void deleteUserListener() {
-        DialogFactory.showCommonDialog(this, "Are you sure you will delete t\n" +
-                "-his friend? Please think clea\n" +
-                "-rly.", Constant.DIALOG_THREE);
+        operationType = 2;
+        DialogFactory.showCommonDialog(this, "Are you sure you will delete this friend? Please think clearly.", Constant.DIALOG_THREE);
     }
 
     @Override
-    public void blackUserListener() {
-        DialogFactory.showCommonDialog(this, "Determine to blacklist the us\n" +
-                "-er? After joining the blacklist, \n" +
-                "the user will no longer be pus\n" +
-                "-hed for you.?", Constant.DIALOG_THREE);
-    }
-
-    @Override
-    public void commonDialogBtnOkListener() {
+    public void reportUserListener() {
         //去举报用户界面
         startActivitys(ReportUserActivity.class);
     }
 
-    private void initializeInjector() {
-        DaggerRecommendUserInfoComponent.builder().appComponent(getAppComponent())
-                .recommendUserInfoModule(new RecommendUserInfoModule(RecommendUserInfoActivity.this, this))
-                .activityModule(new ActivityModule(this)).build().inject(this);
+    @Override
+    public void commonDialogBtnOkListener() {
+        if (operationType == 1) {
+            BlackUserRequest blackUserRequest = new BlackUserRequest();
+            blackUserRequest.token = mBuProcessor.getToken();
+            blackUserRequest.uid = recommendUserInfoResponse.getUid();
+            mPresenter.onRequestBlackUser(blackUserRequest);
+        } else if (operationType == 2) {
+            if (recommendUserInfoResponse.getRelation() == 2) {//好友
+                DeleteUserRequest deleteUserRequest = new DeleteUserRequest();
+                deleteUserRequest.token = mBuProcessor.getToken();
+                deleteUserRequest.del_user_id = recommendUserInfoResponse.getUid();
+                mPresenter.onRequestDeleteUser(deleteUserRequest);
+            } else {
+                showToast("你们不是好友关系");
+            }
+        } else if (operationType == 3) {
+            startActivitys(OpenVipActivity.class);
+        }
     }
+
+    @Override
+    public void getBlackUserSuccess(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void getDeleteUserSuccess(String msg) {
+        showToast(msg);
+    }
+
 
     @Override
     public void jzvdClickListener(int clickPos) {
@@ -312,4 +381,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
         contactWayAdapter.notifyDataSetChanged();
     }
+
+    private void initializeInjector() {
+        DaggerRecommendUserInfoComponent.builder().appComponent(getAppComponent())
+                .recommendUserInfoModule(new RecommendUserInfoModule(RecommendUserInfoActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 }

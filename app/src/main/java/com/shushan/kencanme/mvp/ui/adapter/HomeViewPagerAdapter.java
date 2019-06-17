@@ -90,6 +90,12 @@ public class HomeViewPagerAdapter extends PagerAdapter {
             mImageLoaderHelper.displayMatchImage(mContext, listBean.getCover(), mViewpagerItemIv, Constant.LOADING_BIG);
         }
 
+        if (listBean.getIs_like() == 1) {
+            mImageLoaderHelper.displayImage(mContext, R.mipmap.home_like, homeLikeIv, R.mipmap.home_liked);
+        }else {
+            mImageLoaderHelper.displayImage(mContext, R.mipmap.home_liked, homeLikeIv, R.mipmap.home_liked);
+        }
+
         homeLikeIv.setOnClickListener(v -> {
             if (mHomeViewPagerListener != null) {
                 //0为不喜欢  1喜欢

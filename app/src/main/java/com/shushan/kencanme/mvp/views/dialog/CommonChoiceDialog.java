@@ -71,6 +71,10 @@ public class CommonChoiceDialog extends BaseDialogFragment {
                 closeRechargeDialog();
                 break;
             case R.id.report_btn:
+                if(commonChoiceDialogListener!=null){
+                    commonChoiceDialogListener.reportUserListener();
+                }
+                closeRechargeDialog();
                 break;
             case R.id.recharge_dialog_layout:
                 closeRechargeDialog();
@@ -90,6 +94,8 @@ public class CommonChoiceDialog extends BaseDialogFragment {
         void deleteUserListener();
 
         void blackUserListener();
+
+        void reportUserListener();
     }
 
 

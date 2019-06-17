@@ -1,6 +1,8 @@
 package com.shushan.kencanme.mvp.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
+import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.DialogBuyBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
@@ -90,6 +93,20 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         return view;
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_INFO)) {
+            requestHomeData();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_HOME_INFO);
+    }
+
 
     @SuppressLint("CheckResult")
     @Override
@@ -160,8 +177,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         } else {
             CommonDialog commonDialog = CommonDialog.newInstance();
             commonDialog.setListener(this);
-            commonDialog.setContent("Today's favorite number has been used up. Open membe\n" +
-                    "-rs can enjoy unlimited ~");
+            commonDialog.setContent("Today's favorite number has been used up. Open members can enjoy unlimited ~");
             commonDialog.setStyle(Constant.DIALOG_TWO);
             DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
         }
@@ -184,7 +200,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void goRecommendUser() {
-        RecommendUserInfoActivity.start(getActivity(),viewPagerResponseList.get(currentPagePos));
+        RecommendUserInfoActivity.start(getActivity(),viewPagerResponseList.get(currentPagePos).getUid());
     }
 
     /**
