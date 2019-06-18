@@ -2,7 +2,16 @@ package com.shushan.kencanme.di.modules;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.shushan.kencanme.BuildConfig;
 import com.shushan.kencanme.di.scopes.PerActivity;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
+import com.shushan.kencanme.mvp.model.ModelTransform;
+import com.shushan.kencanme.mvp.model.SettingModel;
+import com.shushan.kencanme.mvp.ui.activity.setting.SettingControl;
+import com.shushan.kencanme.mvp.ui.activity.setting.SettingPresenterImpl;
+import com.shushan.kencanme.network.RetrofitUtil;
+import com.shushan.kencanme.network.networkapi.PersonalInfoApi;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,9 +22,12 @@ import dagger.Provides;
 @Module
 public class SettingModule {
     private final AppCompatActivity activity;
+    private final SettingControl.SettingView view;
 
-    public SettingModule(AppCompatActivity activity) {
+
+    public SettingModule(AppCompatActivity activity,SettingControl.SettingView view) {
         this.activity = activity;
+        this.view  = view;
     }
 
     @Provides
@@ -24,6 +36,30 @@ public class SettingModule {
         return this.activity;
     }
 
+    @Provides
+    @PerActivity
+    SettingControl.SettingView view() {
+        return this.view;
+    }
+
+    @Provides
+    @PerActivity
+    SettingModel provideSettingModel(Gson gson, ModelTransform modelTransform) {
+        return new SettingModel(new RetrofitUtil.Builder()
+                .context(activity)
+                .baseUrl(ServerConstant.DISPATCH_SERVICE)
+                .isHttps(!BuildConfig.DEBUG)
+//                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
+                .isToJson(false)
+                .builder()
+                .create(PersonalInfoApi.class), gson, modelTransform);
+    }
+
+    @Provides
+    @PerActivity
+    SettingControl.PresenterSetting providePresenterSetting(SettingPresenterImpl presenterSetting) {
+        return presenterSetting;
+    }
 
 
 }

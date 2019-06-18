@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -37,6 +38,7 @@ import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
+import com.shushan.kencanme.mvp.utils.DateUtil;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
@@ -66,6 +68,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     ViewPager homeViewpager;
     @BindView(R.id.use_exposure_iv)
     ImageView mUseExposureIv;
+    @BindView(R.id.exposure_time_tv)
+    TextView mExposureTimeTv;
+    @BindView(R.id.use_exposuring_hint)
+    TextView mUseExposuringHint;
     //当前发起更新的位置
     private int currentUpdatePos = 0;
     private int currentPagePos;
@@ -141,6 +147,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
+        setData();
         requestHomeData();
     }
 
@@ -200,7 +207,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void goRecommendUser() {
-        RecommendUserInfoActivity.start(getActivity(),viewPagerResponseList.get(currentPagePos).getUid());
+        RecommendUserInfoActivity.start(getActivity(), viewPagerResponseList.get(currentPagePos).getUid());
     }
 
     /**
@@ -271,6 +278,28 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mLoginUser.today_chat = userBean.getToday_chat();
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
+        setData();
+    }
+
+    /**
+     * 设置数据
+     * 曝光和曝光时间
+     */
+    private void setData() {
+        if (mLoginUser.exposure > 0) {
+            mExposureTimeTv.setVisibility(View.VISIBLE);
+            mExposureTimeTv.setText(String.valueOf(mLoginUser.exposure));
+        } else {
+            mExposureTimeTv.setVisibility(View.INVISIBLE);
+        }
+
+        if (mLoginUser.exposure_time > 0) {
+            mUseExposuringHint.setVisibility(View.VISIBLE);
+            String exposureValue = "Super exposure! Countdown: " + DateUtil.getDateToString(mLoginUser.exposure_time,"mm") + " min";
+            mUseExposuringHint.setText(exposureValue);
+        } else {
+            mUseExposuringHint.setVisibility(View.INVISIBLE);
+        }
     }
 
     //购买超级曝光

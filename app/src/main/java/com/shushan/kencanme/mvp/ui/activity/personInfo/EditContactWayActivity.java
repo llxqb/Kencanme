@@ -23,6 +23,7 @@ import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
+import com.shushan.kencanme.entity.response.ContactWay2;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.ContactWayAdapter;
@@ -54,6 +55,10 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     @BindView(R.id.save_btn)
     Button mSaveBtn;
     List<ContactWay> contactWayList = new ArrayList<>();
+    /**
+     * 上传时不把 isShow 参数带进去
+     */
+    List<ContactWay2> contactWayList2 = new ArrayList<>();
     ContactWayAdapter contactWayAdapter = null;
     UpdatePersonalInfoRequest updatePersonalInfoRequest;
 
@@ -131,7 +136,13 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                 }
                 updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
                 updatePersonalInfoRequest.token = mBuProcessor.getToken();
-                updatePersonalInfoRequest.contact = new Gson().toJson(contactWayList);
+                for (ContactWay contactWay1 : contactWayList) {
+                    ContactWay2 contactWay2 = new ContactWay2();
+                    contactWay2.email = contactWay1.email;
+                    contactWay2.name = contactWay1.name;
+                    contactWayList2.add(contactWay2);
+                }
+                updatePersonalInfoRequest.contact = new Gson().toJson(contactWayList2);
                 mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
                 break;
         }

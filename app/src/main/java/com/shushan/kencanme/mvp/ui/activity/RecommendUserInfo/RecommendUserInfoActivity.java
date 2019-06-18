@@ -189,7 +189,9 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 DialogFactory.showDialogFragment(this.getSupportFragmentManager(), commonChoiceDialog, CommonChoiceDialog.TAG);
                 break;
             case R.id.look_over_tv:
-                showContactWay();
+                if (recommendUserInfoResponse.getIs_see_contact() != 1) {
+                    showContactWay();
+                }
                 break;
             case R.id.recommend_like_iv:
                 likeIv();
@@ -237,6 +239,19 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         } else {
             unlikedBg();
         }
+
+        //是否查看过联系方式
+        if (recommendUserInfoResponse.getIs_see_contact() == 1) {
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = true;
+            }
+            contactWayAdapter.notifyDataSetChanged();
+        }else {
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = true;
+            }
+            contactWayAdapter.notifyDataSetChanged();
+        }
     }
 
     private void likedBg() {
@@ -281,15 +296,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     private void showContactWay() {
-//        UseBeansDialog useBeansDialog = UseBeansDialog.newInstance();
-//        useBeansDialog.setTitle("Look over type?");
-//        useBeansDialog.setListener(this);
-//        useBeansDialog.setContent("become vip","20 hi-beans");
-//        DialogFactory.showDialogFragment((this).getSupportFragmentManager(), useBeansDialog, UseBeansDialog.TAG);
-        for (ContactWay contactWay : contactWayList) {
-            contactWay.isShow = true;
-        }
-        contactWayAdapter.notifyDataSetChanged();
+        UseBeansDialog useBeansDialog = UseBeansDialog.newInstance();
+        useBeansDialog.setTitle("Look over type?");
+        useBeansDialog.setListener(this);
+        useBeansDialog.setContent("become vip","20 hi-beans");
+        DialogFactory.showDialogFragment((this).getSupportFragmentManager(), useBeansDialog, UseBeansDialog.TAG);
     }
 
     @Override

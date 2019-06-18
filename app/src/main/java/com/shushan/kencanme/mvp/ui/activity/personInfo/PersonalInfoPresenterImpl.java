@@ -37,7 +37,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     @Override
     public void onRequestPersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
         mPersonalInfoView.showLoading("加载中...");
-        Disposable disposable = mPersonalInfoModel.createPersonalInfoRequest(createPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+        Disposable disposable = mPersonalInfoModel.updatePersonalInfoRequest(createPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());
         mPersonalInfoView.addSubscription(disposable);

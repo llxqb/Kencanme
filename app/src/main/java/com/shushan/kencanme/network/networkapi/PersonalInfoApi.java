@@ -17,7 +17,7 @@ public interface PersonalInfoApi {
      * 更新用户资料
      */
     @POST("menggoda/user/setuserinfo")
-    Observable<String> createPersonalInfoRequest(@Body String request);
+    Observable<String> updatePersonalInfoRequest(@Body String request);
 
     /**
      * 上传文件

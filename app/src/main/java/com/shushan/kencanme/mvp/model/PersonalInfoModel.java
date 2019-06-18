@@ -29,13 +29,12 @@ public class PersonalInfoModel {
     }
 
 
-    public Observable<ResponseData> createPersonalInfoRequest(UpdatePersonalInfoRequest request) {
-        return mPersonalInfoApi.createPersonalInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    public Observable<ResponseData> updatePersonalInfoRequest(UpdatePersonalInfoRequest request) {
+        return mPersonalInfoApi.updatePersonalInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
     public Observable<ResponseData> uploadVideoRequest(MultipartBody.Part uploadVideo) {
         return mPersonalInfoApi.uploadVideoRequest(uploadVideo).map(mTransform::transformCommon);
-//        return null;
     }
 
     public Observable<ResponseData> uploadImageRequest(UploadImage uploadImage) {

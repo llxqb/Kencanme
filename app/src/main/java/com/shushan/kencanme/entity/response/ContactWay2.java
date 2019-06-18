@@ -1,24 +1,22 @@
 package com.shushan.kencanme.entity.response;
+/**
+ * 长传联系方式时使用
+ */
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public  class ContactWay implements Parcelable{
+public  class ContactWay2 implements Parcelable{
     public String name;
     public String email;
-    /**
-     * 是否显示可以查看
-     */
-    public boolean isShow = false;
 
 
-    protected ContactWay(Parcel in) {
+    protected ContactWay2(Parcel in) {
         name = in.readString();
         email = in.readString();
     }
 
-
-    public ContactWay() {
+    public ContactWay2() {
     }
 
     @Override
@@ -32,15 +30,15 @@ public  class ContactWay implements Parcelable{
         return 0;
     }
 
-    public static final Creator<ContactWay> CREATOR = new Creator<ContactWay>() {
+    public static final Creator<ContactWay2> CREATOR = new Creator<ContactWay2>() {
         @Override
-        public ContactWay createFromParcel(Parcel in) {
-            return new ContactWay(in);
+        public ContactWay2 createFromParcel(Parcel in) {
+            return new ContactWay2(in);
         }
 
         @Override
-        public ContactWay[] newArray(int size) {
-            return new ContactWay[size];
+        public ContactWay2[] newArray(int size) {
+            return new ContactWay2[size];
         }
     };
 }

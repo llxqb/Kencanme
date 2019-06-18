@@ -44,8 +44,10 @@ public class TwoWayRattingBar extends View {
 
     private float stroke_width_select;
 
-    private int leftMaxNum = 32;
+    private int leftMinNum = 32;
     private int rightMaxNum = 32;
+
+
 //    private int num = 50;
 
     Rect bounds = new Rect();
@@ -78,6 +80,13 @@ public class TwoWayRattingBar extends View {
     public TwoWayRattingBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
+    }
+
+    public void setMinValue(int minValue){
+        leftMinNum = minValue;
+    }
+    public void setMaxValue(int maxValue){
+        rightMaxNum = maxValue;
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -115,7 +124,7 @@ public class TwoWayRattingBar extends View {
         }
         this.leftProgress = progress;
         if (onProgressChangeListener != null) {
-            onProgressChangeListener.onProgressChange((int)(progress * leftMaxNum) + 18,(int)(rightProgress * rightMaxNum)+18);
+            onProgressChangeListener.onProgressChange((int)(progress * leftMinNum) + 18,(int)(rightProgress * rightMaxNum)+18);
         }
         invalidate();
     }
@@ -132,7 +141,7 @@ public class TwoWayRattingBar extends View {
         this.rightProgress = progress;
         if (onProgressChangeListener != null) {
 //            onProgressChangeListener.onRightProgressChange(String.valueOf(progress * rightMaxNum + 18));
-            onProgressChangeListener.onProgressChange((int)(leftProgress * leftMaxNum) + 18,(int)(progress * rightMaxNum)+18);
+            onProgressChangeListener.onProgressChange((int)(leftProgress * leftMinNum) + 18,(int)(progress * rightMaxNum)+18);
         }
         invalidate();
     }
@@ -165,7 +174,7 @@ public class TwoWayRattingBar extends View {
         canvas.drawLine(startX, height / 2, endProgressX, height / 2, paint);
 
         //画刻度值
-        String left_num = String.valueOf((int) (leftProgress * leftMaxNum) + 18);
+        String left_num = String.valueOf((int) (leftProgress * leftMinNum) + 18);
 
         String right_num = String.valueOf((int) (rightProgress * rightMaxNum) + 18);
         if (right_num.equals("50")) {

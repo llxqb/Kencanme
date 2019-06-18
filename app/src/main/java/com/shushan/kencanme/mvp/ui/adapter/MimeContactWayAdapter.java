@@ -32,6 +32,11 @@ public class MimeContactWayAdapter extends BaseQuickAdapter<ContactWay, BaseView
         TextView mContactWay = helper.getView(R.id.contact_way);
         String mContactWayValue = item.name + ":" + item.email;
         if (mContext instanceof RecommendUserInfoActivity) {
+//            //设置文字模糊
+//            mContactWay.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//            SpannableString stringBuilder = new SpannableString(mContactWayValue);
+//            stringBuilder.setSpan(new MaskFilterSpan(new BlurMaskFilter(10f, BlurMaskFilter.Blur.NORMAL)), 0, stringBuilder.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//            mContactWay.setText(stringBuilder);
             if (item.isShow) {
                 mContactWay.setText(mContactWayValue);
             } else {

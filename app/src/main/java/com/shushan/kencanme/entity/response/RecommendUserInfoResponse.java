@@ -78,7 +78,7 @@ public class RecommendUserInfoResponse{
     private int active_time;
     private int is_friend;
     private int relation;
-    private int is_see_contact;
+    private int is_see_contact;//是否已经查看过联系方式
     private String rongyun_userid;
     private List<String> label;
     private List<ContactWay> contact;

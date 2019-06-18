@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="false">
-        <shape>
-            <!-- 填充-->
-            <solid android:color="@color/color_6029c9" />
-            <corners android:radius="@dimen/dp_30" />
-        </shape>
-    </item>
-    <item android:state_pressed="true">
-        <shape>
-            <solid android:color="@color/color_ff8122" />
-            <corners android:radius="@dimen/dp_30" />
-        </shape>
-    </item>
+    <!-- 填充-->
+    <solid android:color="@color/color_6029c9" />
+    <corners android:radius="@dimen/dp_30" />
+
+    <!--<item android:state_pressed="true">-->
+        <!--<shape>-->
+            <!--<solid android:color="@color/color_ff8122" />-->
+            <!--<corners android:radius="@dimen/dp_30" />-->
+        <!--</shape>-->
+    <!--</item>-->
 
 
-</selector>
+</shape>
