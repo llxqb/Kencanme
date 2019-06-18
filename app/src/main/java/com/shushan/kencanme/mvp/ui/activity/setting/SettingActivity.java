@@ -16,7 +16,6 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.ui.adapter.PushSexAdapter;
-import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.views.TwoWayRattingBar;
 
 import java.util.ArrayList;
@@ -96,6 +95,8 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                 pushSex = 1;
             } else if (position == 1) {
                 pushSex = 2;
+            } else if (position == 2) {
+                pushSex = 0;
             }
             pushSexAdapter.notifyDataSetChanged();
         });
@@ -110,7 +111,6 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
             sexBean.name = aSex;
             sexList.add(sexBean);
         }
-        LogUtils.e("" + loginUser.pushing_small_age + "   " + loginUser.pushing_large_age);
 //        if (Integer.parseInt(loginUser.pushing_small_age) > 0) {
 ////            mTwoWayRattingBar.setCurrentMinValue(Integer.parseInt(loginUser.pushing_small_age));
 //            mTwoWayRattingBar.setLeftProgress(Float.parseFloat(String.valueOf(Integer.parseInt(loginUser.pushing_small_age)/50)));
@@ -200,7 +200,6 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
 
     @Override
     public void onBackPressed() {
-        LogUtils.e("onBackPressed()");
         if (isUpdatePersonal) {
             updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
             updatePersonalInfoRequest.token = mBuProcessor.getToken();

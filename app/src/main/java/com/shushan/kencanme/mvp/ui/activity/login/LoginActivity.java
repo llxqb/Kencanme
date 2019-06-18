@@ -130,6 +130,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 //            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
             //登录后台系统
             appLogin(account.getId(), account.getIdToken());
+        }else {
+            showToast("google login fail");
         }
     }
 
@@ -146,6 +148,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     public void loginSuccess(LoginResponse response) {
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
         mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
+        mSharePreferenceUtil.setData("ryId", userinfoBean.getRongyun_third_id());
         //根据token请求个人信息   TODO 在MainActivity 中也会请求个人信息 会存在重复请求
         PersonalInfoRequest request = new PersonalInfoRequest();
         request.token = userinfoBean.getToken();

@@ -167,7 +167,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @SuppressLint("CheckResult")
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {
-        LogUtils.d("response:" + new Gson().toJson(response));
+//        LogUtils.d("response:" + new Gson().toJson(response));
         List<HomeFragmentResponse.ListBean> dataList = response.getList();
         viewPagerResponseList.addAll(dataList);
         homeViewPagerAdapter.notifyDataSetChanged();

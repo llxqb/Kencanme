@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -38,6 +39,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, MyJzvdStd.MyjzvdListener {
 
@@ -48,7 +51,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public static final int SWITCH_HOME_PAGE = 0;
     public static final int SWITCH_MESSAGE_PAGE = 1;
     public static final int SWITCH_MINE_PAGE = 2;
-
+    private LoginUser loginUser;
+    private UserInfo uInfo;
     @Inject
     MainControl.PresenterMain mPresenter;
 
@@ -69,6 +73,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             startActivitys(LoginActivity.class);
             finish();
         } else {
+            loginUser = mBuProcessor.getLoginUser();
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
         }
         List<Fragment> fragments = new ArrayList<>();
@@ -96,11 +101,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private void connectRongCloud() {
         //"MbbN5DyzAEs2Vruc4Sirkac3QJl342gyNW2NyYV7fKr3kEu705lRicWjNXyo5Ok1T7F5rN+y/6ypnXiFpNArqFxA4Ai8GBqr"
         String rToken = mSharePreferenceUtil.getData("ryToken");
+        String rId = mSharePreferenceUtil.getData("ryId");
+        Log.e("ddd", "rId:" + rId);
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
             RongCloudHelper.connect(rToken);
         }
-
+        //同步与服务器信息
+        RongIM.setUserInfoProvider(userId -> {
+            uInfo = new UserInfo(String.valueOf(loginUser.uid), loginUser.nickname, Uri.parse(loginUser.trait));
+            return uInfo;
+        }, true);
+        //刷新用户信息  可以刷新会话列表
+        RongIM.getInstance().refreshUserInfoCache(uInfo);
     }
 
     @Override
@@ -169,7 +182,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void jzvdClickListener(int clickPos) {
 //        ToastUtil.showToast(this,"sssssssss");
-        showToast(""+clickPos);
+        showToast("" + clickPos);
 //        LookPhotoActivity.start(this, "");//查看大图
     }
 }

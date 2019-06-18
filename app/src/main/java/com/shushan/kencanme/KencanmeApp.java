@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.di.components.AppComponent;
 import com.shushan.kencanme.di.components.DaggerAppComponent;
 import com.shushan.kencanme.di.modules.AppModule;
-import com.shushan.kencanme.help.CustomerUserInfoProvider;
 
 import javax.inject.Inject;
 
@@ -55,7 +54,7 @@ public class KencanmeApp extends Application {
              * IMKit SDK调用第一步 初始化
              */
             RongIM.init(this);
-            RongIM.setUserInfoProvider(new CustomerUserInfoProvider(), true);
+//            RongIM.setUserInfoProvider(new CustomerUserInfoProvider(), true);
         }
     }
 }

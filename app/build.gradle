@@ -107,4 +107,5 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
     //融云
     implementation project(':IMKit')
+    implementation project(':IMLib')
 }

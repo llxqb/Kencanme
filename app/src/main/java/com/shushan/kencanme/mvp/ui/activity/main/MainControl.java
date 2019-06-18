@@ -24,6 +24,7 @@ public class MainControl {
         void onRequestPersonalInfo(PersonalInfoRequest request);
 
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+
     }
 
 }

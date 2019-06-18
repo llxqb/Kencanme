@@ -33,6 +33,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
+        <!--否则使用拍照功能时，会崩溃 -->
+        <provider
+            android:name=".help.MyProvider"
+            android:authorities="com.shushan.kencanme.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+
+
         <activity android:name=".mvp.ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,8 +79,12 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".mvp.ui.activity.setting.AboutUsActivity" />
         <activity android:name=".mvp.ui.activity.photo.MyAlbumActivity" />
-        <activity android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+
+
         <activity
             android:name=".mvp.ui.activity.rongCloud.ConversationActivity"
             android:screenOrientation="portrait"

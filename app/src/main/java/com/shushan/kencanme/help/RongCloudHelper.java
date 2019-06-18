@@ -43,7 +43,7 @@ public class RongCloudHelper {
              */
             @Override
             public void onSuccess(String userid) {
-//                Log.e("ddd","--onSuccess" + userid);
+                Log.e("ddd","--onSuccess" + userid);
             }
 
             /**

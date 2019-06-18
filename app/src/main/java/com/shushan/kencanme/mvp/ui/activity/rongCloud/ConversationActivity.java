@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -54,8 +56,27 @@ public class ConversationActivity extends BaseActivity {
         mTargetId = intent.getData().getQueryParameter("targetId");
         mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
+//        enterFragment(mConversationType, mTargetId);
+
     }
 
+    /**
+     * 加载会话页面 ConversationFragment
+     *
+     * @param mConversationType 会话类型
+     * @param mTargetId         目标 Id
+     */
+    private void enterFragment(Conversation.ConversationType mConversationType, String mTargetId) {
+
+        ConversationFragment fragment = (ConversationFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.conversation);
+
+        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                .appendPath(mConversationType.getName().toLowerCase()).appendQueryParameter("targetId", mTargetId)
+                .build();
+
+        fragment.setUri(uri);
+    }
 
     @OnClick(R.id.common_back)
     public void onViewClicked() {

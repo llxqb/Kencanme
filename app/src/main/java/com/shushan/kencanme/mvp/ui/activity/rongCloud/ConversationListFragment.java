@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseFragment;
 
+import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
 public class ConversationListFragment extends BaseFragment {
@@ -34,9 +35,10 @@ public class ConversationListFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        //设置会话界面的功能
-//        RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE,"2019061002","我的聊天");
-//        RongIM.getInstance().startConversationList();
+//        设置会话界面的功能
+        RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE,"2019061002","我的聊天");
+//        RongIM.getInstance().startConversationList(getActivity(),);
+//        RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE , targetId, title);
     }
 
     @Override
