@@ -4,7 +4,6 @@ package com.shushan.kencanme.mvp.utils;
  * app 中的一些逻辑
  */
 public class AppUtils {
-
     /**
      * userType
      * 喜欢规则：
@@ -76,5 +75,21 @@ public class AppUtils {
     /**
      * 超级曝光时间30min
      */
+
+
+    /**
+     * 密聊规则
+     * 男性：
+     * vip 每天主动10个人发起聊天
+     * 非vip 不可以
+     * 超级vip 不限次数
+     *
+     * 女性：
+     * 非vip  每天主动10个人发起聊天    超过10个提示开通vip
+     * vip    每天主动20个人发起聊天
+     *
+     */
+
+
 
 }

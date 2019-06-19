@@ -70,6 +70,7 @@
     <string name="EditPersonalInfoActivity_Occupation_hint">Please enter your Occupation</string>
 
 
+
     <!-- Activity 类 相关  返回箭头后title-->
     <string name="AgreementActivity_title">Agreement</string>
     <string name="RechargeActivity_title">Buy Hi-beans</string>
@@ -84,5 +85,6 @@
     <string name="FeedbackProblemActivity_title">Feedback problem</string>
     <string name="UploadPhotoActivity_title">Upload my real photo or video</string>
     <string name="OpenVipActivity_title">Open VIP</string>
-
+    <string name="LoveMePeopleActivity_title">People who like me</string>
+    <string name="SystemMsgActivity_title">System message</string>
 </resources>

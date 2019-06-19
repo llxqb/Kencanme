@@ -5,6 +5,7 @@ import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
@@ -72,6 +73,19 @@ public class MainModel {
     // 根据融云第三方id获取用户头像和昵称
     public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
         return mMainApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     *最新一条系统消息
+     */
+    public Observable<ResponseData> onRequestSystemMsgNew(TokenRequest request) {
+        return mMainApi.onRequestSystemMsgNew(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     *好友/喜欢的人列表
+     */
+    public Observable<ResponseData> onRequestMyFriendList(MyFriendsRequest request) {
+        return mMainApi.onRequestMyFriendList(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

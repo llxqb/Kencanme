@@ -16,16 +16,22 @@ public class LoginUser implements Serializable {
     public String trait;
     //封面
     public String cover;
-    //1男2女
+    /**
+     * 1男2女
+     */
     public int sex;
     public String birthday;
     public String city;
     //交友宣言
     public String declaration;
-    //0 非vip 1 vip
+    /**
+     * 0 非vip 1 vip
+     */
     public int vip;
     public int vip_time;
-    //0 非svip 1 svip svip没有到期时间
+    /**
+     * 0 非svip 1 svip svip没有到期时间
+     */
     public int svip;
     public String height;
     public String weight;

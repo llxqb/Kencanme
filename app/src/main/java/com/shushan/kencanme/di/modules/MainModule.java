@@ -12,6 +12,10 @@ import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentPresenterImpl;
 import com.shushan.kencanme.mvp.ui.activity.main.MainControl;
 import com.shushan.kencanme.mvp.ui.activity.main.MainPresenterImpl;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.ConversationFragmentControl;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.ConversationFragmentPresenterImpl;
+import com.shushan.kencanme.mvp.ui.fragment.message.MyFriendsFragmentControl;
+import com.shushan.kencanme.mvp.ui.fragment.message.MyFriendsFragmentPresenterImpl;
 import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.mvp.ui.fragment.mine.MineFragmentPresenterImpl;
 import com.shushan.kencanme.network.RetrofitUtil;
@@ -80,6 +84,18 @@ public class MainModule {
     @PerActivity
     MineFragmentControl.mineFragmentPresenter providePresenterMineFragment(MineFragmentPresenterImpl mineFragmentPresenter) {
         return mineFragmentPresenter;
+    }
+
+    @Provides
+    @PerActivity
+    ConversationFragmentControl.ConversationFragmentPresenter providePresenterConversationFragment(ConversationFragmentPresenterImpl conversationFragmentPresenter) {
+        return conversationFragmentPresenter;
+    }
+
+    @Provides
+    @PerActivity
+    MyFriendsFragmentControl.MyFriendsFragmentPresenter providePresenterMyFriendsFragment(MyFriendsFragmentPresenterImpl myFriendsFragmentPresenter) {
+        return myFriendsFragmentPresenter;
     }
 
 }

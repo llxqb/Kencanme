@@ -5,6 +5,7 @@ package com.shushan.kencanme.entity.request;
  * user:
  * 1.首页用户信息
  * 2、曝光次数嗨豆购买规则 (列表)
+ * 3、最新一条系统消息
  */
 public class TokenRequest {
    public String token;

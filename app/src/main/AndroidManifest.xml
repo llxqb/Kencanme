@@ -33,8 +33,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity android:name=".mvp.ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,12 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.login.LoginActivity"></activity>
+        <activity android:name=".mvp.ui.activity.login.LoginActivity" />
         <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" />
-        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity"></activity>
-        <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity"></activity>
+        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity" />
         <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
         <activity android:name=".mvp.ui.activity.vip.OpenVipActivity" />
         <activity android:name=".mvp.ui.activity.pay.RechargeActivity" />
@@ -71,9 +69,8 @@
             android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-
-        <!--此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
-        <!--否则使用拍照功能时，会崩溃 -->
+        <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
+        <!-- 否则使用拍照功能时，会崩溃 -->
         <provider
             android:name=".help.MyProvider"
             android:authorities="com.shushan.kencanme.FileProvider"
@@ -99,7 +96,9 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.photo.LookPhotoActivity"></activity>
+        <activity android:name=".mvp.ui.activity.photo.LookPhotoActivity" />
+        <activity android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity" />
+        <activity android:name=".mvp.ui.activity.loveMe.LoveMePeopleActivity"></activity>
     </application>
 
 </manifest>

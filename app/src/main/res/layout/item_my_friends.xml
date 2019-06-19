@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_78"
+    android:paddingBottom="@dimen/dp_5"
+    android:paddingEnd="@dimen/dp_20"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingTop="@dimen/dp_5">
+
+    <com.shushan.kencanme.mvp.views.CircleImageView
+        android:id="@+id/friends_avator_iv"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/friends_nick_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_14"
+        android:layout_toEndOf="@id/friends_avator_iv"
+        android:text="Luis Fonsi"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/friends_year_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_14"
+        android:layout_toEndOf="@id/friends_nick_tv"
+        android:background="@mipmap/home_gender_female"
+        android:paddingEnd="@dimen/dp_2"
+        android:paddingStart="@dimen/dp_18"
+        android:text="23 years"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10" />
+
+    <ImageView
+        android:id="@+id/like_iv"
+        android:layout_width="@dimen/dp_54"
+        android:layout_height="@dimen/dp_54"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+        android:src="@mipmap/message_liked" />
+
+    <TextView
+        android:id="@+id/like_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/like_iv"
+        android:visibility="invisible"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:text="liked" />
+
+</RelativeLayout>

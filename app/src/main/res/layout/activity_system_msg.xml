@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F9"
+    android:orientation="vertical"
+    tools:context=".mvp.ui.activity.rongCloud.SystemMsgActivity">
+
+    <include layout="@layout/common_toolbar" />
+
+    <View style="@style/line_height_1" />
+
+    <!-- layout_height="match_parent TODO 为了显示空白页而做 可能存在滑动问题-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/system_msg_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

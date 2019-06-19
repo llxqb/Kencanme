@@ -197,8 +197,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void goChat(int uId) {
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setListener(this);
-        commonDialog.setContent("Open Super free Chat?");
-        commonDialog.setStyle(Constant.DIALOG_THREE);
+        commonDialog.setContent("Open Super VIP Free Chat~");
+        commonDialog.setStyle(Constant.DIALOG_TWO);
         DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
 

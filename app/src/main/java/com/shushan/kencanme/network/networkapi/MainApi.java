@@ -59,5 +59,15 @@ public interface MainApi {
      */
     @POST("menggoda/user/rongyun_info")
     Observable<String> onRequestUserInfoByRid(@Body String request);
+    /**
+     * 最新一条系统消息
+     */
+    @POST("menggoda/message/new_message")
+    Observable<String> onRequestSystemMsgNew(@Body String request);
+    /**
+     * 好友/喜欢的人列表
+     */
+    @POST("menggoda/user/user_friend")
+    Observable<String> onRequestMyFriendList(@Body String request);
 
 }

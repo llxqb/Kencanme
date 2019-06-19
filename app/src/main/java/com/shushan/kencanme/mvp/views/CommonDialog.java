@@ -15,6 +15,8 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.views.dialog.BaseDialogFragment;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -118,6 +120,10 @@ public class CommonDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.dialog_style_2_rl:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.commonDialogBtnOkListener();
+                }
+                closeCommonDialog();
                 break;
             case R.id.dialog_style_3_rl:
                 if (dialogBtnListener != null) {
@@ -146,7 +152,7 @@ public class CommonDialog extends BaseDialogFragment {
         try {
             this.dismiss();
         } catch (Exception e) {
-            DialogFactory.dismissDialogFragment(getActivity().getSupportFragmentManager(), TAG);
+            DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
 }
