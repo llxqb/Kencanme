@@ -54,7 +54,6 @@ public class KencanmeApp extends Application {
              * IMKit SDK调用第一步 初始化
              */
             RongIM.init(this);
-//            RongIM.setUserInfoProvider(new CustomerUserInfoProvider(), true);
         }
     }
 }

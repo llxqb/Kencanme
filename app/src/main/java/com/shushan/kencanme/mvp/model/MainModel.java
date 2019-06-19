@@ -7,6 +7,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.request.TokenRequest;
+import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
 import javax.inject.Inject;
@@ -67,6 +68,10 @@ public class MainModel {
     // 进行超级曝光
     public Observable<ResponseData> onRequestExposure(TokenRequest request) {
         return mMainApi.onRequestExposure(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    // 根据融云第三方id获取用户头像和昵称
+    public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
+        return mMainApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

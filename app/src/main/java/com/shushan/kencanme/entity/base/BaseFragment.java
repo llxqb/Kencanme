@@ -39,7 +39,7 @@ public abstract class BaseFragment extends Fragment {
     @Inject
     protected ImageLoaderHelper mImageLoaderHelper;
     @Inject
-    protected SharePreferenceUtil sharePreferenceUtil;
+    protected SharePreferenceUtil mSharePreferenceUtil;
     @Inject
     protected GoogleLoginHelper mGoogleLoginHelper;
     @Inject

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".mvp.ui.activity.main.MainActivity">
 
+    <!--app:labelVisibilityMode="labeled"-->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
@@ -16,7 +17,6 @@
         app:itemBackground="@color/white"
         app:itemIconTint="@drawable/selector_menu"
         app:itemTextColor="@drawable/selector_menu"
-        app:labelVisibilityMode="labeled"
         app:menu="@menu/main_navigation_icon" />
 
     <com.shushan.kencanme.mvp.views.MyNoScrollViewPager
