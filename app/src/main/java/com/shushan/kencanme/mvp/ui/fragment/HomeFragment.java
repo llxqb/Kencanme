@@ -38,10 +38,11 @@ import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
-import com.shushan.kencanme.mvp.utils.DateUtil;
+import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.MyTimer;
 import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
 import com.shushan.kencanme.mvp.views.dialog.UseExposureDialog;
 
@@ -62,7 +63,7 @@ import cn.jzvd.JzvdStd;
  */
 
 public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, HomeViewPagerAdapter.HomeViewPagerListener,
-        BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener {
+        BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener, MyTimer.MyTimeListener {
 
     @BindView(R.id.home_viewpager)
     ViewPager homeViewpager;
@@ -85,7 +86,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
 
     @Nullable
     @Override
@@ -147,7 +147,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
-        setData();
+        requestHomeUserInfo();
         requestHomeData();
     }
 
@@ -176,7 +176,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void goLike(int uId) {
-        if (mLoginUser != null && mLoginUser.today_like > 0) {
+        if (AppUtils.isLimitLike(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
             likeRequest.likeid = uId;
@@ -211,7 +211,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     /**
-     * 使用超级曝光
+     * 1、使用超级曝光
+     * 先获取曝光列表
      */
     private void useSuperExposure() {
         TokenRequest tokenRequest = new TokenRequest();
@@ -236,22 +237,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         requestHomeUserInfo();
     }
 
-    @Override
-    public void getBuyExposureTimeList(DialogBuyBean dialogBuyBean) {
-        //检查是否有超级曝光次数
-        if (mLoginUser.exposure > 0) {
-            UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
-            useExposureDialog.setListener(this);
-            useExposureDialog.setContentData(mLoginUser.beans, mLoginUser.exposure);
-            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, UseExposureDialog.TAG);
-        } else {
-            BuyDialog buyDialog = BuyDialog.newInstance();
-            buyDialog.setListener(this);
-            buyDialog.setBugData(dialogBuyBean, mLoginUser.beans);
-            buyDialog.setContent("Matchmaker! 10 times more people will see you in 30 minutes!");
-            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, BuyDialog.TAG);
-        }
-    }
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse response) {
@@ -278,31 +263,86 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mLoginUser.today_chat = userBean.getToday_chat();
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
-        setData();
+        setData(userBean.getNow_time());
     }
+
+    MyTimer myTimer;
+    /**
+     * 曝光剩余时间
+     */
+    int mRemainTime = 0;
 
     /**
      * 设置数据
      * 曝光和曝光时间
      */
-    private void setData() {
+    private void setData(int currentTime) {
         if (mLoginUser.exposure > 0) {
             mExposureTimeTv.setVisibility(View.VISIBLE);
             mExposureTimeTv.setText(String.valueOf(mLoginUser.exposure));
         } else {
             mExposureTimeTv.setVisibility(View.INVISIBLE);
         }
-
         if (mLoginUser.exposure_time > 0) {
             mUseExposuringHint.setVisibility(View.VISIBLE);
-            String exposureValue = "Super exposure! Countdown: " + DateUtil.getDateToString(mLoginUser.exposure_time,"mm") + " min";
+            int remainTime = AppUtils.exposureRemainTime(currentTime, mLoginUser.exposure_time);
+            mRemainTime = remainTime / 60 + 1;
+            String exposureValue = "Super exposure! Countdown: " + remainTime / 60 + " min";
             mUseExposuringHint.setText(exposureValue);
+            setmRemainTime();
         } else {
             mUseExposuringHint.setVisibility(View.INVISIBLE);
         }
     }
 
-    //购买超级曝光
+    /**
+     * 设置一分钟倒计时
+     */
+    private void setmRemainTime() {
+        myTimer = MyTimer.getInstance(60000, 1000, getActivity());
+        myTimer.setListener(this);
+        myTimer.cancel();
+        myTimer.start();
+    }
+
+    /**
+     * 一分钟倒计时结束
+     */
+    @Override
+    public void onFinish() {
+        mRemainTime--;
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
+        if (mRemainTime > 0) {
+            setmRemainTime();
+            String exposureValue = "Super exposure! Countdown: " + mRemainTime + " min";
+            mUseExposuringHint.setText(exposureValue);
+        } else {
+            mUseExposuringHint.setVisibility(View.INVISIBLE);
+        }
+//        requestHomeUserInfo();   不用走接口了
+    }
+
+    @Override
+    public void getBuyExposureTimeList(DialogBuyBean dialogBuyBean) {
+        //2、检查是否有超级曝光次数
+        if (mLoginUser.exposure > 0) {
+            UseExposureDialog useExposureDialog = UseExposureDialog.newInstance();
+            useExposureDialog.setListener(this);
+            useExposureDialog.setContentData(mLoginUser.beans, mLoginUser.exposure);
+            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), useExposureDialog, UseExposureDialog.TAG);
+        } else {
+            BuyDialog buyDialog = BuyDialog.newInstance();
+            buyDialog.setListener(this);
+            buyDialog.setBugData(dialogBuyBean, mLoginUser.beans);
+            buyDialog.setContent("Matchmaker! 10 times more people will see you in 30 minutes!");
+            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, BuyDialog.TAG);
+        }
+    }
+
+    //3、购买超级曝光
     @Override
     public void buyDialogBtnOkListener(int beansMoney) {
         BuyExposureTimeRequest buyExposureTimeRequest = new BuyExposureTimeRequest();
@@ -312,7 +352,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     /**
-     * 购买超级曝光 成功
+     * 4、购买超级曝光 成功
      */
     @Override
     public void getBuyExposureTime(String msg) {
@@ -321,7 +361,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     /**
-     * 使用超级曝光
+     * 5、使用超级曝光
      */
     @Override
     public void useExposureBtnOkListener() {
@@ -330,11 +370,24 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mPresenter.onRequestExposure(tokenRequest);
     }
 
+    /**
+     * 6、曝光成功
+     */
     @Override
     public void exposureSuccess(String msg) {
         showToast(msg);
         //进行更新
         requestHomeUserInfo();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
     }
 
     private void initializeInjector() {
@@ -343,5 +396,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 .homeFragmentModule(new HomeFragmentModule(this))
                 .build().inject(this);
     }
+
 
 }

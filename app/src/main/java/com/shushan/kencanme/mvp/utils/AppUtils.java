@@ -74,7 +74,12 @@ public class AppUtils {
 
     /**
      * 超级曝光时间30min
+     * 现在时间-曝光时间
      */
+    public static int exposureRemainTime(long nowTime, long exposureTime) {
+        long remainTime = 1800 - (nowTime - exposureTime);
+        return (int) remainTime;
+    }
 
 
     /**
@@ -89,7 +94,6 @@ public class AppUtils {
      * vip    每天主动20个人发起聊天
      *
      */
-
 
 
 }

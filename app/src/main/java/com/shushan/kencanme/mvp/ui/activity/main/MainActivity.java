@@ -17,7 +17,6 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
-import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
@@ -141,31 +140,31 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public void personalInfoSuccess(PersonalInfoResponse response) {
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
-        requestHomeUserInfo();
+//        requestHomeUserInfo();  到homeFragemnt调用
     }
 
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
-        LoginUser loginUser = mBuProcessor.getLoginUser();
-        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        //把另外几项LoginUser加入进来
-        loginUser.exposure_type = userBean.getExposure_type();
-        loginUser.exposure_time = userBean.getExposure_time();
-        loginUser.today_like = userBean.getToday_like();
-        loginUser.today_chat = userBean.getToday_chat();
-        loginUser.today_see_contact = userBean.getToday_see_contact();
-        mBuProcessor.setLoginUser(loginUser);
+//        LoginUser loginUser = mBuProcessor.getLoginUser();
+//        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+//        //把另外几项LoginUser加入进来
+//        loginUser.exposure_type = userBean.getExposure_type();
+//        loginUser.exposure_time = userBean.getExposure_time();
+//        loginUser.today_like = userBean.getToday_like();
+//        loginUser.today_chat = userBean.getToday_chat();
+//        loginUser.today_see_contact = userBean.getToday_see_contact();
+//        mBuProcessor.setLoginUser(loginUser);
     }
 
 
     /**
      * 首页用户信息
      */
-    private void requestHomeUserInfo() {
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.token = mBuProcessor.getToken();
-        mPresenter.onRequestHomeUserInfo(tokenRequest);
-    }
+//    private void requestHomeUserInfo() {
+//        TokenRequest tokenRequest = new TokenRequest();
+//        tokenRequest.token = mBuProcessor.getToken();
+//        mPresenter.onRequestHomeUserInfo(tokenRequest);
+//    }
 
     private void initInjectData() {
         MainComponent mMainComponent = DaggerMainComponent.builder().appComponent(getAppComponent())

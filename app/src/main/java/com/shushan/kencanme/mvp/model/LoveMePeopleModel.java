@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
@@ -30,6 +31,13 @@ public class LoveMePeopleModel {
      */
     public Observable<ResponseData> onRequestMyFriendList(MyFriendsRequest request) {
         return mMainApi.onRequestMyFriendList(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 添加喜欢
+     */
+    public Observable<ResponseData> onRequestLike(LikeRequest request) {
+        return mMainApi.onRequestLike(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

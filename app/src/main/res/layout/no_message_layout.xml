@@ -15,5 +15,6 @@
         android:layout_height="wrap_content"
         android:text="No message yet"
         android:textColor="#6D6D6D"
+        android:layout_marginTop="@dimen/dp_5"
         android:textSize="@dimen/sp_13" />
 </LinearLayout>

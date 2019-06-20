@@ -39,22 +39,5 @@
         android:textColor="@color/white"
         android:textSize="@dimen/sp_10" />
 
-    <ImageView
-        android:id="@+id/like_iv"
-        android:layout_width="@dimen/dp_54"
-        android:layout_height="@dimen/dp_54"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"
-        android:src="@mipmap/message_liked" />
-
-    <TextView
-        android:id="@+id/like_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/like_iv"
-        android:visibility="invisible"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:text="liked" />
 
 </RelativeLayout>

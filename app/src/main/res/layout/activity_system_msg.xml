@@ -12,10 +12,11 @@
 
     <View style="@style/line_height_1" />
 
-    <!-- layout_height="match_parent TODO 为了显示空白页而做 可能存在滑动问题-->
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/system_msg_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10" />
 
 </LinearLayout>

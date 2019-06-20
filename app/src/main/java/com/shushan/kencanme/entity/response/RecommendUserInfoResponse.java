@@ -43,7 +43,7 @@ public class RecommendUserInfoResponse{
      * pushing_large_age : 30
      * active_time : -1
      * is_friend : 0
-     * relation : 0
+     * relation : 0   0没有关系1喜欢2互相喜欢（好友）3黑名单
      * is_see_contact : 0
      * rongyun_userid : Kencanme547
      */

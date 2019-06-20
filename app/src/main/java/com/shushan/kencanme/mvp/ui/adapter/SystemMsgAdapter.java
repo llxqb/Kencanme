@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Mime 页面 MyAlbumAdapter
  */
-public class SystemMsgAdapter extends BaseQuickAdapter<SystemMsgResponse, BaseViewHolder> {
+public class SystemMsgAdapter extends BaseQuickAdapter<SystemMsgResponse.DataBean, BaseViewHolder> {
 
     private ImageLoaderHelper mImageLoaderHelper;
     private Context mContext;
 
-    public SystemMsgAdapter(Context context, @Nullable List<SystemMsgResponse> data, ImageLoaderHelper imageLoaderHelper) {
+    public SystemMsgAdapter(Context context, @Nullable List<SystemMsgResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.item_system_msg, data);
         mContext = context;
         mImageLoaderHelper = imageLoaderHelper;
@@ -27,7 +27,7 @@ public class SystemMsgAdapter extends BaseQuickAdapter<SystemMsgResponse, BaseVi
 
 
     @Override
-    protected void convert(BaseViewHolder helper, SystemMsgResponse item) {
+    protected void convert(BaseViewHolder helper, SystemMsgResponse.DataBean item) {
     }
 
 }

@@ -128,7 +128,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
 
     @Override
     public void getSystemMsgNewInfoSuccess(SystemMsgNewResponse systemMsgNewResponse) {
-        Log.e("ddd","systemMsgNewResponse:"+new Gson().toJson(systemMsgNewResponse));
+        Log.e("ddd", "systemMsgNewResponse:" + new Gson().toJson(systemMsgNewResponse));
         SystemMsgNewResponse.NewLikeBean likeBean = systemMsgNewResponse.getNew_like();
         SystemMsgNewResponse.NewMessageBean messageBean = systemMsgNewResponse.getNew_message();
         if (likeBean != null && likeBean.getCount() != 0) {
@@ -144,14 +144,11 @@ public class ConversationListFragment extends BaseFragment implements Conversati
             mNewPairingRl.setVisibility(View.GONE);
             mLineView.setVisibility(View.GONE);
         }
-        if (messageBean != null && messageBean.getMsg_id() != 0) {
+        if (messageBean != null) {
             mSystemMsgTv.setText(messageBean.getTitle());
             mSystemMsgHintTv.setText(messageBean.getDetail());
-            mSystemMsgTimeTv.setText(DateUtil.getDateToString(messageBean.getCreate_time(), "MM-dd"));
-        } else {
-            mSystemMsgRl.setVisibility(View.GONE);
+            mSystemMsgTimeTv.setText(DateUtil.getStrTime(messageBean.getCreate_time(), "MM-dd"));
         }
-
     }
 
     @Override

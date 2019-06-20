@@ -64,10 +64,10 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void initView() {
+        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.no_friends_layout, (ViewGroup) mMyFriendsRecyclerView.getParent(), false);
         mMyFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         myFriendsAdapter = new MyFriendsAdapter(getActivity(), listBeanList, mImageLoaderHelper);
         mMyFriendsRecyclerView.setAdapter(myFriendsAdapter);
-        mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.no_friends_layout, (ViewGroup) mMyFriendsRecyclerView.getParent(), false);
     }
 
     @Override
@@ -80,6 +80,7 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void getMyFriendsListInfoSuccess(MyFriendsResponse myFriendsResponse) {
+
         //没做分页可以这样表示
         if (myFriendsResponse.getList().size() == 0) {
             myFriendsAdapter.setEmptyView(mEmptyView);

@@ -32,6 +32,7 @@ public class MyFriendsResponse {
         private int create_time;
         private String rongyun_userid;
         private int uid;
+        public boolean isLike;
 
         public String getNickname() {
             return nickname;

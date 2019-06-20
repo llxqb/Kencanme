@@ -87,11 +87,13 @@ public class DateUtil {
     /**
      * 时间戳转换成字符串
      */
-    public static String getDateToString(long milSecond, String pattern) {
-        Date date = new Date(milSecond);
-        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
-        return format.format(date);
+    public static String getStrTime(long cc_time, String pattern) {
+        String re_StrTime = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.CHINA);
+        re_StrTime = sdf.format(new Date(cc_time * 1000L));
+        return re_StrTime;
     }
+
 
 
     /**

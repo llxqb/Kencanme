@@ -30,11 +30,13 @@ import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.reportUser.ReportUserActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
+import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
@@ -141,7 +143,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         initAdapter();
         albumAdapter.setOnItemClickListener((adapter, view, position) -> {
             MyAlbumResponse.DataBean bean = albumAdapter.getItem(position);
-
+            assert bean != null;
+            LookPhotoActivity.start(this, bean.getAlbum_url());
         });
     }
 
@@ -194,7 +197,10 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 }
                 break;
             case R.id.recommend_like_iv:
-                likeIv();
+                //0没有关系1喜欢2互相喜欢（好友）3黑名单  喜欢了不可以取消喜欢
+                if (recommendUserInfoResponse.getRelation() == 0) {
+                    likeIv();
+                }
                 break;
             case R.id.recommend_chat_iv:
                 break;
@@ -246,7 +252,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 contactWay.isShow = true;
             }
             contactWayAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             for (ContactWay contactWay : contactWayList) {
                 contactWay.isShow = true;
             }
@@ -269,10 +275,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      */
     private void likeIv() {
         operationType = 3;
-        //TODO 判断用户类型
-//        if(AppUtils.userType(mLoginUser.svip,mLoginUser.vip,mLoginUser.sex)==2){
-//        }
-        if (mLoginUser != null && mLoginUser.today_like < 20) {
+        if (AppUtils.isLimitLike(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
             likeRequest.likeid = mUid;
@@ -290,16 +293,16 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     public void getLikeSuccess(String msg) {
         showToast(msg);
         likedBg();
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
-//        requestHomeUserInfo();
         //更新用户数据
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+
     }
 
     private void showContactWay() {
         UseBeansDialog useBeansDialog = UseBeansDialog.newInstance();
         useBeansDialog.setTitle("Look over type?");
         useBeansDialog.setListener(this);
-        useBeansDialog.setContent("become vip","20 hi-beans");
+        useBeansDialog.setContent("become vip", "20 hi-beans");
         DialogFactory.showDialogFragment((this).getSupportFragmentManager(), useBeansDialog, UseBeansDialog.TAG);
     }
 

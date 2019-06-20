@@ -3,14 +3,12 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerSystemMsgComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
@@ -39,10 +37,10 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     ImageView mCommonIvRight;
     @BindView(R.id.system_msg_recycler_view)
     RecyclerView mSystemMsgRecyclerView;
-    int page;
+    int page = 1;
     String pageSize = "10";
     private View mEmptyView;
-    List<SystemMsgResponse> systemMsgResponseList = new ArrayList<>();
+    List<SystemMsgResponse.DataBean> systemMsgResponseList = new ArrayList<>();
     SystemMsgAdapter systemMsgAdapter;
     @Inject
     SystemMsgControl.PresenterSystemMsg mPresenter;
@@ -59,9 +57,9 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void initView() {
+        mEmptyView = LayoutInflater.from(this).inflate(R.layout.no_message_layout, (ViewGroup) mSystemMsgRecyclerView.getParent(), false);
         mCommonTitleTv.setText(getResources().getString(R.string.SystemMsgActivity_title));
         mImageLoaderHelper.displayImage(this, R.mipmap.system_message_clean, mCommonIvRight, R.mipmap.system_message_clean);
-        mEmptyView = LayoutInflater.from(this).inflate(R.layout.no_friends_layout, (ViewGroup) mSystemMsgRecyclerView.getParent(), false);
         mSystemMsgRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         systemMsgAdapter = new SystemMsgAdapter(this, systemMsgResponseList, mImageLoaderHelper);
         mSystemMsgRecyclerView.setAdapter(systemMsgAdapter);
@@ -89,12 +87,15 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void getSystemMsgSuccess(SystemMsgResponse systemMsgResponse) {
-        Log.e("ddd", "systemMsgResponse" + new Gson().toJson(systemMsgResponse));
-//        if(){
-//
-//        }
-        systemMsgAdapter.setEmptyView(mEmptyView);
-
+        if (page == 1) {
+            if (systemMsgResponse.getData().size() > 0) {
+                systemMsgAdapter.addData(systemMsgResponse.getData());
+            } else {
+                systemMsgAdapter.setEmptyView(mEmptyView);
+            }
+        } else {
+            systemMsgAdapter.addData(systemMsgResponse.getData());
+        }
     }
 
     private void initializeInjector() {

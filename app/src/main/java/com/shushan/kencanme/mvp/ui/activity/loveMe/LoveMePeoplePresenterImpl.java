@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.loveMe;
 import android.content.Context;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.entity.response.MyFriendsResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -48,6 +49,26 @@ public class LoveMePeoplePresenterImpl implements LoveMePeopleControl.PresenterL
             responseData.parseData(MyFriendsResponse.class);
             MyFriendsResponse response = (MyFriendsResponse) responseData.parsedData;
             mLoveMePeopleView.getLoveMePeopleInfoSuccess(response);
+        } else {
+            mLoveMePeopleView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 喜欢
+     */
+    @Override
+    public void onRequestLike(LikeRequest likeRequest) {
+        mLoveMePeopleView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mLoveMePeopleModel.onRequestLike(likeRequest).compose(mLoveMePeopleView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestLikeSuccess, throwable -> mLoveMePeopleView.showErrMessage(throwable),
+                        () -> mLoveMePeopleView.dismissLoading());
+        mLoveMePeopleView.addSubscription(disposable);
+    }
+
+    private void requestLikeSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mLoveMePeopleView.getLikeSuccess("已添加喜欢");
         } else {
             mLoveMePeopleView.showToast(responseData.errorMsg);
         }

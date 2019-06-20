@@ -48,7 +48,7 @@ public class HomeFragmentControl {
         void onRequestLike(LikeRequest likeRequest);
 
         /**
-         * 曝光次数嗨豆购买规则 (列表: 100嗨豆多少次曝光..)
+         * 曝光次数嗨豆购买规则 (列表: 100嗨豆多少次曝光 200.嗨豆多少次曝光....)
          */
         void onRequestBuyExposureTimeList(TokenRequest tokenRequest);
 
