@@ -1,5 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerConversationListFragmentComponent;
 import com.shushan.kencanme.di.modules.ConversationListFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
+import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.TokenRequest;
@@ -85,11 +88,32 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     }
 
     @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MESSAGE_INFO)) {
+            requestSystemMsgNew();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_MESSAGE_INFO);
+    }
+
+    @Override
     public void initView() {
     }
 
     @Override
     public void initData() {
+        requestSystemMsgNew();
+    }
+
+    /**
+     * 请求系统消息和最新匹配信息
+     */
+    private void requestSystemMsgNew() {
         mLoginUser = mBuProcessor.getLoginUser();
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.token = mBuProcessor.getToken();

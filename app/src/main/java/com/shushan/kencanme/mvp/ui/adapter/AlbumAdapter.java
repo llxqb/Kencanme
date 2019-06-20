@@ -38,6 +38,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, MyAlbumResponse.DataBean item) {
+        helper.addOnClickListener(R.id.photo_item_rl);
         ImageView imageView = helper.getView(R.id.photo_iv);
         MyJzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
         if (item != null) {

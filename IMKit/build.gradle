@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-
+    buildToolsVersion '27.0.3'
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 2019060614
-        versionName "2.9.18 Stable"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 2018022610
+        versionName "2.8.28 Dev"
     }
     buildTypes {
         release {
@@ -31,10 +31,13 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'src/main/libs', include: ['*.jar'])
+    api fileTree(include: ['*.jar'], dir: 'src/main/libs')
+    api 'com.android.support:support-v4:26.1.0'
+
+//    compile files('libs/Rong_IMLib.jar')
 }
 
-repositories {
+repositories { flatDir { dirs '../push/aars' }
     maven {
         url 'https://maven.google.com/'
         name 'Google'

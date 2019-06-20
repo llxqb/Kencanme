@@ -115,7 +115,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.common_iv_right:
 //                CommonChoiceDialog commonChoiceDialog = CommonChoiceDialog.newInstance();
@@ -152,5 +152,9 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
+        super.onBackPressed();
+    }
 }

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerRecommendUserInfoComponent;
@@ -141,10 +143,22 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void initView() {
         initAdapter();
-        albumAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MyAlbumResponse.DataBean bean = albumAdapter.getItem(position);
-            assert bean != null;
-            LookPhotoActivity.start(this, bean.getAlbum_url());
+        mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MyAlbumResponse.DataBean bean = albumAdapter.getItem(position);
+
+                switch (view.getId()) {
+                    case R.id.photo_item_rl:
+                        assert bean != null;
+                        if (bean.getAlbum_type() == 1) {
+                            LookPhotoActivity.start(RecommendUserInfoActivity.this, bean.getAlbum_url());
+                        } else if (bean.getAlbum_type() == 2) {
+                            //TODO 成为vip可看
+                        }
+                        break;
+                }
+            }
         });
     }
 
@@ -380,7 +394,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void jzvdClickListener(int clickPos) {
         // VIp can view
-        showToast("1111");
+        showToast("" + clickPos);
     }
 
     @Override

@@ -14,7 +14,5 @@
         <attr name="RCDefDrawable" format="reference" />
 
     </declare-styleable>
-    <declare-styleable name="AutoLinkTextView">
-        <attr name="RCMaxWidth" format="dimension"/>
-    </declare-styleable>
+
 </resources>
