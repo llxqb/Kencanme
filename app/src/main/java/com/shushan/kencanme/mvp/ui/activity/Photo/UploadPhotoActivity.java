@@ -193,7 +193,9 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
-                beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
+                if(!TextUtils.isEmpty(mBeansCustomEv.getText())){
+                    beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
+                }
                 break;
         }
     }

@@ -15,6 +15,10 @@ public interface MessageApi {
      */
     @POST("menggoda/message")
     Observable<String> onRequestSystemMsg(@Body String request);
-
+    /**
+     * 上传图片
+     */
+    @POST("menggoda/upload")
+    Observable<String> uploadImageRequest(@Body String request);
 
 }

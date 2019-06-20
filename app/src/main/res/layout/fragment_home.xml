@@ -49,6 +49,7 @@
         android:background="@drawable/bg_color_gray_round_20"
         android:gravity="center"
         android:padding="@dimen/dp_5"
+        android:visibility="invisible"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_10" />
 

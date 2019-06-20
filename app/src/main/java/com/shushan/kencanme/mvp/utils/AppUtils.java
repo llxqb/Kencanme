@@ -88,14 +88,40 @@ public class AppUtils {
      * vip 每天主动10个人发起聊天
      * 非vip 不可以
      * 超级vip 不限次数
-     *
+     * <p>
      * 女性：
      * 非vip  每天主动10个人发起聊天    超过10个提示开通vip
      * vip    每天主动20个人发起聊天
-     *
+     * <p>
      * 3、女性回复男性VIP用户消息，无需付费或开通VIP。
-     4、男性回复女性用户，需开通VIP或付费（付费金额后台可调整）
+     * 4、男性回复女性用户，需开通VIP或付费（付费金额后台可调整）
+     * <p>
+     * 限制发聊天数
      */
+    public static boolean isLimitMsg(int userType, int todaySendMsgNum) {
+        switch (userType) {
+            case 1:
+                return false;
+            case 2:
+                if (todaySendMsgNum > 10) {
+                    return false;
+                }
+                break;
+            case 3:
+                return true;
+            case 4:
+                if(todaySendMsgNum>10){
+                    return false;
+                }
+                break;
+            case 5:
+                if(todaySendMsgNum>20){
+                    return false;
+                }
+                break;
+        }
 
+        return true;
+    }
 
 }

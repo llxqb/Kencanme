@@ -83,15 +83,15 @@ public class LoginUser implements Serializable {
      */
     public int exposure_time;
     /**
-     * 今日可免费喜欢数
+     * 今日已免费喜欢数
      */
     public int today_like;
     /**
-     * 今日可免费聊天数
+     * 今日已免费聊天数
      */
     public int today_chat;
     /**
-     * 今日可免费查看联系方式数
+     * 今日已免费查看联系方式数
      */
     public int today_see_contact;
 

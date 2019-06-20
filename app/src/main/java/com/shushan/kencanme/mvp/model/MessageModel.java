@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.SystemMsgRequest;
+import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.network.networkapi.MessageApi;
 
 import javax.inject.Inject;
@@ -33,5 +34,13 @@ public class MessageModel {
     public Observable<ResponseData> onRequestSystemMsg(SystemMsgRequest request) {
         return mMessageApi.onRequestSystemMsg(mGson.toJson(request)).map(mTransform::transformListType);
     }
+
+    /**
+     * 上传图片到服务器
+     */
+    public Observable<ResponseData> uploadImageRequest(UploadImage uploadImage) {
+        return mMessageApi.uploadImageRequest(mGson.toJson(uploadImage)).map(mTransform::transformCommon);
+    }
+
 
 }

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_send_photo_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000">
+
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pop_contain"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:padding="@dimen/dp_15"
+        android:src="@mipmap/popup_close" />
+
+
+    <LinearLayout
+        android:id="@+id/pop_contain"
+        android:layout_width="@dimen/dp_285"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_30"
+        android:background="@drawable/bg_white_round_5"
+        android:gravity="center_horizontal"
+        android:minHeight="@dimen/dp_377"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="Please select the type of photo you "
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <!-- 普通照片/视频-->
+        <LinearLayout
+            android:id="@+id/ordinary_photo_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginEnd="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ordinary_photo_check_iv"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/pay_hibeans_no_choose" />
+
+            <TextView
+                android:id="@+id/ordinary_photo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:text="Ordinary Photo/Video"
+                android:textColor="@color/color_80"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+
+        <View style="@style/line_height_1" />
+
+
+        <!-- 私密照片/视频-->
+        <LinearLayout
+            android:id="@+id/private_photo_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/private_photo_check_iv"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/pay_hibeans_no_choose" />
+
+            <TextView
+                android:id="@+id/private_photo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="Private Photos/Videos"
+                android:textColor="@color/color_80"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_35"
+            android:text="（Users need to pay you Hey Dou for checking）"
+            android:textColor="@color/color_9b"
+            android:textSize="@dimen/sp_12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_70"
+            android:layout_marginEnd="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_22"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/beans_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_beans_selector_5"
+                android:drawablePadding="@dimen/dp_2"
+                android:drawableStart="@mipmap/home_popup_hibeans"
+                android:paddingEnd="@dimen/dp_12"
+                android:paddingStart="@dimen/dp_12"
+                android:text="1"
+                android:textSize="@dimen/sp_24" />
+
+            <TextView
+                android:id="@+id/beans_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:background="@drawable/bg_beans_selector_5"
+                android:drawablePadding="@dimen/dp_2"
+                android:drawableStart="@mipmap/home_popup_hibeans"
+                android:paddingEnd="@dimen/dp_12"
+                android:paddingStart="@dimen/dp_12"
+                android:text="5"
+                android:textSize="@dimen/sp_24" />
+
+            <EditText
+                android:id="@+id/beans_custom_ev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_2"
+                android:layout_marginStart="@dimen/dp_15"
+                android:background="@drawable/bg_beans_selector_5"
+                android:drawablePadding="@dimen/dp_4"
+                android:drawableStart="@mipmap/home_popup_hibeans"
+                android:hint="custom"
+                android:inputType="number"
+                android:minHeight="@dimen/dp_34"
+                android:paddingEnd="@dimen/dp_12"
+                android:paddingStart="@dimen/dp_12"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+        <!--保存 -->
+        <Button
+            android:id="@+id/sure_btn"
+            android:layout_width="@dimen/dp_228"
+            android:layout_height="@dimen/dp_35"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_30"
+            android:background="@drawable/dialog_style_2"
+            android:text="Sure"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

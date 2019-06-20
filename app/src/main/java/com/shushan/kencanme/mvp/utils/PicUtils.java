@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
@@ -37,6 +38,31 @@ public class PicUtils {
         byte[] appicon = baos.toByteArray();// 转为byte数组
         return Base64.encodeToString(appicon, Base64.DEFAULT);
     }
+
+
+    /**
+     *  * 图片压缩方法一
+     *
+     * 计算 bitmap大小，如果超过64kb，则进行压缩
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap ImageCompressL(Bitmap bitmap) {
+        double targetwidth = Math.sqrt(64.00 * 1000);
+        if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
+            // 创建操作图片用的matrix对象
+            Matrix matrix = new Matrix();
+            // 计算宽高缩放率
+            double x = Math.max(targetwidth / bitmap.getWidth(), targetwidth
+                    / bitmap.getHeight());
+            // 缩放图片动作
+            matrix.postScale((float) x, (float) x);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+                    bitmap.getHeight(), matrix, true);
+        }
+        return bitmap;
+    }
+
 
 
     /**

@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.di.components.AppComponent;
 import com.shushan.kencanme.di.components.DaggerAppComponent;
 import com.shushan.kencanme.di.modules.AppModule;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessage;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 
 import javax.inject.Inject;
 
@@ -54,6 +56,10 @@ public class KencanmeApp extends Application {
              * IMKit SDK调用第一步 初始化
              */
             RongIM.init(this);
+            //注册自定义消息
+            RongIM.registerMessageType(CustomizeMessage.class);
+            //注册消息模板
+            RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
         }
     }
 }

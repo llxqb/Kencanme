@@ -5,9 +5,7 @@ import android.net.Uri;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
-import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
-import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -62,7 +60,7 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
 
     /**
      * 请求个人信息（首页）
-     */
+     *//*
     @Override
     public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
         mMainView.showLoading(mContext.getResources().getString(R.string.loading));
@@ -80,7 +78,7 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         } else {
             mMainView.showToast(responseData.errorMsg);
         }
-    }
+    }*/
 
     /**
      * 根据融云第三方id获取用户头像和昵称

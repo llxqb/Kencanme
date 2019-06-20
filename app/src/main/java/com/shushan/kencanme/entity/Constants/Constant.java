@@ -23,7 +23,7 @@ public class Constant {
     //图片类型 1头像2封面3相册
     public static final int PIC_AVATOR = 1;
     public static final int PIC_COVER = 2;
-    public static final int PIC_ALBUM = 2;
+    public static final int PIC_ALBUM = 3;
 
     //占位图图片资源
     public static final int LOADING_SMALL = R.mipmap.loading_small;
