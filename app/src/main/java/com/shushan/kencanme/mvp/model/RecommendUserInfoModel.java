@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.network.networkapi.RecommendUserInfoApi;
 
@@ -32,9 +33,11 @@ public class RecommendUserInfoModel {
     public Observable<ResponseData> recommendUserInfoRequest(RecommendUserInfoRequest request) {
         return mRecommendUserInfoApi.recommendUserInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
     }
+
     public Observable<ResponseData> onRequestBlackUser(BlackUserRequest request) {
         return mRecommendUserInfoApi.onRequestBlackUser(mGson.toJson(request)).map(mTransform::transformCommon);
     }
+
     public Observable<ResponseData> onRequestDeleteUser(DeleteUserRequest request) {
         return mRecommendUserInfoApi.onRequestDeleteUser(mGson.toJson(request)).map(mTransform::transformCommon);
     }
@@ -44,4 +47,10 @@ public class RecommendUserInfoModel {
         return mRecommendUserInfoApi.onRequestLike(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 查看联系方式
+     */
+    public Observable<ResponseData> onRequestContact(LookContactTypeRequest request) {
+        return mRecommendUserInfoApi.onRequestContact(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 }

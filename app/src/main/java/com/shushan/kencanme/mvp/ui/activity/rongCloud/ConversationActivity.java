@@ -325,6 +325,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
         //TODO
 
+
         //更新个人信息
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.token = mBuProcessor.getToken();

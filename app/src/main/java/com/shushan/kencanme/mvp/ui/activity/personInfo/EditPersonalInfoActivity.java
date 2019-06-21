@@ -72,6 +72,12 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditPersonalInfoActivity_title));
+        //光标移到最后
+        mEditCityEt.setSelection(mEditCityEt.getText().length());
+        mEditHeightEt.setSelection(mEditHeightEt.getText().length());
+        mEditWeightEt.setSelection(mEditWeightEt.getText().length());
+        mEditChestEt.setSelection(mEditChestEt.getText().length());
+        mEditOccupationEt.setSelection(mEditOccupationEt.getText().length());
     }
 
     @Override

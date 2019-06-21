@@ -13,6 +13,7 @@ public class Constant {
     public static final int DIALOG_ONE = 1;
     public static final int DIALOG_TWO = 2;
     public static final int DIALOG_THREE = 3;
+    public static final int DIALOG_FOUR = 4;
 
     //键盘延时100
     public static final int DELAYTIME = 100;

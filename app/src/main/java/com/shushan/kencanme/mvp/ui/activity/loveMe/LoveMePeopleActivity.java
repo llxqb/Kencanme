@@ -16,13 +16,13 @@ import com.shushan.kencanme.di.components.DaggerLoveMePeopleComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.LoveMePeopleModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
-import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.entity.response.MyFriendsResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.LoveMeFriendsAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.views.CommonDialog;
@@ -83,18 +83,14 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                 switch (view.getId()) {
                     case R.id.like_iv:
                         if (!listBean.isLike) {
-                            if (AppUtils.isLimitLike(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_like)) {
+                            if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
                                 LikeRequest likeRequest = new LikeRequest();
                                 likeRequest.token = mBuProcessor.getToken();
                                 assert listBean != null;
                                 likeRequest.likeid = listBean.getUid();
                                 mPresenter.onRequestLike(likeRequest);
                             } else {
-                                CommonDialog commonDialog = CommonDialog.newInstance();
-                                commonDialog.setListener(LoveMePeopleActivity.this);
-                                commonDialog.setContent("Today's favorite number has been used up. Open members can enjoy unlimited ~");
-                                commonDialog.setStyle(Constant.DIALOG_TWO);
-                                DialogFactory.showDialogFragment(getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+                                DialogFactory.showOpenVipDialog(LoveMePeopleActivity.this, getResources().getString(R.string.dialog_open_vip_like));
                             }
                         }
                         break;
@@ -141,7 +137,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
 
     @Override
     public void commonDialogBtnOkListener() {
-
+        startActivitys(OpenVipActivity.class);
     }
 
 

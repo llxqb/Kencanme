@@ -15,4 +15,8 @@ public class ActivityConstant {
      * 更新消息页面
      */
     public static final String UPDATE_MESSAGE_INFO = "update_message_info";
+    /**
+     * 充值完更新数据
+     */
+    public static final String UPDATE_RECHARGE_INFO = "update_recharge_info";
 }

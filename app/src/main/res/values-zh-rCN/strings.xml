@@ -10,11 +10,23 @@
     <!-- 提交和保存-->
     <string name="submit">Submit</string>
     <string name="Preserve">Preserve</string>
+    <!--赚嗨bean 和充值 -->
+    <string name="earn_beans">Earn Hi-beans</string>
+    <string name="recharge">Recharge</string>
+    <!-- 敬请期待-->
+    <string name="wait_develop">敬请期待</string>
+
+
 
     <!-- dialog 相关-->
-    <string name="dialog_sure">确定</string>
-    <string name="dialog_cancal">取消</string>
+    <string name="dialog_sure">sure</string>
+    <string name="dialog_cancal">cancal</string>
     <string name="dialog_style2_hint">About VIP</string>
+    <string name="dialog_use_beans_title">Open Super VIP Free Chat~</string>
+
+    <string name="dialog_open_vip_like">Today\'s favorite number has been used up. Open members can enjoy unlimited ~</string>
+    <string name="dialog_open_vip_chat">Open Super VIP Free Chat~</string>
+    <string name="dialog_open_vip_album">Open Super VIP look more</string>
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->
@@ -31,6 +43,9 @@
     <string name="PhotoDialog_photo">拍照</string>
     <string name="PhotoDialog_album">从相册中选取</string>
 
+    <!--RechargeBeansDialog -->
+    <string name="RechargeBeansDialog_no_beans_hint">Hey, you don\'t have enough beans!</string>
+
 
     <!--Activity 相关 -->
 
@@ -38,6 +53,12 @@
     <string name="main_bottom_home">首页</string>
     <string name="main_bottom_message">消息</string>
     <string name="main_bottom_mine">我的</string>
+
+
+    <!--EditMakeFriendsInfoActivity -->
+    <string name="EditMakeFriendsInfoActivity_upload_hint">Reupload photo or video</string>
+
+
 
     <!-- CreatePersonalInfoActivity-->
     <!--Empty -->

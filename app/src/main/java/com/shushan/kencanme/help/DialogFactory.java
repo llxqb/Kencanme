@@ -18,8 +18,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
+import com.shushan.kencanme.mvp.views.dialog.RechargeBeansDialog;
 
 import java.util.Calendar;
 
@@ -148,7 +151,6 @@ public class DialogFactory {
         }
     }
 
-
     /**
      * 显示公共dialog
      *
@@ -166,6 +168,7 @@ public class DialogFactory {
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
         return commonDialog;
     }
+
 
     public static ProgressDialog showProgressDialog(Context context, String msg) {
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -185,6 +188,42 @@ public class DialogFactory {
         loadingDialog.setCancelable(true);
         loadingDialog.setContentView(v);
         return loadingDialog;
+    }
+
+
+    /**
+     * 提示成为VIP弹框
+     * 判断 去喜欢/去聊天
+     */
+    public static CommonDialog showOpenVipDialog(Activity context, String title) {
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener((CommonDialog.CommonDialogListener) context);
+        commonDialog.setContent(title);
+        commonDialog.setStyle(Constant.DIALOG_TWO);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        return commonDialog;
+    }
+
+    /**
+     * 提示去充值嗨豆
+     * 判断使用嗨豆
+     */
+    public static RechargeBeansDialog showRechargeBeansDialog(Activity context) {
+        RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
+        rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
+        return rechargeBeansDialog;
+    }
+
+    /**
+     * 显示使用嗨豆
+     */
+    public static MessageUseBeansDialog showUseBeansDialog(Activity context, String title, int beansNum) {
+        MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
+        messageUseBeansDialog.setListener((MessageUseBeansDialog.MessageUseBeansDialogListener) context);
+        messageUseBeansDialog.setTitle(title, beansNum);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
+        return messageUseBeansDialog;
     }
 
 }

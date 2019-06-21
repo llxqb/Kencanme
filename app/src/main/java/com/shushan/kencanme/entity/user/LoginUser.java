@@ -94,6 +94,16 @@ public class LoginUser implements Serializable {
      * 今日已免费查看联系方式数
      */
     public int today_see_contact;
+    /**
+     * 用户类型
+     * app 自己添加
+     * 1：男非VIP
+     * 2：男VIP
+     * 3：超级VIP
+     * 4：女非VIP
+     * 5：女VIP
+     */
+    public int userType;
 
 
 }

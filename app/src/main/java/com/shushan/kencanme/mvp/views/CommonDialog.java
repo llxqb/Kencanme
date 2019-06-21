@@ -54,6 +54,10 @@ public class CommonDialog extends BaseDialogFragment {
     ImageView mDialogStyle2Iv;
     @BindView(R.id.pop_contain)
     LinearLayout mPopContain;
+    @BindView(R.id.dialog_style_4_tv)
+    TextView mDialogStyle4Tv;
+    @BindView(R.id.dialog_style_4_rl)
+    RelativeLayout mDialogStyle4Rl;
     private CommonDialogListener dialogBtnListener;
     private String title, mContent;
     private int mType;// 0 方式一  1 方式二
@@ -97,14 +101,19 @@ public class CommonDialog extends BaseDialogFragment {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.VISIBLE);
+        } else if (mType == Constant.DIALOG_FOUR) {
+            dialogStyle1ll.setVisibility(View.GONE);
+            dialogStyle2Rl.setVisibility(View.GONE);
+            dialogStyle3Rl.setVisibility(View.GONE);
+            mDialogStyle4Rl.setVisibility(View.VISIBLE);
         }
         commonDialogTitle.setText(mContent);
         return view;
     }
 
 
-    @OnClick({R.id.iv_close,R.id.pop_contain, R.id.common_dialog_sure, R.id.common_dialog_cancel,
-            R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout})
+    @OnClick({R.id.iv_close, R.id.pop_contain, R.id.common_dialog_sure, R.id.common_dialog_cancel,
+            R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout, R.id.dialog_style_4_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
@@ -128,6 +137,12 @@ public class CommonDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.dialog_style_3_rl:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.commonDialogBtnOkListener();
+                }
+                closeCommonDialog();
+                break;
+            case R.id.dialog_style_4_rl:
                 if (dialogBtnListener != null) {
                     dialogBtnListener.commonDialogBtnOkListener();
                 }

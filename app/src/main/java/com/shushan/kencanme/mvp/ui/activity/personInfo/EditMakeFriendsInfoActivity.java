@@ -71,6 +71,8 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     RelativeLayout mHeadIconRl;
     @BindView(R.id.user_name_ev)
     EditText mUserNameEv;
+    @BindView(R.id.upload_hint_tv)
+    TextView mUploadHintTv;
     @BindView(R.id.user_name_rl)
     RelativeLayout mUserNameRl;
     @BindView(R.id.declaration_ev)
@@ -111,7 +113,10 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditMakeFriendsInfoActivity_title));
-        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
+        //光标移到最后
+        mUserNameEv.setSelection(mUserNameEv.getText().length());
+        mDeclarationEv.setSelection(mDeclarationEv.getText().length());
+
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
@@ -125,18 +130,20 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
             mJzVideo.setVisibility(View.VISIBLE);
             mCoverIv.setVisibility(View.GONE);
             mJzVideo.setUp(mLoginUser.cover, "");
+            mUploadHintTv.setVisibility(View.VISIBLE);
             PicUtils.loadVideoScreenshot(this, mLoginUser.cover, mJzVideo.thumbImageView, 0);
         } else {
             mJzVideo.setVisibility(View.GONE);
             mCoverIv.setVisibility(View.VISIBLE);
-            mImageLoaderHelper.displayImage(this, mLoginUser.cover, mCoverIv,Constant.LOADING_MIDDLE);
+            mUploadHintTv.setVisibility(View.GONE);
+            mImageLoaderHelper.displayImage(this, mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
         }
-        mImageLoaderHelper.displayImage(this, mLoginUser.trait, mHeadIconIv,Constant.LOADING_SMALL);
+        mImageLoaderHelper.displayImage(this, mLoginUser.trait, mHeadIconIv, Constant.LOADING_SMALL);
         mUserNameEv.setText(mLoginUser.nickname);
         mDeclarationEv.setText(mLoginUser.declaration);
     }
 
-    @OnClick({R.id.common_back, R.id.cover_iv, R.id.head_icon_rl, R.id.save_tv})
+    @OnClick({R.id.common_back, R.id.cover_iv, R.id.head_icon_rl, R.id.save_tv, R.id.upload_hint_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
@@ -147,6 +154,9 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
                 break;
             case R.id.head_icon_rl:
                 showPhotoDialog();
+                break;
+            case R.id.upload_hint_tv:
+                showVideoDialog();
                 break;
             case R.id.save_tv:
                 if (isValidEmpty()) {
@@ -295,6 +305,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
 
     @Override
     public void uploadVideoSuccess(String videoPath) {
+        mUploadHintTv.setVisibility(View.VISIBLE);
         mJzVideo.setVisibility(View.VISIBLE);
         mCoverIv.setVisibility(View.GONE);
         mJzVideo.setUp(videoPath, "");
@@ -307,10 +318,13 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void uploadImageSuccess(String picPath) {
         if (photoOrVideo == 0) {
-            mImageLoaderHelper.displayImage(this, picPath, mHeadIconIv,Constant.LOADING_SMALL);
+            mImageLoaderHelper.displayImage(this, picPath, mHeadIconIv, Constant.LOADING_SMALL);
             mLoginUser.trait = picPath;
         } else {
-            mImageLoaderHelper.displayImage(this, picPath, mCoverIv,Constant.LOADING_MIDDLE);
+            mUploadHintTv.setVisibility(View.VISIBLE);
+            mJzVideo.setVisibility(View.GONE);
+            mCoverIv.setVisibility(View.VISIBLE);
+            mImageLoaderHelper.displayImage(this, picPath, mCoverIv, Constant.LOADING_MIDDLE);
             mLoginUser.cover = picPath;
         }
     }

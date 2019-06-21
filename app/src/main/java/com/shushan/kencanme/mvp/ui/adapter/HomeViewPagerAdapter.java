@@ -108,7 +108,7 @@ public class HomeViewPagerAdapter extends PagerAdapter {
         });
         homeMessageIv.setOnClickListener(v -> {
             if (mHomeViewPagerListener != null) {
-                mHomeViewPagerListener.goChat(listBean.getUid());
+                mHomeViewPagerListener.goChat(listBean.getRongyun_userid(),listBean.getNickname());
             }
         });
         mRecommendUserRl.setOnClickListener(v -> {
@@ -153,7 +153,7 @@ public class HomeViewPagerAdapter extends PagerAdapter {
     public interface HomeViewPagerListener {
         void goLike(int uId);
 
-        void goChat(int uId);
+        void goChat(String  rongYunId,String nickName);
 
         void goRecommendUser();
     }

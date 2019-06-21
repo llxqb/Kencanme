@@ -6,6 +6,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -114,6 +115,26 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
     }
 
     private void requestLikeSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.getLikeSuccess("已添加喜欢");
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 查看联系方式
+     */
+    @Override
+    public void onRequestContact(LookContactTypeRequest lookContactTypeRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestContact(lookContactTypeRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestContactSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestContactSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             mRecommendUserInfoView.getLikeSuccess("已添加喜欢");
         } else {

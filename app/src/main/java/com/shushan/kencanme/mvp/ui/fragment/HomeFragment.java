@@ -22,7 +22,6 @@ import com.shushan.kencanme.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
-import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.DialogBuyBean;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
@@ -56,6 +55,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.JzvdStd;
+import io.rong.imkit.RongIM;
 
 /**
  * HomeFragment
@@ -176,17 +176,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void goLike(int uId) {
-        if (AppUtils.isLimitLike(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_like)) {
+        if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
             likeRequest.likeid = uId;
             mPresenter.onRequestLike(likeRequest);
         } else {
-            CommonDialog commonDialog = CommonDialog.newInstance();
-            commonDialog.setListener(this);
-            commonDialog.setContent("Today's favorite number has been used up. Open members can enjoy unlimited ~");
-            commonDialog.setStyle(Constant.DIALOG_TWO);
-            DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+            DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_like));
         }
     }
 
@@ -194,12 +190,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      * 去聊天
      */
     @Override
-    public void goChat(int uId) {
-        CommonDialog commonDialog = CommonDialog.newInstance();
-        commonDialog.setListener(this);
-        commonDialog.setContent("Open Super VIP Free Chat~");
-        commonDialog.setStyle(Constant.DIALOG_TWO);
-        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+    public void goChat(String rongYunId, String nickName) {
+        if (AppUtils.isLimitMsg(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_chat)) {
+            //启动单聊页面
+            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), rongYunId, nickName);
+        } else {
+            DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_chat));
+        }
     }
 
     /**
@@ -255,6 +252,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
+        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();
         mLoginUser.beans = userBean.getBeans();

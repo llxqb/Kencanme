@@ -30,4 +30,10 @@ public interface RecommendUserInfoApi {
      */
     @POST("menggoda/Operation")
     Observable<String> onRequestLike(@Body String request);
+
+    /**
+     * 查看联系方式
+     */
+    @POST("menggoda/operation/see_contact")
+    Observable<String> onRequestContact(@Body String request);
 }

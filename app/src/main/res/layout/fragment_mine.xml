@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:contentScrim="@color/color_blue_btn_press">
+   >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -15,7 +15,6 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/color_blue_btn_press"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false">
             <!-- 个人资料头部-->

@@ -4,6 +4,7 @@ package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
@@ -22,6 +23,8 @@ public class RecommendUserInfoControl {
         void getDeleteUserSuccess(String msg);
 
         void getLikeSuccess(String msg);
+
+        void getContactSuccess(String msg);
     }
 
     public interface PresenterRecommendUserInfo extends Presenter<RecommendUserInfoView> {
@@ -44,6 +47,10 @@ public class RecommendUserInfoControl {
          * 喜欢
          */
         void onRequestLike(LikeRequest likeRequest);
+        /**
+         * 查看联系方式
+         */
+        void onRequestContact(LookContactTypeRequest lookContactTypeRequest);
     }
 
 

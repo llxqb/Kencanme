@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.shushan.kencanme.KencanmeApp;
@@ -184,17 +186,24 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
-        mAlbumAdapter.setOnItemClickListener((adapter, view, position) -> {
-            MyAlbumResponse.DataBean dataBean = (MyAlbumResponse.DataBean) adapter.getItem(position);
-            if (position == 0) {
-                if (mAlbumAdapter.getItemCount() >= 13) {
-                    showToast("最多传12张");
-                } else {
-                    startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
+        mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                MyAlbumResponse.DataBean dataBean = (MyAlbumResponse.DataBean) adapter.getItem(position);
+                switch (view.getId()) {
+                    case R.id.photo_item_rl:
+                        if (position == 0) {
+                            if (mAlbumAdapter.getItemCount() >= 13) {
+                                showToast("最多传12张");
+                            } else {
+                                startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
+                            }
+                        } else {
+                            assert dataBean != null;
+                            LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
+                        }
+                        break;
                 }
-            } else {
-                assert dataBean != null;
-                LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
             }
         });
         mContactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -226,7 +235,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             contactWayList = gson.fromJson(contactWayString, listType);
         }
         mimeContactWayAdapter.setNewData(contactWayList);
-        if (contactWayList!=null && contactWayList.size() == 0) {
+        if (contactWayList != null && contactWayList.size() == 0) {
             mContactWayHintTv.setVisibility(View.VISIBLE);
         } else {
             mContactWayHintTv.setVisibility(View.GONE);
@@ -240,7 +249,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             labelList = gson2.fromJson(labelString, labelListType);
         }
         recommendUserLabelAdapter.setNewData(labelList);
-        if (labelList!=null && labelList.size() == 0) {
+        if (labelList != null && labelList.size() == 0) {
             mLabelHintTv.setVisibility(View.VISIBLE);
         } else {
             mLabelHintTv.setVisibility(View.GONE);

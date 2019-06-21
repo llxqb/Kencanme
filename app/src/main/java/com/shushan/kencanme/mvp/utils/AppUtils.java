@@ -110,18 +110,58 @@ public class AppUtils {
             case 3:
                 return true;
             case 4:
-                if(todaySendMsgNum>10){
+                if (todaySendMsgNum > 10) {
                     return false;
                 }
                 break;
             case 5:
-                if(todaySendMsgNum>20){
+                if (todaySendMsgNum > 20) {
                     return false;
                 }
                 break;
         }
-
         return true;
     }
 
+    /**
+     * 查看联系方式数  支付嗨豆数
+     * 超级vip   每天免费查看3人 5嗨豆每次
+     * vip       每天免费查看1人  10嗨豆每次
+     * 普通      20嗨豆每次
+     * return    嗨豆数
+     */
+    public static int lookContactType(int userType, int todayContactNum) {
+        switch (userType) {
+            case 1:
+                return 20;
+            case 2:
+                if (todayContactNum >= 1) {
+                    return 10;
+                } else {
+                    return 0;
+                }
+            case 3:
+                if (todayContactNum >= 3) {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            case 4:
+                return 20;
+            case 5:
+                if (todayContactNum >= 1) {
+                    return 10;
+                } else {
+                    return 0;
+                }
+        }
+        return 0;
+    }
+
+    /**
+     * 消息发送规则：
+     1、 用户注册APP后，5个机器人开始给用户发送消息。每个机器人发送消息间隔5分钟发第一条消息。
+     2、后台可以设置添加机器人发送消息的间隔时间/或者每天时间段定时发送，发送内容，发送消息条数。
+     3、用户一旦消费后，则停止自动发送消息。
+     */
 }
