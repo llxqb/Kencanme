@@ -20,7 +20,7 @@ import io.rong.imlib.model.MessageContent;
 @MessageTag(value = "RC:CustomMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class CustomizeMessage extends MessageContent {
     /**
-     *  beans = 10;
+     * beans = 10;
      * "cover_url" = "https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190618/4ef2c12c536c05ded397ff65dd379bd2.mp4";
      * isLocked = 1;   0 未锁   1锁
      * msgType = 2;    msgType =1 照片   2:视频

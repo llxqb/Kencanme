@@ -5,7 +5,7 @@
     android:layout_height="@dimen/dp_84">
 
 
-    <com.shushan.kencanme.mvp.views.MyJzvdStd
+    <cn.jzvd.JzvdStd
         android:id="@+id/album_jz_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

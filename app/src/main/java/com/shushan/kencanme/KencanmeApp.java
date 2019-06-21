@@ -26,6 +26,7 @@ public class KencanmeApp extends Application {
     public Context mContext;
     @Inject
     Gson mGson;
+    public static CustomizeMessageItemProvider mCustomizeMessageItemProvider;
 //    @Inject
 //    BuProcessor mBuProcessor;
 
@@ -59,7 +60,8 @@ public class KencanmeApp extends Application {
             //注册自定义消息
             RongIM.registerMessageType(CustomizeMessage.class);
             //注册消息模板
-            RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
+            mCustomizeMessageItemProvider = new CustomizeMessageItemProvider();
+            RongIM.registerMessageTemplate(mCustomizeMessageItemProvider);
         }
     }
 }

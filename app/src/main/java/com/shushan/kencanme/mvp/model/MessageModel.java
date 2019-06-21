@@ -2,7 +2,9 @@ package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.SystemMsgRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
+import com.shushan.kencanme.entity.request.UseBeansRequest;
 import com.shushan.kencanme.network.networkapi.MessageApi;
 
 import javax.inject.Inject;
@@ -40,6 +42,21 @@ public class MessageModel {
      */
     public Observable<ResponseData> uploadImageRequest(UploadImage uploadImage) {
         return mMessageApi.uploadImageRequest(mGson.toJson(uploadImage)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 嗨豆回复消息/查看私密照片
+     */
+    public Observable<ResponseData> onRequestUseBeans(UseBeansRequest useBeansRequest) {
+        return mMessageApi.onRequestUseBeans(mGson.toJson(useBeansRequest)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 请求首页个人信息  如 是否喜欢数 聊天数
+     */
+
+    public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
+        return mMessageApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 

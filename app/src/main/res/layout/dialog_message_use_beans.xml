@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_use_beans_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pop_contain"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:padding="@dimen/dp_15"
+        android:src="@mipmap/popup_close" />
+
+    <LinearLayout
+        android:id="@+id/pop_contain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_30"
+        android:background="@drawable/bg_white_round_5"
+        android:gravity="center_horizontal"
+        android:minHeight="@dimen/dp_160"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/use_beans_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_12"
+            android:gravity="center"
+            android:minHeight="@dimen/dp_80"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_16" />
+
+
+        <TextView
+            android:id="@+id/use_beans_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp_3"
+            android:drawableStart="@mipmap/message_popup_hibeans1"
+            android:text="5"
+            android:textColor="@color/yellow_btn"
+            android:textSize="@dimen/sp_30"
+            android:textStyle="bold" />
+
+
+        <!-- 弹框方式二-->
+        <RelativeLayout
+            android:id="@+id/dialog_style_2_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/dialog_style_2"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/dialog_style_2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_toEndOf="@id/dialog_style_2_iv"
+                android:text="@string/dialog_sure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

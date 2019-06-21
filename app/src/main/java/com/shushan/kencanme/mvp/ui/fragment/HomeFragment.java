@@ -257,6 +257,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.beans = userBean.getBeans();
         mLoginUser.exposure_type = userBean.getExposure_type();
         mLoginUser.exposure_time = userBean.getExposure_time();
         mLoginUser.today_like = userBean.getToday_like();

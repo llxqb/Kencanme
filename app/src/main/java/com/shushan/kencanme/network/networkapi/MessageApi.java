@@ -20,5 +20,15 @@ public interface MessageApi {
      */
     @POST("menggoda/upload")
     Observable<String> uploadImageRequest(@Body String request);
+    /**
+     * 嗨豆回复消息/查看私密照片
+     */
+    @POST("menggoda/operation/consume_beans")
+    Observable<String> onRequestUseBeans(@Body String request);
 
+    /**
+     * 用户首页信息
+     */
+    @POST("menggoda/index/user_exposure")
+    Observable<String> onRequestHomeUserInfo(@Body String request);
 }

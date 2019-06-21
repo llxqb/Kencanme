@@ -10,13 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerConversationComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.ConversationModule;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
+import com.shushan.kencanme.entity.request.UseBeansRequest;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
@@ -26,6 +30,7 @@ import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
+import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
 import com.shushan.kencanme.mvp.views.dialog.SendPhotoTypeDialog;
 
 import java.util.Objects;
@@ -42,14 +47,12 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.ImageMessage;
-import io.rong.message.RichContentMessage;
-import io.rong.message.VoiceMessage;
 
 /**
  * 打开消息界面
  */
 public class ConversationActivity extends BaseActivity implements CommonChoiceDialog.commonChoiceDialogListener, RongIM.OnSendMessageListener,
-        ConversationControl.ConversationView, CommonDialog.CommonDialogListener, SendPhotoTypeDialog.SendPhotoTypeDialogListener {
+        ConversationControl.ConversationView, CommonDialog.CommonDialogListener, SendPhotoTypeDialog.SendPhotoTypeDialogListener, CustomizeMessageItemProvider.LookViewListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -85,6 +88,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         RongIM.setConversationClickListener(new MyConversationClickListener());
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
+        //注册自定义消息接收
+        KencanmeApp.mCustomizeMessageItemProvider.setListener(this);
         if (getIntent() != null) {
             initIntent(getIntent());
         }
@@ -99,7 +104,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mTargetId = intent.getData().getQueryParameter("targetId");
         mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
-
     }
 
 
@@ -119,17 +123,14 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public void deleteUserListener() {
-
     }
 
     @Override
     public void blackUserListener() {
-
     }
 
     @Override
     public void reportUserListener() {
-
     }
 
     private boolean isSendPic = false;
@@ -140,10 +141,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         //开发者根据自己需求自行处理逻辑
         if (AppUtils.isLimitMsg(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_chat)) {
             MessageContent messageContent = message.getContent();
-            if (messageContent instanceof TextMessage) {//文本消息
-                TextMessage textMessage = (TextMessage) messageContent;
-                Log.d(TAG, "onSent-TextMessage:" + textMessage.getContent());
-            } else if (messageContent instanceof ImageMessage) {//图片消息
+            if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
                     ImageMessage imageMessage = (ImageMessage) messageContent;
                     imgMsg = imageMessage;
@@ -153,14 +151,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 } else {
                     isSendPic = false;
                 }
-            } else if (messageContent instanceof VoiceMessage) {//语音消息
-                VoiceMessage voiceMessage = (VoiceMessage) messageContent;
-                Log.d(TAG, "onSent-voiceMessage:" + voiceMessage.getUri().toString());
-            } else if (messageContent instanceof RichContentMessage) {//图文消息
-                RichContentMessage richContentMessage = (RichContentMessage) messageContent;
-                Log.d(TAG, "onSent-RichContentMessage:" + richContentMessage.getContent());
-            } else {
-                Log.d(TAG, "onSent-其他消息，自己来判断处理");
             }
             return message;
         } else {
@@ -184,12 +174,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-//        mLoginUser.today_chat = mLoginUser.today_chat + 1;
-//        mBuProcessor.setLoginUser(mLoginUser);
+        mLoginUser.today_chat = mLoginUser.today_chat + 1;
+        mBuProcessor.setLoginUser(mLoginUser);
         return false;
     }
-
-//    boolean isTrue;
 
     /**
      * 私密图片
@@ -211,7 +199,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             @Override
             public void onSuccess(Message message) {
                 //发送成功后执行
-//                Log.e("ddd","message:"+new Gson().toJson(message));
                 Log.e("dddd", "onSuccess");
             }
 
@@ -265,7 +252,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         UploadImage uploadImage = new UploadImage();
         uploadImage.dir = String.valueOf(Constant.PIC_ALBUM);//1头像2封面3相册
         Bitmap bitmap = BitmapFactory.decodeFile(imgMsg.getLocalUri().getEncodedPath());
-        uploadImage.file =  PicUtils.convertIconToString( PicUtils.ImageCompressL(bitmap)) ;
+        uploadImage.file = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
         mPresenter.uploadImage(uploadImage);
     }
 
@@ -283,7 +270,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void uploadImageSuccess(String picPath) {
-        Log.d("ddd", "picPath:" + picPath);
+//        Log.d("ddd", "picPath:" + picPath);
         if (TranTools.isVideo(picPath)) {
             sendCustomizeMesage(picPath, 2);
         } else {
@@ -303,6 +290,61 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         startActivitys(OpenVipActivity.class);
     }
 
+    CustomizeMessage mContent;
+
+    /**
+     * 点击view 展示
+     */
+    @Override
+    public void lookViewOnClickListener(CustomizeMessage content) {
+        mContent = content;
+        MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
+        messageUseBeansDialog.setListener(this);
+        messageUseBeansDialog.setTitle("To view private photos, you need to pay", content.beans);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
+    }
+
+    /**
+     * 点击确定展示
+     * 刷新自定义消息页面
+     */
+    @Override
+    public void messageUseBeansDialogBtnOkListener() {
+        UseBeansRequest useBeansRequest = new UseBeansRequest();
+        useBeansRequest.token = mBuProcessor.getToken();
+        useBeansRequest.beans = String.valueOf(mContent.beans);
+        useBeansRequest.message_id = mTargetId;
+        useBeansRequest.type = "3";
+        mPresenter.onRequestUseBeans(useBeansRequest);
+    }
+
+    @Override
+    public void UseBeansSuccess(String msg) {
+        showToast(msg);
+        //更新自定义消息view
+
+        //TODO
+
+        //更新个人信息
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+
+    }
+
+    @Override
+    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        //把另外几项LoginUser加入进来
+        mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.beans = userBean.getBeans();
+        mLoginUser.exposure_type = userBean.getExposure_type();
+        mLoginUser.exposure_time = userBean.getExposure_time();
+        mLoginUser.today_like = userBean.getToday_like();
+        mLoginUser.today_chat = userBean.getToday_chat();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        mBuProcessor.setLoginUser(mLoginUser);
+    }
 
     @Override
     protected void onDestroy() {
@@ -314,6 +356,4 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 .conversationModule(new ConversationModule(ConversationActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
-
-
 }

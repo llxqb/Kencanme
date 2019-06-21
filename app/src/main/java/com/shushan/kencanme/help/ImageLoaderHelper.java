@@ -152,4 +152,35 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
 
+
+    /**
+     * 设置圆角毛玻璃效果
+     * 静态方法
+     */
+    public static void displayGlassImage2(View context, Object path, ImageView imageView, int loadPic) {
+        RequestOptions options = RequestOptions
+                .bitmapTransform(new MultiTransformation<>(new BlurTransformation(30, 3)
+//                        new RoundedCorners(TranTools.dip2px(context, 8))
+                        )
+                )// radius 越大越模糊
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(loadPic)
+                .placeholder(loadPic)
+                .dontAnimate();
+        Glide.with(context).load(path).apply(options).into(imageView);
+    }
+
+    /**
+     *
+     */
+    public static void displayImage2(View context, Object path, ImageView imageView,int loadPic) {
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(loadPic)
+                .skipMemoryCache(true)
+                .placeholder(loadPic)
+                .dontAnimate();
+        Glide.with(context).load(path).apply(options).into(imageView);
+    }
 }

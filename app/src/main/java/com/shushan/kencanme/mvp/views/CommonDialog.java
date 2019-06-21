@@ -103,12 +103,14 @@ public class CommonDialog extends BaseDialogFragment {
     }
 
 
-    @OnClick({R.id.iv_close, R.id.common_dialog_sure, R.id.common_dialog_cancel,
+    @OnClick({R.id.iv_close,R.id.pop_contain, R.id.common_dialog_sure, R.id.common_dialog_cancel,
             R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
                 closeCommonDialog();
+                break;
+            case R.id.pop_contain:
                 break;
             case R.id.common_dialog_sure:
                 if (dialogBtnListener != null) {

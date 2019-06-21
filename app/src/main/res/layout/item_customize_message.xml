@@ -7,6 +7,7 @@
 
 
     <TextView
+        android:id="@+id/customize_msg_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send a private photo."
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentBottom="true"
-            android:background="#90000000"
+            android:background="#70000000"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="@dimen/dp_10">
@@ -70,8 +71,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/dp_8"
+                android:drawableEnd="@mipmap/message_popup_hibeans2"
                 android:drawablePadding="@dimen/dp_3"
-                android:drawableStart="@mipmap/message_popup_hibeans2"
                 android:gravity="center_vertical"
                 android:text="1"
                 android:textColor="@color/white"
