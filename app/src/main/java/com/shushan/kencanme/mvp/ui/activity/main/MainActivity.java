@@ -22,6 +22,7 @@ import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.RongCloudHelper;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
+import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
@@ -68,6 +69,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             startActivitys(LoginActivity.class);
             finish();
         } else {
+            if(!mBuProcessor.isFinishFirstWrite()){
+                startActivitys(CreatePersonalInfoActivity.class);
+                finish();
+            }
             LoginUser loginUser = mBuProcessor.getLoginUser();
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
         }

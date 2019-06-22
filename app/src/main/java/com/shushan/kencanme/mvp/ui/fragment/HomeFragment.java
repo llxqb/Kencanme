@@ -182,7 +182,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             likeRequest.likeid = uId;
             mPresenter.onRequestLike(likeRequest);
         } else {
-            DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_like));
+            DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_like));
         }
     }
 
@@ -191,11 +191,11 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void goChat(String rongYunId, String nickName) {
-        if (AppUtils.isLimitMsg(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_chat)) {
+        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
             //启动单聊页面
             RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), rongYunId, nickName);
         } else {
-            DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_chat));
+            DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_chat));
         }
     }
 
@@ -253,6 +253,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
+        //TODO
+        mLoginUser.userType = 3;
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();
         mLoginUser.beans = userBean.getBeans();

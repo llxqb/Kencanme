@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerConversationComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.ConversationModule;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
-import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -39,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIMessage;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
@@ -47,8 +48,8 @@ import io.rong.message.ImageMessage;
 /**
  * 打开消息界面
  */
-public class ConversationActivity extends BaseActivity implements CommonChoiceDialog.commonChoiceDialogListener, RongIM.OnSendMessageListener,
-        ConversationControl.ConversationView, CommonDialog.CommonDialogListener, SendPhotoTypeDialog.SendPhotoTypeDialogListener, CustomizeMessageItemProvider.LookViewListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
+public class ConversationActivity extends BaseActivity implements CommonChoiceDialog.commonChoiceDialogListener, RongIM.OnSendMessageListener, ConversationControl.ConversationView,
+        CommonDialog.CommonDialogListener, SendPhotoTypeDialog.SendPhotoTypeDialogListener, CustomizeMessageItemProvider.LookViewListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -85,7 +86,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
         //注册自定义消息接收
-        new CustomizeMessageItemProvider().setListener(this);
+        KencanmeApp.mCustomizeMessageItemProvider.setListener(this);
         if (getIntent() != null) {
             initIntent(getIntent());
         }
@@ -136,7 +137,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
-        if (AppUtils.isLimitMsg(AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex), mLoginUser.today_chat)) {
+        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
             MessageContent messageContent = message.getContent();
             if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
@@ -148,6 +149,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                     isSendPic = false;
                 }
             }
+            isSendPic = false;
             return message;
         } else {
             DialogFactory.showOpenVipDialog(this, getResources().getString(R.string.dialog_use_beans_chat));
@@ -223,14 +225,20 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         startActivitys(OpenVipActivity.class);
     }
 
+    View customizeView;
+    int customizePos;
     CustomizeMessage mContent;
+    UIMessage mCustomizeMessage;
 
     /**
      * 点击view 展示
      */
     @Override
-    public void lookViewOnClickListener(CustomizeMessage content) {
+    public void lookViewOnClickListener(View v, int position, CustomizeMessage content, UIMessage message) {
+        customizeView = v;
+        customizePos = position;
         mContent = content;
+        mCustomizeMessage = message;
         MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
         messageUseBeansDialog.setListener(this);
         messageUseBeansDialog.setTitle("To view private photos, you need to pay", content.beans);
@@ -254,15 +262,14 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void UseBeansSuccess(String msg) {
         showToast(msg);
-        //更新自定义消息view
-
-        //TODO
-
+        //TODO更新自定义消息view
+        mContent.isLocked = 0;
+        KencanmeApp.mCustomizeMessageItemProvider.bindView(customizeView, customizePos, mContent, mCustomizeMessage);
 
         //更新个人信息
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.token = mBuProcessor.getToken();
-        mPresenter.onRequestHomeUserInfo(tokenRequest);
+//        TokenRequest tokenRequest = new TokenRequest();
+//        tokenRequest.token = mBuProcessor.getToken();
+//        mPresenter.onRequestHomeUserInfo(tokenRequest);
 
     }
 

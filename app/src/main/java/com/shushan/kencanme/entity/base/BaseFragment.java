@@ -15,7 +15,6 @@ import com.bumptech.glide.load.HttpException;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.DialogFactory;
-import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.mvp.utils.ToastUtil;
@@ -40,8 +39,6 @@ public abstract class BaseFragment extends Fragment {
     protected ImageLoaderHelper mImageLoaderHelper;
     @Inject
     protected SharePreferenceUtil mSharePreferenceUtil;
-    @Inject
-    protected GoogleLoginHelper mGoogleLoginHelper;
     @Inject
     protected BuProcessor mBuProcessor;
 

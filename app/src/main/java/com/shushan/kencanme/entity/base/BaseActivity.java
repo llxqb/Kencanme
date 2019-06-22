@@ -16,7 +16,6 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.AppComponent;
 import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.help.DialogFactory;
-import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
@@ -43,8 +42,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ImageLoaderHelper mImageLoaderHelper;
     @Inject
     protected SharePreferenceUtil mSharePreferenceUtil;
-    @Inject
-    protected GoogleLoginHelper mGoogleLoginHelper;
     @Inject
     protected BuProcessor mBuProcessor;
 

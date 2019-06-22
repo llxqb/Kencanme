@@ -56,7 +56,7 @@ import okhttp3.RequestBody;
 /**
  * 上传照片
  */
-public class PersonalInfoUploadPhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PersonalInfoControl.PersonalInfoView,PhotoDialog.PhotoDialogListener {
+public class PersonalInfoUploadPhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PersonalInfoControl.PersonalInfoView, PhotoDialog.PhotoDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -247,6 +247,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         //获取视频第一帧
         PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0);
         mPersonalInfoRequest.cover = videoPath;
+        mBuProcessor.getLoginUser().cover = videoPath;
     }
 
 
@@ -257,6 +258,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         mPhotoIvRl.setVisibility(View.VISIBLE);
         mPhotoIvRl.setImageBitmap(bitmap);
         mPersonalInfoRequest.cover = picPath;
+        mBuProcessor.getLoginUser().cover = picPath;
     }
 
 

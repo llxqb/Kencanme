@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.di.ComponetGraph;
 import com.shushan.kencanme.di.modules.AppModule;
 import com.shushan.kencanme.entity.user.BuProcessor;
-import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.help.ImageLoaderHelper;
 import com.shushan.kencanme.help.Sharedprefence;
 import com.shushan.kencanme.mvp.model.ModelTransform;
@@ -37,8 +36,6 @@ public interface AppComponent extends ComponetGraph {
     ModelTransform modeTransform();
 
     ImageLoaderHelper imageLoaderHelper();
-
-    GoogleLoginHelper googleLoginHelper();
 
     Sharedprefence sharedprefence();
 

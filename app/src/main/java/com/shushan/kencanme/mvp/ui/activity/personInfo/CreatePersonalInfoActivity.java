@@ -73,7 +73,8 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
         } else {
             mToken = mBuProcessor.getToken();
         }
-
+        //光标移到最后
+        mUserNice.setSelection(mUserNice.getText().length());
     }
 
     @Override

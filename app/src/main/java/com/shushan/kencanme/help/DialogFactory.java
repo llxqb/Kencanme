@@ -194,36 +194,47 @@ public class DialogFactory {
     /**
      * 提示成为VIP弹框
      * 判断 去喜欢/去聊天
+     * Activity中调用
      */
-    public static CommonDialog showOpenVipDialog(Activity context, String title) {
+    public static void showOpenVipDialog(Activity context, String title) {
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setListener((CommonDialog.CommonDialogListener) context);
         commonDialog.setContent(title);
         commonDialog.setStyle(Constant.DIALOG_TWO);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
-        return commonDialog;
+    }
+
+    /**
+     * 提示成为VIP弹框
+     * 判断 去喜欢/去聊天
+     * fragment中调用
+     */
+    public static void showOpenVipDialogFragment(Context context,Fragment fragment, String title) {
+        CommonDialog commonDialog = CommonDialog.newInstance();
+        commonDialog.setListener((CommonDialog.CommonDialogListener) fragment);
+        commonDialog.setContent(title);
+        commonDialog.setStyle(Constant.DIALOG_TWO);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
 
     /**
      * 提示去充值嗨豆
      * 判断使用嗨豆
      */
-    public static RechargeBeansDialog showRechargeBeansDialog(Activity context) {
+    public static void showRechargeBeansDialog(Activity context) {
         RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
         rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
-        return rechargeBeansDialog;
     }
 
     /**
      * 显示使用嗨豆
      */
-    public static MessageUseBeansDialog showUseBeansDialog(Activity context, String title, int beansNum) {
+    public static void showUseBeansDialog(Activity context, String title, int beansNum) {
         MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
         messageUseBeansDialog.setListener((MessageUseBeansDialog.MessageUseBeansDialogListener) context);
         messageUseBeansDialog.setTitle(title, beansNum);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
-        return messageUseBeansDialog;
     }
 
 }

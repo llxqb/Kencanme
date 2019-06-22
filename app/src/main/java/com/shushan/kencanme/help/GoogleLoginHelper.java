@@ -9,21 +9,12 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.shushan.kencanme.entity.Constants.Constant;
-import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
-
-import javax.inject.Inject;
 
 public class GoogleLoginHelper {
-    @Inject
-    public GoogleLoginHelper() {
-    }
 
-    @Inject
-    protected SharePreferenceUtil mSharePreferenceUtil;
+    private static GoogleApiClient mGoogleApiClient;
 
-    public GoogleApiClient mGoogleApiClient;
-
-    public void googleLogin(Context context) {
+    public static void googleLogin(Context context) {
         //初始化
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -47,7 +38,7 @@ public class GoogleLoginHelper {
     /**
      * 注销google登录
      */
-    public void exitGoogleLogin() {
+    public static void exitGoogleLogin() {
         if (mGoogleApiClient != null) {
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
             mGoogleApiClient = null;

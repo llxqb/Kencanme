@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.help.ImageLoaderHelper;
-import com.shushan.kencanme.mvp.utils.ToastUtil;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -28,6 +29,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     private LookViewListener mLookViewListener;
     private Context mContext;
 
+
     public void setListener(LookViewListener lookViewListener) {
         this.mLookViewListener = lookViewListener;
     }
@@ -35,8 +37,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     /**
      * 刷新数据
      */
-    public static void setData(int pos,CustomizeMessage customizeMessage){
-
+    public static void setData(int pos, CustomizeMessage customizeMessage) {
+        customizeMessage.isLocked = 0;
     }
 
 
@@ -68,6 +70,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public void bindView(View v, int position, CustomizeMessage content, UIMessage message) {
+        Log.e("ddd", "content:" + new Gson().toJson(content));
         ViewHolder holder = (ViewHolder) v.getTag();
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
@@ -95,9 +98,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         }
 
         holder.lookTv.setOnClickListener(v1 -> {
-            ToastUtil.showToast(mContext, "" + position);
             if (mLookViewListener != null) {
-                mLookViewListener.lookViewOnClickListener(content);
+                mLookViewListener.lookViewOnClickListener(v,position,content,message);
             }
         });
     }
@@ -120,7 +122,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     }
 
     public interface LookViewListener {
-        void lookViewOnClickListener(CustomizeMessage content);
+        void lookViewOnClickListener(View v, int position, CustomizeMessage content, UIMessage message);
     }
 
 }

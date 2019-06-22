@@ -24,6 +24,7 @@ import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.help.GoogleLoginHelper;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.mvp.utils.LogUtils;
@@ -89,7 +90,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 //                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
                 showLoading("登录中");
 //                new GoogleLoginHelper(this).googleLogin();
-                mGoogleLoginHelper.googleLogin(this);
+                GoogleLoginHelper.googleLogin(this);
+//                mGoogleLoginHelper.googleLogin(this);
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
@@ -162,7 +164,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
-        mGoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
+        GoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
         LogUtils.e("personalInfoResponse:" + new Gson().toJson(personalInfoResponse));
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));

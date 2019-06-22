@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.views.dialog;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class MessageUseBeansDialog extends BaseDialogFragment {
     private int mBeans;
     Unbinder unbinder;
     private MessageUseBeansDialogListener mMessageUseBeansDialogListener;
-
+    @SuppressLint("StaticFieldLeak")
 
     public static MessageUseBeansDialog newInstance() {
         return new MessageUseBeansDialog();
@@ -69,7 +70,7 @@ public class MessageUseBeansDialog extends BaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_message_use_beans, container, true);
         unbinder = ButterKnife.bind(this, view);
-        String titleValue = mTitle + " "+"<font color = '#DDBA67'>" + mBeans + "Hi-Beans" + "</font>";
+        String titleValue = mTitle + " " + "<font color = '#DDBA67'>" + mBeans + "Hi-Beans" + "</font>";
         mUseBeansTitle.setText(Html.fromHtml(titleValue));
         mUseBeansNum.setText(String.valueOf(mBeans));
         return view;
