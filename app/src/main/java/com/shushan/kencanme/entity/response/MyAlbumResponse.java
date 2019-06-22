@@ -56,6 +56,15 @@ public class MyAlbumResponse {
         private String album_url;
         private int album_type;
         private int cost;
+        private int state;
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
 
         public DataBean() {
         }
@@ -65,6 +74,7 @@ public class MyAlbumResponse {
             album_url = in.readString();
             album_type = in.readInt();
             cost = in.readInt();
+            state = in.readInt();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -122,6 +132,7 @@ public class MyAlbumResponse {
             dest.writeString(album_url);
             dest.writeInt(album_type);
             dest.writeInt(cost);
+            dest.writeInt(state);
         }
     }
 }

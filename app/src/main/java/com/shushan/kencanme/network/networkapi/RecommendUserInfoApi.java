@@ -36,4 +36,15 @@ public interface RecommendUserInfoApi {
      */
     @POST("menggoda/operation/see_contact")
     Observable<String> onRequestContact(@Body String request);
+    /**
+     * 嗨豆查看相册
+     */
+    @POST("menggoda/order/user_beans")
+    Observable<String> onRequestAlbumByBeans(@Body String request);
+
+    /**
+     * 用户首页信息
+     */
+    @POST("menggoda/index/user_exposure")
+    Observable<String> onRequestHomeUserInfo(@Body String request);
 }

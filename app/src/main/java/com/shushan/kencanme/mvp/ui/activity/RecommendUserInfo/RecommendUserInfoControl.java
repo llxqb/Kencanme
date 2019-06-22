@@ -4,8 +4,11 @@ package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
@@ -25,6 +28,10 @@ public class RecommendUserInfoControl {
         void getLikeSuccess(String msg);
 
         void getContactSuccess(String msg);
+
+        void getAlbumByBeansSuccess(String msg);
+
+        void getHomeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
     }
 
     public interface PresenterRecommendUserInfo extends Presenter<RecommendUserInfoView> {
@@ -51,6 +58,16 @@ public class RecommendUserInfoControl {
          * 查看联系方式
          */
         void onRequestContact(LookContactTypeRequest lookContactTypeRequest);
+
+        /**
+         * 嗨豆查看相册
+         */
+        void onRequestAlbumByBeans(LookAlbumByBeansRequest lookAlbumByBeansRequest);
+
+        /**
+         * 查询用户信息（首页）
+         */
+        void onRequestHomeUserInfo(TokenRequest tokenRequest);
     }
 
 

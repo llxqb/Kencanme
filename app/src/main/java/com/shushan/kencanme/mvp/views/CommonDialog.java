@@ -93,14 +93,17 @@ public class CommonDialog extends BaseDialogFragment {
             dialogStyle1ll.setVisibility(View.VISIBLE);
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.GONE);
+            mDialogStyle4Rl.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_TWO) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.VISIBLE);
             dialogStyle3Rl.setVisibility(View.GONE);
+            mDialogStyle4Rl.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_THREE) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.VISIBLE);
+            mDialogStyle4Rl.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_FOUR) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.GONE);

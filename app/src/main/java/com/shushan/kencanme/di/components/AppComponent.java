@@ -46,6 +46,8 @@ public interface AppComponent extends ComponetGraph {
 
     BuProcessor buProcessor();
 
+//    CustomizeMessageItemProvider customizeMessageItemProvider();
+
 
 //    DaoSession daoSession();
 //

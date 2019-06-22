@@ -69,7 +69,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
                             helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
-                            if (mContext instanceof RecommendUserInfoActivity) {
+                            if (mContext instanceof RecommendUserInfoActivity && item.getState() == 0) {
                                 jzvdStd.setUp(item.getAlbum_url(), "");
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
                             } else {
@@ -99,7 +99,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
                             helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
-                            if (mContext instanceof RecommendUserInfoActivity) {
+                            if (mContext instanceof RecommendUserInfoActivity && item.getState() == 0) {
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
                             } else {
                                 mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);

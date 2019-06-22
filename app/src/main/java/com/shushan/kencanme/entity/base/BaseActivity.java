@@ -97,10 +97,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     };
 
-   public void onReceivePro(Context context, Intent intent) {
+    public void onReceivePro(Context context, Intent intent) {
     }
 
-   public void addFilter() {
+    public void addFilter() {
     }
 
     /**
@@ -153,14 +153,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 退出登录
      */
     public void exitLogin(Context context) {
-        mSharePreferenceUtil.clearData();
-        //TODO 退出有问题
-        //googleLoginHelper.exitGoogleLogin();
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
         intent.putExtra("exitLogin", true);
         context.startActivity(intent);
+        mSharePreferenceUtil.clearData();
         ((Activity) context).finish();
     }
 

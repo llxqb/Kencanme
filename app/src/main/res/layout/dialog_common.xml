@@ -130,7 +130,7 @@
         </RelativeLayout>
 
 
-        <!-- 弹框方式二   使用嗨豆提示-->
+        <!-- 弹框方式四   使用嗨豆提示-->
         <RelativeLayout
             android:id="@+id/dialog_style_4_rl"
             android:layout_width="match_parent"

@@ -26,7 +26,7 @@ public class KencanmeApp extends Application {
     public Context mContext;
     @Inject
     Gson mGson;
-    public static CustomizeMessageItemProvider mCustomizeMessageItemProvider;
+    public  CustomizeMessageItemProvider mCustomizeMessageItemProvider;
 //    @Inject
 //    BuProcessor mBuProcessor;
 

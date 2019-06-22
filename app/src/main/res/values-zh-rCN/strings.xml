@@ -2,7 +2,7 @@
     <!--网络相关 -->
     <string name="text_check_internet">请检查网络</string>
     <string name="text_wait_try">请稍后重试</string>
-    <string name="loading">加载中...</string>
+    <string name="loading">loading…</string>
 
     <!-- app相关-->
     <string name="this_is_desc">This is a description</string>
@@ -15,6 +15,8 @@
     <string name="recharge">Recharge</string>
     <!-- 敬请期待-->
     <string name="wait_develop">敬请期待</string>
+    <string name="app_like">Like</string>
+    <string name="app_chat">Chat</string>
 
 
 
@@ -22,11 +24,13 @@
     <string name="dialog_sure">sure</string>
     <string name="dialog_cancal">cancal</string>
     <string name="dialog_style2_hint">About VIP</string>
-    <string name="dialog_use_beans_title">Open Super VIP Free Chat~</string>
+    <string name="dialog_use_beans_chat">Open Super VIP Free Chat~</string>
+    <string name="dialog_use_beans_album">Look photo Use</string>
 
     <string name="dialog_open_vip_like">Today\'s favorite number has been used up. Open members can enjoy unlimited ~</string>
     <string name="dialog_open_vip_chat">Open Super VIP Free Chat~</string>
     <string name="dialog_open_vip_album">Open Super VIP look more</string>
+    <string name="dialog_open_vip_chat_like">Buy Super VIP to see who likes you</string>
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->
@@ -57,6 +61,10 @@
 
     <!--EditMakeFriendsInfoActivity -->
     <string name="EditMakeFriendsInfoActivity_upload_hint">Reupload photo or video</string>
+
+
+    <string name="RecommendUserInfoActivity_look_over_hint">Look over</string>
+    <string name="RecommendUserInfoActivity_label_hint">The Label</string>
 
 
 

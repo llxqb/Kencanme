@@ -6,8 +6,11 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.RecommendUserInfoModel;
@@ -136,7 +139,49 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestContactSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getLikeSuccess("已添加喜欢");
+            mRecommendUserInfoView.getContactSuccess("");
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 查看联系方式
+     */
+    @Override
+    public void onRequestAlbumByBeans(LookAlbumByBeansRequest lookAlbumByBeansRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestAlbumByBeans(lookAlbumByBeansRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestAlbumByBeansSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestAlbumByBeansSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.getAlbumByBeansSuccess("");
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 获取个人信息（首页）
+     */
+    @Override
+    public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestHomeUserInfo(tokenRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestHomeUserInfoSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestHomeUserInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(HomeUserInfoResponse.class);
+            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+            mRecommendUserInfoView.getHomeUserInfoSuccess(response);
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

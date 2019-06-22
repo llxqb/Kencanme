@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.network.networkapi.RecommendUserInfoApi;
 
 import javax.inject.Inject;
@@ -52,5 +54,16 @@ public class RecommendUserInfoModel {
      */
     public Observable<ResponseData> onRequestContact(LookContactTypeRequest request) {
         return mRecommendUserInfoApi.onRequestContact(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 嗨豆查看相册
+     */
+    public Observable<ResponseData> onRequestAlbumByBeans(LookAlbumByBeansRequest request) {
+        return mRecommendUserInfoApi.onRequestAlbumByBeans(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    //请求首页个人信息  如 是否喜欢数 聊天数
+    public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
+        return mRecommendUserInfoApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 }

@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.shushan.kencanme.entity.Constants.Constant;
+import com.shushan.kencanme.mvp.utils.SharePreferenceUtil;
 
 import javax.inject.Inject;
 
@@ -17,7 +18,10 @@ public class GoogleLoginHelper {
     public GoogleLoginHelper() {
     }
 
-    private GoogleApiClient mGoogleApiClient;
+    @Inject
+    protected SharePreferenceUtil mSharePreferenceUtil;
+
+    public GoogleApiClient mGoogleApiClient;
 
     public void googleLogin(Context context) {
         //初始化
@@ -26,7 +30,7 @@ public class GoogleLoginHelper {
                 .requestIdToken("611870031660-21c3miohhpbfd40v8t2ou30e3eshmf7a.apps.googleusercontent.com")
                 .build();
 
-        if(mGoogleApiClient == null){
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(context)
                     .enableAutoManage((FragmentActivity) context, connectionResult -> {
                     })
@@ -46,9 +50,9 @@ public class GoogleLoginHelper {
     public void exitGoogleLogin() {
         if (mGoogleApiClient != null) {
             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+            mGoogleApiClient = null;
         }
     }
-
 
     /**
      * 退出登录
@@ -63,16 +67,4 @@ public class GoogleLoginHelper {
 //                });
 //    }
 
-    /**
-     * 断开账户
-     */
-//    private void revokeAccess() {
-//        mGoogleSignInClient.revokeAccess()
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-//    }
 }

@@ -6,11 +6,11 @@ import android.view.View;
 
 import cn.jzvd.JzvdStd;
 
+/**
+ * 自定义播放器view 防止点击往下传
+ */
 public class MyJzvdStd extends JzvdStd {
 
-    private static boolean mIsClick = false;
-    private static MyjzvdListener mMyjzvdListener;
-    private static int mClickPos;
 
     public MyJzvdStd(Context context) {
         super(context);
@@ -20,25 +20,13 @@ public class MyJzvdStd extends JzvdStd {
         super(context, attrs);
     }
 
-    public interface MyjzvdListener {
-        void jzvdClickListener(int clickPos);
-    }
 
-    public static  void setClick(MyjzvdListener myjzvdListener, boolean isClick, int clickPos) {
-        mIsClick = isClick;
-        mMyjzvdListener = myjzvdListener;
-        mClickPos = clickPos;
-    }
 
     @Override
     public void onClick(View v) {
-        if (mIsClick) {
-            super.onClick(v);
-        } else {
-            if (mMyjzvdListener != null) {
-                mMyjzvdListener.jzvdClickListener( mClickPos);
-            }
-        }
+//        if (mIsClick) {
+//            super.onClick(v);
+//        }
     }
 
 }

@@ -3,6 +3,8 @@ package com.shushan.kencanme.entity.response;
 import java.util.List;
 
 public class OpenVipResponse {
+
+
     private List<VipinfoBean> vipinfo;
     private List<String> notice;
 
@@ -35,8 +37,8 @@ public class OpenVipResponse {
 
         private int v_id;
         private String name;
-        private int original_price;
-        private int special_price;
+        private String original_price;
+        private String special_price;
         private String describe;
         private String privilege;
         private int give;
@@ -57,19 +59,19 @@ public class OpenVipResponse {
             this.name = name;
         }
 
-        public int getOriginal_price() {
+        public String getOriginal_price() {
             return original_price;
         }
 
-        public void setOriginal_price(int original_price) {
+        public void setOriginal_price(String original_price) {
             this.original_price = original_price;
         }
 
-        public int getSpecial_price() {
+        public String getSpecial_price() {
             return special_price;
         }
 
-        public void setSpecial_price(int special_price) {
+        public void setSpecial_price(String special_price) {
             this.special_price = special_price;
         }
 

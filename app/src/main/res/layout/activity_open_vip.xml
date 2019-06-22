@@ -63,7 +63,7 @@
             android:layout_below="@id/toolbar"
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_20"
-            android:src="@mipmap/person_head_icon" />
+            android:src="@mipmap/head_photo_loading" />
 
         <TextView
             android:id="@+id/username"
@@ -100,9 +100,13 @@
             android:background="@drawable/open_vip_top_btn_bg"
             android:drawablePadding="@dimen/dp_8"
             android:drawableStart="@mipmap/mine_pay_notice"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
-            android:paddingStart="@dimen/dp_8"
-            android:text="User xxxxxxx opens Super VIP"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:singleLine="true"
             android:textColor="@color/color_eeca70"
             android:textSize="@dimen/sp_14" />
     </RelativeLayout>
@@ -124,7 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_84"
                 android:background="@drawable/super_vip_bg"
-                android:padding="@dimen/dp_8">
+                android:padding="@dimen/dp_8"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/super_vip_hint"
@@ -184,7 +189,7 @@
                 android:id="@+id/vip_type_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20" />
+                android:layout_marginTop="@dimen/dp_10" />
 
             <TextView
                 android:id="@+id/vip_agreement"

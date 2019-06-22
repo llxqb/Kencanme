@@ -78,6 +78,11 @@ public class AppModule {
     BuProcessor buProcessor(SharePreferenceUtil sharePerferenceUtil) {
         return new BuProcessor(application, sharePerferenceUtil);
     }
+//    @Provides
+//    @Singleton
+//    CustomizeMessageItemProvider customizeMessageItemProvider() {
+//        return new CustomizeMessageItemProvider();
+//    }
 //
 //    @Provides
 //    @Singleton

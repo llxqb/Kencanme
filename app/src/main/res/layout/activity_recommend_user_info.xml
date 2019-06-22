@@ -23,7 +23,6 @@
                 android:id="@+id/collapsingToolbarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/color_blue_btn"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="false">
                 <!-- 个人资料头部-->
@@ -41,7 +40,8 @@
                         android:layout_height="@dimen/dp_45"
                         android:layout_marginStart="@dimen/dp_22"
                         android:layout_marginTop="@dimen/dp_200"
-                        android:src="@mipmap/person_head_icon" />
+                        android:src="@mipmap/head_photo_loading"
+                        />
 
                     <TextView
                         android:id="@+id/recommend_username"
@@ -80,7 +80,6 @@
                         android:layout_marginBottom="@dimen/dp_15"
                         android:layout_marginStart="@dimen/dp_22"
                         android:layout_marginTop="@dimen/dp_8"
-                        android:text="Sincere friend,like to send videp bar~"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
 
@@ -242,6 +241,7 @@
 
                 <!-- 联系方式-->
                 <RelativeLayout
+                    android:id="@+id/contact_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_20"
@@ -268,7 +268,7 @@
                         android:gravity="center"
                         android:paddingEnd="@dimen/dp_10"
                         android:paddingStart="@dimen/dp_10"
-                        android:text="Look over"
+                        android:text="@string/RecommendUserInfoActivity_look_over_hint"
                         android:textColor="@color/color_blue_btn"
                         android:textSize="@dimen/sp_15" />
                 </RelativeLayout>
@@ -282,24 +282,14 @@
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/contact_way"-->
-                <!--android:layout_width="@dimen/dp_180"-->
-                <!--android:layout_height="@dimen/dp_28"-->
-                <!--android:background="@drawable/bg_blue_round_5"-->
-                <!--android:gravity="center"-->
-                <!--android:text="13262253731"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/sp_15" />-->
-
-
                 <!-- 标签-->
                 <TextView
+                    android:id="@+id/label_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_25"
-                    android:text="The Label"
+                    android:text="@string/RecommendUserInfoActivity_label_hint"
                     android:textColor="@color/second_text_color"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
@@ -340,7 +330,7 @@
                 android:id="@+id/recommend_like_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Like"
+                android:text="@string/app_like"
                 android:textColor="@color/five_text_color"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -361,7 +351,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chat"
+                android:text="@string/app_chat"
                 android:textColor="@color/app_color"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>

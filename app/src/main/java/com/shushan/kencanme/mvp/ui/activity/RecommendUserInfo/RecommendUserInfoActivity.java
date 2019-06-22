@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,9 +27,12 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.BlackUserRequest;
 import com.shushan.kencanme.entity.request.DeleteUserRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
+import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
@@ -45,7 +49,6 @@ import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 import com.shushan.kencanme.mvp.views.CommonDialog;
-import com.shushan.kencanme.mvp.views.MyJzvdStd;
 import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
 import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
 import com.shushan.kencanme.mvp.views.dialog.RechargeBeansDialog;
@@ -64,7 +67,7 @@ import io.rong.imkit.RongIM;
  * 推荐用户资料详情
  */
 public class RecommendUserInfoActivity extends BaseActivity implements RecommendUserInfoControl.RecommendUserInfoView, CommonChoiceDialog.commonChoiceDialogListener,
-        CommonDialog.CommonDialogListener, MyJzvdStd.MyjzvdListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
+        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
     @BindView(R.id.back_iv)
     ImageView mBackIv;
     @BindView(R.id.more_iv)
@@ -109,6 +112,10 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     TextView mRecommendLikeTv;
     @BindView(R.id.recommend_chat_iv)
     ImageView mRecommendChatIv;
+    @BindView(R.id.contact_rl)
+    RelativeLayout mContactRl;
+    @BindView(R.id.label_tv)
+    TextView mLabelTv;
     private List<MyAlbumResponse.DataBean> albumInfoLists = new ArrayList<>();
     private List<ContactWay> contactWayList = new ArrayList<>();
     private AlbumAdapter albumAdapter;
@@ -120,6 +127,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 4 免费beans使用提示  5 打开VIP
      */
     private int commonDialogOperationType;
+    /**
+     * 1 使用嗨豆查看相册
+     * 2 使用嗨豆查看联系方式
+     */
+    private int useBeansType;
     @Inject
     RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
     List<String> labelList = new ArrayList<>();
@@ -159,32 +171,35 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         initData();
     }
 
+    MyAlbumResponse.DataBean mAlbumBean;
+
     @Override
     public void initView() {
         initAdapter();
         mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                MyAlbumResponse.DataBean bean = albumAdapter.getItem(position);
+                mAlbumBean = albumAdapter.getItem(position);
                 switch (view.getId()) {
                     case R.id.photo_item_rl:
-                        assert bean != null;
-                        if (bean.getAlbum_type() == 1) {
-                            LookPhotoActivity.start(RecommendUserInfoActivity.this, bean.getAlbum_url());
-                        } else if (bean.getAlbum_type() == 2) {
+                        assert mAlbumBean != null;
+                        if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
+                            LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
+                        } else if (mAlbumBean.getAlbum_type() == 2) {
                             if (mLoginUser.userType == 2 || mLoginUser.userType == 3 || mLoginUser.userType == 5) {
-                                LookPhotoActivity.start(RecommendUserInfoActivity.this, bean.getAlbum_url());
+                                LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
                             } else {
                                 showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_album));
                             }
-                        } else if (bean.getAlbum_type() == 3) {
+                        } else if (mAlbumBean.getAlbum_type() == 3) {
                             //使用hi-bean查看
-                            if (bean.getCost() > mLoginUser.beans) {
+                            if (mAlbumBean.getCost() > mLoginUser.beans) {
                                 //去充值
                                 showRechargeBeansDialog();
                             } else {
                                 //去使用
-                                showUseBeansDialog(bean.getCost());
+                                useBeansType = 1;
+                                showUseBeansDialog(mAlbumBean.getCost());
                             }
                         }
                         break;
@@ -243,6 +258,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                     if (useBeansNum > mLoginUser.beans) {
                         showRechargeBeansDialog();
                     } else {
+                        useBeansType = 2;
                         showUseBeansDialog(useBeansNum);
                     }
                 }
@@ -306,7 +322,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             contactWayAdapter.notifyDataSetChanged();
         } else {
             for (ContactWay contactWay : contactWayList) {
-                contactWay.isShow = true;
+                contactWay.isShow = false;
             }
             contactWayAdapter.notifyDataSetChanged();
         }
@@ -341,7 +357,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 显示使用嗨豆
      */
     private void showUseBeansDialog(int beansNum) {
-        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_title), beansNum);
+        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_album), beansNum);
     }
 
     /**
@@ -401,9 +417,19 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
         albumAdapter.setNewData(albumInfoLists);
         contactWayList = response.getContact();
-        contactWayAdapter.setNewData(contactWayList);
+        if (contactWayList != null && contactWayList.size() > 0) {
+            contactWayAdapter.setNewData(contactWayList);
+            mContactRl.setVisibility(View.VISIBLE);
+        } else {
+            mContactRl.setVisibility(View.GONE);
+        }
         labelList = response.getLabel();
-        recommendUserLabelAdapter.setNewData(labelList);
+        if (labelList != null && labelList.size() > 0) {
+            recommendUserLabelAdapter.setNewData(labelList);
+            mLabelTv.setVisibility(View.VISIBLE);
+        } else {
+            mLabelTv.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -444,7 +470,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         } else if (commonDialogOperationType == 3) {
             startActivitys(OpenVipActivity.class);
         } else if (commonDialogOperationType == 4) {
-            LookContactTypeRequest(1);
+            lookContactTypeRequest(1);
         } else if (commonDialogOperationType == 5) {
             startActivitys(OpenVipActivity.class);
         }
@@ -458,13 +484,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getDeleteUserSuccess(String msg) {
         showToast(msg);
-    }
-
-
-    @Override
-    public void jzvdClickListener(int clickPos) {
-        // VIp can view
-        showToast("" + clickPos);
     }
 
 
@@ -485,22 +504,40 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     /**
-     * 使用beans
+     * 使用beans 查看相册和联系方式
      */
     @Override
     public void messageUseBeansDialogBtnOkListener() {
-        LookContactTypeRequest(2);
+        if (useBeansType == 1) { //相册
+            lookAlbumByBeansRequest();
+        } else if (useBeansType == 2) { //联系方式
+            lookContactTypeRequest(2);
+        }
     }
 
     /**
      * 查看联系方式请求
+     * 嗨豆/VIP
+     * type:1使用vip次数2使用嗨豆
      */
-    private void LookContactTypeRequest(int type) {
+    private void lookContactTypeRequest(int type) {
         LookContactTypeRequest lookContactTypeRequest = new LookContactTypeRequest();
         lookContactTypeRequest.token = mBuProcessor.getToken();
         lookContactTypeRequest.uid = String.valueOf(mUid);
         lookContactTypeRequest.type = String.valueOf(type);
         mPresenter.onRequestContact(lookContactTypeRequest);
+    }
+
+    /**
+     * 嗨豆查看相册
+     */
+    private void lookAlbumByBeansRequest() {
+        LookAlbumByBeansRequest lookAlbumByBeansRequest = new LookAlbumByBeansRequest();
+        lookAlbumByBeansRequest.token = mBuProcessor.getToken();
+        lookAlbumByBeansRequest.beans = String.valueOf(mAlbumBean.getCost());
+        lookAlbumByBeansRequest.album_id = String.valueOf(mAlbumBean.getId());
+        lookAlbumByBeansRequest.see_id = String.valueOf(mLoginUser.uid);
+        mPresenter.onRequestAlbumByBeans(lookAlbumByBeansRequest);
     }
 
     /**
@@ -512,7 +549,48 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             contactWay.isShow = true;
         }
         contactWayAdapter.notifyDataSetChanged();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+        requestHomeUserInfo();
     }
+
+    /**
+     * 查看相册成功
+     */
+    @Override
+    public void getAlbumByBeansSuccess(String msg) {
+        mAlbumBean.setState(1);
+        albumAdapter.notifyDataSetChanged();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+        requestHomeUserInfo();
+    }
+
+    /**
+     * 更新个人信息
+     */
+    private void requestHomeUserInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    }
+
+    /**
+     * 查看用户信息（首页）成功
+     */
+    @Override
+    public void getHomeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
+        //把另外几项LoginUser加入进来
+        mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.beans = userBean.getBeans();
+        mLoginUser.exposure_type = userBean.getExposure_type();
+        mLoginUser.exposure_time = userBean.getExposure_time();
+        mLoginUser.today_like = userBean.getToday_like();
+        mLoginUser.today_chat = userBean.getToday_chat();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        mBuProcessor.setLoginUser(mLoginUser);
+    }
+
 
     private void initializeInjector() {
         DaggerRecommendUserInfoComponent.builder().appComponent(getAppComponent())

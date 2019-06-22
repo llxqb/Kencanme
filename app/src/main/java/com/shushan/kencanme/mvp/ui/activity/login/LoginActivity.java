@@ -130,7 +130,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 //            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
             //登录后台系统
             appLogin(account.getId(), account.getIdToken());
-        }else {
+        } else {
             showToast("google login fail");
         }
     }
@@ -149,7 +149,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
         mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
         mSharePreferenceUtil.setData("rongId", userinfoBean.getRongyun_third_id());
-        //根据token请求个人信息   TODO 在MainActivity 中也会请求个人信息 会存在重复请求
+        //根据token请求个人信息    在MainActivity 中也会请求个人信息 会存在重复请求  <待优化>
         PersonalInfoRequest request = new PersonalInfoRequest();
         request.token = userinfoBean.getToken();
         mPresenterLogin.onRequestPersonalInfo(request);
@@ -162,7 +162,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
-        LogUtils.e("personalInfoResponse:"+new Gson().toJson(personalInfoResponse));
+        mGoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
+        LogUtils.e("personalInfoResponse:" + new Gson().toJson(personalInfoResponse));
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity

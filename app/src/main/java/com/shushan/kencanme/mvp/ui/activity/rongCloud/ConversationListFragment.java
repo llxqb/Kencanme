@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,13 +126,11 @@ public class ConversationListFragment extends BaseFragment implements Conversati
         switch (view.getId()) {
             case R.id.new_pairing_rl:
                 //查看谁喜欢过我
-                startActivitys(LoveMePeopleActivity.class);
-//                if (AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex) == 3) {
-//                    //查看谁喜欢过我
-//                    startActivitys(LoveMePeopleActivity.class);
-//                } else {
-//                    showSuperVipDialog();
-//                }
+                if (mLoginUser.userType == 3) {
+                    startActivitys(LoveMePeopleActivity.class);
+                } else {
+                    showSuperVipDialog();
+                }
                 break;
             case R.id.system_msg_rl:
                 startActivitys(SystemMsgActivity.class);
@@ -143,11 +142,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
      * 提示开通超级vip
      */
     private void showSuperVipDialog() {
-        CommonDialog commonDialog = CommonDialog.newInstance();
-        commonDialog.setListener(this);
-        commonDialog.setContent("Buy Super VIP to see who likes you.");
-        commonDialog.setStyle(Constant.DIALOG_TWO);
-        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+        DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_chat_like));
     }
 
     @Override
@@ -169,8 +164,12 @@ public class ConversationListFragment extends BaseFragment implements Conversati
             mLineView.setVisibility(View.GONE);
         }
         if (messageBean != null) {
-            mSystemMsgTv.setText(messageBean.getTitle());
-            mSystemMsgHintTv.setText(messageBean.getDetail());
+            if (!TextUtils.isEmpty(messageBean.getTitle())) {
+                mSystemMsgTv.setText(messageBean.getTitle());
+            }
+            if (!TextUtils.isEmpty(messageBean.getDetail())) {
+                mSystemMsgHintTv.setText(messageBean.getDetail());
+            }
             mSystemMsgTimeTv.setText(DateUtil.getStrTime(messageBean.getCreate_time(), "MM-dd"));
         }
     }

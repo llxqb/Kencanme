@@ -27,7 +27,6 @@ import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MineFragment;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
-import com.shushan.kencanme.mvp.views.MyJzvdStd;
 import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, MyJzvdStd.MyjzvdListener, RongIM.UserInfoProvider {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, RongIM.UserInfoProvider {
 
     @BindView(R.id.main_bottom_navigation)
     BottomNavigationView mMainBottomNavigation;
@@ -138,12 +137,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
 //        requestHomeUserInfo();  到homeFragemnt调用
-    }
-
-    @Override
-    public void jzvdClickListener(int clickPos) {
-//        showToast("" + clickPos);
-//        LookPhotoActivity.start(this, "");//查看大图
     }
 
     @Override

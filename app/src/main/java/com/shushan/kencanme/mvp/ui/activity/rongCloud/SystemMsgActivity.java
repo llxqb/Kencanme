@@ -72,7 +72,8 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
         systemMsgRequest.page = String.valueOf(page);
         systemMsgRequest.pagesize = pageSize;
         mPresenter.onRequestSystemMsgList(systemMsgRequest);
-    }
+
+        }
 
     @OnClick({R.id.common_back, R.id.common_iv_right})
     public void onViewClicked(View view) {

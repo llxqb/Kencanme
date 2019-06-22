@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerConversationComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
@@ -26,6 +23,7 @@ import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.utils.AppUtils;
+import com.shushan.kencanme.mvp.utils.ConversationUtil;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
 import com.shushan.kencanme.mvp.views.CommonDialog;
@@ -41,8 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
@@ -83,13 +79,13 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public void initView() {
-        mCommonRightIv.setVisibility(View.VISIBLE);
+//        mCommonRightIv.setVisibility(View.VISIBLE);
         //设置融云会话点击监听
         RongIM.setConversationClickListener(new MyConversationClickListener());
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
         //注册自定义消息接收
-        KencanmeApp.mCustomizeMessageItemProvider.setListener(this);
+        new CustomizeMessageItemProvider().setListener(this);
         if (getIntent() != null) {
             initIntent(getIntent());
         }
@@ -98,6 +94,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
+//        ConversationUtil.sendCustomizeMesage("Kencanme6", Conversation.ConversationType.PRIVATE,"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3071844911,2905106883&fm=26&gp=0.jpg",1,5);
     }
 
     private void initIntent(Intent intent) {
@@ -146,7 +143,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                     ImageMessage imageMessage = (ImageMessage) messageContent;
                     imgMsg = imageMessage;
                     sendImgMsgDialog();
-                    Log.d(TAG, "onSent-ImageMessage:" + imageMessage.getRemoteUri());
                     return null;
                 } else {
                     isSendPic = false;
@@ -154,11 +150,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             }
             return message;
         } else {
-            CommonDialog commonDialog = CommonDialog.newInstance();
-            commonDialog.setListener(this);
-            commonDialog.setContent("Open Super VIP Free Chat~");
-            commonDialog.setStyle(Constant.DIALOG_TWO);
-            DialogFactory.showDialogFragment(getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
+            DialogFactory.showOpenVipDialog(this, getResources().getString(R.string.dialog_use_beans_chat));
         }
         return null;
     }
@@ -177,65 +169,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mLoginUser.today_chat = mLoginUser.today_chat + 1;
         mBuProcessor.setLoginUser(mLoginUser);
         return false;
-    }
-
-    /**
-     * 私密图片
-     * 发送自定义消息
-     */
-    private void sendCustomizeMesage(String picLoad, int msgType) {
-        CustomizeMessage customizeMessage = new CustomizeMessage();
-        customizeMessage.beans = mBeansNum;
-        customizeMessage.cover_url = picLoad;
-        customizeMessage.isLocked = 1;
-        customizeMessage.msgType = msgType;
-        Message message = Message.obtain(mTargetId, mConversationType, customizeMessage);
-        RongIM.getInstance().sendMessage(message, "have a private new message", null, new IRongCallback.ISendMessageCallback() {
-
-            @Override
-            public void onAttached(Message message) {
-            }
-
-            @Override
-            public void onSuccess(Message message) {
-                //发送成功后执行
-                Log.e("dddd", "onSuccess");
-            }
-
-            @Override
-            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                //错误时执行
-                Log.e("dddd", "message " + new Gson().toJson(message));
-            }
-        });
-    }
-
-    /**
-     * 图片图片
-     * 发送图片消息
-     */
-    private void sendImgMessage() {
-        RongIM.getInstance().sendImageMessage(mConversationType, mTargetId, imgMsg, null, null, new RongIMClient.SendImageMessageCallback() {
-            @Override
-            public void onAttached(Message message) {
-                //保存数据库成功
-            }
-
-            @Override
-            public void onError(Message message, RongIMClient.ErrorCode code) {
-                //发送失败
-            }
-
-            @Override
-            public void onSuccess(Message message) {
-                //发送成功
-            }
-
-            @Override
-            public void onProgress(Message message, int progress) {
-                //发送进度
-            }
-        });
     }
 
 
@@ -262,7 +195,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void sendOrdinaryPhotoBtnOKListener() {
         isSendPic = true;
-        sendImgMessage();
+        ConversationUtil.sendImgMessage(mTargetId, mConversationType, imgMsg);
     }
 
     /**
@@ -272,9 +205,9 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public void uploadImageSuccess(String picPath) {
 //        Log.d("ddd", "picPath:" + picPath);
         if (TranTools.isVideo(picPath)) {
-            sendCustomizeMesage(picPath, 2);
+            ConversationUtil.sendCustomizeMesage(mTargetId, mConversationType, picPath, 2, mBeansNum);
         } else {
-            sendCustomizeMesage(picPath, 1);
+            ConversationUtil.sendCustomizeMesage(mTargetId, mConversationType, picPath, 1, mBeansNum);
         }
     }
 
