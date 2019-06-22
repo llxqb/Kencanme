@@ -3,9 +3,12 @@ package com.shushan.kencanme.mvp.ui.activity.main;
 import android.content.Context;
 import android.net.Uri;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
+import com.shushan.kencanme.entity.response.MessageIdResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -126,6 +129,26 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         return null;
     }
 
+
+    /**
+     * 查看用户嗨豆查看私密照片message_id
+     */
+    @Override
+    public void onRequestMessageId(TokenRequest tokenRequest) {
+        Disposable disposable = mMainModel.onRequestMessageId(tokenRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestMessageIdSuccess, throwable -> mMainView.showErrMessage(throwable),
+                        () -> mMainView.dismissLoading());
+        mMainView.addSubscription(disposable);
+    }
+
+    private void requestMessageIdSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            MessageIdResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MessageIdResponse.class);
+            mMainView.messageIdSuccess(response);
+        } else {
+            mMainView.showToast(responseData.errorMsg);
+        }
+    }
 
     @Override
     public void onCreate() {

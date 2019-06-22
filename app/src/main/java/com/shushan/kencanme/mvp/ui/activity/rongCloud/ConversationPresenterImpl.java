@@ -33,7 +33,7 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
         mMessageModel = model;
         mConversationView = ConversationView;
     }
-    
+
     @Override
     public void uploadImage(UploadImage uploadImage) {
         mConversationView.showLoading(mContext.getResources().getString(R.string.loading));

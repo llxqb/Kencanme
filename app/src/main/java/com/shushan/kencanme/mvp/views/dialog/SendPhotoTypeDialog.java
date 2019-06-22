@@ -1,7 +1,9 @@
 package com.shushan.kencanme.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +75,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
     }
 
     private void initView() {
-
+        mBeansCustomEv.addTextChangedListener(textWatcher);
     }
 
 
@@ -109,9 +111,6 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
-                if (!TextUtils.isEmpty(mBeansCustomEv.getText())) {
-                    beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
-                }
                 break;
             case R.id.sure_btn:
                 if (isValidEmpty()) {
@@ -167,6 +166,29 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
 
         void sendPrivatePhotoBtnOKListener(int beansNum);
     }
+
+
+    private TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (!TextUtils.isEmpty(s)) {
+                initBeansBg();
+                mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                beansNumber = Integer.parseInt(s.toString());
+            }
+        }
+    };
 
     @Override
     public void onDestroyView() {

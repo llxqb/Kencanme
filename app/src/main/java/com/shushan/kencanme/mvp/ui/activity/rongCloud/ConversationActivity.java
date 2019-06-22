@@ -15,6 +15,7 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.ConversationModule;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -31,6 +32,7 @@ import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
 import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
 import com.shushan.kencanme.mvp.views.dialog.SendPhotoTypeDialog;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -63,8 +65,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      * 会话类型
      */
     private Conversation.ConversationType mConversationType;
-    private String TAG = "ConversationActivity";
-
+    /**
+     * 已用嗨豆查看图片集合
+     */
+    private List<String> mMessageIdList;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -86,7 +90,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
         //注册自定义消息接收
-        KencanmeApp.mCustomizeMessageItemProvider.setListener(this);
+        CustomizeMessageItemProvider.setListener(this);
         if (getIntent() != null) {
             initIntent(getIntent());
         }
@@ -95,11 +99,13 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
+        mMessageIdList = (List<String>) mSharePreferenceUtil.readObjData("messageIdList");
+        CustomizeMessageItemProvider.setMessageList(mMessageIdList);
 //        ConversationUtil.sendCustomizeMesage("Kencanme6", Conversation.ConversationType.PRIVATE,"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3071844911,2905106883&fm=26&gp=0.jpg",1,5);
     }
 
     private void initIntent(Intent intent) {
-        mTargetId = intent.getData().getQueryParameter("targetId");
+        mTargetId = Objects.requireNonNull(intent.getData()).getQueryParameter("targetId");
         mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
     }
@@ -134,6 +140,11 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     private boolean isSendPic = false;
     ImageMessage imgMsg = new ImageMessage();
 
+    /**
+     * 获取消息id
+     */
+    int messageId;
+
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
@@ -141,8 +152,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             MessageContent messageContent = message.getContent();
             if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
-                    ImageMessage imageMessage = (ImageMessage) messageContent;
-                    imgMsg = imageMessage;
+                    messageId = message.getMessageId();
+                    imgMsg = (ImageMessage) messageContent;
                     sendImgMsgDialog();
                     return null;
                 } else {
@@ -254,23 +265,26 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         UseBeansRequest useBeansRequest = new UseBeansRequest();
         useBeansRequest.token = mBuProcessor.getToken();
         useBeansRequest.beans = String.valueOf(mContent.beans);
-        useBeansRequest.message_id = mTargetId;
+        useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
         useBeansRequest.type = "3";
         mPresenter.onRequestUseBeans(useBeansRequest);
     }
 
+    /**
+     * 使用beans
+     */
     @Override
     public void UseBeansSuccess(String msg) {
         showToast(msg);
         //TODO更新自定义消息view
+        mMessageIdList.add(String.valueOf(mCustomizeMessage.getMessageId()));
+        mSharePreferenceUtil.saveObjData("messageIdList", mMessageIdList);
         mContent.isLocked = 0;
         KencanmeApp.mCustomizeMessageItemProvider.bindView(customizeView, customizePos, mContent, mCustomizeMessage);
-
         //更新个人信息
-//        TokenRequest tokenRequest = new TokenRequest();
-//        tokenRequest.token = mBuProcessor.getToken();
-//        mPresenter.onRequestHomeUserInfo(tokenRequest);
-
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
     }
 
     @Override
@@ -287,8 +301,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mBuProcessor.setLoginUser(mLoginUser);
     }
 
+
     @Override
     protected void onDestroy() {
+        KencanmeApp.mCustomizeMessageItemProvider.setListenerNoll();
         super.onDestroy();
     }
 

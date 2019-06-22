@@ -58,6 +58,9 @@
     <string name="main_bottom_message">消息</string>
     <string name="main_bottom_mine">我的</string>
 
+    <!-- chat-->
+    <string name="chat_send_message_hint">Send a private photo.</string>
+    <string name="chat_receive_message_hint">Receive a private photo.</string>
 
     <!--EditMakeFriendsInfoActivity -->
     <string name="EditMakeFriendsInfoActivity_upload_hint">Reupload photo or video</string>

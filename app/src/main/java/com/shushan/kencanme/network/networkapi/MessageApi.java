@@ -31,4 +31,5 @@ public interface MessageApi {
      */
     @POST("menggoda/index/user_exposure")
     Observable<String> onRequestHomeUserInfo(@Body String request);
+
 }

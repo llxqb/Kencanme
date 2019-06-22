@@ -54,7 +54,6 @@ public class MessageModel {
     /**
      * 请求首页个人信息  如 是否喜欢数 聊天数
      */
-
     public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
         return mMessageApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }

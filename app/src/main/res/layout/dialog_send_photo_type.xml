@@ -154,6 +154,8 @@
                 android:drawablePadding="@dimen/dp_4"
                 android:drawableStart="@mipmap/home_popup_hibeans"
                 android:hint="custom"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:inputType="number"
                 android:minHeight="@dimen/dp_34"
                 android:paddingEnd="@dimen/dp_12"

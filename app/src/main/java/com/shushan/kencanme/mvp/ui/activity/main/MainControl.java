@@ -2,7 +2,9 @@ package com.shushan.kencanme.mvp.ui.activity.main;
 
 
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
+import com.shushan.kencanme.entity.response.MessageIdResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
@@ -18,7 +20,7 @@ public class MainControl {
         void personalInfoSuccess(PersonalInfoResponse response);
 
 //        void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
-
+void messageIdSuccess(MessageIdResponse messageIdResponse);
     }
 
     public interface PresenterMain extends Presenter<MainView> {
@@ -33,6 +35,11 @@ public class MainControl {
          * 根据融云第三方id获取用户头像和昵称
          */
         UserInfo onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest);
+
+        /**
+         * 查看用户嗨豆查看私密照片message_id
+         */
+        void onRequestMessageId(TokenRequest tokenRequest);
     }
 
 }

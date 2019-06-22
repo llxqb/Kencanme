@@ -69,5 +69,10 @@ public interface MainApi {
      */
     @POST("menggoda/user/user_friend")
     Observable<String> onRequestMyFriendList(@Body String request);
+    /**
+     * 查看用户嗨豆查看私密照片message_id
+     */
+    @POST("menggoda/operation/get_message_ids")
+    Observable<String> onRequestMessageId(@Body String request);
 
 }

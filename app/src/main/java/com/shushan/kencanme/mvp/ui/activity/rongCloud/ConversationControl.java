@@ -21,6 +21,7 @@ public class ConversationControl {
         void UseBeansSuccess(String msg);
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
+
     }
 
     public interface PresenterConversation extends Presenter<ConversationView> {
@@ -41,6 +42,7 @@ public class ConversationControl {
          * 查询用户信息（首页）
          */
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+
     }
 
 

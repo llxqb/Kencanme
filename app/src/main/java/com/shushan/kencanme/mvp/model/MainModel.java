@@ -88,4 +88,11 @@ public class MainModel {
         return mMainApi.onRequestMyFriendList(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 查看用户嗨豆查看私密照片message_id
+     */
+    public Observable<ResponseData> onRequestMessageId(TokenRequest request) {
+        return mMainApi.onRequestMessageId(mGson.toJson(request)).map(mTransform::transformListType);
+    }
+
 }

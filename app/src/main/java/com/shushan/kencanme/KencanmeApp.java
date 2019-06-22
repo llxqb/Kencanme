@@ -1,5 +1,6 @@
 package com.shushan.kencanme;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -26,6 +27,7 @@ public class KencanmeApp extends Application {
     public Context mContext;
     @Inject
     Gson mGson;
+    @SuppressLint("StaticFieldLeak")
     public static CustomizeMessageItemProvider mCustomizeMessageItemProvider;
 //    @Inject
 //    BuProcessor mBuProcessor;

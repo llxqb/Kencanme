@@ -17,12 +17,15 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
+import com.shushan.kencanme.entity.response.MessageIdResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.RongCloudHelper;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
+import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
@@ -141,7 +144,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public void personalInfoSuccess(PersonalInfoResponse response) {
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
-//        requestHomeUserInfo();  到homeFragemnt调用
+        reqMessageId();
+    }
+
+    private void reqMessageId(){
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestMessageId(tokenRequest);
+    }
+    @Override
+    public void messageIdSuccess(MessageIdResponse messageIdResponse) {
+        mSharePreferenceUtil.saveObjData("messageIdList",messageIdResponse.getData());
+        CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
 
     @Override
