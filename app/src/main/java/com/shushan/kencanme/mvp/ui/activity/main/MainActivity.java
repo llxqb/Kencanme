@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         initInjectData();
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
 
@@ -78,6 +77,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             }
             LoginUser loginUser = mBuProcessor.getLoginUser();
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+            initData();
         }
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
@@ -92,6 +92,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
         connectRongCloud();
+
     }
 
     @Override

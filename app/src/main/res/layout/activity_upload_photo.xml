@@ -209,7 +209,7 @@
                     android:drawablePadding="@dimen/dp_4"
                     android:drawableStart="@mipmap/home_popup_hibeans"
                     android:hint="custom"
-                    android:minHeight="@dimen/dp_34"
+                    android:minHeight="@dimen/dp_33"
                     android:inputType="number"
                     android:paddingEnd="@dimen/dp_12"
                     android:paddingStart="@dimen/dp_12"

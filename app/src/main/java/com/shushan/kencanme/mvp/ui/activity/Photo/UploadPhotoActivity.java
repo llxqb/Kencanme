@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -123,10 +125,12 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.UploadPhotoActivity_title));
+        mBeansCustomEv.addTextChangedListener(textWatcher);
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
         if (getIntent() != null) {
             dataBean = getIntent().getParcelableExtra("dataBean");
         }
+
     }
 
     @Override
@@ -193,9 +197,9 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
-                if(!TextUtils.isEmpty(mBeansCustomEv.getText())){
-                    beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
-                }
+//                if(!TextUtils.isEmpty(mBeansCustomEv.getText())){
+//                    beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
+//                }
                 break;
         }
     }
@@ -386,6 +390,28 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         finish();
     }
 
+
+    private TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (!TextUtils.isEmpty(s)) {
+                initBeansBg();
+                mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                beansNumber = Integer.parseInt(s.toString());
+            }
+        }
+    };
 
     private void initializeInjector() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())

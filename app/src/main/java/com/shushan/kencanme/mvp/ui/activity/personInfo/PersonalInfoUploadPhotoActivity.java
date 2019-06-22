@@ -24,6 +24,7 @@ import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.mvp.utils.PicUtils;
@@ -47,7 +48,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -77,6 +77,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     String mToken;
     //成功取得照片
     Bitmap bitmap;
+    private LoginUser mLoginUser;
 
     private UpdatePersonalInfoRequest mPersonalInfoRequest;
     @Inject
@@ -96,7 +97,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void initView() {
         mToken = mBuProcessor.getToken();
-        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
         if (getIntent() != null) {
             mPersonalInfoRequest = getIntent().getParcelableExtra("personalInfoRequest");
         }
@@ -104,7 +104,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     @Override
     public void initData() {
-
+        mLoginUser = mBuProcessor.getLoginUser();
     }
 
     @OnClick({R.id.common_back, R.id.photo_iv_rl, R.id.complete_btn})
@@ -195,7 +195,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void takeFail(TResult result, String msg) {
         //取得失败
-        showToast("设置失败");
+        showToast(msg);
     }
 
     @Override
@@ -235,8 +235,19 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void updateSuccess(String response) {
         showToast("创建成功");
+        updateUserInfo();
         startActivitys(MainActivity.class);
         finish();
+    }
+
+    private void updateUserInfo() {
+        mLoginUser.nickname = mPersonalInfoRequest.nickname;
+        mLoginUser.sex = mPersonalInfoRequest.sex;
+        mLoginUser.birthday = mPersonalInfoRequest.birthday;
+        mLoginUser.city = mPersonalInfoRequest.city;
+        mLoginUser.cover = mPersonalInfoRequest.cover;
+        mLoginUser.declaration = mPersonalInfoRequest.declaration;
+        mBuProcessor.setLoginUser(mLoginUser);
     }
 
     @Override
@@ -247,7 +258,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         //获取视频第一帧
         PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0);
         mPersonalInfoRequest.cover = videoPath;
-        mBuProcessor.getLoginUser().cover = videoPath;
     }
 
 
@@ -258,7 +268,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         mPhotoIvRl.setVisibility(View.VISIBLE);
         mPhotoIvRl.setImageBitmap(bitmap);
         mPersonalInfoRequest.cover = picPath;
-        mBuProcessor.getLoginUser().cover = picPath;
     }
 
 

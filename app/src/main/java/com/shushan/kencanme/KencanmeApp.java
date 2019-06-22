@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.di.components.AppComponent;
 import com.shushan.kencanme.di.components.DaggerAppComponent;
 import com.shushan.kencanme.di.modules.AppModule;
+import com.shushan.kencanme.help.CrashHandler;
 import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessage;
 import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 
@@ -35,6 +36,7 @@ public class KencanmeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler.getInstance().init(this);
         mContext = this.getApplicationContext();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mAppComponent.inject(this);//必须有

@@ -23,7 +23,10 @@ android {
             keyPassword RELEASE_KEY_PASSWORD
         }
     }
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     buildTypes {
         release {
             debuggable true //发布时候设置false   true为可调式，false为不可调试
@@ -42,9 +45,9 @@ android {
                 def file = output.outputFile
                 def fileName
                 if (variant.buildType.name.equals('release')) {
-                    fileName = "menggoda_v" + versionName + ".apk"
+                    fileName = "kencanme_v" + versionName + ".apk"
                 } else if (variant.buildType.name.equals('debug')) {
-                    fileName = "menggoda-v" + versionName + "_debug.apk"
+                    fileName = "kencanme-v" + versionName + "_debug.apk"
                 }
                 output.outputFileName = fileName
                 //生成的文件名
@@ -108,4 +111,5 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+
 }

@@ -85,13 +85,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         switch (view.getId()) {
             case R.id.login_google_rl:
                 //Google登录
-//                LoginDialog loginDialog = LoginDialog.newInstance();
-//                loginDialog.setListener(this);
-//                DialogFactory.showDialogFragment(this.getSupportFragmentManager(), loginDialog, LoginDialog.TAG);
-                showLoading("登录中");
-//                new GoogleLoginHelper(this).googleLogin();
+                showLoading("loading...");
                 GoogleLoginHelper.googleLogin(this);
-//                mGoogleLoginHelper.googleLogin(this);
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录

@@ -12,7 +12,7 @@
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
         android:layout_marginTop="@dimen/dp_134"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/login_logo1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:id="@+id/login_hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_83"
+        android:layout_marginTop="@dimen/dp_63"
         android:gravity="center"
         android:text="Welcome to login,\n
 please choose the following way to login."

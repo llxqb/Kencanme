@@ -58,7 +58,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_22"
                         android:layout_marginTop="@dimen/dp_8"
-                        android:background="@mipmap/home_gender_female"
                         android:paddingStart="@dimen/dp_18"
                         android:paddingEnd="@dimen/dp_2"
                         android:textColor="@color/white"

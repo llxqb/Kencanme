@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -182,7 +183,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             likeRequest.likeid = uId;
             mPresenter.onRequestLike(likeRequest);
         } else {
-            DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_like));
+            DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_like));
         }
     }
 
@@ -195,7 +196,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             //启动单聊页面
             RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), rongYunId, nickName);
         } else {
-            DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_chat));
+            DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
         }
     }
 
@@ -253,8 +254,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
-        //TODO
-        mLoginUser.userType = 3;
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();
         mLoginUser.beans = userBean.getBeans();
@@ -265,6 +264,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
         setData(userBean.getNow_time());
+        //更新MineFragment信息
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     MyTimer myTimer;
