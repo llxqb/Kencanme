@@ -17,8 +17,8 @@ public class BuyDialogAdapter extends BaseQuickAdapter<DialogBuyBean.DataBean, B
 
     private Context mContext;
 
-    public BuyDialogAdapter(Context context, int layoutResId, @Nullable List<DialogBuyBean.DataBean> data) {
-        super(layoutResId, data);
+    public BuyDialogAdapter(Context context, @Nullable List<DialogBuyBean.DataBean> data) {
+        super(R.layout.dialog_bug_item, data);
         mContext = context;
     }
 

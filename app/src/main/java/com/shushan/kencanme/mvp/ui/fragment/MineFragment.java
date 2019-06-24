@@ -194,7 +194,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                     case R.id.photo_item_rl:
                         if (position == 0) {
                             if (mAlbumAdapter.getItemCount() >= 13) {
-                                showToast("最多传12张");
+                                showToast(getResources().getString(R.string.album_max_num));
                             } else {
                                 startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
                             }
@@ -263,7 +263,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         } else {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_female);
         }
-        String mSexYearTvValue = mLoginUser.age + " years";
+        String mSexYearTvValue = mLoginUser.age + getResources().getString(R.string.HomeViewPagerAdapter_years);
         mSexYearTv.setText(mSexYearTvValue);
         //svip不为0显示图标
         if (mLoginUser.svip == 0) {
@@ -272,11 +272,11 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             if (mLoginUser.vip == 1) {
                 mVipTimeTv.setText(mLoginUser.vip_time);
             } else {
-                mVipTimeTv.setText("Become VIP");
+                mVipTimeTv.setText(getResources().getString(R.string.MineFragment_Become_VIP));
             }
         } else {
             mSVipIcon.setVisibility(View.VISIBLE);
-            mVipTimeTv.setText("Hi~SVIP");
+            mVipTimeTv.setText(getResources().getString(R.string.MineFragment_hello_VIP));
         }
         mDescTv.setText(mLoginUser.declaration);
         mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl, Constant.LOADING_MIDDLE);
@@ -310,7 +310,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(EditMakeFriendsInfoActivity.class);
                 break;
             case R.id.barn_hi_beans:
-                showToast("暂未开放此功能");
+                showToast("waiting development...");
                 break;
             case R.id.recharge:
                 //充值

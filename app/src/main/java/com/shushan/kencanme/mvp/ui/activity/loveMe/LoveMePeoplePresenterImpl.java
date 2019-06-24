@@ -68,7 +68,7 @@ public class LoveMePeoplePresenterImpl implements LoveMePeopleControl.PresenterL
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mLoveMePeopleView.getLikeSuccess("已添加喜欢");
+            mLoveMePeopleView.getLikeSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mLoveMePeopleView.showToast(responseData.errorMsg);
         }

@@ -116,9 +116,9 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         mImageLoaderHelper.displayImage(this, mLoginUser.trait, mAvator, R.mipmap.head_photo_loading);
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.vip == 0) {
-            mIsVipTv.setText("Not open Vip");
+            mIsVipTv.setText(getResources().getString(R.string.not_vip));
         } else {
-            mIsVipTv.setText("Is Vip");
+            mIsVipTv.setText(getResources().getString(R.string.is_vip));
         }
 
     }

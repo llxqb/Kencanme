@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_recharge_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_5"
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_5"
-        android:text="2888"
         android:textColor="@color/recharge_no_check_color"
         android:textSize="@dimen/sp_22" />
 
@@ -23,25 +23,33 @@
         android:layout_below="@id/hi_beans_num"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_5"
-        android:text="Give 100 / "
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_10" />
 
     <TextView
-        android:id="@+id/vip_desc"
+        android:id="@+id/give"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hi_beans_num"
+        android:layout_below="@id/desc"
+        android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_5"
-        android:layout_toEndOf="@id/desc"
-        android:text="VIP give 200"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_10" />
+
+    <TextView
+        android:id="@+id/vip_give"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/desc"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toEndOf="@id/give"
         android:textColor="#DCB139"
         android:textSize="@dimen/sp_10" />
 
     <View
         android:id="@+id/line"
         style="@style/line_height_05"
-        android:layout_below="@id/desc"
+        android:layout_below="@id/give"
         android:layout_marginTop="@dimen/dp_5" />
 
     <TextView
@@ -51,6 +59,14 @@
         android:layout_below="@id/line"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_5"
-        android:text="Rp 588" />
+        android:layout_marginTop="@dimen/dp_5" />
+
+    <ImageView
+        android:id="@+id/check_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/mine_hibeans_pay_choose"
+        android:visibility="invisible" />
 </RelativeLayout>

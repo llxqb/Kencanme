@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/exposure_time_tv"
                 android:layout_centerHorizontal="true"
-                android:text="time" />
+                android:text="@string/BuyDialogAdapter_time" />
 
             <ImageView
                 android:id="@+id/check_iv"

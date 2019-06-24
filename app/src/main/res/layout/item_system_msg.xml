@@ -28,8 +28,6 @@
             android:id="@+id/system_msg_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New users are the first privilege! Let's
-wait for something."
             android:textColor="@color/color_6941ff"
             android:textSize="@dimen/sp_13" />
 
@@ -38,8 +36,6 @@ wait for something."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="Here is the text，new users are the first
-privilege! Let's wait for something."
             android:textColor="@color/color_80"
             android:textSize="@dimen/sp_13" />
 

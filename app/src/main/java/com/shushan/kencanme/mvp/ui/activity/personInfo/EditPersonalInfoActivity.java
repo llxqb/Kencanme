@@ -135,10 +135,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             mEditBirthdayTv.setText(DateUtil.dateTranString(date, "yyyy/MM/dd"));
         })
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setCancelText("cancel")//取消按钮文字
-                .setSubmitText("sure")//确认按钮文字
+                .setCancelText(getResources().getString(R.string.dialog_cancal))//取消按钮文字
+                .setSubmitText(getResources().getString(R.string.dialog_sure))//确认按钮文字
                 .setTitleSize(16)//标题文字大小
-                .setTitleText("Your Birthday")//标题文字
+                .setTitleText(getResources().getString(R.string.personal_info_birthday))//标题文字
                 .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
                 .isCyclic(true)//是否循环滚动
                 .setTitleColor(getResources().getColor(R.color.first_text_color))//标题文字颜色

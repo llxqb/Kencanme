@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_14"
-                    android:text="Push to me"
+                    android:text="@string/SettingActivity_push_tv"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18" />
 
@@ -47,7 +47,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Age"
+                        android:text="@string/SettingActivity_Age"
                         android:textColor="#FFF651"
                         android:textSize="@dimen/sp_16" />
 
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:text="Pushing gender"
+                    android:text="@string/SettingActivity_Pushing_gender"
                     android:textColor="#FFF651"
                     android:textSize="@dimen/sp_16" />
 
@@ -105,7 +105,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
-                android:text="Message reminder"
+                android:text="@string/SettingActivity_Message_reminder"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -119,7 +119,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
-                android:text="Clear cache"
+                android:text="@string/SettingActivity_Clear_cache"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -134,7 +134,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
-                android:text="Problem feedback"
+                android:text="@string/SettingActivity_Problem_feedback"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -148,7 +148,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
-                android:text="About us"
+                android:text="@string/SettingActivity_About_us"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -162,7 +162,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:drawableEnd="@mipmap/sign_out"
                 android:gravity="start|center_vertical"
-                android:text="Logout"
+                android:text="@string/Logout"
                 android:textColor="@color/app_color"
                 android:textSize="@dimen/sp_14" />
 

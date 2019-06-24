@@ -25,6 +25,7 @@ import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.MyAlbumAdapter;
+import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_album);
+        //设置有图片状态栏
+        StatusBarUtil.setTransparentForImageView(this, null);
         initializeInjector();
         ButterKnife.bind(this);
         initView();
@@ -107,7 +110,7 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
                     case R.id.photo_item_rl:
                         if (position == 0) {
                             if (myAlbumAdapter.getItemCount() >= 13) {
-                                showToast("最多传12张");
+                                showToast(getResources().getString(R.string.album_max_num));
                             } else {
                                 startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
                             }

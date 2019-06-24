@@ -76,6 +76,16 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         mRecyclerView.setLayoutManager(layoutManager);
         rechargeAdapter = new RechargeAdapter(this, rechargeBeanList);
         mRecyclerView.setAdapter(rechargeAdapter);
+
+        rechargeAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            ReChargeBeansInfoResponse.BeansinfoBean beansinfoBean = (ReChargeBeansInfoResponse.BeansinfoBean) adapter.getItem(position);
+            assert beansinfoBean != null;
+            for (ReChargeBeansInfoResponse.BeansinfoBean bean : rechargeBeanList) {
+                if (bean.isCheck) bean.isCheck = false;
+            }
+            beansinfoBean.isCheck = true;
+            rechargeAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -98,14 +108,14 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
                 startActivitys(AgreementActivity.class);
                 break;
             case R.id.contact_customer:
-                showToast("联系客服");
+//                showToast("联系客服");
                 break;
         }
     }
 
     @Override
     public void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse) {
-        rechargeBeanList =    reChargeBeansInfoResponse.getBeansinfo();
+        rechargeBeanList = reChargeBeansInfoResponse.getBeansinfo();
         rechargeAdapter.addData(rechargeBeanList);
     }
 

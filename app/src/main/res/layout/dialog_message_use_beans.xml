@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/dp_3"
             android:drawableStart="@mipmap/message_popup_hibeans1"
-            android:text="5"
             android:textColor="@color/yellow_btn"
             android:textSize="@dimen/sp_30"
             android:textStyle="bold" />

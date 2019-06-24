@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/edit_declaration_bg"
             android:gravity="start|top"
-            android:hint="Please describe your problem."
+            android:hint="@string/FeedbackProblemActivity_problem_desc"
             android:padding="@dimen/dp_10"
             android:textSize="@dimen/sp_14" />
 
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pictures (optional)"
+            android:text="@string/FeedbackProblemActivity_Pictures_optional"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
@@ -76,7 +76,7 @@
         android:layout_marginEnd="@dimen/dp_22"
         android:layout_marginStart="@dimen/dp_22"
         android:layout_marginTop="@dimen/dp_15"
-        android:text="Contact information (optional)"
+        android:text="@string/FeedbackProblemActivity_Contact_optional"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -89,8 +89,9 @@
         android:layout_marginTop="@dimen/dp_15"
         android:background="@drawable/bg_gray4_round_5"
         android:gravity="center_vertical"
-        android:hint="Please fill in your e-mail"
+        android:hint="@string/FeedbackProblemActivity_e_mail"
         android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -106,7 +107,7 @@
             android:layout_height="@dimen/dp_35"
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_gray3_round_5_selector"
-            android:text="Submission"
+            android:text="@string/submit"
             android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

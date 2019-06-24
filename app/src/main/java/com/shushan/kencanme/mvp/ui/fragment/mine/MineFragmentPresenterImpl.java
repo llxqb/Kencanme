@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.fragment.mine;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -33,7 +34,7 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.mineFragme
 
     @Override
     public void onRequestMyAlbum(MyAlbumRequest myAlbumRequest) {
-        mMineView.showLoading("加载中...");
+        mMineView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMineFragmentModel.onRequestMyAlbum(myAlbumRequest).compose(mMineView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mMineView.showErrMessage(throwable),
                         () -> mMineView.dismissLoading());

@@ -42,6 +42,9 @@ public class KencanmeApp extends Application {
         mAppComponent.inject(this);//必须有
         //初始化融云
         initRongYun();
+//        //友盟init
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+//        UMConfigure.setLogEnabled(true);
     }
 
     public AppComponent getAppComponent() {
@@ -57,9 +60,6 @@ public class KencanmeApp extends Application {
                 .equals(getCurProcessName(getApplicationContext()))
                 || "io.rong.push"
                 .equals(getCurProcessName(getApplicationContext()))) {
-            /**
-             * IMKit SDK调用第一步 初始化
-             */
             RongIM.init(this);
             //注册自定义消息
             RongIM.registerMessageType(CustomizeMessage.class);

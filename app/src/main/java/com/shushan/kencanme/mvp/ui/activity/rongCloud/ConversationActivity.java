@@ -252,7 +252,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mCustomizeMessage = message;
         MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
         messageUseBeansDialog.setListener(this);
-        messageUseBeansDialog.setTitle("To view private photos, you need to pay", content.beans);
+        messageUseBeansDialog.setTitle(getResources().getString(R.string.ConversationActivity_private_photo_hint), content.beans);
         DialogFactory.showDialogFragment(getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
     }
 

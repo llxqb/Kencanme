@@ -133,8 +133,8 @@ public class HomeViewPagerAdapter extends PagerAdapter {
         } else {
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
         }
-        String mRecommendUserSexYearValue = listBean.getAge() + " years";
-        String mActiveTimeValue = "active " + listBean.getActive_time() + " minute ago";
+        String mRecommendUserSexYearValue = listBean.getAge() + " "+mContext.getResources().getString(R.string.HomeViewPagerAdapter_years);
+        String mActiveTimeValue = mContext.getResources().getString(R.string.HomeViewPagerAdapter_active) + listBean.getActive_time() + mContext.getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
         mRecommendUserSexYear.setText(mRecommendUserSexYearValue);
         mRecommendUserLocation.setText(listBean.getCity());
         mActiveTime.setText(mActiveTimeValue);

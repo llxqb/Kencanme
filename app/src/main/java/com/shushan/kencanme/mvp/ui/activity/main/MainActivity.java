@@ -6,13 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerMainComponent;
-import com.shushan.kencanme.di.components.MainComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
@@ -30,6 +28,7 @@ import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MineFragment;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
 import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 
@@ -59,8 +58,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initInjectData();
         ButterKnife.bind(this);
+        initInjectData();
         initView();
     }
 
@@ -76,7 +75,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 finish();
             }
             LoginUser loginUser = mBuProcessor.getLoginUser();
-            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+            LogUtils.e( "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }
         List<Fragment> fragments = new ArrayList<>();
@@ -172,10 +171,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void initInjectData() {
-        MainComponent mMainComponent = DaggerMainComponent.builder().appComponent(getAppComponent())
+        DaggerMainComponent.builder().appComponent(getAppComponent())
                 .mainModule(new MainModule(MainActivity.this, this))
-                .activityModule(new ActivityModule(this)).build();
-        mMainComponent.inject(this);
+                .activityModule(new ActivityModule(this)).build().inject(this);
     }
 
 }

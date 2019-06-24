@@ -84,7 +84,7 @@ public class BuyDialog extends BaseDialogFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dialogBuyRecyclerView.setLayoutManager(linearLayoutManager);
-        BuyDialogAdapter buyDialogAdapter = new BuyDialogAdapter(getActivity(), R.layout.dialog_bug_item, dialogBuyBeans);
+        BuyDialogAdapter buyDialogAdapter = new BuyDialogAdapter(getActivity(), dialogBuyBeans);
         dialogBuyRecyclerView.setAdapter(buyDialogAdapter);
         buyDialogAdapter.setOnItemClickListener((adapter, view, position) -> {
             bean = buyDialogAdapter.getItem(position);
@@ -116,7 +116,7 @@ public class BuyDialog extends BaseDialogFragment {
             case R.id.dialog_buy_buy:
                 if (dialogBtnListener != null) {
                     if (beans < bean.num) {
-                        showToast("Hi-Beans 不足，请先购买Hi-Beans");
+                        showToast(getResources().getString(R.string.BuyDialog_buy_beans));
                     } else {
                         dialogBtnListener.buyDialogBtnOkListener(bean.num);
                         closeCommonDialog();

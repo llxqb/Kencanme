@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerConversationListFragmentComponent;
@@ -147,7 +145,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
 
     @Override
     public void getSystemMsgNewInfoSuccess(SystemMsgNewResponse systemMsgNewResponse) {
-        Log.e("ddd", "systemMsgNewResponse:" + new Gson().toJson(systemMsgNewResponse));
+//        LogUtils.e("systemMsgNewResponse:" + new Gson().toJson(systemMsgNewResponse));
         SystemMsgNewResponse.NewLikeBean likeBean = systemMsgNewResponse.getNew_like();
         SystemMsgNewResponse.NewMessageBean messageBean = systemMsgNewResponse.getNew_message();
         if (likeBean != null && likeBean.getCount() != 0) {
@@ -157,7 +155,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
                 mImageLoaderHelper.displayGlassImage(getActivity(), likeBean.getTrait(), mNewPairingIv, Constant.LOADING_AVATOR);
             }
             mNewPairingNumTv.setText(String.valueOf(likeBean.getCount()));
-            String mNewPairingTvValue = "Add " + "<font color = '#FF2D5B'>" + likeBean.getCount() + "</font>" + " new people who like you";
+            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add) + "<font color = '#FF2D5B'>" + likeBean.getCount() + "</font>" + getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
             mNewPairingTv.setText(Html.fromHtml(mNewPairingTvValue));
         } else {
             mNewPairingRl.setVisibility(View.GONE);

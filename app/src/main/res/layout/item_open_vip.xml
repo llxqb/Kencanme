@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_20"
         android:gravity="bottom"
-        android:text="Super VIP"
         android:textColor="@color/third_text_color"
         android:textSize="@dimen/sp_16" />
 
@@ -23,7 +22,6 @@
         android:layout_marginStart="@dimen/dp_5"
         android:layout_toEndOf="@id/super_vip_hint"
         android:gravity="bottom"
-        android:text="/  RP 400000"
         android:textColor="@color/third_text_color"
         android:textSize="@dimen/sp_16" />
 
@@ -34,7 +32,6 @@
         android:layout_marginStart="@dimen/dp_5"
         android:layout_toEndOf="@id/current_price"
         android:gravity="bottom"
-        android:text="RP 2000000"
         android:textColor="@color/third_text_color"
         android:textSize="@dimen/sp_12" />
 
@@ -44,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/super_vip_hint"
         android:layout_marginTop="@dimen/dp_5"
-        android:text="Exclusive: Permanent Membership, Free Private Trust"
         android:textColor="@color/third_text_color"
         android:textSize="@dimen/sp_11" />
 

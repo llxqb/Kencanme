@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.activity.reportUser;
 
 import android.content.Context;
 
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.ReportUserRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.response.UploadImageResponse;
@@ -34,7 +35,7 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
 
     @Override
     public void onRequestReportUser(ReportUserRequest reportUserRequest) {
-        mReportUserView.showLoading("加载中...");
+        mReportUserView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.reportUserRequest(reportUserRequest).compose(mReportUserView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mReportUserView.showErrMessage(throwable),
                         () -> mReportUserView.dismissLoading());
@@ -53,7 +54,7 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
 
     @Override
     public void uploadImage(UploadImage uploadImage) {
-        mReportUserView.showLoading("Loading...");
+        mReportUserView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.uploadImageRequest(uploadImage).compose(mReportUserView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestImageSuccess, throwable -> mReportUserView.showErrMessage(throwable),
                         () -> mReportUserView.dismissLoading());

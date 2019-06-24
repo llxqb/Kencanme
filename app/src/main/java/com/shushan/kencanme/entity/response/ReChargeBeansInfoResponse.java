@@ -6,6 +6,7 @@ import java.util.List;
  * 购买嗨豆信息list
  */
 public class ReChargeBeansInfoResponse {
+
     private List<BeansinfoBean> beansinfo;
 
     public List<BeansinfoBean> getBeansinfo() {
@@ -19,19 +20,20 @@ public class ReChargeBeansInfoResponse {
     public static class BeansinfoBean {
         /**
          * b_id : 1
-         * amount : 588
-         * describe : 首选赠送100
-         * price : 45
-         * give : 100
-         * vip_give : 100
+         * amount : 100
+         * describe : First time Purchase bonus 30 Hey Beans
+         * price : 0.99
+         * give : 30
+         * vip_give : 10
          */
 
         private int b_id;
         private int amount;
         private String describe;
-        private int price;
+        private String price;
         private int give;
         private int vip_give;
+        public boolean isCheck;
 
         public int getB_id() {
             return b_id;
@@ -57,11 +59,11 @@ public class ReChargeBeansInfoResponse {
             this.describe = describe;
         }
 
-        public int getPrice() {
+        public String getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(String price) {
             this.price = price;
         }
 

@@ -217,16 +217,16 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
 
     private boolean isValidEmpty() {
         if (TextUtils.isEmpty(photoUrl)) {
-            showToast("请先上传图片或者视频");
+            showToast(getResources().getString(R.string.UploadPhotoActivity_upload_pic_or_video_hint));
             return false;
         }
         if (picType == 0) {
-            showToast("请选择照片类型");
+            showToast(getResources().getString(R.string.UploadPhotoActivity_upload_pic_hint));
             return false;
         }
         if (picType == 3) {
             if (beansNumber == 0) {
-                showToast("请选择嗨豆数量");
+                showToast(getResources().getString(R.string.UploadPhotoActivity_upload_beans_hint));
                 return false;
             }
         }
@@ -250,7 +250,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         //弹出框框
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
-        photoDialog.setData("Select video or photo", "Video", "Photo");
+        photoDialog.setData(getResources().getString(R.string.PhotoDialog_title_hint), getResources().getString(R.string.Video), getResources().getString(R.string.Photo));
         DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 

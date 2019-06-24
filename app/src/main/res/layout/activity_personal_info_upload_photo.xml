@@ -42,8 +42,7 @@
                 android:layout_marginEnd="@dimen/dp_22"
                 android:layout_marginStart="@dimen/dp_22"
                 android:gravity="center_horizontal"
-                android:text="Please upload vivid photos or videos with clear facial features
-to get a match."
+                android:text="@string/PersonalInfoUploadPhotoActivity_hint_tv"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_11" />
 
@@ -56,7 +55,7 @@ to get a match."
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_22"
                 android:layout_marginTop="@dimen/dp_20"
-                android:text="Declaration"
+                android:text="@string/personal_info_declaration"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -74,7 +73,7 @@ to get a match."
                     android:layout_above="@id/world_limit_text"
                     android:background="@drawable/bg_gray2_round_5"
                     android:gravity="start|top"
-                    android:hint="Please enter a statement about making friends."
+                    android:hint="@string/PersonalInfoUploadPhotoActivity_declaration_ev"
                     android:padding="@dimen/dp_10"
                     android:textSize="@dimen/sp_14" />
 
@@ -103,7 +102,7 @@ to get a match."
                     android:layout_width="@dimen/dp_228"
                     android:layout_height="@dimen/dp_35"
                     android:background="@drawable/bg_blue2_round_20_selector"
-                    android:text="Preserve"
+                    android:text="@string/Preserve"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>

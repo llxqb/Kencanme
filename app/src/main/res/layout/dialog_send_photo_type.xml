@@ -36,7 +36,7 @@
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_20"
-            android:text="Please select the type of photo you "
+            android:text="@string/UseExposureDialog_select_photo_type"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_8"
-                android:text="Ordinary Photo/Video"
+                android:text="@string/UploadPhotoActivity_ordinary"
                 android:textColor="@color/color_80"
                 android:textSize="@dimen/sp_14" />
 
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_4"
-                android:text="Private Photos/Videos"
+                android:text="@string/UploadPhotoActivity_private"
                 android:textColor="@color/color_80"
                 android:textSize="@dimen/sp_14" />
 
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_22"
             android:layout_marginStart="@dimen/dp_35"
-            android:text="（Users need to pay you Hey Dou for checking）"
+            android:text="@string/UploadPhotoActivity_private_hint"
             android:textColor="@color/color_9b"
             android:textSize="@dimen/sp_12" />
 
@@ -153,9 +153,9 @@
                 android:background="@drawable/bg_beans_selector_5"
                 android:drawablePadding="@dimen/dp_4"
                 android:drawableStart="@mipmap/home_popup_hibeans"
-                android:hint="custom"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:hint="@string/UploadPhotoActivity_custom_num"
                 android:inputType="number"
                 android:minHeight="@dimen/dp_34"
                 android:paddingEnd="@dimen/dp_12"
@@ -173,7 +173,7 @@
             android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/dialog_style_2"
-            android:text="Sure"
+            android:text="@string/dialog_sure"
             android:textColor="@color/white" />
 
     </LinearLayout>

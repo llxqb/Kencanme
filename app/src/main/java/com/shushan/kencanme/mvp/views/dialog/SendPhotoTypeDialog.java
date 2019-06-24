@@ -141,12 +141,12 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
 
     private boolean isValidEmpty() {
         if (picType == 0) {
-            showToast("请选择照片类型");
+            showToast(getResources().getString(R.string.UploadPhotoActivity_upload_pic_hint));
             return false;
         }
         if (picType == 3) {
             if (beansNumber == 0) {
-                showToast("请选择嗨豆数量");
+                showToast(getResources().getString(R.string.UploadPhotoActivity_upload_beans_hint));
                 return false;
             }
         }

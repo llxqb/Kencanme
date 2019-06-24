@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Show message preview"
+            android:text="@string/MessageReminderActivity_message_preview"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Shock"
+            android:text="@string/MessageReminderActivity_Shock"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Voice"
+            android:text="@string/MessageReminderActivity_Voice"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 

@@ -234,7 +234,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     @Override
     public void updateSuccess(String response) {
-        showToast("创建成功");
         updateUserInfo();
         startActivitys(MainActivity.class);
         finish();

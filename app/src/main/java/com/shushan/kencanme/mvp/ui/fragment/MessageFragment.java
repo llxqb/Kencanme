@@ -90,7 +90,7 @@ public class MessageFragment extends BaseFragment {
 
 
     private class MyPageAdapter extends FragmentPagerAdapter {
-        private final String[] titles = {"Message", "My friend"};
+        private final String[] titles = {getResources().getString(R.string.MessageFragment_message), getResources().getString(R.string.MessageFragment_My_friend)};
         private List<Fragment> fragments = new ArrayList<Fragment>();
 
         MyPageAdapter(FragmentManager fm) {

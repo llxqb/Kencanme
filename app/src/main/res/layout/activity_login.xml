@@ -33,10 +33,9 @@
         android:id="@+id/login_hint_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_63"
+        android:layout_marginTop="@dimen/dp_60"
         android:gravity="center"
-        android:text="Welcome to login,\n
-please choose the following way to login."
+        android:text="@string/login_hint"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_13"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +64,7 @@ please choose the following way to login."
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="Google"
+            android:text="@string/google"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
@@ -93,7 +92,7 @@ please choose the following way to login."
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="Facebook"
+            android:text="@string/facebook"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
@@ -121,7 +120,7 @@ please choose the following way to login."
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="WhatsApp"
+            android:text="@string/whatsapp"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 

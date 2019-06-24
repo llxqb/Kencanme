@@ -42,7 +42,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Head portraits, data fraud"
+        android:text="@string/DataFraudActivity_head_portraits"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -58,7 +58,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Advertising and marketing"
+        android:text="@string/ReportUserActivity_advertising"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -74,7 +74,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Fraud"
+        android:text="@string/ReportUserActivity_Fraud"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -90,7 +90,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Pornography and vulgarity"
+        android:text="@string/ReportUserActivity_Pornography"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -106,7 +106,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Malicious harassment, Vulgar language"
+        android:text="@string/ReportUserActivity_Malicious"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -122,7 +122,7 @@
         android:gravity="start|center_vertical"
         android:paddingEnd="@dimen/dp_20"
         android:paddingStart="@dimen/dp_20"
-        android:text="Other"
+        android:text="@string/ReportUserActivity_Other"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_14" />
 
@@ -139,7 +139,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tell us the reason for reporting, let's make Teasing APP better!"
+            android:text="@string/ReportUserActivity_buttom_tv"
             android:textColor="@color/color_blue_btn"
             android:textSize="@dimen/sp_11" />
 
@@ -147,8 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
-            android:text="(In order to protect your private business, we report it completely anonymously.
- Please feel free to fill it in.)"
+            android:text="@string/ReportUserActivity_buttom_tv_hint"
             android:textColor="@color/color_80"
             android:textSize="@dimen/sp_9" />
     </LinearLayout>

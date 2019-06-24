@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:text="Head portrait"
+                    android:text="@string/EditMakeFriendsInfoActivity_head_img"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:text="name"
+                    android:text="@string/personal_info_name"
                     android:textColor="@color/first_text_color"
                     android:textSize="@dimen/sp_14" />
 
@@ -106,7 +106,7 @@
                     android:layout_marginEnd="@dimen/dp_30"
                     android:background="@null"
                     android:gravity="end"
-                    android:hint="@string/app_nice_hint"
+                    android:hint="@string/app_nick_hint"
                     android:minWidth="@dimen/dp_50"
                     android:textColor="@color/color_80"
                     android:textSize="@dimen/sp_14" />
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
-                android:text="Declaration"
+                android:text="@string/personal_info_declaration"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -138,7 +138,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_declaration_bg"
                     android:gravity="start|top"
-                    android:hint="Sincere friends, I hope you like me."
+                    android:hint="@string/personal_info_declaration_hint_ev"
                     android:padding="@dimen/dp_10"
                     android:textSize="@dimen/sp_14" />
 
@@ -162,7 +162,7 @@
                 android:layout_margin="@dimen/dp_30"
                 android:background="@drawable/dialog_style_2_blue"
                 android:gravity="center"
-                android:text="Preserve"
+                android:text="@string/Preserve"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
 

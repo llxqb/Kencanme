@@ -29,8 +29,9 @@ android {
     }
     buildTypes {
         release {
-            debuggable true //发布时候设置false   true为可调式，false为不可调试
+            debuggable false //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
+            zipAlignEnabled true//Zipalign优化
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -60,10 +61,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    //解决 Dagger2/ButterKnife 冲突
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
+//    //解决 Dagger2/ButterKnife 冲突
+//    packagingOptions {
+//        exclude 'META-INF/services/javax.annotation.processing.Processor'
+//    }
 }
 
 dependencies {
@@ -112,4 +113,11 @@ dependencies {
     implementation project(':IMKit')
     implementation project(':IMLib')
 
+//    //友盟
+//    //友盟推送  友盟统计
+//    implementation 'com.umeng.umsdk:analytics:8.0.0'
+//    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+//    implementation 'com.umeng.umsdk:common:2.0.0'
+//    //PushSDK必须依赖utdid库，所以需要加入对应依赖
+//    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
 }

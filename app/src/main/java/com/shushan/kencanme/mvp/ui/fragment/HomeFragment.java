@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
@@ -39,7 +38,6 @@ import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoA
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
-import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.MyTimer;
@@ -252,7 +250,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        LogUtils.e("userBean:" + new Gson().toJson(userBean));
+//        LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();
@@ -265,7 +263,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mBuProcessor.setLoginUser(mLoginUser);
         setData(userBean.getNow_time());
         //更新MineFragment信息
-        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     MyTimer myTimer;
@@ -289,7 +287,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mUseExposuringHint.setVisibility(View.VISIBLE);
             int remainTime = AppUtils.exposureRemainTime(currentTime, mLoginUser.exposure_time);
             mRemainTime = remainTime / 60 + 1;
-            String exposureValue = "Super exposure! Countdown: " + remainTime / 60 + " min";
+            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + remainTime / 60 + " min";
             mUseExposuringHint.setText(exposureValue);
             setmRemainTime();
         } else {
@@ -319,7 +317,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         }
         if (mRemainTime > 0) {
             setmRemainTime();
-            String exposureValue = "Super exposure! Countdown: " + mRemainTime + " min";
+            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint)  + mRemainTime + " min";
             mUseExposuringHint.setText(exposureValue);
         } else {
             mUseExposuringHint.setVisibility(View.INVISIBLE);
@@ -339,7 +337,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             BuyDialog buyDialog = BuyDialog.newInstance();
             buyDialog.setListener(this);
             buyDialog.setBugData(dialogBuyBean, mLoginUser.beans);
-            buyDialog.setContent("Matchmaker! 10 times more people will see you in 30 minutes!");
+            buyDialog.setContent(getResources().getString(R.string.HomeFragment_Super_exposure_content_hint));
             DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), buyDialog, BuyDialog.TAG);
         }
     }

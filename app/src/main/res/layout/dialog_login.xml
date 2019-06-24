@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_25"
             android:gravity="center"
-            android:text="Select an account to continue using Kencanme APP"
+            android:text="@string/LoginDialog_count_hint"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
 
@@ -65,7 +65,6 @@
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_6"
                 android:layout_toEndOf="@id/account_avator_iv"
-                android:text="Aaron Carter"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_15" />
 
@@ -76,7 +75,6 @@
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_toEndOf="@id/account_avator_iv"
                 android:layout_marginBottom="@dimen/dp_6"
-                android:text="cityke@gmail.com"
                 android:textSize="@dimen/sp_12" />
 
         </RelativeLayout>
@@ -102,7 +100,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_toEndOf="@id/other_account_iv"
-                android:text="Use other accounts"
+                android:text="@string/LoginDialog_other_accounts"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_15" />
 
@@ -115,8 +113,7 @@
             android:layout_marginStart="@dimen/dp_26"
             android:layout_marginTop="@dimen/dp_18"
             android:gravity="center"
-            android:text="To continue, Google will provide your name, email
-address, and profile photo to the Kencanme app."
+            android:text="@string/LoginDialog_agreement"
             android:textColor="@color/color_80"
             android:textSize="@dimen/sp_10" />
     </LinearLayout>

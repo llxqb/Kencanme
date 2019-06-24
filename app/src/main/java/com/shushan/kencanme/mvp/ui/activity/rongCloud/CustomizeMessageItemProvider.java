@@ -3,7 +3,6 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,14 +46,6 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         }
     }
 
-    /**
-     * 刷新数据
-     */
-    public static void setData(int pos, CustomizeMessage customizeMessage) {
-        customizeMessage.isLocked = 0;
-    }
-
-
     class ViewHolder {
         LinearLayout msgLayout;
         ImageView coverIv;
@@ -82,7 +73,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public void bindView(View v, int position, CustomizeMessage content, UIMessage message) {
-        Log.e("ddd", "message:" + message.getMessageId());
+//        LogUtils.e("message:" + message.getMessageId());
         ViewHolder holder = (ViewHolder) v.getTag();
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
@@ -101,7 +92,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.customizeMsgTv.setText(v.getResources().getString(R.string.chat_receive_message_hint));
             holder.customizeMsgHintTv.setTextColor(v.getResources().getColor(R.color.color_9b));
             holder.beansNum.setVisibility(View.GONE);
-            holder.lookTv.setText("view");
+            holder.lookTv.setText(v.getResources().getString(R.string.app_view));
             if (content.isLocked == 1 && content.msgType == 1 && !DataUtils.isContainString(mMessageIdList, String.valueOf(message.getMessageId()))) {
                 ImageLoaderHelper.displayGlassImage2(v, content.cover_url, holder.coverIv, Constant.LOADING_SMALL);
                 holder.isLockedIv.setVisibility(View.VISIBLE);
@@ -123,7 +114,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public Spannable getContentSummary(CustomizeMessage data) {
-        return new SpannableString("您收到一条私密信息");
+        return new SpannableString("Received a private message");
     }
 
 

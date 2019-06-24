@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.photo;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.DeleteMyAlbumRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
@@ -34,7 +35,7 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
 
     @Override
     public void deleteMyAlbum(DeleteMyAlbumRequest deleteMyAlbumRequest) {
-        mMyAlbumView.showLoading("Loading...");
+        mMyAlbumView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMyAlbumModel.deleteAlbumRequest(deleteMyAlbumRequest).compose(mMyAlbumView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mMyAlbumView.showErrMessage(throwable),
                         () -> mMyAlbumView.dismissLoading());
@@ -43,7 +44,7 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
 
     @Override
     public void onRequestMyAlbum(MyAlbumRequest myAlbumRequest) {
-        mMyAlbumView.showLoading("加载中...");
+        mMyAlbumView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMyAlbumModel.onRequestMyAlbum(myAlbumRequest).compose(mMyAlbumView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestMyAlbumSuccess, throwable -> mMyAlbumView.showErrMessage(throwable),
                         () -> mMyAlbumView.dismissLoading());

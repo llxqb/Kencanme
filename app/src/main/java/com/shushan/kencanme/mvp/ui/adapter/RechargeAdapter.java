@@ -26,12 +26,26 @@ public class RechargeAdapter extends BaseQuickAdapter<ReChargeBeansInfoResponse.
 
     @Override
     protected void convert(BaseViewHolder helper, ReChargeBeansInfoResponse.BeansinfoBean item) {
+        helper.addOnClickListener(R.id.item_recharge_rl);
         if (item != null) {
             helper.setText(R.id.hi_beans_num, String.valueOf(item.getAmount()));
-            String describeValue = !TextUtils.isEmpty(item.getDescribe()) ? item.getDescribe() + "/" : "";
-            helper.setText(R.id.desc, describeValue);
-            helper.setText(R.id.vip_desc, "VIP give" + String.valueOf(item.getVip_give()));
-            helper.setText(R.id.rp_money, String.valueOf(item.getPrice()));
+            if (!TextUtils.isEmpty(item.getDescribe())) {
+                helper.setVisible(R.id.desc, true);
+                helper.setText(R.id.desc, item.getDescribe());
+            } else {
+                helper.setVisible(R.id.desc, false);
+            }
+            helper.setText(R.id.give, "give" + String.valueOf(item.getVip_give()));
+            helper.setText(R.id.vip_give, " / VIP give" + String.valueOf(item.getVip_give()));
+            helper.setText(R.id.rp_money, "$" + String.valueOf(item.getPrice()));
+
+            if(item.isCheck){
+//                helper.setBackgroundRes(R.id.item_recharge_rl,R.drawable.yellow_btn);
+                helper.setVisible(R.id.check_iv,true);
+            }else {
+//                helper.setBackgroundRes(R.id.item_recharge_rl,R.drawable.item_recharge_bg);
+                helper.setVisible(R.id.check_iv,false);
+            }
         }
     }
 }

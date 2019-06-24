@@ -45,7 +45,6 @@
         android:gravity="center"
         android:paddingBottom="@dimen/dp_3"
         android:paddingTop="@dimen/dp_3"
-        android:text="VIP can look"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_11"
         android:visibility="gone" />

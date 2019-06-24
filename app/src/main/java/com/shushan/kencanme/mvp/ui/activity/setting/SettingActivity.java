@@ -53,7 +53,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     @BindView(R.id.logout_tv)
     TextView mLogoutTv;
 
-    private String sex[] = {"male", "female", "Unlimited"};
+    private String sex[] = {getResources().getString(R.string.male), getResources().getString(R.string.female), getResources().getString(R.string.Unlimited)};
     private PushSexAdapter pushSexAdapter;
     private String minYear = "18", maxYear = "50+";
     private int pushSex;//性别 1男2女

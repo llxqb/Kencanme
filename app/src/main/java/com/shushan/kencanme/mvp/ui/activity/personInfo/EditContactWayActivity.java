@@ -131,7 +131,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                 break;
             case R.id.save_btn:
                 if (contactWayList.size() == 0) {
-                    showToast("please add contact");
+                    showToast(getResources().getString(R.string.EditContactWay_contact_is_noll));
                     return;
                 }
                 updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
@@ -155,7 +155,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
         //弹出框框
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
-        photoDialog.setData("Select Contact way", "google", "facebook", "WhatsApp");
+        photoDialog.setData(getResources().getString(R.string.EditContactWay_select_contact_way), "google", "facebook", "WhatsApp");
         DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 

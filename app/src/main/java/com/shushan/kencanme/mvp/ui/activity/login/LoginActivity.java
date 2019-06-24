@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         switch (view.getId()) {
             case R.id.login_google_rl:
                 //Google登录
-                showLoading("loading...");
+                showLoading(getResources().getString(R.string.loading));
                 GoogleLoginHelper.googleLogin(this);
                 break;
             case R.id.login_facebook_rl:

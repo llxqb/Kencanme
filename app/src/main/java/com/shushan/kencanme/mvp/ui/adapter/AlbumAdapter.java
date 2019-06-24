@@ -55,7 +55,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                             break;
                         case 2:
                             helper.setVisible(R.id.photo_hint_tv, true);
-                            helper.setText(R.id.photo_hint_tv, "VIP can view");
+                            helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_vip_can_view));
                             if (mContext instanceof RecommendUserInfoActivity) {
                                 //设置毛玻璃效果
                                 jzvdStd.setUp(item.getAlbum_url(), "");
@@ -68,7 +68,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                             break;
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
-                            helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
+                            helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_Beans_photo));
                             if (mContext instanceof RecommendUserInfoActivity && item.getState() == 0) {
                                 jzvdStd.setUp(item.getAlbum_url(), "");
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
@@ -89,7 +89,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                             break;
                         case 2:
                             helper.setVisible(R.id.photo_hint_tv, true);
-                            helper.setText(R.id.photo_hint_tv, "VIP can view");
+                            helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_vip_can_view));
                             if (mContext instanceof RecommendUserInfoActivity) {
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
                             } else {
@@ -98,7 +98,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                             break;
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
-                            helper.setText(R.id.photo_hint_tv, "Hi-Beans photo");
+                            helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_Beans_photo));
                             if (mContext instanceof RecommendUserInfoActivity && item.getState() == 0) {
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
                             } else {

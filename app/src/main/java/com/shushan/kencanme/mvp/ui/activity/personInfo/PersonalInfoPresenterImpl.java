@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.activity.personInfo;
 
 import android.content.Context;
 
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
@@ -36,7 +37,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     @Override
     public void onRequestPersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
-        mPersonalInfoView.showLoading("加载中...");
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.updatePersonalInfoRequest(createPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());
@@ -55,7 +56,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     @Override
     public void uploadVideo(MultipartBody.Part uploadVideo) {
-        mPersonalInfoView.showLoading("加载中...");
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.uploadVideoRequest(uploadVideo).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestVideoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());
@@ -64,7 +65,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     @Override
     public void uploadImage(UploadImage uploadImage) {
-        mPersonalInfoView.showLoading("Loading...");
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.uploadImageRequest(uploadImage).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestImageSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());
@@ -73,7 +74,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     @Override
     public void updateMyAlbum(UpdateAlbumRequest updateAlbumRequest) {
-        mPersonalInfoView.showLoading("Loading...");
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.updateMyAlbum(updateAlbumRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::updateMyAlbumSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
                         () -> mPersonalInfoView.dismissLoading());

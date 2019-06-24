@@ -119,7 +119,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getLikeSuccess("已添加喜欢");
+            mRecommendUserInfoView.getLikeSuccess("liked");
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

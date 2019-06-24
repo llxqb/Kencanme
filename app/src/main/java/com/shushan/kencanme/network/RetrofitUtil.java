@@ -1,31 +1,20 @@
 package com.shushan.kencanme.network;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.SSLSocketFactory;
-
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import retrofit2.Converter;
@@ -121,17 +110,17 @@ public class RetrofitUtil {
 //            }
 //        });
 
-        if (isHttps) {
-            SSLSocketFactory ssl = new SSLSocketUtil.Builder()
-                    .context(context)
-                    .keyStoreName(keyName)
-                    .keyPwd(keyPwd)
-                    .build()
-                    .getSocketFactory();
-            okHttpClientBuilder.sslSocketFactory(ssl)
-                    .hostnameVerifier(
-                            org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        }
+//        if (isHttps) {
+//            SSLSocketFactory ssl = new SSLSocketUtil.Builder()
+//                    .context(context)
+//                    .keyStoreName(keyName)
+//                    .keyPwd(keyPwd)
+//                    .build()
+//                    .getSocketFactory();
+//            okHttpClientBuilder.sslSocketFactory(ssl)
+//                    .hostnameVerifier(
+//                            org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+//        }
         okHttpClient = okHttpClientBuilder.build();
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(baseUrl);

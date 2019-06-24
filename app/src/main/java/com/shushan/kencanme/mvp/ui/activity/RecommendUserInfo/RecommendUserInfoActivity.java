@@ -436,13 +436,13 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     public void blackUserListener() {
         commonDialogOperationType = 1;
         //显示加入黑名单弹框
-        DialogFactory.showCommonDialog(this, "Determine to blacklist the user? After joining the blacklist, the user will no longer be pushed for you.?", Constant.DIALOG_THREE);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.dialog_add_black_friend), Constant.DIALOG_THREE);
     }
 
     @Override
     public void deleteUserListener() {
         commonDialogOperationType = 2;
-        DialogFactory.showCommonDialog(this, "Are you sure you will delete this friend? Please think clearly.", Constant.DIALOG_THREE);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.dialog_delete_friend), Constant.DIALOG_THREE);
     }
 
     @Override
@@ -465,7 +465,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 deleteUserRequest.del_user_id = recommendUserInfoResponse.getUid();
                 mPresenter.onRequestDeleteUser(deleteUserRequest);
             } else {
-                showToast("你们不是好友关系");
+                showToast(getResources().getString(R.string.RecommendUserInfoActivity_no_friends));
             }
         } else if (commonDialogOperationType == 3) {
             startActivitys(OpenVipActivity.class);

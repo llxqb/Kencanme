@@ -7,8 +7,8 @@
     <ImageView
         android:id="@+id/viewpager_item_iv"
         android:layout_width="match_parent"
-        android:scaleType="fitCenter"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter" />
 
     <cn.jzvd.JzvdStd
         android:id="@+id/jz_video"
@@ -34,7 +34,7 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentStart="true"
-            android:src="@mipmap/person_head_icon" />
+            android:src="@mipmap/head_photo_loading" />
 
         <TextView
             android:id="@+id/recommend_user_name"
@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
             android:layout_toEndOf="@id/recommend_user_head_iv"
-            android:text="walta"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_15" />
 
@@ -54,8 +53,8 @@
             android:layout_marginTop="@dimen/dp_4"
             android:layout_toEndOf="@id/recommend_user_name"
             android:background="@mipmap/home_gender_female"
+            android:paddingEnd="@dimen/dp_4"
             android:paddingStart="@dimen/dp_18"
-            android:text="23 years"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10" />
 
@@ -69,7 +68,6 @@
             android:layout_toEndOf="@id/recommend_user_head_iv"
             android:drawablePadding="@dimen/dp_3"
             android:drawableStart="@mipmap/home_address"
-            android:text="Jakarta"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12" />
 
@@ -81,7 +79,6 @@
             android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_3"
             android:layout_toEndOf="@id/recommend_user_location"
-            android:text="active 3 minute ago"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12" />
 

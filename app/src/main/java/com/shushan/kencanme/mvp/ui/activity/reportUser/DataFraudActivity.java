@@ -141,7 +141,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                     case R.id.photo_item_rl:
                         if (position == 0) {
                             if (photoAdapter.getItemCount() >= 9) {
-                                showToast("最多传8张");
+                                showToast(getResources().getString(R.string.fraud_album_max_num));
                             } else {
                                 showDialog();
                             }
@@ -214,7 +214,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             case R.id.submit_btn:
                 //上传图片
                 if (TextUtils.isEmpty(mDataFraudContentEv.getText())) {
-                    showToast("描述不能为空");
+                    showToast(getResources().getString(R.string.DataFraudActivity_desc_is_null));
                     return;
                 }
                 for (int i = 0; i < photoList.size(); i++) {
@@ -260,7 +260,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     @Override
     public void takeFail(TResult result, String msg) {
         //取得失败
-        showToast("设置失败");
+        showToast("fail");
     }
 
     @Override
@@ -286,7 +286,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             selectionStart = mDataFraudContentEv.getSelectionStart();
             selectionEnd = mDataFraudContentEv.getSelectionEnd();
             if (s.length() > 100) {
-                showToast("限制100字以内");
+                showToast(getResources().getString(R.string.DataFraudActivity_only_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
                 int worldTextNum = s.length();

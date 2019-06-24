@@ -21,7 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/dp_14"
         android:layout_toEndOf="@id/friends_avator_iv"
-        android:text="Luis Fonsi"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_16" />
 
@@ -35,7 +34,6 @@
         android:background="@mipmap/home_gender_female"
         android:paddingEnd="@dimen/dp_2"
         android:paddingStart="@dimen/dp_18"
-        android:text="23 years"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_10" />
 

@@ -107,7 +107,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     private void showDialog() {
         CommonDialog commonDialog = CommonDialog.newInstance();
         commonDialog.setStyle(Constant.DIALOG_ONE);
-        commonDialog.setContent("delete the label?");
+        commonDialog.setContent(getResources().getString(R.string.EditLabelActivity_dialog_delete_label_hint));
         commonDialog.setListener(this);
         DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), commonDialog, CommonDialog.TAG);
     }
@@ -138,7 +138,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
                     recommendUserLabelAdapter.addData(mTextEt.getText().toString());
                     mTextEt.setText("");
                 } else {
-                    showToast("please add label");
+                    showToast(getResources().getString(R.string.EditLabelActivity_dialog_add_label_hint));
                 }
                 break;
             case R.id.save_btn:
@@ -153,10 +153,10 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
             updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
             updatePersonalInfoRequest.token = mBuProcessor.getToken();
             updatePersonalInfoRequest.label = new Gson().toJson(recommendUserLabelAdapter.getData());
-            LogUtils.e("updatePersonalInfoRequest:" + new Gson().toJson(updatePersonalInfoRequest));
+//            LogUtils.e("updatePersonalInfoRequest:" + new Gson().toJson(updatePersonalInfoRequest));
             mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
         } else {
-            showToast("please add label");
+            showToast(getResources().getString(R.string.EditLabelActivity_dialog_add_label_hint));
         }
     }
 
@@ -184,7 +184,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
     private void updatLoginUser() {
         LoginUser loginUser = mBuProcessor.getLoginUser();
         loginUser.label = updatePersonalInfoRequest.label;
-        LogUtils.e("loginUser" + new Gson().toJson(loginUser));
+//        LogUtils.e("loginUser" + new Gson().toJson(loginUser));
         mBuProcessor.setLoginUser(loginUser);
     }
 

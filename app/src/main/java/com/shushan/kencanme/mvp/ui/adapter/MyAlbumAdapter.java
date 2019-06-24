@@ -62,11 +62,11 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
                     break;
                 case 2:
                     helper.setVisible(R.id.photo_hint_tv, true);
-                    helper.setText(R.id.photo_hint_tv, "VIP can look");
+                    helper.setText(R.id.photo_hint_tv, mContext.getResources().getString(R.string.MyAlbumAdapter_vip_can_look));
                     break;
                 case 3:
                     helper.setVisible(R.id.photo_hint_tv, true);
-                    helper.setText(R.id.photo_hint_tv, "Hi-Beans can look");
+                    helper.setText(R.id.photo_hint_tv, mContext.getResources().getString(R.string.MyAlbumAdapter_beans_can_look));
                     break;
             }
         } else {

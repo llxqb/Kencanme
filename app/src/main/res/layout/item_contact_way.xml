@@ -41,7 +41,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/delete_iv"
             android:background="@null"
-            android:hint="Please enter your account number."
+            android:hint="@string/ContactWayAdapter_et_hint"
             android:textColor="@color/first_text_color"
             android:textColorHint="@color/text_hint_color"
             android:textSize="@dimen/sp_18" />

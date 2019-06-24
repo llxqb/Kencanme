@@ -10,7 +10,7 @@
         style="@style/person_center_photo_Style"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/dp_5"
-        android:text="Delete friends"
+        android:text="@string/CommonChoiceDialog_delete_friends"
         android:textColor="@color/red_color_btn"
         android:textSize="@dimen/sp_16" />
 
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Add to blacklist"
+            android:text="@string/CommonChoiceDialog_add_blacklist"
             android:textColor="@color/server_text_color"
             android:textSize="@dimen/sp_16" />
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Anonymous report"
+            android:text="@string/CommonChoiceDialog_anonymous_report"
             android:textColor="@color/server_text_color"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>

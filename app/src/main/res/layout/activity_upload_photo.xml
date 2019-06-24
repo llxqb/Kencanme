@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_5"
-                android:text="Please upload vivid photos or videos with clear facial features."
+                android:text="@string/UploadPhotoActivity_video_hint"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_11" />
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_22"
                 android:layout_marginTop="@dimen/dp_20"
-                android:text="Choose Photo/Video Type"
+                android:text="@string/UploadPhotoActivity_video_or_photo_type_hint"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
 
@@ -77,14 +77,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
-                    android:text="Ordinary Photo/Video"
+                    android:text="@string/UploadPhotoActivity_ordinary"
                     android:textColor="@color/color_80"
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="（Anyone can view it）"
+                    android:text="@string/UploadPhotoActivity_ordinary_hint"
                     android:textColor="@color/color_9b"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>
@@ -112,14 +112,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
-                    android:text="Membership Photos/Videos"
+                    android:text="@string/UploadPhotoActivity_membership"
                     android:textColor="@color/color_80"
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="（vip can view it）"
+                    android:text="@string/UploadPhotoActivity_membership_hint"
                     android:textColor="@color/color_9b"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>
@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
-                    android:text="Private Photos/Videos"
+                    android:text="@string/UploadPhotoActivity_private"
                     android:textColor="@color/color_80"
                     android:textSize="@dimen/sp_14" />
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_22"
                 android:layout_marginStart="@dimen/dp_35"
-                android:text="（Users need to pay you Hey Dou for checking）"
+                android:text="@string/UploadPhotoActivity_private_hint"
                 android:textColor="@color/color_9b"
                 android:textSize="@dimen/sp_12" />
 
@@ -208,7 +208,7 @@
                     android:background="@drawable/bg_beans_selector_5"
                     android:drawablePadding="@dimen/dp_4"
                     android:drawableStart="@mipmap/home_popup_hibeans"
-                    android:hint="custom"
+                    android:hint="@string/UploadPhotoActivity_custom_num"
                     android:minHeight="@dimen/dp_33"
                     android:inputType="number"
                     android:paddingEnd="@dimen/dp_12"
@@ -228,7 +228,7 @@
                 android:layout_marginBottom="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
                 android:background="@drawable/bg_blue2_round_20_selector"
-                android:text="Complete"
+                android:text="@string/Complete"
                 android:textColor="@color/white" />
 
         </LinearLayout>

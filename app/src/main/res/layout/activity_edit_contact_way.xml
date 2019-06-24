@@ -31,7 +31,7 @@
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@mipmap/add"
             android:gravity="center_vertical"
-            android:text="Add one more" />
+            android:text="@string/EditContactWay_add_more" />
     </LinearLayout>
 
 
@@ -47,7 +47,7 @@
             android:layout_height="@dimen/dp_35"
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_blue2_round_20_selector"
-            android:text="Preserve"
+            android:text="@string/Preserve"
             android:textColor="@color/white" />
     </LinearLayout>
 

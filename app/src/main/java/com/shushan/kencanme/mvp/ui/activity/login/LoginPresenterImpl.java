@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.activity.login;
 
 import android.content.Context;
 
+import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.LoginRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.entity.response.LoginResponse;
@@ -40,7 +41,7 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
      */
     @Override
     public void onRequestLogin(LoginRequest request) {
-        mLoginView.showLoading("加载中...");
+        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mLoginModel.LoginRequest(request).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mLoginView.showErrMessage(throwable),
                         () -> mLoginView.dismissLoading());
@@ -49,7 +50,7 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
 
     @Override
     public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
-        mLoginView.showLoading("加载中...");
+        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mLoginModel.onRequestPersonalInfo(personalInfoRequest).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestPersonalInfoSuccess, throwable -> mLoginView.showErrMessage(throwable),
                         () -> mLoginView.dismissLoading());
