@@ -121,7 +121,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     private AlbumAdapter albumAdapter;
     private MimeContactWayAdapter contactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
-    int mUid;
+    private int mUid;
     /**
      * 1 加入黑名单  2 删除好友  3 喜欢好友
      * 4 免费beans使用提示  5 打开VIP
@@ -448,7 +448,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void reportUserListener() {
         //去举报用户界面
-        startActivitys(ReportUserActivity.class);
+        ReportUserActivity.start(this, String.valueOf(mUid));
     }
 
     @Override

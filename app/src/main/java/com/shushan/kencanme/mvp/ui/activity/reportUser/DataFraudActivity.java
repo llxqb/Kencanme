@@ -1,11 +1,16 @@
 package com.shushan.kencanme.mvp.ui.activity.reportUser;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +20,19 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.di.components.DaggerReportUserComponent;
+import com.shushan.kencanme.di.modules.ActivityModule;
+import com.shushan.kencanme.di.modules.ReportUserModule;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.ReportUserRequest;
+import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.FraudPhotoAdapter;
+import com.shushan.kencanme.mvp.utils.LogUtils;
+import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.dialog.PhotoDialog;
 
@@ -36,7 +50,10 @@ import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +62,7 @@ import butterknife.OnClick;
 /**
  * 举报头像资料作假
  */
-public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PhotoDialog.PhotoDialogListener {
+public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, PhotoDialog.PhotoDialogListener, ReportUserControl.ReportUserView {
     @BindView(R.id.back)
     ImageView mBack;
     @BindView(R.id.title_name)
@@ -69,6 +86,20 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     FraudPhotoAdapter photoAdapter;
     //默认传8张
     private int maxPicNum = 8;
+    private String uid;
+    /**
+     * 上传成功后图片集合
+     */
+    private List<String> mPicList = new ArrayList<>();
+    @Inject
+    ReportUserControl.PresenterReportUser mPresenter;
+
+
+    public static void start(Context context, String uid) {
+        Intent intent = new Intent(context, DataFraudActivity.class);
+        intent.putExtra("uid", uid);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +108,16 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         setContentView(R.layout.activity_data_fraud);
         ButterKnife.bind(this);
         StatusBarUtil.setTransparentForImageView(this, null);
+        initializeInjector();
         initView();
         initData();
     }
 
     @Override
     public void initView() {
+        if (getIntent() != null) {
+            uid = getIntent().getStringExtra("uid");
+        }
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
@@ -141,7 +176,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //以下代码为处理Android6.0、7.0动态权限所需
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -177,6 +212,17 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                 finish();
                 break;
             case R.id.submit_btn:
+                //上传图片
+                if (TextUtils.isEmpty(mDataFraudContentEv.getText())) {
+                    showToast("描述不能为空");
+                    return;
+                }
+                for (int i = 0; i < photoList.size(); i++) {
+                    TImage tImage = photoList.get(i);
+                    Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
+                    String path = PicUtils.convertIconToString(bitmap);
+                    uploadImage(path);
+                }
                 break;
         }
     }
@@ -189,8 +235,18 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         //弹出框框
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
-        photoDialog.setData(getResources().getString(R.string.PhotoDialog_title),getResources().getString(R.string.PhotoDialog_photo),getResources().getString(R.string.PhotoDialog_album));
+        photoDialog.setData(getResources().getString(R.string.PhotoDialog_title), getResources().getString(R.string.PhotoDialog_photo), getResources().getString(R.string.PhotoDialog_album));
         DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
+    }
+
+    /**
+     * 上传图片
+     */
+    private void uploadImage(String filename) {
+        UploadImage uploadImage = new UploadImage();
+        uploadImage.dir = String.valueOf(Constant.PIC_REPORT);//1头像2封面3相册4举报5消息
+        uploadImage.file = filename;
+        mPresenter.uploadImage(uploadImage);
     }
 
     @Override
@@ -256,4 +312,42 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     public void photoDialogBtn3OkListener() {
 
     }
+
+    /**
+     * 上传图片成功
+     */
+    @Override
+    public void uploadImageSuccess(String picPath) {
+        mPicList.add(picPath);
+        if (mPicList != null && mPicList.size() == photoList.size()) {
+            //上传完最后一张图片 进行举报
+            ReportUserRequest reportUserRequest = new ReportUserRequest();
+            reportUserRequest.token = mBuProcessor.getToken();
+            reportUserRequest.uid = uid;
+            reportUserRequest.reason = "1";
+            LogUtils.e("mPicList:" + new Gson().toJson(mPicList));
+            reportUserRequest.pics = new Gson().toJson(mPicList);
+            if (!TextUtils.isEmpty(mDataFraudContentEv.getText())) {
+                reportUserRequest.describe = mDataFraudContentEv.getText().toString();
+            }
+            mPresenter.onRequestReportUser(reportUserRequest);
+        }
+    }
+
+    /**
+     * 举报用户成功
+     */
+    @Override
+    public void reportUserSuccess(String msg) {
+        showToast(msg);
+        finish();
+    }
+
+
+    private void initializeInjector() {
+        DaggerReportUserComponent.builder().appComponent(getAppComponent())
+                .reportUserModule(new ReportUserModule(DataFraudActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 }

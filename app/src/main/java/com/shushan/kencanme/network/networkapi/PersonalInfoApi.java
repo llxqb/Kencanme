@@ -49,5 +49,11 @@ public interface PersonalInfoApi {
     @POST("menggoda/user/album")
     Observable<String> onRequestMyAlbum(@Body String request);
 
+    /**
+     * 举报用户
+     */
+    @POST("menggoda/operation/report")
+    Observable<String> reportUserRequest(@Body String request);
+
 
 }

@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="wrap_content"
         android:background="@mipmap/top_background"
         android:paddingTop="@dimen/dp_20">
 

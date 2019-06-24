@@ -1,5 +1,7 @@
 package com.shushan.kencanme.mvp.ui.activity.reportUser;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +36,14 @@ public class ReportUserActivity extends BaseActivity {
     TextView mLanguageUncivilized;
     @BindView(R.id.other)
     TextView mOther;
+    private String uid;
+
+
+    public static void start(Context context, String uid) {
+        Intent intent = new Intent(context, ReportUserActivity.class);
+        intent.putExtra("uid", uid);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,9 @@ public class ReportUserActivity extends BaseActivity {
     @Override
     public void initView() {
         mTitleName.setText(getResources().getString(R.string.ReportUserActivity_title));
+        if (getIntent() != null) {
+            uid = getIntent().getStringExtra("uid");
+        }
     }
 
     @Override
@@ -63,7 +76,7 @@ public class ReportUserActivity extends BaseActivity {
                 break;
             case R.id.data_fraud:
                 //头像资料作假
-                startActivitys(DataFraudActivity.class);
+                DataFraudActivity.start(this, uid);
                 break;
             case R.id.advertising_and_marketing:
                 //广告、营销
@@ -82,4 +95,6 @@ public class ReportUserActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }
