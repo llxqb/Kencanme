@@ -29,7 +29,7 @@ android {
     }
     buildTypes {
         release {
-            debuggable false //发布时候设置false   true为可调式，false为不可调试
+            debuggable true //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             signingConfig signingConfigs.release

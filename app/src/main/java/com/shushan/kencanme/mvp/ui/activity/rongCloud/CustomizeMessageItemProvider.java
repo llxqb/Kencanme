@@ -78,8 +78,9 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         if (message.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_right);
             holder.customizeMsgTv.setTextColor(v.getResources().getColor(R.color.white));
-            holder.customizeMsgTv.setText(v.getResources().getString(R.string.chat_send_message_hint));
+            holder.customizeMsgTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_right_photo));
             holder.customizeMsgHintTv.setTextColor(v.getResources().getColor(R.color.white));
+            holder.customizeMsgHintTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_right_photo_hint));
             holder.lookTv.setVisibility(View.GONE);
             holder.isLockedIv.setVisibility(View.GONE);
             holder.beansNum.setVisibility(View.VISIBLE);
@@ -89,8 +90,9 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 //            Log.e("ddd", "content:" + new Gson().toJson(content));
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_left);
             holder.customizeMsgTv.setTextColor(v.getResources().getColor(R.color.first_text_color));
-            holder.customizeMsgTv.setText(v.getResources().getString(R.string.chat_receive_message_hint));
+            holder.customizeMsgTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_left_photo));
             holder.customizeMsgHintTv.setTextColor(v.getResources().getColor(R.color.color_9b));
+            holder.customizeMsgHintTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_left_photo_hint));
             holder.beansNum.setVisibility(View.GONE);
             holder.lookTv.setText(v.getResources().getString(R.string.app_view));
             if (content.isLocked == 1 && content.msgType == 1 && !DataUtils.isContainString(mMessageIdList, String.valueOf(message.getMessageId()))) {

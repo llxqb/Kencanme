@@ -283,11 +283,11 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
         //Personal Information
         mUserLocation.setText(mLoginUser.city);
-        String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? "Height: " + mLoginUser.height + "cm" : "Height: ";
-        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? "Weight: " + mLoginUser.weight + "kg" : "Weight: ";
-        String mUserChestValue = "Chest:" + mLoginUser.bust;
-        String mUserBirthdayValue = "Birthday:" + mLoginUser.birthday;
-        String mUserProfessionalValue = "Professional:" + mLoginUser.occupation;
+        String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + " " + mLoginUser.height + "cm" : "Height: ";
+        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight) + " " + mLoginUser.weight + "kg" : "Weight: ";
+        String mUserChestValue = getResources().getString(R.string.Chest) + " " + mLoginUser.bust;
+        String mUserBirthdayValue = getResources().getString(R.string.Birthday) + " " + mLoginUser.birthday;
+        String mUserProfessionalValue = getResources().getString(R.string.Professional) + " " + mLoginUser.occupation;
         mUserHeight.setText(mUserHeightValue);
         mUserWeight.setText(mUserWeightValue);
         mUserChest.setText(mUserChestValue);
@@ -304,6 +304,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(SettingActivity.class);
                 break;
             case R.id.line_customer:
+                showToast("waiting development...");
                 break;
             case R.id.edit_personal_info_fab:
                 //编辑个人资料

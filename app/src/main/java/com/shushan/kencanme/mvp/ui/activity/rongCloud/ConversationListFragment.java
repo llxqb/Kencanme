@@ -155,7 +155,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
                 mImageLoaderHelper.displayGlassImage(getActivity(), likeBean.getTrait(), mNewPairingIv, Constant.LOADING_AVATOR);
             }
             mNewPairingNumTv.setText(String.valueOf(likeBean.getCount()));
-            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add) + "<font color = '#FF2D5B'>" + likeBean.getCount() + "</font>" + getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
+            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add)+ " <font color = '#FF2D5B'>" + likeBean.getCount() + "</font> " +getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
             mNewPairingTv.setText(Html.fromHtml(mNewPairingTvValue));
         } else {
             mNewPairingRl.setVisibility(View.GONE);

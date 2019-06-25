@@ -52,8 +52,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     TextView mAboutUsTv;
     @BindView(R.id.logout_tv)
     TextView mLogoutTv;
-
-    private String sex[] = {getResources().getString(R.string.male), getResources().getString(R.string.female), getResources().getString(R.string.Unlimited)};
+    private String[] sex;
     private PushSexAdapter pushSexAdapter;
     private String minYear = "18", maxYear = "50+";
     private int pushSex;//性别 1男2女
@@ -74,6 +73,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
 
     @Override
     public void initView() {
+        sex = new String[]{getResources().getString(R.string.male), getResources().getString(R.string.female), getResources().getString(R.string.Unlimited)};
         mCommonTitleTv.setText(getResources().getString(R.string.SettingActivity_title));
         mTwoWayRattingBar.setOnProgressChangeListener(this);
         pushSexAdapter = new PushSexAdapter(sexList);
