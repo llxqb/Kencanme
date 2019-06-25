@@ -1,6 +1,5 @@
 package com.shushan.kencanme.mvp.utils;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -9,13 +8,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.LocationManager;
-import android.support.v4.content.ContextCompat;
-import android.telephony.TelephonyManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-
-import java.util.Objects;
 
 /**
  * Created by li.liu on 2018/10/16.
@@ -142,13 +140,49 @@ public class SystemUtils {
     /**
      * 获取设备id
      */
-    @SuppressLint("HardwareIds")
-    public static String getDeviceId(Context context){
-        String  deviceId = null;
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            deviceId = Objects.requireNonNull(tm).getDeviceId();
+//    @SuppressLint("HardwareIds")
+//    public static String getDeviceId(Context context){
+//        String  deviceId = null;
+//        if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+//            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//            deviceId = Objects.requireNonNull(tm).ge();
+//        }
+//        return deviceId;
+//    }
+
+    public static String getDeviceId(Context context) {
+        String deviceId = "";
+        try {
+            deviceId = getLocalMac(context).replace(":", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (deviceId == null || "".equals(deviceId)) {
+            try {
+                deviceId = getAndroidId(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return deviceId;
     }
+
+    // Mac地址
+    @SuppressLint("HardwareIds")
+    private static String getLocalMac(Context context) {
+        WifiManager wifi = (WifiManager) context.getApplicationContext()
+                .getSystemService(Context.WIFI_SERVICE);
+        assert wifi != null;
+        WifiInfo info = wifi.getConnectionInfo();
+        return info.getMacAddress();
+    }
+
+    // Android Id
+    private static String getAndroidId(Context context) {
+        @SuppressLint("HardwareIds") String androidId = Settings.Secure.getString(
+                context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return androidId;
+    }
+
+
 }

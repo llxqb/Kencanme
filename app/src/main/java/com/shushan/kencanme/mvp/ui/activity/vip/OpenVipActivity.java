@@ -18,6 +18,7 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
+import com.shushan.kencanme.help.GooglePayHelper;
 import com.shushan.kencanme.mvp.ui.activity.register.AgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.OpenVipAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.VipPrivilegeAdapter;
@@ -77,6 +78,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     LoginUser mLoginUser;
     //vip 特权
     private List<VipPrivilege> vipPrivilegeList = new ArrayList<>();
+    private GooglePayHelper mGooglePayHelper;
     @Inject
     OpenVipControl.PresenterOpenVip mPresenter;
 
@@ -94,6 +96,9 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
 
     @Override
     public void initView() {
+        //初始化google支付
+        mGooglePayHelper = new GooglePayHelper(this);
+        mGooglePayHelper.initGooglePay();
         mTitleName.setText(getResources().getString(R.string.OpenVipActivity_title));
         mVipTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         openVipAdapter = new OpenVipAdapter(this, vipinfoBeanList);
@@ -141,6 +146,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 break;
             case R.id.go_to_pay:
                 //去支付
+                mGooglePayHelper.buyGoods();
                 break;
         }
     }

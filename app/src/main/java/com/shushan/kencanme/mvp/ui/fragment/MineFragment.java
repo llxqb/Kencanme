@@ -270,7 +270,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mSVipIcon.setVisibility(View.GONE);
             //不是svip 判断是否是vip
             if (mLoginUser.vip == 1) {
-                mVipTimeTv.setText(mLoginUser.vip_time);
+                mVipTimeTv.setText(String.valueOf(mLoginUser.vip_time));
             } else {
                 mVipTimeTv.setText(getResources().getString(R.string.MineFragment_Become_VIP));
             }

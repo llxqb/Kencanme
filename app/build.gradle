@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -29,15 +29,20 @@ android {
     }
     buildTypes {
         release {
-            debuggable true //发布时候设置false   true为可调式，false为不可调试
+            debuggable false //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
-            signingConfig signingConfigs.debug
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            signingConfig signingConfigs.debug
+            debuggable true //发布时候设置false   true为可调式，false为不可调试
+            minifyEnabled false //true 为开启混淆
+            zipAlignEnabled true//Zipalign优化
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         //打包输出路径 gradlew assembleRelease
@@ -65,6 +70,13 @@ android {
 //    packagingOptions {
 //        exclude 'META-INF/services/javax.annotation.processing.Processor'
 //    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {

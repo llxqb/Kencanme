@@ -140,7 +140,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
      * 提示开通超级vip
      */
     private void showSuperVipDialog() {
-        DialogFactory.showOpenVipDialog(getActivity(), getResources().getString(R.string.dialog_open_vip_chat_like));
+        DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_chat_like));
     }
 
     @Override
