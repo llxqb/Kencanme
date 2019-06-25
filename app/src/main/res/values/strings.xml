@@ -1,1 +1,298 @@
-<resources></resources>
+<resources>
+    <!-- 不是中、英、印尼语显示-->
+
+    <!--网络相关 -->
+    <!--请检查网络Cek koneksi internet anda-->
+    <!--请稍后重试Mohon coba kembali-->
+    <!--加载中Sedang diproses-->
+    <string name="text_check_internet" translatable="false">check your network connection</string>
+    <string name="text_wait_try" translatable="false">Please try again later</string>
+    <string name="loading" translatable="false">loading…</string>
+
+
+    <!-- app相关-->
+    <string name="this_is_desc" translatable="false">This is a description</string>
+    <string name="app_name" translatable="false">Kencanme</string>
+    <string name="success" translatable="false">success</string>
+    <string name="google" translatable="false">Google</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="whatsapp" translatable="false">WhatsApp</string>
+    <string name="album_max_num" translatable="false">最多传12张</string>
+    <string name="fraud_album_max_num" translatable="false">最多传8张</string>
+    <string name="money" translatable="false">$</string>
+    <!-- 提交和保存-->
+    <string name="submit" translatable="false">Submit</string>
+    <string name="Preserve" translatable="false">Preserve</string>
+    <string name="Complete" translatable="false">Complete</string>
+    <string name="Payment" translatable="false">Payment</string>
+    <!--赚嗨bean 和充值 -->
+    <string name="earn_beans" translatable="false">Earn Hey Beans</string>
+    <string name="recharge" translatable="false">Purchase</string>
+    <!-- 敬请期待-->
+    <string name="wait_develop" translatable="false">waiting...</string>
+    <string name="app_like" translatable="false">Like</string>
+    <string name="app_chat" translatable="false">Chat</string>
+    <string name="app_view" translatable="false">Check now</string>
+    <string name="Hi_Beans" translatable="false">Hi Coins</string>
+
+
+    <!-- dialog 相关-->
+    <string name="dialog_sure" translatable="false">sure</string>
+    <string name="dialog_cancal" translatable="false">cancal</string>
+    <string name="dialog_style2_hint" translatable="false">About VIP</string>
+    <string name="dialog_use_beans_chat" translatable="false">Register for Super VIP Chat free</string>
+    <string name="dialog_use_beans_album" translatable="false">Look photo Use</string>
+    <string name="dialog_open_vip_like" translatable="false">No "Likes" for today.  Register for membership today, enjoy unlimited "Likes"</string>
+    <string name="dialog_open_vip_chat" translatable="false">Open Super VIP Free Chat~</string>
+    <string name="dialog_open_vip_album" translatable="false">Open Super VIP look more</string>
+    <string name="dialog_open_vip_chat_like" translatable="false">Buy Super VIP to see who likes you</string>
+    <!-- buyDialog-->
+    <string name="buy_dailog_title" translatable="false">Super exposure</string>
+    <!-- 要替换掉 -->
+    <string name="buy_dailog_hint" translatable="false">Available times：</string>
+    <string name="buy_dialog_buy" translatable="false">Purchase</string>
+    <!-- UseExposureDialog-->
+    <string name="use_exposure_dialog_hint" translatable="false">number of times</string>
+    <string name="use_exposure_dialog_use" translatable="false">Use once</string>
+    <string name="use_exposure_dialog_desc" translatable="false">Pairs! 10 times more exposure over others in 30 minutes</string>
+    <string name="album_vip_view" translatable="false">VIP can view</string>
+    <string name="album_hi_beans_view" translatable="false">Hi-beans photo</string>
+    <!--PhotoDialog -->
+    <string name="PhotoDialog_title" translatable="false">请选择</string>
+    <string name="PhotoDialog_photo" translatable="false">拍照</string>
+    <string name="PhotoDialog_album" translatable="false">从相册中选取</string>
+    <!--RechargeBeansDialog -->
+    <string name="RechargeBeansDialog_no_beans_hint" translatable="false">Hey, you don\'t have enough beans!</string>
+    <string name="PhotoDialog_title_hint" translatable="false">Select video or photo</string>
+    <string name="Video" translatable="false">Video</string>
+    <string name="Photo" translatable="false">Photo</string>
+    <!-- 加入黑名单-->
+    <string name="dialog_add_black_friend" translatable="false">Are Your Sure to Add to Blacklist?We Will Stop Pushing This Friend When Add to Blacklist</string>
+    <string name="dialog_delete_friend" translatable="false">Are You Sure to Delete Your Friend?Please Reconsider.</string>
+
+
+    <!--Activity 相关 -->
+    <!-- LoginActivity-->
+    <string name="login_hint" translatable="false">Welcome to login,please choose the following way to login.</string>
+    <!-- RechargeActivity-->
+    <string name="recharge_current_beans_num_hint" translatable="false">Hi-beans currently in possession</string>
+    <string name="recharge_amount_of_money" translatable="false">Amount of money</string>
+    <string name="recharge_means_hint" translatable="false">* Renewal means consent to the</string>
+    <string name="recharge_app_agreement" translatable="false">《Kencanme APP Renewal Agreement》</string>
+    <string name="recharge_problems_hint" translatable="false">If there are problems with recharge, please </string>
+    <string name="recharge_contact_customer" translatable="false">contact customer service.</string>
+    <!--MainActivity -->
+    <string name="main_bottom_home" translatable="false">Hey</string>
+    <string name="main_bottom_message" translatable="false">Message</string>
+    <string name="main_bottom_mine" translatable="false">My Profile</string>
+    <!--CreatePersonalInfoActivity -->
+    <string name="personal_info_name" translatable="false">Name</string>
+    <string name="personal_info_declaration" translatable="false">Declaration</string>
+    <string name="personal_info_birthday" translatable="false">Birthday</string>
+    <string name="personal_info_sex_tv" translatable="false">Sex</string>
+    <string name="personal_info_address" translatable="false">Address</string>
+
+    <!-- Personal information-->
+    <string name="create_personal_info_title" translatable="false">Personal information</string>
+    <string name="create_personal_info_name_et_hint" translatable="false">Please enter a name</string>
+    <string name="create_personal_info_sex_tv_hint" translatable="false">（After choosing the right sex, you can\'t modify it.）</string>
+    <string name="create_personal_info_male_tv" translatable="false">Male</string>
+    <string name="create_personal_info_female_tv" translatable="false">Female</string>
+    <string name="create_personal_info_select_date_tv" translatable="false">select date</string>
+    <string name="create_personal_info_address_hint_et" translatable="false">Please enter the name of your city</string>
+    <string name="personal_info_declaration_hint_ev" translatable="false">Sincere friends, I hope you like me.</string>
+    <string name="PersonalInfoUploadPhotoActivity_hint_tv" translatable="false">Please upload vivid photos or videos with clear facial features to get a match.</string>
+    <string name="PersonalInfoUploadPhotoActivity_declaration_ev" translatable="false">Please enter a statement about making friends.</string>
+    <string name="male" translatable="false">male</string>
+    <string name="female" translatable="false">female</string>
+    <string name="Unlimited" translatable="false">Unlimited</string>
+    <string name="Height" translatable="false">Height:</string>
+    <string name="Weight" translatable="false">Weight:</string>
+    <string name="Chest" translatable="false">Chest:</string>
+    <string name="Birthday" translatable="false">Birthday:</string>
+    <string name="Professional" translatable="false">Professional:</string>
+
+
+    <!-- EditContactWayActivity-->
+    <string name="EditContactWay_contact_is_noll" translatable="false">please add contact</string>
+    <string name="EditContactWay_select_contact_way" translatable="false">Select Contact way</string>
+    <string name="EditContactWay_add_more" translatable="false">Add one more</string>
+
+    <!-- EditLabelActivity-->
+    <string name="EditLabelActivity_dialog_delete_label_hint" translatable="false">delete the label?</string>
+    <string name="EditLabelActivity_dialog_add_label_hint" translatable="false">please add label</string>
+
+    <!-- chat-->
+    <!-- CustomizeMessageItemProvider-->
+    <string name="CustomizeMessageItemProvider_left_photo" translatable="false">Received One Private Photo</string>
+    <string name="CustomizeMessageItemProvider_left_photo_hint" translatable="false">This is a private message users only</string>
+    <string name="CustomizeMessageItemProvider_right_photo" translatable="false">Send a private photo</string>
+    <string name="CustomizeMessageItemProvider_right_photo_hint" translatable="false">This is a private message </string>
+
+
+    <!--EditMakeFriendsInfoActivity -->
+    <string name="EditMakeFriendsInfoActivity_upload_hint" translatable="false">Reupload photo or video</string>
+    <string name="EditMakeFriendsInfoActivity_head_img" translatable="false">Head portrait</string>
+
+    <string name="RecommendUserInfoActivity_look_over_hint" translatable="false">Look over</string>
+    <string name="RecommendUserInfoActivity_label_hint" translatable="false">The Label</string>
+    <string name="RecommendUserInfoActivity_no_friends" translatable="false">你们不是好友关系</string>
+
+
+    <!-- CreatePersonalInfoActivity-->
+    <!--Empty -->
+    <string name="CreatePersonalInfoActivity_nice_is_empty" translatable="false">昵称不能为空</string>
+    <string name="CreatePersonalInfoActivity_sex_is_empty" translatable="false">性别不能为空</string>
+    <string name="CreatePersonalInfoActivity_birthday_is_empty" translatable="false">生日不能为空</string>
+    <string name="CreatePersonalInfoActivity_address_is_empty" translatable="false">地址不能为空</string>
+    <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty" translatable="false">请输入交友宣言</string>
+    <!-- app hint语句 -->
+    <string name="app_nick_hint" translatable="false">请输入昵称</string>
+
+    <!-- MineFragment-->
+    <string name="MineFragment_photo_album_hint" translatable="false">Photo Album</string>
+    <string name="MineFragment_personal_information_hint" translatable="false">Personal Information</string>
+    <string name="MineFragment_contact_way_hint" translatable="false">Contact Way</string>
+    <string name="MineFragment_desc_tv" translatable="false">Sincere friends, like to send me video bar，I hope you like me.</string>
+    <string name="MineFragment_My_Album" translatable="false">My Album</string>
+    <string name="MineFragment_Add_contact_way" translatable="false">Add your contact way</string>
+    <string name="MineFragment_The_Label" translatable="false">The Label</string>
+    <string name="MineFragment_The_Label_hint" translatable="false">Add your personality label</string>
+
+
+    <!--EditPersonalInfoActivity-->
+    <string name="EditPersonalInfoActivity_Address" translatable="false">Address</string>
+    <string name="EditPersonalInfoActivity_address_hint" translatable="false">Please enter your city</string>
+    <string name="EditPersonalInfoActivity_Height" translatable="false">Height</string>
+    <string name="EditPersonalInfoActivity_Height_hint" translatable="false">Please enter your height</string>
+    <string name="EditPersonalInfoActivity_Weight" translatable="false">Weight</string>
+    <string name="EditPersonalInfoActivity_Weight_hint" translatable="false">Please enter your Weight</string>
+    <string name="EditPersonalInfoActivity_Chest" translatable="false">Chest</string>
+    <string name="EditPersonalInfoActivity_Chest_hint" translatable="false">Please enter your Chest</string>
+    <string name="EditPersonalInfoActivity_Birthday" translatable="false">Birthday</string>
+    <string name="EditPersonalInfoActivity_Birthday_hint" translatable="false">Please enter your Birthday</string>
+    <string name="EditPersonalInfoActivity_Occupation" translatable="false">Occupation</string>
+    <string name="EditPersonalInfoActivity_Occupation_hint" translatable="false">Please enter your Occupation</string>
+    <!--UploadPhotoActivity -->
+    <string name="UploadPhotoActivity_upload_pic_or_video_hint" translatable="false">请先上传图片或者视频</string>
+    <string name="UploadPhotoActivity_upload_pic_hint" translatable="false">请选择照片类型</string>
+    <string name="UploadPhotoActivity_upload_beans_hint" translatable="false">请选择嗨豆数量</string>
+    <string name="UploadPhotoActivity_video_hint" translatable="false">Please upload vivid photos or videos with clear facial features.</string>
+    <string name="UploadPhotoActivity_video_or_photo_type_hint" translatable="false">Choose Photo/Video Type</string>
+    <string name="UploadPhotoActivity_ordinary" translatable="false">Ordinary Photo/Video</string>
+    <string name="UploadPhotoActivity_ordinary_hint" translatable="false">（Anyone can view it）</string>
+    <string name="UploadPhotoActivity_membership" translatable="false">Membership Photos/Videos</string>
+    <string name="UploadPhotoActivity_membership_hint" translatable="false">（vip can view it）</string>
+    <string name="UploadPhotoActivity_private" translatable="false">Private Photos/Videos</string>
+    <string name="UploadPhotoActivity_private_hint" translatable="false">（Users need to pay you Hey Dou for checking）</string>
+    <string name="UploadPhotoActivity_custom_num" translatable="false">custom</string>
+    <!--DataFraudActivity -->
+    <string name="DataFraudActivity_desc_is_null" translatable="false">描述不能为空</string>
+    <string name="DataFraudActivity_only_word" translatable="false">only 100 word.</string>
+    <string name="DataFraudActivity_head_portraits" translatable="false">Fake Profile or Photo Data</string>
+    <string name="DataFraudActivity_pic_num" translatable="false">Upload Screenshots, Improve Accuracy（0/8）</string>
+    <string name="DataFraudActivity_other_content" translatable="false">More Detail Your Want to Report(multi-line)</string>
+    <!--ReportUserActivity -->
+    <string name="ReportUserActivity_advertising" translatable="false">Advertise 、Promotion</string>
+    <string name="ReportUserActivity_Fraud" translatable="false">Fraud</string>
+    <string name="ReportUserActivity_Pornography" translatable="false">Vulgar or Pornographic Contant</string>
+    <string name="ReportUserActivity_Malicious" translatable="false">Malicious Harassment</string>
+    <string name="ReportUserActivity_Other" translatable="false">Others</string>
+    <string name="ReportUserActivity_buttom_tv" translatable="false">Please tell us detail about your reporting, make Hey App better!</string>
+    <string name="ReportUserActivity_buttom_tv_hint" translatable="false">(Anonymous reporting , Don\'t worry, we protect your privacy.)</string>
+    <!--ConversationActivity -->
+    <string name="ConversationActivity_private_photo_hint" translatable="false">To view private photos, you need to pay</string>
+    <string name="ConversationListFragment_add" translatable="false">Find </string>
+    <string name="ConversationListFragment_new_like_people_hint" translatable="false"> new people like you</string>
+    <string name="ConversationListFragment_New_Pairing" translatable="false">New Pairing</string>
+    <string name="ConversationListFragment_Chat" translatable="false">Chat</string>
+    <string name="ConversationListFragment_System_message_title" translatable="false">System message</string>
+    <string name="ConversationListFragment_System_message_title_hint" translatable="false">There are more girls waiting for you to call …</string>
+    <!--ClearCacheActivity -->
+    <string name="ClearCacheActivity_value" translatable="false">清除缓存（10M）</string>
+    <!--FeedbackProblemActivity -->
+    <string name="FeedbackProblemActivity_problem_desc" translatable="false">Please describe your problem.</string>
+    <string name="FeedbackProblemActivity_Pictures_optional" translatable="false">Pictures (optional)</string>
+    <string name="FeedbackProblemActivity_Contact_optional" translatable="false">Contact information (optional)</string>
+    <string name="FeedbackProblemActivity_e_mail" translatable="false">Please fill in your e-mail</string>
+    <!--MessageReminderActivity -->
+    <string name="MessageReminderActivity_message_preview" translatable="false">Show message preview"</string>
+    <string name="MessageReminderActivity_Shock" translatable="false">Shock</string>
+    <string name="MessageReminderActivity_Voice" translatable="false">Voice</string>
+    <!--SettingActivity -->
+    <string name="SettingActivity_push_tv" translatable="false">Push to me</string>
+    <string name="SettingActivity_Age" translatable="false">Age</string>
+    <string name="SettingActivity_Pushing_gender" translatable="false">Pushing gender</string>
+    <string name="SettingActivity_Message_reminder" translatable="false">Message reminder</string>
+    <string name="SettingActivity_Clear_cache" translatable="false">Clear cache</string>
+    <string name="SettingActivity_Problem_feedback" translatable="false">Problem feedback</string>
+    <string name="SettingActivity_About_us" translatable="false">About us</string>
+    <string name="Logout" translatable="false">Logout</string>
+
+    <!--OpenVipActivity -->
+    <string name="not_vip" translatable="false">Not open Vip</string>
+    <string name="is_vip" translatable="false">Is Vip</string>
+    <string name="OpenVipActivity_agreement" translatable="false">* Opening a member means that the representative agrees to the 《Kencanme APP Renewal Agreement》</string>
+    <string name="OpenVipActivity_Membership_privileges" translatable="false">Membership privileges</string>
+
+    <!--HomeFragment -->
+    <string name="HomeFragment_Super_exposure_hint" translatable="false">Super exposure! Countdown: </string>
+    <string name="HomeFragment_Super_exposure_content_hint" translatable="false">Matchmaker! 10 times more people will see you in 30 minutes! </string>
+    <!--MessageFragment -->
+    <string name="MessageFragment_message" translatable="false">Message</string>
+    <string name="MessageFragment_My_friend" translatable="false">My friend</string>
+    <!--MineFragment -->
+    <string name="MineFragment_Become_VIP" translatable="false">Become VIP</string>
+    <string name="MineFragment_hello_VIP" translatable="false">Hi~SVIP</string>
+
+    <!-- adapter-->
+    <string name="AlbumAdapter_vip_can_view" translatable="false">Member Photos</string>
+    <string name="AlbumAdapter_vip_can_Video" translatable="false">Member Video</string>
+    <string name="AlbumAdapter_Beans_photo" translatable="false">Hey Bean Album</string>
+    <string name="AlbumAdapter_Beans_video" translatable="false">Hey Bean Video</string>
+    <!-- BuyDialogAdapter-->
+    <string name="BuyDialogAdapter_time" translatable="false">time</string>
+    <!-- ContactWayAdapter-->
+    <string name="ContactWayAdapter_et_hint" translatable="false">Please enter your account number.</string>
+    <!-- HomeViewPagerAdapter-->
+    <string name="HomeViewPagerAdapter_years" translatable="false"> years</string>
+    <string name="HomeViewPagerAdapter_active" translatable="false">active </string>
+    <string name="HomeViewPagerAdapter_minute_ago" translatable="false"> minute ago </string>
+    <!-- LoveMeFriendsAdapter-->
+    <string name="LoveMeFriendsAdapter_like_you" translatable="false"> like you</string>
+    <string name="LoveMeFriendsAdapter_like" translatable="false">like</string>
+    <string name="LoveMeFriendsAdapter_liked" translatable="false">liked</string>
+    <!-- MyAlbumAdapter-->
+    <string name="MyAlbumAdapter_vip_can_look" translatable="false">VIP can look</string>
+    <string name="MyAlbumAdapter_beans_can_look" translatable="false">Hi-Beans can look</string>
+
+    <!--dialog -->
+    <string name="BuyDialog_buy_beans" translatable="false">Hi-Beans 不足，请先购买Hi-Beans</string>
+    <string name="CommonChoiceDialog_add_blacklist" translatable="false">Add to blacklist</string>
+    <string name="CommonChoiceDialog_anonymous_report" translatable="false">Anonymous Reporting </string>
+    <string name="CommonChoiceDialog_delete_friends" translatable="false">Delete friends</string>
+    <string name="LoginDialog_count_hint" translatable="false">Select an account to continue using Kencanme APP</string>
+    <string name="LoginDialog_other_accounts" translatable="false">Use other accounts</string>
+    <string name="LoginDialog_agreement" translatable="false">To continue, Google will provide your name, email address, and profile photo to the Kencanme app.</string>
+    <string name="UseExposureDialog_select_photo_type" translatable="false">Please select the type of photo you </string>
+
+
+    <!-- Activity 类 相关  返回箭头后title-->
+    <string name="AgreementActivity_title" translatable="false">Agreement</string>
+    <string name="RechargeActivity_title" translatable="false">Buy Hi-beans</string>
+    <string name="EditMakeFriendsInfoActivity_title" translatable="false">Editing Friendship Information</string>
+    <string name="EditPersonalInfoActivity_title" translatable="false">Editing personal information</string>
+    <string name="EditLabelActivity_title" translatable="false">Editing personal Tags</string>
+    <string name="ReportUserActivity_title" translatable="false">Anonymous Reporting </string>
+    <string name="EditContactWayActivity_title" translatable="false">Editorial contact information</string>
+    <string name="SettingActivity_title" translatable="false">Install</string>
+    <string name="MessageReminderActivity_title" translatable="false">Message reminder</string>
+    <string name="ClearCacheActivity_title" translatable="false">Clear cache</string>
+    <string name="FeedbackProblemActivity_title" translatable="false">Feedback problem</string>
+    <string name="UploadPhotoActivity_title" translatable="false">Upload my real photo or video</string>
+    <string name="OpenVipActivity_title" translatable="false">Open VIP</string>
+    <string name="LoveMePeopleActivity_title" translatable="false">People who like me</string>
+    <string name="SystemMsgActivity_title" translatable="false">System message</string>
+    <string name="MyAlbumActivity_title" translatable="false">My Album</string>
+    <string name="DataFraudActivity_title" translatable="false">Anonymous Reporting </string>
+</resources>

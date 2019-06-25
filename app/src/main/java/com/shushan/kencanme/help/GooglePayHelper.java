@@ -16,10 +16,10 @@ public class GooglePayHelper {
     private String TAG= "GooglePayHelper";
     private Context mContext;
     private IabHelper mHelper;
+    private String sku;
     public GooglePayHelper(Context context) {
         this.mContext = context;
     }
-
     /**
      * 初始化
      */
@@ -68,12 +68,28 @@ public class GooglePayHelper {
                 Log.e(TAG, "Failed to query inventory: " + result);
                 return;
             }
-//            Log.e(TAG, "Query inventory was successful." + inventory.getPurchase(mPayInfo.getProductId()));
-//            if (inventory.hasPurchase(mPayInfo.getProductId())){
-//                //库存存在用户购买的产品，先去消耗
-//            }else{
-//                //库存不存在
+            Log.e(TAG, "Query inventory was successful." + inventory.getPurchase(sku));
+            if (inventory.hasPurchase(sku)){
+                //库存存在用户购买的产品，先去消耗
+
+            }else{
+                //库存不存在
+            }
+
+//             Check for gas delivery -- if we own gas, we should fill up the tank immediately
+            //查询你的产品是否存在没有消耗的，要是没有消耗，先去消耗，再购买
+//            Purchase gasPurchase = inventory.getPurchase(purchaseId);
+//            if (gasPurchase != null && verifyDeveloperPayload(gasPurchase))
+//            {
+//                try {
+//                    mHelper.consumeAsync(inventory.getPurchase(purchaseId), mConsumeFinishedListener);
+//                } catch (IabHelper.IabAsyncInProgressException e) {
+//                    complain("Error consuming gas. Another async operation in progress.");
+//                }
+//                return;
 //            }
+//            Log.i(TAG, "初始库存查询完成；启用主用户界面.");
+
         }
     };
 
@@ -82,9 +98,15 @@ public class GooglePayHelper {
      * google应用内支付调用购买接口的时候，应先确保用户没有存在这个商品的购买（买了但是没有消耗）
      * launchPurchaseFlow(Activity, String, int, OnIabPurchaseFinishedListener, String) 购买商品
      */
-    public void buyGoods(){
+    public void buyGoods(String sku){
+        this.sku = sku;
+        queryInventory();
+
+
+
         //在合适的地方调用购买
 //        mHelper.launchPurchaseFlow(mContext, sku, RC_REQUEST, mPurchaseFinishedListener, extra);
+
     }
 
 
@@ -109,7 +131,8 @@ public class GooglePayHelper {
     };
 
     /**
-     * 消耗掉商品
+     * 消耗商品
+     * 用户购买成功后，如果是可重复购买的商品，应该立刻将这个商品消耗掉，以及在购买之前应确保用户不存在这个商品，如果存在就调用消耗商品的接口去将商品消耗掉
      */
     public void expendGoods(){
 //        mHelper.consumeAsync(purchase, mConsumeFinishedListener);

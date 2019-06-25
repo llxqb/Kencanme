@@ -17,6 +17,7 @@
     <string name="whatsapp">WhatsApp</string>
     <string name="album_max_num">最多传12张</string>
     <string name="fraud_album_max_num">最多传8张</string>
+    <string name="money">$</string>
     <!-- 提交和保存-->
     <string name="submit">Submit</string>
     <string name="Preserve">Preserve</string>

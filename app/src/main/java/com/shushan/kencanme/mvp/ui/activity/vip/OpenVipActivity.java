@@ -79,6 +79,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     //vip 特权
     private List<VipPrivilege> vipPrivilegeList = new ArrayList<>();
     private GooglePayHelper mGooglePayHelper;
+    OpenVipResponse.VipinfoBean mVipinfoBean;
     @Inject
     OpenVipControl.PresenterOpenVip mPresenter;
 
@@ -106,6 +107,17 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         mVipPrivilegesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         VipPrivilegeAdapter vipPrivilegeAdapter = new VipPrivilegeAdapter(this, vipPrivilegeList, mImageLoaderHelper);
         mVipPrivilegesRecyclerView.setAdapter(vipPrivilegeAdapter);
+        openVipAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mVipinfoBean = (OpenVipResponse.VipinfoBean) adapter.getItem(position);
+            for (OpenVipResponse.VipinfoBean bean : vipinfoBeanList) {
+                bean.isCheck = false;
+            }
+            assert mVipinfoBean != null;
+            mVipinfoBean.isCheck = true;
+            openVipAdapter.notifyDataSetChanged();
+            String moneyValue = getResources().getString(R.string.money) + " " + mVipinfoBean.getSpecial_price();
+            mPayMoneyValue.setText(moneyValue);
+        });
     }
 
     @Override
@@ -146,11 +158,16 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 break;
             case R.id.go_to_pay:
                 //去支付
-                mGooglePayHelper.buyGoods();
+                if(mVipinfoBean!=null){
+                    mGooglePayHelper.buyGoods(String.valueOf(mVipinfoBean.getV_id()));
+                }
                 break;
         }
     }
 
+    /**
+     * 请求vip集合
+     */
     private void reqVipListRequest() {
         OpenVipRequest openVipRequest = new OpenVipRequest();
         openVipRequest.token = mBuProcessor.getToken();
@@ -161,7 +178,16 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void OpenVipListSuccess(OpenVipResponse openVipResponse) {
         mVipHintTv.setText(openVipResponse.getNotice().toString());
         vipinfoBeanList = openVipResponse.getVipinfo();
-        openVipAdapter.setNewData(vipinfoBeanList);
+        for (int i = 0; i < vipinfoBeanList.size(); i++) {
+            OpenVipResponse.VipinfoBean vipinfoBean = vipinfoBeanList.get(i);
+            if (i == 0) {
+                mVipinfoBean = vipinfoBean;
+                vipinfoBean.isCheck = true;
+                String moneyValue = getResources().getString(R.string.money) + " " + vipinfoBean.getSpecial_price();
+                mPayMoneyValue.setText(moneyValue);
+            }
+        }
+        openVipAdapter.addData(vipinfoBeanList);
     }
 
     private void initializeInjector() {

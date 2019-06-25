@@ -78,7 +78,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mHomeView.getLikeSuccess("已添加喜欢");
+            mHomeView.getLikeSuccess(mContext.getResources().getString(R.string.LoveMeFriendsAdapter_liked));
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -120,7 +120,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestBuyExposureTimeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
 //            DialogBuyBean response = new Gson().fromJson(responseData.mJsonObject.toString(), DialogBuyBean.class);
-            mHomeView.getBuyExposureTime("购买成功");
+            mHomeView.getBuyExposureTime("success");
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -186,7 +186,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
         if (responseData.resultCode == 0) {
 //            responseData.parseData(HomeUserInfoResponse.class);
 //            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
-            mHomeView.exposureSuccess("进行超级曝光");
+            mHomeView.exposureSuccess("success");
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }

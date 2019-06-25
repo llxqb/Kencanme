@@ -43,6 +43,7 @@
     <string name="dialog_open_vip_chat">Open Super VIP Free Chat~</string>
     <string name="dialog_open_vip_album">Open Super VIP look more</string>
     <string name="dialog_open_vip_chat_like">Buy Super VIP to see who likes you</string>
+    <string name="money">$</string>
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->

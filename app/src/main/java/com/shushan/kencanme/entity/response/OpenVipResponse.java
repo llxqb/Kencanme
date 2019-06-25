@@ -42,6 +42,7 @@ public class OpenVipResponse {
         private String describe;
         private String privilege;
         private int give;
+        public boolean isCheck;
 
         public int getV_id() {
             return v_id;

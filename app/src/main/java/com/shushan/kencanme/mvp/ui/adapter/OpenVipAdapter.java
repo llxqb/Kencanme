@@ -27,6 +27,7 @@ public class OpenVipAdapter extends BaseQuickAdapter<OpenVipResponse.VipinfoBean
 
     @Override
     protected void convert(BaseViewHolder helper, OpenVipResponse.VipinfoBean item) {
+        helper.addOnClickListener(R.id.open_vip_super_vip_rl);
         if (item != null) {
             TextView originalPriceTv = helper.getView(R.id.original_price);
             helper.setText(R.id.super_vip_hint,item.getName());
@@ -35,6 +36,11 @@ public class OpenVipAdapter extends BaseQuickAdapter<OpenVipResponse.VipinfoBean
             originalPriceTv.getPaint().setAntiAlias(true);//抗锯齿
             originalPriceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
             helper.setText(R.id.exclusive_tv,item.getPrivilege());
+            if(item.isCheck){
+                helper.setBackgroundRes(R.id.open_vip_super_vip_rl,R.drawable.super_vip_bg);
+            }else {
+                helper.setBackgroundRes(R.id.open_vip_super_vip_rl,R.drawable.bg_open_vip_selector);
+            }
         }
     }
 }

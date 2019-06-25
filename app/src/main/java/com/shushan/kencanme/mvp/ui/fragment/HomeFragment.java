@@ -7,14 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
@@ -36,7 +39,7 @@ import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.main.HomeFragmentControl;
 import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.mvp.ui.adapter.HomeViewPagerAdapter;
+import com.shushan.kencanme.mvp.ui.adapter.HomeAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
@@ -61,23 +64,20 @@ import io.rong.imkit.RongIM;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, HomeViewPagerAdapter.HomeViewPagerListener,
-        BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener, MyTimer.MyTimeListener {
+public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener,
+        MyTimer.MyTimeListener, BaseQuickAdapter.RequestLoadMoreListener {
 
-    @BindView(R.id.home_viewpager)
-    ViewPager homeViewpager;
+    @BindView(R.id.home_recycler_view)
+    RecyclerView homeRecyclerView;
     @BindView(R.id.use_exposure_iv)
     ImageView mUseExposureIv;
     @BindView(R.id.exposure_time_tv)
     TextView mExposureTimeTv;
     @BindView(R.id.use_exposuring_hint)
     TextView mUseExposuringHint;
-    //当前发起更新的位置
-    private int currentUpdatePos = 0;
-    private int currentPagePos;
 
     private List<HomeFragmentResponse.ListBean> viewPagerResponseList = new ArrayList<>();
-    private HomeViewPagerAdapter homeViewPagerAdapter;
+    private HomeAdapter mHomeAdapter;
     private LoginUser mLoginUser;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
@@ -112,32 +112,33 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mFilter.addAction(ActivityConstant.UPDATE_HOME_INFO);
     }
 
+    HomeFragmentResponse.ListBean listBean;
 
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
         RxView.clicks(mUseExposureIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> useSuperExposure());
-        homeViewPagerAdapter = new HomeViewPagerAdapter(getActivity(), viewPagerResponseList, mImageLoaderHelper, this);
-        homeViewpager.setAdapter(homeViewPagerAdapter);
-        homeViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        homeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mHomeAdapter = new HomeAdapter(getActivity(), viewPagerResponseList, mImageLoaderHelper);
+        mHomeAdapter.setOnLoadMoreListener(this, homeRecyclerView);
+        homeRecyclerView.setAdapter(mHomeAdapter);
+        homeRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPagePos = position;
-                if ((position + 1) % 4 == 0 && position > currentUpdatePos) {//回滑的时候不刷新
-                    currentUpdatePos = position;
-                    requestHomeData();
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                listBean = (HomeFragmentResponse.ListBean) adapter.getItem(position);
+                switch (view.getId()) {
+                    case R.id.recommend_user_rl:
+                        assert listBean != null;
+                        goRecommendUser(listBean.getUid());
+                        break;
+                    case R.id.home_like_iv:
+                        assert listBean != null;
+                        goLike(listBean.getUid());
+                        break;
+                    case R.id.home_message_iv:
+                        goChat(listBean.getRongyun_userid(), listBean.getNickname());
+                        break;
                 }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                //暂停播放
-                JzvdStd.goOnPlayOnPause();
             }
         });
     }
@@ -162,18 +163,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         JzvdStd.goOnPlayOnPause();
     }
 
-
-    @SuppressLint("CheckResult")
-    @Override
-    public void getInfoSuccess(HomeFragmentResponse response) {
-//        LogUtils.d("response:" + new Gson().toJson(response));
-        List<HomeFragmentResponse.ListBean> dataList = response.getList();
-        viewPagerResponseList.addAll(dataList);
-        homeViewPagerAdapter.notifyDataSetChanged();
-    }
-
-
-    @Override
+    /**
+     * 去喜欢
+     */
     public void goLike(int uId) {
         if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
@@ -188,7 +180,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     /**
      * 去聊天
      */
-    @Override
     public void goChat(String rongYunId, String nickName) {
         if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
             //启动单聊页面
@@ -201,9 +192,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     /**
      * 去推荐人详情
      */
-    @Override
-    public void goRecommendUser() {
-        RecommendUserInfoActivity.start(getActivity(), viewPagerResponseList.get(currentPagePos).getUid());
+    public void goRecommendUser(int uid) {
+        RecommendUserInfoActivity.start(getActivity(), uid);
     }
 
     /**
@@ -228,11 +218,19 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void getLikeSuccess(String msg) {
-        showToast(msg);
-        homeViewPagerAdapter.setLikeImg();
+        listBean.setIs_like(1);
+        mHomeAdapter.notifyDataSetChanged();
         requestHomeUserInfo();
     }
 
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getInfoSuccess(HomeFragmentResponse response) {
+//        LogUtils.d("response:" + new Gson().toJson(response));
+        List<HomeFragmentResponse.ListBean> dataList = response.getList();
+        mHomeAdapter.addData(dataList);
+    }
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse response) {
@@ -265,6 +263,16 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         //更新MineFragment信息
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
+
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        requestHomeData();
+    }
+
 
     MyTimer myTimer;
     /**
@@ -317,7 +325,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         }
         if (mRemainTime > 0) {
             setmRemainTime();
-            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint)  + mRemainTime + " min";
+            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + mRemainTime + " min";
             mUseExposuringHint.setText(exposureValue);
         } else {
             mUseExposuringHint.setVisibility(View.INVISIBLE);

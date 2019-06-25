@@ -3,20 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/home_viewpager"
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/home_viewpager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
     <ImageView
         android:id="@+id/use_exposure_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_22"
+        android:layout_marginEnd="@dimen/dp_10"
         android:padding="@dimen/dp_10"
         android:src="@mipmap/home_super_exposure" />
 
@@ -25,10 +28,10 @@
         android:id="@+id/exposure_time_tv"
         android:layout_width="@dimen/dp_14"
         android:layout_height="@dimen/dp_14"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_10"
         android:background="@drawable/bg_red_round"
         android:gravity="center"
         android:textColor="@color/white"
@@ -41,17 +44,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_5"
         android:layout_marginStart="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_32"
-        android:layout_toEndOf="@id/logo_iv"
+        android:layout_marginEnd="@dimen/dp_5"
         android:layout_toStartOf="@id/use_exposure_iv"
+        android:layout_toEndOf="@id/logo_iv"
         android:background="@drawable/bg_color_gray_round_20"
         android:gravity="center"
         android:padding="@dimen/dp_5"
-        android:visibility="invisible"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_10" />
+        android:textSize="@dimen/sp_10"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/logo_iv"
