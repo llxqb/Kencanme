@@ -25,7 +25,6 @@ import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.utils.ConversationUtil;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
@@ -80,6 +79,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      * 2、使用嗨豆查看私有照片
      */
     private int UseBeansDialogFlag;
+    /**
+     * 被聊天用户id
+     */
+    private String chatUid;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -123,6 +126,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mTargetId = Objects.requireNonNull(intent.getData()).getQueryParameter("targetId");
         mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
+
+        chatUid = mSharePreferenceUtil.getData("chat_uid");
     }
 
     @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right})
@@ -166,7 +171,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
-        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat) && mLoginUser.beans >= 1) {
+        if (mLoginUser.userType == 1 && mLoginUser.beans == 0) {
+            //男非VIP 和beans=0
+            DialogFactory.showRechargeBeansDialog2(this);
+        } else {
             MessageContent messageContent = message.getContent();
             if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
@@ -180,15 +188,31 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             }
             isSendPic = false;
             return message;
-        } else {
-            if (mLoginUser.beans > 0) {
-                UseBeansDialogFlag = 1;
-                DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_chat_num), 1);
-            } else {
-                DialogFactory.showRechargeBeansDialog2(this);
-            }
         }
         return null;
+    }
+
+    @Override
+    public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
+        if (mLoginUser.userType == 1) {
+            UseBeansDialogFlag = 1;
+            useBeansToChat("4", 1);
+        }
+        return false;
+    }
+
+    /**
+     * 使用嗨豆 聊天
+     * 3查看私密照片4男性回复女性消息
+     */
+    private void useBeansToChat(String type, int beans) {
+        UseBeansRequest useBeansRequest = new UseBeansRequest();
+        useBeansRequest.token = mBuProcessor.getToken();
+        useBeansRequest.beans = String.valueOf(beans);
+        useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+        useBeansRequest.type = type;
+        useBeansRequest.see_id = chatUid;
+        mPresenter.onRequestUseBeans(useBeansRequest);
     }
 
     /**
@@ -198,13 +222,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         SendPhotoTypeDialog sendPhotoTypeDialog = new SendPhotoTypeDialog();
         sendPhotoTypeDialog.setListener(this);
         DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), sendPhotoTypeDialog, SendPhotoTypeDialog.TAG);
-    }
-
-    @Override
-    public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-        mLoginUser.today_chat = mLoginUser.today_chat + 1;
-        mBuProcessor.setLoginUser(mLoginUser);
-        return false;
     }
 
 
@@ -267,7 +284,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         customizePos = position;
         mContent = content;
         mCustomizeMessage = message;
-        UseBeansDialogFlag = 2;
         DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.ConversationActivity_private_photo_hint), content.beans);
     }
 
@@ -277,22 +293,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void messageUseBeansDialogBtnOkListener() {
-        if (UseBeansDialogFlag == 1) {
-            UseBeansRequest useBeansRequest = new UseBeansRequest();
-            useBeansRequest.token = mBuProcessor.getToken();
-            useBeansRequest.beans = String.valueOf(mContent.beans);
-            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
-            useBeansRequest.type = "4";
-            mPresenter.onRequestUseBeans(useBeansRequest);
-        } else if (UseBeansDialogFlag == 2) {
-            UseBeansRequest useBeansRequest = new UseBeansRequest();
-            useBeansRequest.token = mBuProcessor.getToken();
-            useBeansRequest.beans = String.valueOf(mContent.beans);
-            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
-            useBeansRequest.type = "3";
-            mPresenter.onRequestUseBeans(useBeansRequest);
-        }
-
+        UseBeansDialogFlag = 2;
+        useBeansToChat("3", mContent.beans);
     }
 
     /**
@@ -300,12 +302,13 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void UseBeansSuccess(String msg) {
-        showToast(msg);
-        //TODO更新自定义消息view
-        mMessageIdList.add(String.valueOf(mCustomizeMessage.getMessageId()));
-        mSharePreferenceUtil.saveObjData("messageIdList", mMessageIdList);
-        mContent.isLocked = 0;
-        KencanmeApp.mCustomizeMessageItemProvider.bindView(customizeView, customizePos, mContent, mCustomizeMessage);
+        //更新自定义消息view
+        if (UseBeansDialogFlag == 2) {
+            mMessageIdList.add(String.valueOf(mCustomizeMessage.getMessageId()));
+            mSharePreferenceUtil.saveObjData("messageIdList", mMessageIdList);
+            mContent.isLocked = 0;
+            KencanmeApp.mCustomizeMessageItemProvider.bindView(customizeView, customizePos, mContent, mCustomizeMessage);
+        }
         //更新个人信息
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.token = mBuProcessor.getToken();

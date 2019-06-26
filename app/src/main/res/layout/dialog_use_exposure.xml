@@ -21,18 +21,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/dp_30"
-        android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_20"
         android:minHeight="@dimen/dp_300"
         android:background="@mipmap/home_popup_use"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dp_30">
+        android:paddingBottom="@dimen/dp_20">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_83"
+            android:layout_marginTop="@dimen/dp_90"
             android:text="@string/buy_dailog_title"
             android:textColor="@color/second_text_color"
             android:textSize="@dimen/sp_16" />

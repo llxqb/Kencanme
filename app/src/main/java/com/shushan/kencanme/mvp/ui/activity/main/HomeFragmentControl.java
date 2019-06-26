@@ -6,6 +6,7 @@ import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -32,6 +33,8 @@ public class HomeFragmentControl {
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
 
         void exposureSuccess(String msg);
+
+        void chatNumSuccess();
     }
 
     public interface homeFragmentPresenter extends Presenter<HomeView> {
@@ -66,6 +69,12 @@ public class HomeFragmentControl {
          * 进行超级曝光
          */
         void onRequestExposure(TokenRequest tokenRequest);
+
+        /**
+         * 密聊接口
+         * 统计今日密聊次数
+         */
+        void onRequestChatNum(RequestFreeChat requestFreeChat);
     }
 
 

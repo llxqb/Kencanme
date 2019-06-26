@@ -9,6 +9,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
@@ -182,6 +183,26 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
             responseData.parseData(HomeUserInfoResponse.class);
             HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
             mRecommendUserInfoView.getHomeUserInfoSuccess(response);
+        } else {
+            mRecommendUserInfoView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     *统计今日密聊次数
+     */
+    @Override
+    public void onRequestChatNum(RequestFreeChat requestFreeChat) {
+        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mRecommendUserInfoModel.onRequestChatNum(requestFreeChat).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestChatNumSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
+                        () -> mRecommendUserInfoView.dismissLoading());
+        mRecommendUserInfoView.addSubscription(disposable);
+    }
+
+    private void requestChatNumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRecommendUserInfoView.chatNumSuccess();
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

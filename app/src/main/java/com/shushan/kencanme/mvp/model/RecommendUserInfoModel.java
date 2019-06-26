@@ -7,6 +7,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.network.networkapi.RecommendUserInfoApi;
 
@@ -65,5 +66,12 @@ public class RecommendUserInfoModel {
     //请求首页个人信息  如 是否喜欢数 聊天数
     public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
         return mRecommendUserInfoApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 统计今日密聊次数
+     */
+    public Observable<ResponseData> onRequestChatNum(RequestFreeChat request) {
+        return mRecommendUserInfoApi.onRequestChatNum(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 }

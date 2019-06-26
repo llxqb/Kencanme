@@ -47,4 +47,10 @@ public interface RecommendUserInfoApi {
      */
     @POST("menggoda/index/user_exposure")
     Observable<String> onRequestHomeUserInfo(@Body String request);
+    /**
+     * 密聊
+     * 统计今日密聊次数
+     */
+    @POST("menggoda/operation/secret_chat")
+    Observable<String> onRequestChatNum(@Body String request);
 }

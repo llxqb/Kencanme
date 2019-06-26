@@ -14,4 +14,8 @@ public class UseBeansRequest {
      * 消息id
      */
     public String message_id;
+    /**
+     * 被查看用户id
+     */
+    public String see_id;
 }

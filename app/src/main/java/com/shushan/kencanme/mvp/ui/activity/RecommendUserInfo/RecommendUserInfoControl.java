@@ -7,6 +7,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
@@ -32,6 +33,8 @@ public class RecommendUserInfoControl {
         void getAlbumByBeansSuccess(String msg);
 
         void getHomeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
+
+        void chatNumSuccess();
     }
 
     public interface PresenterRecommendUserInfo extends Presenter<RecommendUserInfoView> {
@@ -68,6 +71,11 @@ public class RecommendUserInfoControl {
          * 查询用户信息（首页）
          */
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+        /**
+         * 密聊接口
+         * 统计今日密聊次数
+         */
+        void onRequestChatNum(RequestFreeChat requestFreeChat);
     }
 
 

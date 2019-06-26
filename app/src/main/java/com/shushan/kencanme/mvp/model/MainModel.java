@@ -7,6 +7,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.network.networkapi.MainApi;
@@ -93,6 +94,12 @@ public class MainModel {
      */
     public Observable<ResponseData> onRequestMessageId(TokenRequest request) {
         return mMainApi.onRequestMessageId(mGson.toJson(request)).map(mTransform::transformListType);
+    }
+    /**
+     * 统计今日密聊次数
+     */
+    public Observable<ResponseData> onRequestChatNum(RequestFreeChat request) {
+        return mMainApi.onRequestChatNum(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

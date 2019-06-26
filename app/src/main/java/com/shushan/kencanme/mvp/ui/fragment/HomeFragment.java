@@ -31,6 +31,7 @@ import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -138,7 +139,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                         goLike(listBean.getUid());
                         break;
                     case R.id.home_message_iv:
-                        goChat(listBean.getRongyun_userid(), listBean.getNickname());
+                        goChat();
                         break;
                 }
             }
@@ -182,10 +183,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     /**
      * 去聊天
      */
-    public void goChat(String rongYunId, String nickName) {
+    public void goChat() {
         if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
-            //启动单聊页面
-            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), rongYunId, nickName);
+            RequestFreeChat requestFreeChat = new RequestFreeChat();
+            requestFreeChat.token = mBuProcessor.getToken();
+            requestFreeChat.secret_id = String.valueOf(listBean.getUid());
+            mPresenter.onRequestChatNum(requestFreeChat);
         } else {
             DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
         }
@@ -383,6 +386,18 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         showToast(msg);
         //进行更新
         requestHomeUserInfo();
+    }
+
+    /**
+     * 密聊
+     */
+    @Override
+    public void chatNumSuccess() {
+        //进行更新
+        requestHomeUserInfo();
+        //启动单聊页面
+        mSharePreferenceUtil.setData("chat_uid",String.valueOf(listBean.getUid()));
+        RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(),listBean.getNickname());
     }
 
 

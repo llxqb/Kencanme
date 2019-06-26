@@ -10,6 +10,10 @@ import java.io.Serializable;
 
 public class LoginUser implements Serializable {
 
+    public LoginUser() {
+        userType = 1;//默认男非VIP
+    }
+
     public int uid;
     public String nickname;
     //头像

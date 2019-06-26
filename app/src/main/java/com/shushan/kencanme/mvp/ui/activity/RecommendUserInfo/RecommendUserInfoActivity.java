@@ -30,6 +30,7 @@ import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -270,7 +271,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 }
                 break;
             case R.id.recommend_chat_iv:
-                goChat(recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
+                goChat();
                 break;
         }
     }
@@ -379,10 +380,13 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     /**
      * 去聊天
      */
-    private void goChat(String rongYunId, String nickName) {
+    private void goChat() {
         if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
             //启动单聊页面
-            RongIM.getInstance().startPrivateChat(this, rongYunId, nickName);
+            RequestFreeChat requestFreeChat = new RequestFreeChat();
+            requestFreeChat.token = mBuProcessor.getToken();
+            requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
+            mPresenter.onRequestChatNum(requestFreeChat);
         } else {
             showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
         }
@@ -588,6 +592,18 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         mLoginUser.today_chat = userBean.getToday_chat();
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
+    }
+
+    /**
+     * 密聊
+     */
+    @Override
+    public void chatNumSuccess() {
+        //进行更新
+        requestHomeUserInfo();
+        //启动单聊页面
+        mSharePreferenceUtil.setData("chat_uid",String.valueOf(recommendUserInfoResponse.getUid()));
+        RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
 
 

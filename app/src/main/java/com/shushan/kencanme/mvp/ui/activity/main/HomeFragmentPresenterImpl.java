@@ -9,6 +9,7 @@ import com.shushan.kencanme.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
@@ -184,9 +185,26 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
 
     private void requestExposureSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-//            responseData.parseData(HomeUserInfoResponse.class);
-//            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
             mHomeView.exposureSuccess("success");
+        } else {
+            mHomeView.showToast(responseData.errorMsg);
+        }
+    }
+    /**
+     *统计今日密聊次数
+     */
+    @Override
+    public void onRequestChatNum(RequestFreeChat requestFreeChat) {
+        mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mHomeFragmentModel.onRequestChatNum(requestFreeChat).compose(mHomeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestChatNumSuccess, throwable -> mHomeView.showErrMessage(throwable),
+                        () -> mHomeView.dismissLoading());
+        mHomeView.addSubscription(disposable);
+    }
+
+    private void requestChatNumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mHomeView.chatNumSuccess();
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
