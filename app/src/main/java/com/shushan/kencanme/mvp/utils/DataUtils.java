@@ -9,13 +9,20 @@ public class DataUtils {
     /**
      * json字符串转list
      */
-    public static boolean isContainString(List<String> list,String text){
-        if(list==null) return false;
-        for (String s:list){
-            if(s.equals(text)){
+    public static boolean isContainString(List<String> list, String text) {
+        if (list == null) return false;
+        for (String s : list) {
+            if (s.equals(text)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * 字符串大写转小写
+     */
+    public static String uppercaseToLowercase(String uppercaseStr) {
+        return uppercaseStr.toLowerCase();
     }
 }

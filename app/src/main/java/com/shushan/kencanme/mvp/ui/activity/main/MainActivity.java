@@ -91,7 +91,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
         connectRongCloud();
-
     }
 
     @Override

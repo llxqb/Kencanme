@@ -262,7 +262,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     @Override
     public void uploadImageSuccess(String picPath) {
-        Log.e("ddd", "picPath:" + picPath);
+//        Log.e("ddd", "picPath:" + picPath);
         mJzVideo.setVisibility(View.GONE);
         mPhotoIvRl.setVisibility(View.VISIBLE);
         mPhotoIvRl.setImageBitmap(bitmap);

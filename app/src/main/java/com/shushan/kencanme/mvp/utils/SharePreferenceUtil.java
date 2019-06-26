@@ -43,6 +43,19 @@ public class SharePreferenceUtil {
     }
 
     /**
+     * sp 取出本地数据
+     *
+     * @param key
+     */
+    public int getIntData(String key) {
+        return mSharedprefence.getValueByName(projectKey, key, Sharedprefence.INT);
+    }
+
+    public boolean getBooleanData(String key) {
+        return mSharedprefence.getValueByName(projectKey, key, Sharedprefence.BOOLEAN);
+    }
+
+    /**
      * 写入对象
      *
      * @param key

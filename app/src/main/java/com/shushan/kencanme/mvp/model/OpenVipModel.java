@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
 import com.shushan.kencanme.network.networkapi.BuyApi;
 
@@ -27,6 +28,13 @@ public class OpenVipModel {
 
     public Observable<ResponseData> openVipListRequest(OpenVipRequest request) {
         return mBuyApi.openVipListRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 创建订单
+     */
+    public Observable<ResponseData> onRequestCreateOrder(CreateOrderRequest request) {
+        return mBuyApi.onRequestCreateOrder(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 

@@ -1,6 +1,8 @@
 package com.shushan.kencanme.mvp.ui.activity.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +13,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerSettingComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.SettingModule;
+import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.SexBean;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
@@ -176,6 +179,8 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     public void updateSuccess(String msg) {
         showToast(msg);
         updatLoginUser();
+        //更新首页推送内容
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
         super.onBackPressed();
     }
 

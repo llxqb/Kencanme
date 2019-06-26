@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--<uses-permission android:name="android.permission.CALL_PHONE" />-->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Google支付权限-->
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -30,7 +30,7 @@
     <application
         android:name=".KencanmeApp"
         android:allowBackup="true"
-        android:icon="@mipmap/logo"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -39,7 +39,9 @@
         <!--android:name="UMENG_APPKEY"-->
         <!--android:value="5d104a194ca357b692000ff5" />-->
 
-        <activity android:name=".mvp.ui.activity.splash.SplashActivity">
+        <activity
+            android:name=".mvp.ui.activity.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,36 +50,71 @@
         </activity>
         <activity
             android:name=".mvp.ui.activity.main.MainActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".mvp.ui.activity.login.LoginActivity" />
-        <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
-        <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
-        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity"/>
-        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity"/>
-        <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity" />
-        <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
-        <activity android:name=".mvp.ui.activity.vip.OpenVipActivity"/>
-        <activity android:name=".mvp.ui.activity.pay.RechargeActivity" />
-        <activity android:name=".mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity" />
-        <activity android:name=".mvp.ui.activity.personInfo.EditPersonalInfoActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.reportUser.ReportUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.reportUser.DataFraudActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.register.AgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.vip.OpenVipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.pay.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.personInfo.EditPersonalInfoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.personInfo.EditLabelActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".mvp.ui.activity.personInfo.EditContactWayActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".mvp.ui.activity.setting.SettingActivity" />
-        <activity android:name=".mvp.ui.activity.setting.MessageReminderActivity" />
-        <activity android:name=".mvp.ui.activity.setting.ClearCacheActivity">
-
-        </activity>
+        <activity
+            android:name=".mvp.ui.activity.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.setting.MessageReminderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.setting.ClearCacheActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.setting.FeedbackProblemActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".mvp.ui.activity.setting.AboutUsActivity" />
-        <activity android:name=".mvp.ui.activity.photo.MyAlbumActivity" />
+        <activity
+            android:name=".mvp.ui.activity.setting.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.photo.MyAlbumActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
@@ -107,11 +144,15 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.photo.LookPhotoActivity">
-
-        </activity>
-        <activity android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity" />
-        <activity android:name=".mvp.ui.activity.loveMe.LoveMePeopleActivity" />
+        <activity
+            android:name=".mvp.ui.activity.photo.LookPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.loveMe.LoveMePeopleActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

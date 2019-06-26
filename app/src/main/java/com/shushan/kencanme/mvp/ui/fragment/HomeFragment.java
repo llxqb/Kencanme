@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +83,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     private List<HomeFragmentResponse.ListBean> viewPagerResponseList = new ArrayList<>();
     private HomeAdapter mHomeAdapter;
     private LoginUser mLoginUser;
+    HomeFragmentResponse.ListBean listBean;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
 
@@ -105,6 +107,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_INFO)) {
             requestHomeData();
+        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_DATA_INFO)){
+            requestHomeUserInfo();
         }
         super.onReceivePro(context, intent);
     }
@@ -113,9 +117,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_HOME_INFO);
+        mFilter.addAction(ActivityConstant.UPDATE_HOME_DATA_INFO);
     }
 
-    HomeFragmentResponse.ListBean listBean;
 
     @SuppressLint("CheckResult")
     @Override
@@ -125,6 +129,24 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mHomeAdapter = new HomeAdapter(getActivity(), viewPagerResponseList, mImageLoaderHelper);
         mHomeAdapter.setOnLoadMoreListener(this, homeRecyclerView);
         homeRecyclerView.setAdapter(mHomeAdapter);
+        //一次滑动一个item（LinearSnapHelper ）  不能快速滑动（PagerSnapHelper）
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(homeRecyclerView);
+        //如果当前页面不可见，暂停播放
+        homeRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();//获取LayoutManager
+                if (manager instanceof LinearLayoutManager) {
+                    //第一个可见的位置
+                    int firstPosition = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
+                    if (firstPosition > 0) {
+                        JzvdStd.goOnPlayOnPause();
+                    }
+                }
+            }
+        });
         homeRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -270,6 +292,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void onLoadMoreRequested() {
+        LogUtils.d("onLoadMoreRequested()");
         requestHomeData();
     }
 
@@ -396,8 +419,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         //进行更新
         requestHomeUserInfo();
         //启动单聊页面
-        mSharePreferenceUtil.setData("chat_uid",String.valueOf(listBean.getUid()));
-        RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(),listBean.getNickname());
+        mSharePreferenceUtil.setData("chat_uid", String.valueOf(listBean.getUid()));
+        RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
     }
 
 

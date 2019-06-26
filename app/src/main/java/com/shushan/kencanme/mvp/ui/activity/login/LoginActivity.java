@@ -138,6 +138,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         loginRequest.deviceId = SystemUtils.getDeviceId(this);
         loginRequest.access_token = accessToken;
         loginRequest.from = "android";
+        LogUtils.e("loginRequest:"+new Gson().toJson(loginRequest));
         mPresenterLogin.onRequestLogin(loginRequest);
     }
 

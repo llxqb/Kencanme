@@ -15,13 +15,16 @@ import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.OpenVipModule;
 import com.shushan.kencanme.entity.VipPrivilege;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
+import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.GooglePayHelper;
 import com.shushan.kencanme.mvp.ui.activity.register.AgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.OpenVipAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.VipPrivilegeAdapter;
+import com.shushan.kencanme.mvp.utils.DataUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 
@@ -123,13 +126,13 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
+        reqVipListRequest();
         for (int i = 0; i < mVipPrivilegeImg.length; i++) {
             VipPrivilege vipPrivilege = new VipPrivilege();
             vipPrivilege.pic = mVipPrivilegeImg[i];
             vipPrivilege.name = mVipPrivilegeName[i];
             vipPrivilegeList.add(vipPrivilege);
         }
-        reqVipListRequest();
         mImageLoaderHelper.displayImage(this, mLoginUser.trait, mAvator, R.mipmap.head_photo_loading);
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.vip == 0) {
@@ -158,9 +161,12 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 break;
             case R.id.go_to_pay:
                 //去支付
-                if(mVipinfoBean!=null){
-                    mGooglePayHelper.buyGoods(String.valueOf(mVipinfoBean.getV_id()));
-                }
+                //1.创建订单
+                //购买会员
+//                if (mVipinfoBean != null) {
+//                    createOrder("1", String.valueOf(mVipinfoBean.getV_id()));
+//                }
+                mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase("kencanme_beans_100"));
                 break;
         }
     }
@@ -172,6 +178,21 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         OpenVipRequest openVipRequest = new OpenVipRequest();
         openVipRequest.token = mBuProcessor.getToken();
         mPresenter.openVipListRequest(openVipRequest);
+    }
+
+    /**
+     * 创建订单
+     * type:1购买会员 2购买嗨豆
+     * relation_id:对应购买 会员/嗨豆id
+     */
+    private void createOrder(String type, String relation_id) {
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+        createOrderRequest.token = mBuProcessor.getToken();
+        createOrderRequest.type = type;
+        createOrderRequest.relation_id = relation_id;
+        createOrderRequest.money = mVipinfoBean.getSpecial_price();
+        createOrderRequest.from = "Android";
+        mPresenter.onRequestCreateOrder(createOrderRequest);
     }
 
     @Override
@@ -188,6 +209,15 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
             }
         }
         openVipAdapter.addData(vipinfoBeanList);
+    }
+
+    /**
+     * 创建订单成功
+     */
+    @Override
+    public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
+        //2、进行支付
+        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()));
     }
 
     private void initializeInjector() {

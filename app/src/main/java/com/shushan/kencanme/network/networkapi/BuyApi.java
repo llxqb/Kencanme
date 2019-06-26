@@ -22,4 +22,9 @@ public interface BuyApi {
      */
     @POST("menggoda/user/vipinfo")
     Observable<String> openVipListRequest(@Body String request);
+    /**
+     * 创建订单
+     */
+    @POST("menggoda/order")
+    Observable<String> onRequestCreateOrder(@Body String request);
 }

@@ -1,6 +1,6 @@
 package com.shushan.kencanme.help;
 
-import android.content.Context;
+import android.app.Activity;
 import android.util.Log;
 
 import com.shushan.kencanme.entity.Constants.ServerConstant;
@@ -13,17 +13,19 @@ import com.shushan.kencanme.mvp.utils.googlePayUtils.Purchase;
  * google 支付 helper
  */
 public class GooglePayHelper {
-    private String TAG= "GooglePayHelper";
-    private Context mContext;
+    private String TAG = "GooglePayHelper";
+    private Activity mContext;
     private IabHelper mHelper;
     private String sku;
-    public GooglePayHelper(Context context) {
+
+    public GooglePayHelper(Activity context) {
         this.mContext = context;
     }
+
     /**
      * 初始化
      */
-    public void initGooglePay(){
+    public void initGooglePay() {
         //设置自己从google控制台得到的公钥
         mHelper = new IabHelper(mContext, ServerConstant.GOOGLE_PAY_PUBLIC_KEY);
         //调试模式
@@ -37,7 +39,7 @@ public class GooglePayHelper {
                     Log.d(TAG, "Setup fail.");
                     return;
                 }
-                if (mHelper == null){
+                if (mHelper == null) {
                     Log.d(TAG, "Setup fail.");
                     return;
                 }
@@ -49,8 +51,8 @@ public class GooglePayHelper {
 
     /**
      * 查询库存
-     * */
-    private void queryInventory(){
+     */
+    private void queryInventory() {
         Log.e(TAG, "Query inventory start");
         try {
             mHelper.queryInventoryAsync(mGotInventoryListener);
@@ -59,22 +61,24 @@ public class GooglePayHelper {
         }
     }
 
-    /**查询库存的回调*/
+    /**
+     * 查询库存的回调
+     */
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         @Override
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.e(TAG, "Query inventory finished.");
+            Log.e(TAG, "Query inventory finished." + "sku：" + sku);
             if (result.isFailure()) {
                 Log.e(TAG, "Failed to query inventory: " + result);
                 return;
             }
             Log.e(TAG, "Query inventory was successful." + inventory.getPurchase(sku));
-//            if (inventory.hasPurchase(sku)){
-//                //库存存在用户购买的产品，先去消耗
-//
-//            }else{
-//                //库存不存在
-//            }
+            if (inventory.hasPurchase(sku)) {
+                //库存存在用户购买的产品，先去消耗
+
+            } else {
+                //库存不存在
+            }
 
 //             Check for gas delivery -- if we own gas, we should fill up the tank immediately
             //查询你的产品是否存在没有消耗的，要是没有消耗，先去消耗，再购买
@@ -98,14 +102,17 @@ public class GooglePayHelper {
      * google应用内支付调用购买接口的时候，应先确保用户没有存在这个商品的购买（买了但是没有消耗）
      * launchPurchaseFlow(Activity, String, int, OnIabPurchaseFinishedListener, String) 购买商品
      */
-    public void buyGoods(String sku){
+    public void buyGoods(String sku) {
         this.sku = sku;
-        queryInventory();
-
-
+//        queryInventory();
 
         //在合适的地方调用购买
-//        mHelper.launchPurchaseFlow(mContext, sku, RC_REQUEST, mPurchaseFinishedListener, extra);
+        try {
+            // 这个payload是要给Google发送的备注信息，自定义参数，购买完成之后的订单中也有该字段
+            mHelper.launchPurchaseFlow(mContext, sku, 100, mPurchaseFinishedListener, "pay");
+        } catch (IabHelper.IabAsyncInProgressException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -119,7 +126,7 @@ public class GooglePayHelper {
             Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
             if (result.isFailure()) {
                 // Oh noes! pay fail
-                Log.d(TAG,"Error purchasing: " + result);
+                Log.d(TAG, "Error purchasing: " + result);
                 return;
             }
 
@@ -134,7 +141,7 @@ public class GooglePayHelper {
      * 消耗商品
      * 用户购买成功后，如果是可重复购买的商品，应该立刻将这个商品消耗掉，以及在购买之前应确保用户不存在这个商品，如果存在就调用消耗商品的接口去将商品消耗掉
      */
-    public void expendGoods(){
+    public void expendGoods() {
 //        mHelper.consumeAsync(purchase, mConsumeFinishedListener);
     }
 
@@ -148,9 +155,8 @@ public class GooglePayHelper {
             Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
             if (result.isSuccess()) {
                 Log.d(TAG, "Consumption successful. Provisioning.");
-            }
-            else {
-                Log.d(TAG,"Error while consuming: " + result);
+            } else {
+                Log.d(TAG, "Error while consuming: " + result);
             }
         }
     };

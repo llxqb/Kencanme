@@ -3,7 +3,9 @@ package com.shushan.kencanme.mvp.ui.activity.vip;
 import android.content.Context;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
+import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.OpenVipModel;
@@ -46,6 +48,29 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
             responseData.parseData(OpenVipResponse.class);
             OpenVipResponse response = (OpenVipResponse) responseData.parsedData;
             mOpenVipView.OpenVipListSuccess(response);
+        } else {
+            mOpenVipView.showLoading(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 创建订单
+     */
+    @Override
+    public void onRequestCreateOrder(CreateOrderRequest createOrderRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onRequestCreateOrder(createOrderRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::createOrderSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+
+    private void createOrderSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderResponse.class);
+            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+            mOpenVipView.createOrderSuccess(response);
         } else {
             mOpenVipView.showLoading(responseData.errorMsg);
         }

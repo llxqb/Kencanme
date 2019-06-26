@@ -263,7 +263,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         } else {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_female);
         }
-        String mSexYearTvValue = mLoginUser.age + getResources().getString(R.string.HomeViewPagerAdapter_years);
+        String mSexYearTvValue = mLoginUser.age + " "+getResources().getString(R.string.HomeViewPagerAdapter_years);
         mSexYearTv.setText(mSexYearTvValue);
         //svip不为0显示图标
         if (mLoginUser.svip == 0) {
