@@ -221,18 +221,30 @@ public class DialogFactory {
      */
     public static void showRechargeBeansDialog(Activity context) {
         RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
+        rechargeBeansDialog.setContent(context.getResources().getString(R.string.RechargeBeansDialog_no_beans_hint),context.getResources().getString(R.string.earn_beans),context.getResources().getString(R.string.recharge));
         rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
     }
 
     /**
      * 显示使用嗨豆
+     * 查看照片、聊天、点击view
      */
     public static void showUseBeansDialog(Activity context, String title, int beansNum) {
         MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
         messageUseBeansDialog.setListener((MessageUseBeansDialog.MessageUseBeansDialogListener) context);
         messageUseBeansDialog.setTitle(title, beansNum);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
+    }
+
+    /**
+     * 消耗嗨豆或者成为VIP
+     */
+    public static void showRechargeBeansDialog2(Activity context) {
+        RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
+        rechargeBeansDialog.setContent(context.getResources().getString(R.string.RechargeBeansDialog_beans_or_vip_hint),context.getResources().getString(R.string.dialog_style2_hint),context.getResources().getString(R.string.recharge));
+        rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
     }
 
 }

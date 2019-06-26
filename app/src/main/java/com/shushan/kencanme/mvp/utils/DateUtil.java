@@ -94,7 +94,20 @@ public class DateUtil {
         return re_StrTime;
     }
 
-
+    // 将字符串转为时间戳
+    public static String getTime(String user_time,String pattern) {
+        String re_time = null;
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.CHINA);
+        Date d;
+        try {
+            d = sdf.parse(user_time);
+            long l = d.getTime();
+            String str = String.valueOf(l);
+            re_time = str.substring(0, 10);
+        }catch (ParseException e) {
+        }
+        return re_time;
+    }
 
     /**
      * 浏览器时间转字符串

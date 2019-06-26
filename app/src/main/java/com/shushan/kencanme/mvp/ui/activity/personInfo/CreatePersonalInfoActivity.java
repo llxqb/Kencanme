@@ -105,12 +105,10 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
                     UpdatePersonalInfoRequest request = new UpdatePersonalInfoRequest();
                     request.nickname = mUserNice.getText().toString();
                     request.sex = mMaleRb.isChecked() ? 1 : 2;// 1男2女
-                    request.birthday = mBirthday.getText().toString();
+                    request.birthday = DateUtil.getTime(mBirthday.getText().toString(), "yyyy/MM/dd");
                     request.city = mAddress.getText().toString();
                     request.token = mToken;
-//                    mPresenter.onRequestPersonalInfo(request);
                     PersonalInfoUploadPhotoActivity.start(this, request);
-//                    finish();
                 }
                 break;
         }
@@ -176,7 +174,6 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
     public void uploadVideoSuccess(String videoPath) {
 
     }
-
 
 
     @Override

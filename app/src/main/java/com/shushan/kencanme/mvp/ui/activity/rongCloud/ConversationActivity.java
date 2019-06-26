@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.KencanmeApp;
@@ -22,14 +23,15 @@ import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
+import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.utils.ConversationUtil;
 import com.shushan.kencanme.mvp.utils.PicUtils;
 import com.shushan.kencanme.mvp.utils.TranTools;
-import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
 import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
+import com.shushan.kencanme.mvp.views.dialog.RechargeBeansDialog;
 import com.shushan.kencanme.mvp.views.dialog.SendPhotoTypeDialog;
 
 import java.util.List;
@@ -51,7 +53,7 @@ import io.rong.message.ImageMessage;
  * 打开消息界面
  */
 public class ConversationActivity extends BaseActivity implements CommonChoiceDialog.commonChoiceDialogListener, RongIM.OnSendMessageListener, ConversationControl.ConversationView,
-        CommonDialog.CommonDialogListener, SendPhotoTypeDialog.SendPhotoTypeDialogListener, CustomizeMessageItemProvider.LookViewListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
+        SendPhotoTypeDialog.SendPhotoTypeDialogListener, CustomizeMessageItemProvider.LookViewListener, MessageUseBeansDialog.MessageUseBeansDialogListener, RechargeBeansDialog.RechargeDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -59,6 +61,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     TextView mCommonTitleTv;
     @BindView(R.id.common_iv_right)
     ImageView mCommonRightIv;
+    @BindView(R.id.chat_top_hint_btn)
+    TextView mChatTopHintBtn;
+    @BindView(R.id.chat_top_hint_rl)
+    RelativeLayout mChatTopHintRl;
     private LoginUser mLoginUser;
     String mTargetId;
     /**
@@ -69,6 +75,11 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      * 已用嗨豆查看图片集合
      */
     private List<String> mMessageIdList;
+    /**
+     * 1、使用1嗨豆聊天
+     * 2、使用嗨豆查看私有照片
+     */
+    private int UseBeansDialogFlag;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -101,6 +112,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mLoginUser = mBuProcessor.getLoginUser();
         mMessageIdList = (List<String>) mSharePreferenceUtil.readObjData("messageIdList");
         CustomizeMessageItemProvider.setMessageList(mMessageIdList);
+        String chatTopHintRl = mSharePreferenceUtil.getData("chat_top_rl");
+        if (chatTopHintRl.equals("true")) {
+            mChatTopHintRl.setVisibility(View.GONE);
+        }
 //        ConversationUtil.sendCustomizeMesage("Kencanme6", Conversation.ConversationType.PRIVATE,"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3071844911,2905106883&fm=26&gp=0.jpg",1,5);
     }
 
@@ -110,12 +125,15 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
     }
 
-
-    @OnClick({R.id.common_back, R.id.common_iv_right})
+    @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
                 finish();
+                break;
+            case R.id.chat_top_hint_btn:
+                mSharePreferenceUtil.setData("chat_top_rl", "true");
+                mChatTopHintRl.setVisibility(View.GONE);
                 break;
             case R.id.common_iv_right:
                 CommonChoiceDialog commonChoiceDialog = CommonChoiceDialog.newInstance();
@@ -148,7 +166,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
-        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat) && mLoginUser.beans >= 1) {
             MessageContent messageContent = message.getContent();
             if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
@@ -163,7 +181,12 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             isSendPic = false;
             return message;
         } else {
-            DialogFactory.showOpenVipDialog(this, getResources().getString(R.string.dialog_use_beans_chat));
+            if (mLoginUser.beans > 0) {
+                UseBeansDialogFlag = 1;
+                DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_chat_num), 1);
+            } else {
+                DialogFactory.showRechargeBeansDialog2(this);
+            }
         }
         return null;
     }
@@ -230,12 +253,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         showToast(erorMsg);
     }
 
-
-    @Override
-    public void commonDialogBtnOkListener() {
-        startActivitys(OpenVipActivity.class);
-    }
-
     View customizeView;
     int customizePos;
     CustomizeMessage mContent;
@@ -250,10 +267,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         customizePos = position;
         mContent = content;
         mCustomizeMessage = message;
-        MessageUseBeansDialog messageUseBeansDialog = MessageUseBeansDialog.newInstance();
-        messageUseBeansDialog.setListener(this);
-        messageUseBeansDialog.setTitle(getResources().getString(R.string.ConversationActivity_private_photo_hint), content.beans);
-        DialogFactory.showDialogFragment(getSupportFragmentManager(), messageUseBeansDialog, MessageUseBeansDialog.TAG);
+        UseBeansDialogFlag = 2;
+        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.ConversationActivity_private_photo_hint), content.beans);
     }
 
     /**
@@ -262,12 +277,22 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void messageUseBeansDialogBtnOkListener() {
-        UseBeansRequest useBeansRequest = new UseBeansRequest();
-        useBeansRequest.token = mBuProcessor.getToken();
-        useBeansRequest.beans = String.valueOf(mContent.beans);
-        useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
-        useBeansRequest.type = "3";
-        mPresenter.onRequestUseBeans(useBeansRequest);
+        if (UseBeansDialogFlag == 1) {
+            UseBeansRequest useBeansRequest = new UseBeansRequest();
+            useBeansRequest.token = mBuProcessor.getToken();
+            useBeansRequest.beans = String.valueOf(mContent.beans);
+            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+            useBeansRequest.type = "4";
+            mPresenter.onRequestUseBeans(useBeansRequest);
+        } else if (UseBeansDialogFlag == 2) {
+            UseBeansRequest useBeansRequest = new UseBeansRequest();
+            useBeansRequest.token = mBuProcessor.getToken();
+            useBeansRequest.beans = String.valueOf(mContent.beans);
+            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+            useBeansRequest.type = "3";
+            mPresenter.onRequestUseBeans(useBeansRequest);
+        }
+
     }
 
     /**
@@ -301,6 +326,21 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mBuProcessor.setLoginUser(mLoginUser);
     }
 
+    /**
+     * 成为VIP
+     */
+    @Override
+    public void earnBeansDialogBtnListener() {
+        startActivitys(OpenVipActivity.class);
+    }
+
+    /**
+     * 充值
+     */
+    @Override
+    public void rechargeBeansDialogBtnListener() {
+        startActivitys(RechargeActivity.class);
+    }
 
     @Override
     protected void onDestroy() {
@@ -313,4 +353,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 .conversationModule(new ConversationModule(ConversationActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
+
 }

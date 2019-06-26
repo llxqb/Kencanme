@@ -36,8 +36,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="5d104a194ca357b692000ff5" />-->
+        <!--android:name="UMENG_APPKEY"-->
+        <!--android:value="5d104a194ca357b692000ff5" />-->
 
         <activity android:name=".mvp.ui.activity.splash.SplashActivity">
             <intent-filter>
@@ -52,13 +52,11 @@
         <activity android:name=".mvp.ui.activity.login.LoginActivity" />
         <activity android:name=".mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity" />
         <activity android:name=".mvp.ui.activity.reportUser.ReportUserActivity" />
-        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity" >
-        </activity>
-        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity" />
+        <activity android:name=".mvp.ui.activity.reportUser.DataFraudActivity"/>
+        <activity android:name=".mvp.ui.activity.personInfo.CreatePersonalInfoActivity"/>
         <activity android:name=".mvp.ui.activity.personInfo.PersonalInfoUploadPhotoActivity" />
         <activity android:name=".mvp.ui.activity.register.AgreementActivity" />
-        <activity android:name=".mvp.ui.activity.vip.OpenVipActivity" >
-        </activity>
+        <activity android:name=".mvp.ui.activity.vip.OpenVipActivity"/>
         <activity android:name=".mvp.ui.activity.pay.RechargeActivity" />
         <activity android:name=".mvp.ui.activity.personInfo.EditMakeFriendsInfoActivity" />
         <activity android:name=".mvp.ui.activity.personInfo.EditPersonalInfoActivity" />
@@ -70,7 +68,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".mvp.ui.activity.setting.SettingActivity" />
         <activity android:name=".mvp.ui.activity.setting.MessageReminderActivity" />
-        <activity android:name=".mvp.ui.activity.setting.ClearCacheActivity" >
+        <activity android:name=".mvp.ui.activity.setting.ClearCacheActivity">
 
         </activity>
         <activity
@@ -109,7 +107,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.photo.LookPhotoActivity" >
+        <activity android:name=".mvp.ui.activity.photo.LookPhotoActivity">
 
         </activity>
         <activity android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity" />

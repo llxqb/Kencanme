@@ -21,8 +21,6 @@ public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
         void getInfoSuccess(HomeFragmentResponse response);
 
-        void getInfoFail(String errMsg);
-
         void getLikeSuccess(String msg);
 
         void getBuyExposureTimeList(DialogBuyBean dialogBuyBean);

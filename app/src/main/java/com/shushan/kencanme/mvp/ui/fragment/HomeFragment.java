@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
@@ -41,6 +42,7 @@ import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoA
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.MyTimer;
@@ -212,11 +214,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     @Override
-    public void getInfoFail(String errMsg) {
-        showToast(errMsg);
-    }
-
-    @Override
     public void getLikeSuccess(String msg) {
         listBean.setIs_like(1);
         mHomeAdapter.notifyDataSetChanged();
@@ -227,7 +224,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @SuppressLint("CheckResult")
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {
-//        LogUtils.d("response:" + new Gson().toJson(response));
+        LogUtils.d("response:" + new Gson().toJson(response));
         List<HomeFragmentResponse.ListBean> dataList = response.getList();
         mHomeAdapter.addData(dataList);
     }

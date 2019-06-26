@@ -2,6 +2,7 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 
 
 import com.shushan.kencanme.entity.request.SystemMsgRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.SystemMsgResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
@@ -13,6 +14,8 @@ import com.shushan.kencanme.mvp.presenter.Presenter;
 public class SystemMsgControl {
     public interface SystemMsgView extends LoadDataView {
         void  getSystemMsgSuccess(SystemMsgResponse systemMsgResponse);
+
+        void getDeleteMsgSuccess();
     }
 
     public interface PresenterSystemMsg extends Presenter<SystemMsgView> {
@@ -20,6 +23,10 @@ public class SystemMsgControl {
          * 系统消息列表
          */
         void onRequestSystemMsgList(SystemMsgRequest systemMsgRequest);
+        /**
+         * 清除系统消息
+         */
+        void onRequestDeleteSystemMsg(TokenRequest tokenRequest);
     }
 
 

@@ -46,6 +46,7 @@
     <string name="dialog_open_vip_chat" translatable="false">Open Super VIP Free Chat~</string>
     <string name="dialog_open_vip_album" translatable="false">Open Super VIP look more</string>
     <string name="dialog_open_vip_chat_like" translatable="false">Buy Super VIP to see who likes you</string>
+    <string name="dialog_use_beans_chat_num" translatable="false">Hey beans is required</string>
     <!-- buyDialog-->
     <string name="buy_dailog_title" translatable="false">Super exposure</string>
     <!-- 要替换掉 -->
@@ -64,6 +65,7 @@
     <!--RechargeBeansDialog -->
     <string name="RechargeBeansDialog_no_beans_hint" translatable="false">Hey, you don\'t have enough beans!</string>
     <string name="PhotoDialog_title_hint" translatable="false">Select video or photo</string>
+    <string name="RechargeBeansDialog_beans_or_vip_hint" translatable="false">You don\'t have enough Heybeans? Register for super VIP chat for free</string>
     <string name="Video" translatable="false">Video</string>
     <string name="Photo" translatable="false">Photo</string>
     <!-- 加入黑名单-->
@@ -208,6 +210,8 @@
     <string name="ConversationListFragment_Chat" translatable="false">Chat</string>
     <string name="ConversationListFragment_System_message_title" translatable="false">System message</string>
     <string name="ConversationListFragment_System_message_title_hint" translatable="false">There are more girls waiting for you to call …</string>
+    <string name="ConversationListFragment_top_title_hint" translatable="false">Private message 1 Hey beans/per,VIP Free</string>
+    <string name="ConversationListFragment_top_title_hint_btn" translatable="false">No more reminder</string>
     <!--ClearCacheActivity -->
     <string name="ClearCacheActivity_value" translatable="false">清除缓存（10M）</string>
     <!--FeedbackProblemActivity -->

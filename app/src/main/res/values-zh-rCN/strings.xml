@@ -17,6 +17,7 @@
     <string name="whatsapp">WhatsApp</string>
     <string name="album_max_num">最多传12张</string>
     <string name="fraud_album_max_num">最多传8张</string>
+    <string name="money">$</string>
     <!-- 提交和保存-->
     <string name="submit">Submit</string>
     <string name="Preserve">Preserve</string>
@@ -26,7 +27,7 @@
     <string name="earn_beans">Earn Hey Beans</string>
     <string name="recharge">Purchase</string>
     <!-- 敬请期待-->
-    <string name="wait_develop">waiting...</string>
+    <string name="wait_develop">waiting…</string>
     <string name="app_like">Like</string>
     <string name="app_chat">Chat</string>
     <string name="app_view">Check now</string>
@@ -43,7 +44,8 @@
     <string name="dialog_open_vip_chat">Open Super VIP Free Chat~</string>
     <string name="dialog_open_vip_album">Open Super VIP look more</string>
     <string name="dialog_open_vip_chat_like">Buy Super VIP to see who likes you</string>
-    <string name="money">$</string>
+    <string name="dialog_use_beans_chat_num">Hey beans is required</string>
+
     <!-- buyDialog-->
     <string name="buy_dailog_title">Super exposure</string>
     <!-- 要替换掉 -->
@@ -62,6 +64,7 @@
     <!--RechargeBeansDialog -->
     <string name="RechargeBeansDialog_no_beans_hint">Hey, you don\'t have enough beans!</string>
     <string name="PhotoDialog_title_hint">Select video or photo</string>
+    <string name="RechargeBeansDialog_beans_or_vip_hint">You don\'t have enough Heybeans? Register for super VIP chat for free</string>
     <string name="Video">Video</string>
     <string name="Photo">Photo</string>
     <!-- 加入黑名单-->
@@ -209,6 +212,8 @@
     <string name="ConversationListFragment_Chat">Chat</string>
     <string name="ConversationListFragment_System_message_title">System message</string>
     <string name="ConversationListFragment_System_message_title_hint">There are more girls waiting for you to call …</string>
+    <string name="ConversationListFragment_top_title_hint">Private message 1 Hey beans/per,VIP Free</string>
+    <string name="ConversationListFragment_top_title_hint_btn">No more reminder</string>
     <!--ClearCacheActivity -->
     <string name="ClearCacheActivity_value">清除缓存（10M）</string>
     <!--FeedbackProblemActivity -->

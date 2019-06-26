@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerSystemMsgComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.SystemMsgModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.SystemMsgRequest;
+import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.SystemMsgResponse;
 import com.shushan.kencanme.mvp.ui.adapter.SystemMsgAdapter;
 
@@ -27,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.SystemMsgView {
+public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.SystemMsgView, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -57,23 +59,29 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void initView() {
+        mImageLoaderHelper.displayImage(this, R.mipmap.system_message_clean, mCommonIvRight, R.mipmap.system_message_clean);
+        mCommonIvRight.setVisibility(View.VISIBLE);
         mEmptyView = LayoutInflater.from(this).inflate(R.layout.no_message_layout, (ViewGroup) mSystemMsgRecyclerView.getParent(), false);
         mCommonTitleTv.setText(getResources().getString(R.string.SystemMsgActivity_title));
         mImageLoaderHelper.displayImage(this, R.mipmap.system_message_clean, mCommonIvRight, R.mipmap.system_message_clean);
         mSystemMsgRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         systemMsgAdapter = new SystemMsgAdapter(this, systemMsgResponseList, mImageLoaderHelper);
+        systemMsgAdapter.setOnLoadMoreListener(this, mSystemMsgRecyclerView);
         mSystemMsgRecyclerView.setAdapter(systemMsgAdapter);
     }
 
     @Override
     public void initData() {
+        requestMsgList();
+    }
+
+    private void requestMsgList() {
         SystemMsgRequest systemMsgRequest = new SystemMsgRequest();
         systemMsgRequest.token = mBuProcessor.getToken();
         systemMsgRequest.page = String.valueOf(page);
         systemMsgRequest.pagesize = pageSize;
         mPresenter.onRequestSystemMsgList(systemMsgRequest);
-
-        }
+    }
 
     @OnClick({R.id.common_back, R.id.common_iv_right})
     public void onViewClicked(View view) {
@@ -82,21 +90,46 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
                 finish();
                 break;
             case R.id.common_iv_right:
+                clearMsg();
                 break;
         }
+    }
+
+    private void clearMsg() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestDeleteSystemMsg(tokenRequest);
     }
 
     @Override
     public void getSystemMsgSuccess(SystemMsgResponse systemMsgResponse) {
         if (page == 1) {
             if (systemMsgResponse.getData().size() > 0) {
-                systemMsgAdapter.addData(systemMsgResponse.getData());
+                systemMsgAdapter.setNewData(systemMsgResponse.getData());
             } else {
                 systemMsgAdapter.setEmptyView(mEmptyView);
             }
         } else {
             systemMsgAdapter.addData(systemMsgResponse.getData());
         }
+    }
+
+    /**
+     * 清空系统消息成功
+     */
+    @Override
+    public void getDeleteMsgSuccess() {
+        systemMsgAdapter.setNewData(null);
+        systemMsgAdapter.setEmptyView(mEmptyView);
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        page++;
+        requestMsgList();
     }
 
     private void initializeInjector() {

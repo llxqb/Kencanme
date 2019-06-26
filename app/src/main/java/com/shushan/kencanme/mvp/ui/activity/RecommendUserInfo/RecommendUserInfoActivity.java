@@ -395,7 +395,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
 
     @Override
     public void getLikeSuccess(String msg) {
-        showToast(msg);
         likedBg();
         //更新用户数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));

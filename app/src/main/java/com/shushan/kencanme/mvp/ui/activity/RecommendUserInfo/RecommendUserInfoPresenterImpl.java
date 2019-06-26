@@ -119,7 +119,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getLikeSuccess("liked");
+            mRecommendUserInfoView.getLikeSuccess("success");
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -139,7 +139,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestContactSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getContactSuccess("");
+            mRecommendUserInfoView.getContactSuccess("success");
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

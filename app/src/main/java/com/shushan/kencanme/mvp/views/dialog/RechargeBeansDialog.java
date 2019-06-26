@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.help.DialogFactory;
@@ -20,13 +21,15 @@ import butterknife.Unbinder;
 
 
 /**
- * 公用提示的dialog
- * 充值beans
+ * 使用beans   查看相册
+ * 聊天回复消息  提示开vip或者使用beans
  */
 public class RechargeBeansDialog extends BaseDialogFragment {
     public static final String TAG = RechargeBeansDialog.class.getSimpleName();
     @BindView(R.id.iv_close)
     ImageView mIvClose;
+    @BindView(R.id.dialog_recharge_title)
+    TextView mDialogRechargeTitle;
     @BindView(R.id.btn_earn)
     Button mBtnEarn;
     @BindView(R.id.btn_recharge)
@@ -37,6 +40,9 @@ public class RechargeBeansDialog extends BaseDialogFragment {
     RelativeLayout mRechargeDialogLayout;
     Unbinder unbinder;
     private RechargeDialogListener mRechargeDialogListener;
+    private String mTitle;
+    private String mTopContent;
+    private String mBottomContent;
 
     public static RechargeBeansDialog newInstance() {
         return new RechargeBeansDialog();
@@ -47,11 +53,19 @@ public class RechargeBeansDialog extends BaseDialogFragment {
         this.mRechargeDialogListener = dialogBtnListener;
     }
 
+    public void setContent(String title,String topContent,String bottomContent){
+        mTitle = title;
+        mTopContent = topContent;
+        mBottomContent = bottomContent;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_recharge_beans, container, true);
         unbinder = ButterKnife.bind(this, view);
+        mDialogRechargeTitle.setText(mTitle);
+        mBtnEarn.setText(mTopContent);
+        mBtnRecharge.setText(mBottomContent);
         return view;
     }
 

@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.response.SystemMsgResponse;
 import com.shushan.kencanme.help.ImageLoaderHelper;
+import com.shushan.kencanme.mvp.utils.DateUtil;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class SystemMsgAdapter extends BaseQuickAdapter<SystemMsgResponse.DataBea
 
     @Override
     protected void convert(BaseViewHolder helper, SystemMsgResponse.DataBean item) {
+        helper.setText(R.id.system_msg_title, item.getTitle())
+                .setText(R.id.system_msg_content, item.getDetail());
+        helper.setText(R.id.system_msg_date, DateUtil.getStrTime(item.getCreate_time(), "yyyy/MM/dd"));
     }
 
 }

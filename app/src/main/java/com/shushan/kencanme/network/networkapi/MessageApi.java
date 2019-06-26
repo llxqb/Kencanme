@@ -16,6 +16,11 @@ public interface MessageApi {
     @POST("menggoda/message")
     Observable<String> onRequestSystemMsg(@Body String request);
     /**
+     * 清空系统消息
+     */
+    @POST("menggoda/message/del")
+    Observable<String> onRequestDeleteSystemMsg(@Body String request);
+    /**
      * 上传图片
      */
     @POST("menggoda/upload")

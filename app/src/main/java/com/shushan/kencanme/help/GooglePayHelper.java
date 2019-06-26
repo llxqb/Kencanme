@@ -69,12 +69,12 @@ public class GooglePayHelper {
                 return;
             }
             Log.e(TAG, "Query inventory was successful." + inventory.getPurchase(sku));
-            if (inventory.hasPurchase(sku)){
-                //库存存在用户购买的产品，先去消耗
-
-            }else{
-                //库存不存在
-            }
+//            if (inventory.hasPurchase(sku)){
+//                //库存存在用户购买的产品，先去消耗
+//
+//            }else{
+//                //库存不存在
+//            }
 
 //             Check for gas delivery -- if we own gas, we should fill up the tank immediately
             //查询你的产品是否存在没有消耗的，要是没有消耗，先去消耗，再购买

@@ -31,10 +31,16 @@ public class MessageModel {
 
 
     /**
-     *好友/喜欢的人列表
+     *系统消息列表
      */
     public Observable<ResponseData> onRequestSystemMsg(SystemMsgRequest request) {
         return mMessageApi.onRequestSystemMsg(mGson.toJson(request)).map(mTransform::transformListType);
+    }
+    /**
+     *清空系统消息
+     */
+    public Observable<ResponseData> onRequestDeleteSystemMsg(TokenRequest request) {
+        return mMessageApi.onRequestDeleteSystemMsg(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
     /**

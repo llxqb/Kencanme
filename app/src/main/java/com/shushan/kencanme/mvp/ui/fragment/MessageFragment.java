@@ -60,8 +60,6 @@ public class MessageFragment extends BaseFragment {
         mMessageViewpager.setOffscreenPageLimit(2);
         mMessageViewpager.setAdapter(new MyPageAdapter(getChildFragmentManager()));
         mTabLayout.setupWithViewPager(mMessageViewpager);
-//
-
         mTabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
