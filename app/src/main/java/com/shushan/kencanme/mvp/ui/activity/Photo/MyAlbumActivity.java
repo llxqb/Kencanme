@@ -110,7 +110,7 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
                     case R.id.photo_item_rl:
                         if (position == 0) {
                             if (myAlbumAdapter.getItemCount() >= 13) {
-                                showToast(getResources().getString(R.string.album_max_num));
+                                showToast(getResources().getString(R.string.album_num_max_12));
                             } else {
                                 startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
                             }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.shushan.kencanme.entity.Constants.ServerConstant;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.mvp.utils.googlePayUtils.IabResult;
 import com.shushan.kencanme.mvp.utils.googlePayUtils.Inventory;
@@ -17,6 +18,7 @@ public class GooglePayHelper {
     private Activity mContext;
     private IabHelper mHelper;
     private String sku;
+    private String mOrderId;
 
     public GooglePayHelper(Activity context) {
         this.mContext = context;
@@ -46,6 +48,8 @@ public class GooglePayHelper {
                 Log.d(TAG, "Setup success.");
             }
         });
+
+
     }
 
 
@@ -72,7 +76,9 @@ public class GooglePayHelper {
                 Log.e(TAG, "Failed to query inventory: " + result);
                 return;
             }
-            Log.e(TAG, "Query inventory was successful." + inventory.getPurchase(sku));
+            Log.e(TAG, "Query inventory was successful:" + inventory.getPurchase(sku));
+            Log.e(TAG, "getSkuDetails" + inventory.getSkuDetails(sku));
+
             if (inventory.hasPurchase(sku)) {
                 //库存存在用户购买的产品，先去消耗
 
@@ -102,16 +108,20 @@ public class GooglePayHelper {
      * google应用内支付调用购买接口的时候，应先确保用户没有存在这个商品的购买（买了但是没有消耗）
      * launchPurchaseFlow(Activity, String, int, OnIabPurchaseFinishedListener, String) 购买商品
      */
-    public void buyGoods(String sku) {
+    public void buyGoods(String sku, String orderId) {
         this.sku = sku;
+        this.mOrderId = orderId;
 //        queryInventory();
 
         //在合适的地方调用购买
         try {
             // 这个payload是要给Google发送的备注信息，自定义参数，购买完成之后的订单中也有该字段
-            mHelper.launchPurchaseFlow(mContext, sku, 100, mPurchaseFinishedListener, "pay");
+            mHelper.launchPurchaseFlow(mContext, sku, 100, mPurchaseFinishedListener, mOrderId);
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
+            LogUtils.e("IabHelper--e:" + e.toString());
+        } catch (Exception e) {
+            LogUtils.e("e:" + e.toString());
         }
 
     }

@@ -103,7 +103,7 @@ public class DateUtil {
             d = sdf.parse(user_time);
             long l = d.getTime();
             String str = String.valueOf(l);
-            re_time = str.substring(0, 10);
+            re_time = str.substring(0, 9);
         }catch (ParseException e) {
         }
         return re_time;

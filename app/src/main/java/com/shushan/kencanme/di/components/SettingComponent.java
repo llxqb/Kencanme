@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.SettingModule;
 import com.shushan.kencanme.di.scopes.PerActivity;
+import com.shushan.kencanme.mvp.ui.activity.setting.FeedbackProblemActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 
 import dagger.Component;
@@ -16,10 +17,13 @@ import dagger.Component;
  * Created by li.liu on 18/1/19.
  */
 @PerActivity
-@Component(dependencies = AppComponent.class,modules = {SettingModule.class, ActivityModule.class})
+@Component(dependencies = AppComponent.class, modules = {SettingModule.class, ActivityModule.class})
 public interface SettingComponent extends ActivityComponent {
     //对LoginActivity进行依赖注入
     void inject(SettingActivity settingActivity);
+
+    void inject(FeedbackProblemActivity feedbackProblemActivity);
+
     AppCompatActivity activity();
 
 }

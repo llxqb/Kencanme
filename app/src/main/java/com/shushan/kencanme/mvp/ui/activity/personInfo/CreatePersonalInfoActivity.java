@@ -105,7 +105,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
                     UpdatePersonalInfoRequest request = new UpdatePersonalInfoRequest();
                     request.nickname = mUserNice.getText().toString();
                     request.sex = mMaleRb.isChecked() ? 1 : 2;// 1男2女
-                    request.birthday = DateUtil.getTime(mBirthday.getText().toString(), "yyyy/MM/dd");
+                    request.birthday = DateUtil.getTime(mBirthdayValue, DateUtil.TIME_YYMMDD_HHMMSS);
                     request.city = mAddress.getText().toString();
                     request.token = mToken;
                     PersonalInfoUploadPhotoActivity.start(this, request);
@@ -114,11 +114,14 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
         }
     }
 
+    String mBirthdayValue;
+
     /**
      * 选择生日弹框
      */
     private void showBirthdayDialog() {
         TimePickerView pvTime = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            mBirthdayValue = DateUtil.dateTranString(date, DateUtil.TIME_YYMMDD_HHMMSS);
             mBirthday.setText(DateUtil.dateTranString(date, "yyyy/MM/dd"));
         })
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示

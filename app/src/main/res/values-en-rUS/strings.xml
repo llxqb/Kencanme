@@ -15,8 +15,9 @@
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="whatsapp">WhatsApp</string>
-    <string name="album_max_num">最多传12张</string>
-    <string name="fraud_album_max_num">最多传8张</string>
+    <string name="album_num_max_12">最多传12张</string>
+    <string name="album_num_max_8">最多传8张</string>
+    <string name="album_num_max_6">最多传6张</string>
     <string name="money">$</string>
     <!-- 提交和保存-->
     <string name="submit">Submit</string>
@@ -190,8 +191,8 @@
     <string name="UploadPhotoActivity_private_hint">（Users need to pay you Hey Dou for checking）</string>
     <string name="UploadPhotoActivity_custom_num">custom</string>
     <!--DataFraudActivity -->
-    <string name="DataFraudActivity_desc_is_null">描述不能为空</string>
-    <string name="DataFraudActivity_only_word">only 100 word.</string>
+    <string name="DataFraudActivity_desc_is_null">Please describe your problem</string>
+    <string name="DataFraudActivity_only_100_word">only 100 word.</string>
     <string name="DataFraudActivity_head_portraits">Fake Profile or Photo Data</string>
     <string name="DataFraudActivity_pic_num">Upload Screenshots, Improve Accuracy（0/8）</string>
     <string name="DataFraudActivity_other_content">More Detail Your Want to Report(multi-line)</string>
@@ -214,12 +215,16 @@
     <string name="ConversationListFragment_top_title_hint">Private message 1 Hey beans/per,VIP Free</string>
     <string name="ConversationListFragment_top_title_hint_btn">No more reminder</string>
     <!--ClearCacheActivity -->
-    <string name="ClearCacheActivity_value">清除缓存（10M）</string>
+    <string name="ClearCacheActivity_value">清除缓存（0K）</string>
+    <string name="ClearCacheActivity_value_hint" >Cleaning up local cached data only removes all media </string>
     <!--FeedbackProblemActivity -->
     <string name="FeedbackProblemActivity_problem_desc">Please describe your problem.</string>
+    <string name="FeedbackProblemActivity_problem_desc_null" >feedback can not be empty</string>
     <string name="FeedbackProblemActivity_Pictures_optional">Pictures (optional)</string>
     <string name="FeedbackProblemActivity_Contact_optional">Contact information (optional)</string>
     <string name="FeedbackProblemActivity_e_mail">Please fill in your e-mail</string>
+    <string name="FeedbackProblemActivity_e_mail_null" >email can not be empty</string>
+    <string name="FeedbackProblemActivity_only_400_word">only 400 word.</string>
     <!--MessageReminderActivity -->
     <string name="MessageReminderActivity_message_preview">Show message preview"</string>
     <string name="MessageReminderActivity_Shock">Shock</string>
@@ -292,7 +297,7 @@
     <string name="EditContactWayActivity_title">Editorial contact information</string>
     <string name="SettingActivity_title">Install</string>
     <string name="MessageReminderActivity_title">Message reminder</string>
-    <string name="ClearCacheActivity_title">Clear cache</string>
+    <string name="ClearCacheActivity_title">Clear up local cached data</string>
     <string name="FeedbackProblemActivity_title">Feedback problem</string>
     <string name="UploadPhotoActivity_title">Upload my real photo or video</string>
     <string name="OpenVipActivity_title">Open VIP</string>

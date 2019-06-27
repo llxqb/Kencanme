@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.gson.Gson;
@@ -28,7 +29,6 @@ import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MineFragment;
-import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
 import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 
@@ -70,12 +70,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             startActivitys(LoginActivity.class);
             finish();
         } else {
-            if(!mBuProcessor.isFinishFirstWrite()){
+            if (!mBuProcessor.isFinishFirstWrite()) {
                 startActivitys(CreatePersonalInfoActivity.class);
                 finish();
             }
             LoginUser loginUser = mBuProcessor.getLoginUser();
-            LogUtils.e( "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+            Log.e("ddd","loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }
         List<Fragment> fragments = new ArrayList<>();
@@ -95,6 +95,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
+        requestPersonalInfo();
+    }
+
+    private void requestPersonalInfo() {
         PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
         personalInfoRequest.token = mBuProcessor.getToken();
         mPresenter.onRequestPersonalInfo(personalInfoRequest);
@@ -120,6 +124,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             //退出登录
             startActivitys(LoginActivity.class);
             finish();
+        } else if (intent.getBooleanExtra("update_personal_info", false)) {
+            requestPersonalInfo();
         }
     }
 
@@ -146,14 +152,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         reqMessageId();
     }
 
-    private void reqMessageId(){
+    private void reqMessageId() {
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.token = mBuProcessor.getToken();
         mPresenter.onRequestMessageId(tokenRequest);
     }
+
     @Override
     public void messageIdSuccess(MessageIdResponse messageIdResponse) {
-        mSharePreferenceUtil.saveObjData("messageIdList",messageIdResponse.getData());
+        mSharePreferenceUtil.saveObjData("messageIdList", messageIdResponse.getData());
         CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
 

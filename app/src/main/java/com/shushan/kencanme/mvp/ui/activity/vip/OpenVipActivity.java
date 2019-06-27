@@ -163,10 +163,10 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 //去支付
                 //1.创建订单
                 //购买会员
-//                if (mVipinfoBean != null) {
-//                    createOrder("1", String.valueOf(mVipinfoBean.getV_id()));
-//                }
-                mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase("kencanme_beans_100"));
+                if (mVipinfoBean != null) {
+                    createOrder("1", String.valueOf(mVipinfoBean.getV_id()));
+                }
+//                mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase("kencanme_monthly_vip"));
                 break;
         }
     }
@@ -217,7 +217,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
         //2、进行支付
-        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()));
+        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
     private void initializeInjector() {

@@ -13,12 +13,20 @@
         android:id="@+id/clear_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
-        android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/bg_yellow_round_5"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:background="@drawable/bg_blue_round_5"
         android:gravity="center"
         android:text="@string/ClearCacheActivity_value"
-        />
+        android:textColor="@color/white" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:text="@string/ClearCacheActivity_value_hint"
+        android:textSize="@dimen/sp_12" />
 </LinearLayout>

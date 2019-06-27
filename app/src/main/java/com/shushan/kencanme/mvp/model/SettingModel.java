@@ -1,7 +1,9 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.entity.request.FeedbackProblemRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.network.networkapi.PersonalInfoApi;
 
 import javax.inject.Inject;
@@ -25,12 +27,23 @@ public class SettingModel {
         mTransform = transform;
     }
 
-
     /**
      * 更新用户资料
      */
     public Observable<ResponseData> updatePersonalInfoRequest(UpdatePersonalInfoRequest request) {
         return mPersonalInfoApi.updatePersonalInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 上传图片
+     */
+    public Observable<ResponseData> uploadImageRequest(UploadImage uploadImage) {
+        return mPersonalInfoApi.uploadImageRequest(mGson.toJson(uploadImage)).map(mTransform::transformCommon);
+    }
+    /**
+     * 问题反馈
+     */
+    public Observable<ResponseData> onRequestFeedbackProblem(FeedbackProblemRequest request) {
+        return mPersonalInfoApi.onRequestFeedbackProblem(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

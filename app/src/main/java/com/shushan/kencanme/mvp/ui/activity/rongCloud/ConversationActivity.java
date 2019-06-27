@@ -209,7 +209,9 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         UseBeansRequest useBeansRequest = new UseBeansRequest();
         useBeansRequest.token = mBuProcessor.getToken();
         useBeansRequest.beans = String.valueOf(beans);
-        useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+        if(mCustomizeMessage!=null){
+            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+        }
         useBeansRequest.type = type;
         useBeansRequest.see_id = chatUid;
         mPresenter.onRequestUseBeans(useBeansRequest);

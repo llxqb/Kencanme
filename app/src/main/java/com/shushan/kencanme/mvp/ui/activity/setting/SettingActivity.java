@@ -148,7 +148,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                 startActivitys(ClearCacheActivity.class);
                 break;
             case R.id.problem_feedback_tv:
-                startActivitys(FeedbackProblemActivity.class);
+                startActivitys(FeedbackProblemActivity.class);//问题反馈
                 break;
             case R.id.about_us_tv:
                 startActivitys(AboutUsActivity.class);
@@ -188,6 +188,14 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     public void updateFail(String errorMsg) {
         showToast(errorMsg);
         super.onBackPressed();
+    }
+
+    @Override
+    public void uploadImageSuccess(String picPath) {
+    }
+
+    @Override
+    public void feedbackProblemSuccess(String msg) {
     }
 
     /**

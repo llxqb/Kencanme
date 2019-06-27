@@ -141,16 +141,13 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                     case R.id.photo_item_rl:
                         if (position == 0) {
                             if (photoAdapter.getItemCount() >= 9) {
-                                showToast(getResources().getString(R.string.fraud_album_max_num));
+                                showToast(getResources().getString(R.string.album_num_max_8));
                             } else {
                                 showDialog();
                             }
                         } else {
-                            showToast("" + position);
                             //查看大图
-//                TImage bean = photoAdapter.getItem(position);
-//                if (bean != null) {
-//                }
+//                            LookPhotoActivity.start();
                         }
                         break;
                 }
@@ -286,7 +283,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             selectionStart = mDataFraudContentEv.getSelectionStart();
             selectionEnd = mDataFraudContentEv.getSelectionEnd();
             if (s.length() > 100) {
-                showToast(getResources().getString(R.string.DataFraudActivity_only_word));
+                showToast(getResources().getString(R.string.DataFraudActivity_only_100_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
                 int worldTextNum = s.length();

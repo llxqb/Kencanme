@@ -3,13 +3,18 @@ package com.shushan.kencanme.mvp.ui.activity.splash;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.user.BuProcessor;
+import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.ui.activity.main.MainActivity;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 /**
  * 启动页
@@ -17,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class SplashActivity extends BaseActivity {
 
     private ScheduledExecutorService scheduledThreadPool;
+    @Inject
+    protected BuProcessor mBuProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,7 @@ public class SplashActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
+        ((KencanmeApp) getApplication()).getAppComponent().inject(this);
         initView();
         initData();
     }
@@ -45,10 +53,14 @@ public class SplashActivity extends BaseActivity {
         if (scheduledThreadPool == null) {
             scheduledThreadPool = Executors.newScheduledThreadPool(1);
         }
-
         scheduledThreadPool.schedule(() -> {
-            startActivitys(MainActivity.class);
-            finish();
+            if (!mBuProcessor.isValidLogin()) {
+                startActivitys(LoginActivity.class);
+                finish();
+            } else {
+                startActivitys(MainActivity.class);
+                finish();
+            }
         }, 500, TimeUnit.MILLISECONDS);
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.mvp.utils.DataCleanManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +41,11 @@ public class ClearCacheActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        try {
+            mClearTv.setText(DataCleanManager.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick({R.id.common_back, R.id.clear_tv})
@@ -50,6 +55,12 @@ public class ClearCacheActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.clear_tv:
+                DataCleanManager.clearAllCache(this);
+                try {
+                    mClearTv.setText(DataCleanManager.getTotalCacheSize(this));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

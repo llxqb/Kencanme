@@ -17,8 +17,9 @@
     <string name="google" translatable="false">Google</string>
     <string name="facebook" translatable="false">Facebook</string>
     <string name="whatsapp" translatable="false">WhatsApp</string>
-    <string name="album_max_num" translatable="false">最多传12张</string>
-    <string name="fraud_album_max_num" translatable="false">最多传8张</string>
+    <string name="album_num_max_12" translatable="false">最多传12张</string>
+    <string name="album_num_max_8" translatable="false">最多传8张</string>
+    <string name="album_num_max_6" translatable="false">最多传6张</string>
     <string name="money" translatable="false">$</string>
     <!-- 提交和保存-->
     <string name="submit" translatable="false">Submit</string>
@@ -189,8 +190,8 @@
     <string name="UploadPhotoActivity_private_hint" translatable="false">（Users need to pay you Hey Dou for checking）</string>
     <string name="UploadPhotoActivity_custom_num" translatable="false">custom</string>
     <!--DataFraudActivity -->
-    <string name="DataFraudActivity_desc_is_null" translatable="false">描述不能为空</string>
-    <string name="DataFraudActivity_only_word" translatable="false">only 100 word.</string>
+    <string name="DataFraudActivity_desc_is_null" translatable="false">Please describe your problem</string>
+    <string name="DataFraudActivity_only_100_word" translatable="false">only 100 word.</string>
     <string name="DataFraudActivity_head_portraits" translatable="false">Fake Profile or Photo Data</string>
     <string name="DataFraudActivity_pic_num" translatable="false">Upload Screenshots, Improve Accuracy（0/8）</string>
     <string name="DataFraudActivity_other_content" translatable="false">More Detail Your Want to Report(multi-line)</string>
@@ -213,12 +214,16 @@
     <string name="ConversationListFragment_top_title_hint" translatable="false">Private message 1 Hey beans/per,VIP Free</string>
     <string name="ConversationListFragment_top_title_hint_btn" translatable="false">No more reminder</string>
     <!--ClearCacheActivity -->
-    <string name="ClearCacheActivity_value" translatable="false">清除缓存（10M）</string>
+    <string name="ClearCacheActivity_value" translatable="false">清除缓存（0K）</string>
+    <string name="ClearCacheActivity_value_hint" translatable="false">Cleaning up local cached data only removes all media </string>
     <!--FeedbackProblemActivity -->
     <string name="FeedbackProblemActivity_problem_desc" translatable="false">Please describe your problem.</string>
     <string name="FeedbackProblemActivity_Pictures_optional" translatable="false">Pictures (optional)</string>
     <string name="FeedbackProblemActivity_Contact_optional" translatable="false">Contact information (optional)</string>
     <string name="FeedbackProblemActivity_e_mail" translatable="false">Please fill in your e-mail</string>
+    <string name="FeedbackProblemActivity_problem_desc_null" translatable="false">feedback can not be empty</string>
+    <string name="FeedbackProblemActivity_e_mail_null" translatable="false">email can not be empty</string>
+    <string name="FeedbackProblemActivity_only_400_word" translatable="false">only 400 word.</string>
     <!--MessageReminderActivity -->
     <string name="MessageReminderActivity_message_preview" translatable="false">Show message preview"</string>
     <string name="MessageReminderActivity_Shock" translatable="false">Shock</string>
@@ -291,7 +296,7 @@
     <string name="EditContactWayActivity_title" translatable="false">Editorial contact information</string>
     <string name="SettingActivity_title" translatable="false">Install</string>
     <string name="MessageReminderActivity_title" translatable="false">Message reminder</string>
-    <string name="ClearCacheActivity_title" translatable="false">Clear cache</string>
+    <string name="ClearCacheActivity_title" translatable="false">Clear up local cached data</string>
     <string name="FeedbackProblemActivity_title" translatable="false">Feedback problem</string>
     <string name="UploadPhotoActivity_title" translatable="false">Upload my real photo or video</string>
     <string name="OpenVipActivity_title" translatable="false">Open VIP</string>

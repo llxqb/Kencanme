@@ -54,6 +54,11 @@ public interface PersonalInfoApi {
      */
     @POST("menggoda/operation/report")
     Observable<String> reportUserRequest(@Body String request);
+    /**
+     * 问题反馈
+     */
+    @POST("menggoda/user/feedback")
+    Observable<String> onRequestFeedbackProblem(@Body String request);
 
 
 }

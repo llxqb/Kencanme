@@ -5,9 +5,9 @@ android {
     defaultConfig {
         applicationId "com.shushan.kencanme"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0.1"
+        targetSdkVersion 28
+        versionCode 11
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -32,6 +32,8 @@ android {
             debuggable false //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -145,6 +147,7 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+
 
 //    //友盟
 //    //友盟推送  友盟统计

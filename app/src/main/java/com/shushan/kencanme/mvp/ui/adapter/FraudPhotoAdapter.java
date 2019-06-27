@@ -34,7 +34,7 @@ public class FraudPhotoAdapter extends BaseQuickAdapter<TImage, BaseViewHolder> 
     protected void convert(BaseViewHolder helper, TImage item) {
         helper.addOnClickListener(R.id.photo_delete).addOnClickListener( R.id.photo_item_rl);
         ImageView imageView = helper.getView(R.id.photo_iv);
-        if (helper.getPosition() == 0) {
+        if (helper.getAdapterPosition() == 0) {
             helper.setVisible(R.id.photo_delete, false);
         } else {
             helper.setVisible(R.id.photo_delete, true);
