@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_INFO)) {
             requestHomeData();
-        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_DATA_INFO)){
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_DATA_INFO)) {
             requestHomeUserInfo();
         }
         super.onReceivePro(context, intent);
@@ -158,7 +158,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                         break;
                     case R.id.home_like_iv:
                         assert listBean != null;
-                        goLike(listBean.getUid());
+                        if (listBean.getIs_like() != 1) {
+                            goLike(listBean.getUid());
+                        }
                         break;
                     case R.id.home_message_iv:
                         goChat();

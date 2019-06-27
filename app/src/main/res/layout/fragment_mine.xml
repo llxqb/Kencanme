@@ -22,7 +22,6 @@
                 android:id="@+id/personal_info_ll"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_375"
-                android:background="@mipmap/upload_photos"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7">
@@ -157,7 +156,7 @@
                     android:layout_marginTop="@dimen/dp_20"
                     android:drawablePadding="@dimen/dp_5"
                     android:drawableStart="@mipmap/mine_icon_hibeans"
-                    android:text="@string/Hi_Beans"
+                    android:text="@string/MineFragment_beans"
                     android:textColor="@color/color_6941ff"
                     android:textSize="@dimen/sp_17" />
 

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.mvp.utils.SystemUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +18,8 @@ public class AboutUsActivity extends BaseActivity {
     ImageView mCommonBack;
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
+    @BindView(R.id.app_version_name)
+    TextView mVersionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mCommonTitleTv.setText(getResources().getString(R.string.AboutUsActivity_title));
+        mVersionName.setText(SystemUtils.getVersionName(this));
 
     }
 

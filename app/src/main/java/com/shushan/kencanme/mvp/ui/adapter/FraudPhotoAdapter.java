@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,6 +41,7 @@ public class FraudPhotoAdapter extends BaseQuickAdapter<TImage, BaseViewHolder> 
             helper.setVisible(R.id.photo_delete, true);
         }
         if (item != null) {
+            Log.e("ddd","getOriginalPath="+item.getOriginalPath());
             Bitmap bitmap = BitmapFactory.decodeFile(item.getOriginalPath());
             imageView.setImageBitmap(bitmap);
         }

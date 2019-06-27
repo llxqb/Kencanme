@@ -74,10 +74,9 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         mCommonTitleTv.setText(getResources().getString(R.string.EditPersonalInfoActivity_title));
         //光标移到最后
         mEditCityEt.setSelection(mEditCityEt.getText().length());
-        mEditHeightEt.setSelection(mEditHeightEt.getText().length());
-        mEditWeightEt.setSelection(mEditWeightEt.getText().length());
-        mEditChestEt.setSelection(mEditChestEt.getText().length());
-        mEditOccupationEt.setSelection(mEditOccupationEt.getText().length());
+        if (mLoginUser.sex == 1) {
+            mChestLl.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -113,7 +112,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 showBirthdayDialog();
                 break;
             case R.id.save_btn:
-
                 updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
                 updatePersonalInfoRequest.token = mBuProcessor.getToken();
                 updatePersonalInfoRequest.city = mEditCityEt.getText().toString();

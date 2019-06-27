@@ -69,6 +69,8 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     TextView mTitleName;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+    @BindView(R.id.pic_num_tv)
+    TextView mPicNumTv;
     @BindView(R.id.data_fraud_content_ev)
     EditText mDataFraudContentEv;
     @BindView(R.id.world_limit_text)
@@ -115,6 +117,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
 
     @Override
     public void initView() {
+        mPicNumTv.setText(getResources().getString(R.string.DataFraudActivity_pic_num) + "(0/8)");
         if (getIntent() != null) {
             uid = getIntent().getStringExtra("uid");
         }
@@ -136,7 +139,9 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                 switch (view.getId()) {
                     case R.id.photo_delete:
                         photoAdapter.remove(position);
-                        photoAdapter.notifyDataSetChanged();
+                        maxPicNum = maxPicNum + 1;
+                        String photoNum = getResources().getString(R.string.DataFraudActivity_pic_num) + " (" + (photoAdapter.getItemCount() - 1) + "/8)";
+                        mPicNumTv.setText(photoNum);
                         break;
                     case R.id.photo_item_rl:
                         if (position == 0) {
@@ -252,6 +257,8 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         photoList = result.getImages();
         maxPicNum = maxPicNum - photoList.size();
         photoAdapter.addData(photoList);
+        String photoNum = getResources().getString(R.string.DataFraudActivity_pic_num) + " (" + (photoAdapter.getItemCount() - 1) + "/8)";
+        mPicNumTv.setText(photoNum);
     }
 
     @Override
@@ -282,13 +289,15 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         public void afterTextChanged(Editable s) {
             selectionStart = mDataFraudContentEv.getSelectionStart();
             selectionEnd = mDataFraudContentEv.getSelectionEnd();
+            int worldTextNum = s.length();
             if (s.length() > 100) {
                 showToast(getResources().getString(R.string.DataFraudActivity_only_100_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
-                int worldTextNum = s.length();
                 mWorldLimitText.setText(worldTextNum + "/100");
                 mDataFraudContentEv.setSelection(tempSelection);
+            } else {
+                mWorldLimitText.setText(worldTextNum + "/100");
             }
         }
     };

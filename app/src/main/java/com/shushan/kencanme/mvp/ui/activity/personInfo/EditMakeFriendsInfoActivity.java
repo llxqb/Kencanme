@@ -50,7 +50,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

@@ -185,7 +185,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
 
     private void requestExposureSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mHomeView.exposureSuccess("success");
+            mHomeView.exposureSuccess(mContext.getResources().getString(R.string.msg_super_expsure_success));
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }

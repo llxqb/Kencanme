@@ -5,6 +5,7 @@ import android.content.Context;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.response.MyFriendsResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.LoveMePeopleModel;
@@ -73,7 +74,28 @@ public class LoveMePeoplePresenterImpl implements LoveMePeopleControl.PresenterL
             mLoveMePeopleView.showToast(responseData.errorMsg);
         }
     }
-    
+
+    /**
+     *统计今日密聊次数
+     */
+    @Override
+    public void onRequestChatNum(RequestFreeChat requestFreeChat) {
+        mLoveMePeopleView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mLoveMePeopleModel.onRequestChatNum(requestFreeChat).compose(mLoveMePeopleView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestChatNumSuccess, throwable -> mLoveMePeopleView.showErrMessage(throwable),
+                        () -> mLoveMePeopleView.dismissLoading());
+        mLoveMePeopleView.addSubscription(disposable);
+    }
+
+    private void requestChatNumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mLoveMePeopleView.chatNumSuccess();
+        } else {
+            mLoveMePeopleView.showToast(responseData.errorMsg);
+        }
+    }
+
+
     @Override
     public void onCreate() {
     }

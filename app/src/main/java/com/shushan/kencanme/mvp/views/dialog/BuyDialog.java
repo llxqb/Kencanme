@@ -50,6 +50,7 @@ public class BuyDialog extends BaseDialogFragment {
     private DialogBuyBean mDialogBuyBean;
     private int beans;
     DialogBuyBean.DataBean bean;
+    private boolean isCheckOne;
 
     public static BuyDialog newInstance() {
         return new BuyDialog();
@@ -87,6 +88,7 @@ public class BuyDialog extends BaseDialogFragment {
         BuyDialogAdapter buyDialogAdapter = new BuyDialogAdapter(getActivity(), dialogBuyBeans);
         dialogBuyRecyclerView.setAdapter(buyDialogAdapter);
         buyDialogAdapter.setOnItemClickListener((adapter, view, position) -> {
+            isCheckOne = true;
             bean = buyDialogAdapter.getItem(position);
             if (bean != null) {
                 for (DialogBuyBean.DataBean buyBean : dialogBuyBeans) {
@@ -115,11 +117,13 @@ public class BuyDialog extends BaseDialogFragment {
                 break;
             case R.id.dialog_buy_buy:
                 if (dialogBtnListener != null) {
-                    if (beans < bean.num) {
-                        showToast(getResources().getString(R.string.BuyDialog_buy_beans));
-                    } else {
-                        dialogBtnListener.buyDialogBtnOkListener(bean.num);
-                        closeCommonDialog();
+                    if (isCheckOne) {
+                        if (beans < bean.num) {
+                            showToast(getResources().getString(R.string.buy_dialog_no_beans));
+                        } else {
+                            dialogBtnListener.buyDialogBtnOkListener(bean.num);
+                            closeCommonDialog();
+                        }
                     }
                 }
                 break;

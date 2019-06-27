@@ -214,10 +214,6 @@ public class FeedbackProblemActivity extends BaseActivity implements TakePhoto.T
             showToast(getResources().getString(R.string.FeedbackProblemActivity_problem_desc_null));
             return false;
         }
-        if (TextUtils.isEmpty(mEmailEv.getText())) {
-            showToast(getResources().getString(R.string.FeedbackProblemActivity_e_mail_null));
-            return false;
-        }
         return true;
     }
 

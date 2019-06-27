@@ -43,7 +43,7 @@ public class LoveMeFriendsAdapter extends BaseQuickAdapter<MyFriendsResponse.Lis
         } else if (item.getSex() == 2) {
             helper.setBackgroundRes(R.id.friends_year_tv, R.mipmap.home_gender_female);
         }
-        helper.setText(R.id.love_me_time, DateUtil.getStrTime(item.getCreate_time(), "MM-dd  HH:mm") + mContext.getResources().getString(R.string.LoveMeFriendsAdapter_like_you));
+        helper.setText(R.id.love_me_time, DateUtil.getStrTime(item.getCreate_time(), "MM-dd  HH:mm") +" "+ mContext.getResources().getString(R.string.LoveMeFriendsAdapter_like_you));
 
         if (item.isLike) {
             mImageLoaderHelper.displayImage(mContext, R.mipmap.message_like, likeIv, R.mipmap.message_like);

@@ -76,8 +76,8 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     OpenVipAdapter openVipAdapter;
     private int[] mVipPrivilegeImg = {R.mipmap.privilege_vip_logo, R.mipmap.rectangle, R.mipmap.private_letter, R.mipmap.vip_photo_open, R.mipmap.vip_video_watch,
             R.mipmap.unlimited_love, R.mipmap.search, R.mipmap.active_secret_chat, R.mipmap.make_friend};
-    private String[] mVipPrivilegeName = {"VIP logo", "Hi-beans specials", "Free private letter", "VIP photo open", "VIP video watch",
-            "Unlimited love", "Check out what I like", "Active secret chat", "Making friends in the same city"};
+    private String[] mVipPrivilegeName = {"Supremacy VIP Sign", "Hey Bean on sale", "Free private messages", "unlimited member photos ", "unlimited member video",
+            "unlimited like", "Check for who is like me(Super VIP)", "Start secret chat", "Making friends in the city"};
     LoginUser mLoginUser;
     //vip 特权
     private List<VipPrivilege> vipPrivilegeList = new ArrayList<>();
@@ -166,7 +166,6 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 if (mVipinfoBean != null) {
                     createOrder("1", String.valueOf(mVipinfoBean.getV_id()));
                 }
-//                mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase("kencanme_monthly_vip"));
                 break;
         }
     }

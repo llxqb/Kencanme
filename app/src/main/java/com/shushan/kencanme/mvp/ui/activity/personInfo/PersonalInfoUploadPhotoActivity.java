@@ -131,6 +131,10 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
             showToast(getResources().getString(R.string.PersonalInfoUploadPhotoActivity_declaration_is_empty));
             return false;
         }
+        if(mPersonalInfoRequest.cover==null){
+            showToast(getResources().getString(R.string.CreatePersonalInfoActivity_cover_is_empty));
+            return false;
+        }
         return true;
     }
 

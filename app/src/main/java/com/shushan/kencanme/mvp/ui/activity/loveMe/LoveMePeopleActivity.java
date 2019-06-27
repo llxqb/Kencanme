@@ -19,6 +19,7 @@ import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.response.MyFriendsResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
@@ -26,6 +27,7 @@ import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.LoveMeFriendsAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.dialog.MatchSuccessDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +37,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * 查看喜欢我的人
  */
-public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener {
+public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener, MatchSuccessDialog.MatchSuccessListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -51,8 +54,9 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     RecyclerView mLoveMeRecyclerView;
 
     private LoveMeFriendsAdapter myFriendsAdapter;
-    List<MyFriendsResponse.ListBean> listBeanList = new ArrayList<>();
-    LoginUser mLoginUser;
+    private List<MyFriendsResponse.ListBean> listBeanList = new ArrayList<>();
+    private LoginUser mLoginUser;
+    private MyFriendsResponse.ListBean listBean;
     @Inject
     LoveMePeopleControl.PresenterLoveMePeople mPresenter;
 
@@ -66,7 +70,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         initData();
     }
 
-    MyFriendsResponse.ListBean listBean;
 
     @Override
     public void initView() {
@@ -126,6 +129,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         myFriendsAdapter.setNewData(myFriendsResponse.getList());
     }
 
+
     @Override
     public void getLikeSuccess(String msg) {
         showToast(msg);
@@ -133,6 +137,38 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         myFriendsAdapter.notifyDataSetChanged();
         //更新用户数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+        showMatchSuccesDialog();
+    }
+
+    /**
+     * 显示匹配成功弹框
+     */
+    private void showMatchSuccesDialog() {
+        MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
+        matchSuccessDialog.setListener(this);
+        DialogFactory.showDialogFragment(this.getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
+    }
+
+    @Override
+    public void startChatBtnListener() {
+        //查看喜欢我的人都是超级VIP
+        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+            RequestFreeChat requestFreeChat = new RequestFreeChat();
+            requestFreeChat.token = mBuProcessor.getToken();
+            requestFreeChat.secret_id = String.valueOf(listBean.getUid());
+            mPresenter.onRequestChatNum(requestFreeChat);
+        }
+//        else {
+//            DialogFactory.showOpenVipDialog(this, this, getResources().getString(R.string.dialog_open_vip_chat));
+//        }
+    }
+
+    @Override
+    public void chatNumSuccess() {
+        //启动单聊页面
+        mSharePreferenceUtil.setData("chat_uid", String.valueOf(listBean.getUid()));
+        RongIM.getInstance().startPrivateChat(this, listBean.getRongyun_userid(), listBean.getNickname());
+        finish();
     }
 
     @Override
@@ -140,17 +176,16 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         startActivitys(OpenVipActivity.class);
     }
 
-
-    private void initializeInjector() {
-        DaggerLoveMePeopleComponent.builder().appComponent(getAppComponent())
-                .loveMePeopleModule(new LoveMePeopleModule(LoveMePeopleActivity.this, this))
-                .activityModule(new ActivityModule(this)).build().inject(this);
-
-    }
-
     @Override
     public void onBackPressed() {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
         super.onBackPressed();
     }
+
+    private void initializeInjector() {
+        DaggerLoveMePeopleComponent.builder().appComponent(getAppComponent())
+                .loveMePeopleModule(new LoveMePeopleModule(LoveMePeopleActivity.this, this))
+                .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
 }

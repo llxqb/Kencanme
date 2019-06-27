@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.LikeRequest;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
+import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.network.networkapi.MainApi;
 
 import javax.inject.Inject;
@@ -38,6 +39,13 @@ public class LoveMePeopleModel {
      */
     public Observable<ResponseData> onRequestLike(LikeRequest request) {
         return mMainApi.onRequestLike(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 统计今日密聊次数
+     */
+    public Observable<ResponseData> onRequestChatNum(RequestFreeChat request) {
+        return mMainApi.onRequestChatNum(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

@@ -25,7 +25,7 @@
             android:gravity="start|center_vertical"
             android:paddingEnd="@dimen/dp_10"
             android:paddingStart="@dimen/dp_10"
-            android:hint="Please enter the label content"
+            android:hint="@string/EditLabelActivity_tag_hint"
             android:textColorHint="@color/text_hint_color"
             android:textSize="@dimen/sp_14" />
 
@@ -35,7 +35,7 @@
             android:layout_height="@dimen/dp_34"
             android:background="@drawable/label_search_bg2"
             android:gravity="center"
-            android:text="Add"
+            android:text="@string/EditLabelActivity_tag_add"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
     </LinearLayout>
@@ -58,7 +58,7 @@
             android:layout_height="@dimen/dp_35"
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_blue2_round_20_selector"
-            android:text="Preserve"
+            android:text="@string/Preserve"
             android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

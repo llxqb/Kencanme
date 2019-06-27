@@ -57,7 +57,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     TextView mLogoutTv;
     private String[] sex;
     private PushSexAdapter pushSexAdapter;
-    private String minYear = "18", maxYear = "50+";
+    private String minYear = "18", maxYear = "50";
     private int pushSex;//性别 1男2女
     List<SexBean> sexList = new ArrayList<>();
     private boolean isUpdatePersonal = false;
@@ -167,7 +167,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         String ageSelectValue;
         if (rightProgress == 50) {
             ageSelectValue = leftProgress + "-" + rightProgress + "+";
-            maxYear = rightProgress + "+";
+            maxYear = String.valueOf(rightProgress);
         } else {
             ageSelectValue = leftProgress + "-" + rightProgress;
             maxYear = String.valueOf(rightProgress);
