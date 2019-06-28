@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.fragment.message;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.shushan.kencanme.di.modules.MyFriendsFragmentModule;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.entity.response.MyFriendsResponse;
+import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 import com.shushan.kencanme.mvp.ui.adapter.MyFriendsAdapter;
 
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
         initializeInjector();
@@ -68,6 +70,12 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
         mMyFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         myFriendsAdapter = new MyFriendsAdapter(getActivity(), listBeanList, mImageLoaderHelper);
         mMyFriendsRecyclerView.setAdapter(myFriendsAdapter);
+        myFriendsAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            MyFriendsResponse.ListBean listBean = (MyFriendsResponse.ListBean) adapter.getItem(position);
+            //跳到好友详情
+            assert listBean != null;
+            RecommendUserInfoActivity.start(getActivity(), listBean.getUid());
+        });
     }
 
     @Override

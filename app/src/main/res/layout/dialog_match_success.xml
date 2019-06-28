@@ -21,7 +21,7 @@
         android:layout_below="@id/match_success_iv"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/dp_m_25"
+        android:layout_marginTop="@dimen/dp_m_30"
         android:background="@drawable/match_success_tv_bg"
         android:gravity="center"
         android:text="@string/LoveMeFriendsAdapter_match_success"

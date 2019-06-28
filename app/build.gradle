@@ -147,6 +147,8 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+    //富文本加载
+    implementation 'com.zzhoujay.richtext:richtext:2.5.2'
 
 
 //    //友盟

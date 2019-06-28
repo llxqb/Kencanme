@@ -30,10 +30,11 @@ public class MyFriendsAdapter extends BaseQuickAdapter<MyFriendsResponse.ListBea
 
     @Override
     protected void convert(BaseViewHolder helper, MyFriendsResponse.ListBean item) {
+        helper.addOnClickListener(R.id.my_friends_rl);
         CircleImageView imageView = helper.getView(R.id.friends_avator_iv);
         mImageLoaderHelper.displayImage(mContext, item.getTrait(), imageView, Constant.LOADING_AVATOR);
         helper.setText(R.id.friends_nick_tv, item.getNickname());
-        helper.setText(R.id.friends_year_tv, item.getAge() + mContext.getResources().getString(R.string.HomeViewPagerAdapter_years));
+        helper.setText(R.id.friends_year_tv, item.getAge() + " "+mContext.getResources().getString(R.string.HomeViewPagerAdapter_years));
         if (item.getSex() == 1) {
             helper.setBackgroundRes(R.id.friends_year_tv, R.mipmap.home_gender_male);
         } else if (item.getSex() == 2) {

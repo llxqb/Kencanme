@@ -68,6 +68,7 @@ public class MatchSuccessDialog extends BaseDialogFragment {
                 if (matchSuccessListener != null) {
                     matchSuccessListener.startChatBtnListener();
                 }
+                closeCommonDialog();
                 break;
             case R.id.dialog_match_success_layout:
                 break;

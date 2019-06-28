@@ -151,7 +151,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
 
     @Override
     public void startChatBtnListener() {
-        //查看喜欢我的人都是超级VIP
+        //查看喜欢我的人都是超级VIP  没进行弹框提示   记录了统计今日密聊次数
         if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
             RequestFreeChat requestFreeChat = new RequestFreeChat();
             requestFreeChat.token = mBuProcessor.getToken();
