@@ -4,7 +4,9 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
+import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
 
@@ -21,6 +23,7 @@ public class ConversationControl {
         void UseBeansSuccess(String msg);
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
+        void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse);
 
     }
 
@@ -42,6 +45,10 @@ public class ConversationControl {
          * 查询用户信息（首页）
          */
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+        /**
+         * 根据融云第三方id获取用户头像和昵称
+         */
+        void onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest);
 
     }
 

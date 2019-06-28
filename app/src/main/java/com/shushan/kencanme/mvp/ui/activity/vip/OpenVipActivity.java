@@ -21,7 +21,7 @@ import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.GooglePayHelper;
-import com.shushan.kencanme.mvp.ui.activity.register.AgreementActivity;
+import com.shushan.kencanme.mvp.ui.activity.register.MemberAgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.OpenVipAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.VipPrivilegeAdapter;
 import com.shushan.kencanme.mvp.utils.DataUtils;
@@ -157,14 +157,14 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 break;
             case R.id.vip_agreement:
                 //打开协议
-                startActivitys(AgreementActivity.class);
+                startActivitys(MemberAgreementActivity.class);
                 break;
             case R.id.go_to_pay:
                 //去支付
                 //1.创建订单
                 //购买会员
                 if (mVipinfoBean != null) {
-                    createOrder("1", String.valueOf(mVipinfoBean.getV_id()));
+                    createOrder(String.valueOf(mVipinfoBean.getV_id()));
                 }
                 break;
         }
@@ -184,10 +184,10 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      * type:1购买会员 2购买嗨豆
      * relation_id:对应购买 会员/嗨豆id
      */
-    private void createOrder(String type, String relation_id) {
+    private void createOrder(String relation_id) {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.token = mBuProcessor.getToken();
-        createOrderRequest.type = type;
+        createOrderRequest.type = "1";
         createOrderRequest.relation_id = relation_id;
         createOrderRequest.money = mVipinfoBean.getSpecial_price();
         createOrderRequest.from = "Android";

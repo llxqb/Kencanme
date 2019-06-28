@@ -70,7 +70,7 @@ public class MessageUseBeansDialog extends BaseDialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_message_use_beans, container, true);
         unbinder = ButterKnife.bind(this, view);
-        String titleValue = mTitle + " " + "<font color = '#DDBA67'>" + mBeans + getResources().getString(R.string.Hi_Beans) + "</font>";
+        String titleValue = mTitle + " " + "<font color = '#DDBA67'>" + mBeans + " "+getResources().getString(R.string.Hi_Beans) + "</font>";
         mUseBeansTitle.setText(Html.fromHtml(titleValue));
         mUseBeansNum.setText(String.valueOf(mBeans));
         return view;

@@ -3,7 +3,9 @@ package com.shushan.kencanme.mvp.ui.activity.pay;
 import android.content.Context;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.ReChargeBeansModel;
@@ -51,6 +53,30 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
             mRechargeView.showLoading(responseData.errorMsg);
         }
     }
+
+    /**
+     * 创建订单
+     */
+    @Override
+    public void onRequestCreateOrder(CreateOrderRequest createOrderRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onRequestCreateOrder(createOrderRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::createOrderSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+
+    private void createOrderSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderResponse.class);
+            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+            mRechargeView.createOrderSuccess(response);
+        } else {
+            mRechargeView.showLoading(responseData.errorMsg);
+        }
+    }
+
 
     @Override
     public void onCreate() {

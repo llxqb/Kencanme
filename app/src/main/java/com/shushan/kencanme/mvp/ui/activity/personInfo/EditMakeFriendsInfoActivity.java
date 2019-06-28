@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -112,10 +114,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.EditMakeFriendsInfoActivity_title));
-        //光标移到最后
-        mUserNameEv.setSelection(mUserNameEv.getText().length());
-        mDeclarationEv.setSelection(mDeclarationEv.getText().length());
-
+        mDeclarationEv.addTextChangedListener(search_text_OnChange);
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
         int size = Math.min(getResources().getDisplayMetrics().widthPixels, getResources().getDisplayMetrics().heightPixels);
@@ -140,6 +139,9 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         mImageLoaderHelper.displayImage(this, mLoginUser.trait, mHeadIconIv, Constant.LOADING_SMALL);
         mUserNameEv.setText(mLoginUser.nickname);
         mDeclarationEv.setText(mLoginUser.declaration);
+        //光标移到最后
+        mUserNameEv.setSelection(mUserNameEv.getText().length());
+        mDeclarationEv.setSelection(mDeclarationEv.getText().length());
     }
 
     @OnClick({R.id.common_back, R.id.cover_iv, R.id.head_icon_rl, R.id.save_tv, R.id.upload_hint_tv})
@@ -362,6 +364,36 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     public void photoDialogBtn3OkListener() {
 
     }
+
+    public TextWatcher search_text_OnChange = new TextWatcher() {
+        private int selectionStart;
+        private int selectionEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = mDeclarationEv.getSelectionStart();
+            selectionEnd = mDeclarationEv.getSelectionEnd();
+            int worldTextNum = s.length();
+            if (s.length() > 80) {
+                showToast(getResources().getString(R.string.DataFraudActivity_only_100_word));
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionStart;
+                mDeclarationWorldLimitTv.setText(worldTextNum + "/80");
+                mDeclarationEv.setSelection(tempSelection);
+            } else {
+                mDeclarationWorldLimitTv.setText(worldTextNum + "/80");
+            }
+        }
+    };
 
     private void initializeInjector() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())

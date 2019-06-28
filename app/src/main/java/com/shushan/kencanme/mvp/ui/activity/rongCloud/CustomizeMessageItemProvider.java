@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.help.ImageLoaderHelper;
@@ -87,7 +89,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.beansNum.setText(String.valueOf(content.beans));
             ImageLoaderHelper.displayImage2(v, content.cover_url, holder.coverIv, Constant.LOADING_SMALL);
         } else {
-//            Log.e("ddd", "content:" + new Gson().toJson(content));
+            Log.e("ddd", "content:" + new Gson().toJson(content)+"  uid:"+message.getUId());
+            Log.e("ddd", "mMessageIdList:" + new Gson().toJson(mMessageIdList));
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_left);
             holder.customizeMsgTv.setTextColor(v.getResources().getColor(R.color.first_text_color));
             holder.customizeMsgTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_left_photo));
@@ -95,7 +98,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.customizeMsgHintTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_left_photo_hint));
             holder.beansNum.setVisibility(View.GONE);
             holder.lookTv.setText(v.getResources().getString(R.string.app_view));
-            if (content.isLocked == 1 && content.msgType == 1 && !DataUtils.isContainString(mMessageIdList, String.valueOf(message.getMessageId()))) {
+            if (content.isLocked == 1 && content.msgType == 1 && !DataUtils.isContainString(mMessageIdList, message.getUId())) {
                 ImageLoaderHelper.displayGlassImage2(v, content.cover_url, holder.coverIv, Constant.LOADING_SMALL);
                 holder.isLockedIv.setVisibility(View.VISIBLE);
                 holder.lookTv.setVisibility(View.VISIBLE);

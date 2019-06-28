@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.network.networkapi.BuyApi;
 
@@ -27,6 +28,13 @@ public class ReChargeBeansModel {
 
     public Observable<ResponseData> beansInfoRequest(ReChargeBeansInfoRequest request) {
         return mBuyApi.beansInfoRequest(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 创建订单
+     */
+    public Observable<ResponseData> onRequestCreateOrder(CreateOrderRequest request) {
+        return mBuyApi.onRequestCreateOrder(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 

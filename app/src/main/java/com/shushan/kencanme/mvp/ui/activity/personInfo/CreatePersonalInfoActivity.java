@@ -20,6 +20,7 @@ import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.mvp.utils.DateUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.utils.SystemUtils;
 
 import javax.inject.Inject;
 
@@ -95,6 +96,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
             case R.id.female_rb:
                 break;
             case R.id.birthday:
+                SystemUtils.hideSoftKeyboard(this);
                 showBirthdayDialog();
                 break;
             case R.id.address:

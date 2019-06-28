@@ -315,18 +315,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             unlikedBg();
         }
 
-        //是否查看过联系方式
-        if (recommendUserInfoResponse.getIs_see_contact() == 1) {
-            for (ContactWay contactWay : contactWayList) {
-                contactWay.isShow = true;
-            }
-            contactWayAdapter.notifyDataSetChanged();
-        } else {
-            for (ContactWay contactWay : contactWayList) {
-                contactWay.isShow = false;
-            }
-            contactWayAdapter.notifyDataSetChanged();
-        }
     }
 
     private void likedBg() {
@@ -358,7 +346,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 显示使用嗨豆
      */
     private void showUseBeansDialog(int beansNum) {
-        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_album), beansNum);
+        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_contact), beansNum);
     }
 
     /**
@@ -416,11 +404,23 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             dataBean.setAlbum_url(albumBean.getAlbum_url());
             dataBean.setAlbum_type(albumBean.getAlbum_type());
             dataBean.setCost(albumBean.getCost());
+            dataBean.setState(albumBean.getState());
             albumInfoLists.add(dataBean);
         }
         albumAdapter.setNewData(albumInfoLists);
         contactWayList = response.getContact();
-        if (contactWayList != null && contactWayList.size() > 0) {
+        //是否查看过联系方式
+        if (recommendUserInfoResponse.getIs_see_contact() == 1) {
+            mLookOverTv.setVisibility(View.GONE);
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = true;
+            }
+        } else {
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = false;
+            }
+        }
+        if (contactWayList.size() > 0) {
             contactWayAdapter.setNewData(contactWayList);
             mContactRl.setVisibility(View.VISIBLE);
         } else {
@@ -539,7 +539,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         lookAlbumByBeansRequest.token = mBuProcessor.getToken();
         lookAlbumByBeansRequest.beans = String.valueOf(mAlbumBean.getCost());
         lookAlbumByBeansRequest.album_id = String.valueOf(mAlbumBean.getId());
-        lookAlbumByBeansRequest.see_id = String.valueOf(mLoginUser.uid);
+        lookAlbumByBeansRequest.see_id = String.valueOf(mUid);
         mPresenter.onRequestAlbumByBeans(lookAlbumByBeansRequest);
     }
 
@@ -602,7 +602,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         //进行更新
         requestHomeUserInfo();
         //启动单聊页面
-        mSharePreferenceUtil.setData("chat_uid",String.valueOf(recommendUserInfoResponse.getUid()));
         RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
 

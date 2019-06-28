@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             //登录后台系统
             appLogin(account.getId(), account.getIdToken());
         } else {
-            showToast("google login fail");
+            showToast(getResources().getString(R.string.login_google_fail));
         }
     }
 

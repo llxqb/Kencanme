@@ -37,4 +37,9 @@ public interface MessageApi {
     @POST("menggoda/index/user_exposure")
     Observable<String> onRequestHomeUserInfo(@Body String request);
 
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    @POST("menggoda/user/rongyun_info")
+    Observable<String> onRequestUserInfoByRid(@Body String request);
 }

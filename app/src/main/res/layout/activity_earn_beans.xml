@@ -5,23 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.register.AgreementActivity">
+    tools:context=".mvp.ui.activity.register.EarnBeansActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <include layout="@layout/common_toolbar"/>
+
 
     <ProgressBar
         android:id="@+id/progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/dp_3"
+        android:layout_height="3dip"
         android:indeterminateOnly="false"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_states" />
 
+
     <WebView
-        android:id="@+id/agreement_wb"
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_height="wrap_content"/>
 </LinearLayout>

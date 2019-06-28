@@ -421,7 +421,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         //进行更新
         requestHomeUserInfo();
         //启动单聊页面
-        mSharePreferenceUtil.setData("chat_uid", String.valueOf(listBean.getUid()));
         RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
     }
 

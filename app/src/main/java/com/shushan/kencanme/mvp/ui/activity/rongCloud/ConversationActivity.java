@@ -19,7 +19,9 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
+import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
@@ -122,12 +124,15 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 //        ConversationUtil.sendCustomizeMesage("Kencanme6", Conversation.ConversationType.PRIVATE,"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3071844911,2905106883&fm=26&gp=0.jpg",1,5);
     }
 
+
     private void initIntent(Intent intent) {
         mTargetId = Objects.requireNonNull(intent.getData()).getQueryParameter("targetId");
         mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
         mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
-
-        chatUid = mSharePreferenceUtil.getData("chat_uid");
+        UserInfoByRidRequest userInfoByRidRequest = new UserInfoByRidRequest();
+        userInfoByRidRequest.token = mBuProcessor.getToken();
+        userInfoByRidRequest.rongyun_third_id = mTargetId;
+        mPresenter.onRequestUserInfoByRid(userInfoByRidRequest);
     }
 
     @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right})
@@ -166,7 +171,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     /**
      * 获取消息id
      */
-    int messageId;
 
     @Override
     public Message onSend(Message message) {
@@ -178,7 +182,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             MessageContent messageContent = message.getContent();
             if (messageContent instanceof ImageMessage) {//图片消息
                 if (!isSendPic) {
-                    messageId = message.getMessageId();
                     imgMsg = (ImageMessage) messageContent;
                     sendImgMsgDialog();
                     return null;
@@ -209,8 +212,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         UseBeansRequest useBeansRequest = new UseBeansRequest();
         useBeansRequest.token = mBuProcessor.getToken();
         useBeansRequest.beans = String.valueOf(beans);
-        if(mCustomizeMessage!=null){
-            useBeansRequest.message_id = String.valueOf(mCustomizeMessage.getMessageId());
+        if (mCustomizeMessage != null) {
+            useBeansRequest.message_id = mCustomizeMessage.getUId();
         }
         useBeansRequest.type = type;
         useBeansRequest.see_id = chatUid;
@@ -306,7 +309,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public void UseBeansSuccess(String msg) {
         //更新自定义消息view
         if (UseBeansDialogFlag == 2) {
-            mMessageIdList.add(String.valueOf(mCustomizeMessage.getMessageId()));
+            mMessageIdList.add(mCustomizeMessage.getUId());
             mSharePreferenceUtil.saveObjData("messageIdList", mMessageIdList);
             mContent.isLocked = 0;
             KencanmeApp.mCustomizeMessageItemProvider.bindView(customizeView, customizePos, mContent, mCustomizeMessage);
@@ -329,6 +332,14 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mLoginUser.today_chat = userBean.getToday_chat();
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
+    }
+
+    /**
+     * 根据融云第三方id获取用户头像和昵称 成功
+     */
+    @Override
+    public void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse) {
+        chatUid = String.valueOf(userInfoByRidResponse.getUid());
     }
 
     /**

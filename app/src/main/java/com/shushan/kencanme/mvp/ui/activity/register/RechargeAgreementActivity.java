@@ -20,10 +20,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 注册协议
+ * 充值协议协议
  */
-public class AgreementActivity extends BaseActivity {
-
+public class RechargeAgreementActivity extends BaseActivity {
     @BindView(R.id.common_back)
     ImageView mCommonBack;
     @BindView(R.id.common_title_tv)
@@ -47,14 +46,13 @@ public class AgreementActivity extends BaseActivity {
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.AgreementActivity_title));
         mAgreementWb.addJavascriptInterface(this, "android");//添加js监听 这样html就能调用客户端
-//        mAgreementWb.setWebChromeClient(webChromeClient);
         mAgreementWb.setWebViewClient(webViewClient);
         WebSettings webSettings = mAgreementWb.getSettings();
         webSettings.setJavaScriptEnabled(true);//允许使用js
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        mAgreementWb.loadUrl(ServerConstant.DISPATCH_SERVICE + "/Kencanme/MemberAgreement-en.html");//加载url
+        mAgreementWb.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.purchase_agreement_wb));//加载url
     }
 
     @Override
@@ -89,4 +87,11 @@ public class AgreementActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
 }

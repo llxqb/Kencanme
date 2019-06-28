@@ -131,9 +131,9 @@
     <string name="EditPersonalInfoActivity_Occupation" translatable="false">Occupation</string>
     <string name="EditPersonalInfoActivity_Occupation_hint" translatable="false">Please enter your Occupation</string>
     <!--UploadPhotoActivity -->
-    <string name="UploadPhotoActivity_upload_pic_or_video_hint" translatable="false">请先上传图片或者视频</string>
-    <string name="UploadPhotoActivity_upload_pic_hint" translatable="false">请选择照片类型</string>
-    <string name="UploadPhotoActivity_upload_beans_hint" translatable="false">请选择嗨豆数量</string>
+    <string name="UploadPhotoActivity_upload_pic_or_video_hint" translatable="false">Please upload vivid photos or videos</string>
+    <string name="UploadPhotoActivity_upload_pic_hint" translatable="false">Please select a photo type</string>
+    <string name="UploadPhotoActivity_upload_beans_hint" translatable="false">Please select Hey beans num</string>
     <string name="UploadPhotoActivity_video_hint" translatable="false">Please upload vivid photos or videos with clear facial features.</string>
     <string name="UploadPhotoActivity_video_or_photo_type_hint" translatable="false">Choose Photo/Video Type</string>
     <string name="UploadPhotoActivity_ordinary" translatable="false">Ordinary Photo/Video</string>
@@ -190,7 +190,7 @@
     <string name="SettingActivity_Clear_cache" translatable="false">Clear cache</string>
     <string name="SettingActivity_Problem_feedback" translatable="false">Problem feedback</string>
     <string name="SettingActivity_About_us" translatable="false">About us</string>
-    <string name="Logout" translatable="false">log out</string>
+    <string name="Logout" translatable="false">Log out</string>
     <!--OpenVipActivity -->
     <string name="not_vip" translatable="false">Not register</string>
     <string name="is_vip" translatable="false">Is Vip</string>
@@ -250,6 +250,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="dialog_style2_hint" translatable="false">About VIP</string>
     <string name="dialog_use_beans_chat" translatable="false">Register for Super VIP Chat free</string>
     <string name="dialog_use_beans_album" translatable="false">Look photo Use</string>
+    <string name="dialog_use_beans_contact" translatable="false">Look Contact Way Use</string>
     <string name="dialog_open_vip_like" translatable="false">No "Likes" for today.  Register for membership today, enjoy unlimited "Likes"</string>
     <string name="dialog_open_vip_chat" translatable="false">Open Super VIP Free Chat~</string>
     <string name="dialog_open_vip_album" translatable="false">Open Super VIP look more</string>
@@ -308,15 +309,11 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="MyAlbumActivity_title" translatable="false">My Album</string>
     <string name="DataFraudActivity_title" translatable="false">Anonymous Reporting </string>
     <string name="AboutUsActivity_title" translatable="false">About us </string>
-
-
-
-
-
-
+    <string name="EarnBeansActivity_title" translatable="false">Earn Hey Beans </string>
 
 
     <!-- 请求成功返回msg-->
+    <string name="login_google_fail" translatable="false">google login fail</string>
     <string name="msg_super_expsure_success" translatable="false">Super expsure success </string>
     <string name="msg_purchase_success" translatable="false">purchase success </string>
     <string name="msg_delete_success" translatable="false">Delete success </string>
@@ -326,6 +323,10 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="add_successfully" translatable="false">Add succefully</string>
 
 
-
+    <!-- WebView-->
+    <string name="earn_beans_wb" translatable="false">Kencanme/inviteApp-EN.html?code=YHI345</string>    <!--分享页-->
+    <string name="member_agreement_wb" translatable="false">Kencanme/MemberAgreement-en.html</string>    <!--会员协议-->
+    <string name="purchase_agreement_wb" translatable="false">Kencanme/RechargeAgreement-en.html</string>    <!--充值协议-->
+    <string name="register_agreement_wb" translatable="false">Kencanme/RegistrationAgreement-en.html</string>    <!--注册协议-->
 
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.ui.activity.register.AgreementActivity">
+    tools:context=".mvp.ui.activity.register.RegisterAgreementActivity">
 
     <include layout="@layout/common_toolbar" />
 
@@ -22,6 +22,4 @@
         android:id="@+id/agreement_wb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
 </LinearLayout>

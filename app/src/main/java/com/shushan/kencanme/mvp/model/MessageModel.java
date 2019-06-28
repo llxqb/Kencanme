@@ -5,6 +5,7 @@ import com.shushan.kencanme.entity.request.SystemMsgRequest;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
+import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.network.networkapi.MessageApi;
 
 import javax.inject.Inject;
@@ -64,5 +65,11 @@ public class MessageModel {
         return mMessageApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
+        return mMessageApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

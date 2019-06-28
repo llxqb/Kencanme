@@ -22,6 +22,7 @@ import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.mvp.utils.DateUtil;
+import com.shushan.kencanme.mvp.utils.SystemUtils;
 
 import javax.inject.Inject;
 
@@ -71,9 +72,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
     @Override
     public void initView() {
+        mLoginUser = mBuProcessor.getLoginUser();
         mCommonTitleTv.setText(getResources().getString(R.string.EditPersonalInfoActivity_title));
-        //光标移到最后
-        mEditCityEt.setSelection(mEditCityEt.getText().length());
         if (mLoginUser.sex == 1) {
             mChestLl.setVisibility(View.GONE);
         }
@@ -81,7 +81,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
     @Override
     public void initData() {
-        mLoginUser = mBuProcessor.getLoginUser();
         if (!TextUtils.isEmpty(mLoginUser.city)) {
             mEditCityEt.setText(mLoginUser.city);
         }
@@ -100,6 +99,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         if (!TextUtils.isEmpty(mLoginUser.occupation)) {
             mEditOccupationEt.setText(mLoginUser.occupation);
         }
+        //光标移到最后
+        mEditCityEt.setSelection(mEditCityEt.getText().length());
     }
 
     @OnClick({R.id.common_back, R.id.edit_birthday_tv, R.id.save_btn})
@@ -109,6 +110,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 finish();
                 break;
             case R.id.edit_birthday_tv:
+                SystemUtils.hideSoftKeyboard(this);
                 showBirthdayDialog();
                 break;
             case R.id.save_btn:

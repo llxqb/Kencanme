@@ -166,7 +166,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     @Override
     public void chatNumSuccess() {
         //启动单聊页面
-        mSharePreferenceUtil.setData("chat_uid", String.valueOf(listBean.getUid()));
         RongIM.getInstance().startPrivateChat(this, listBean.getRongyun_userid(), listBean.getNickname());
         finish();
     }

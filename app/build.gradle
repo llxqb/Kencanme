@@ -7,7 +7,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 14
-        versionName "1.1.4"
+        versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -147,9 +147,6 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
-    //富文本加载
-    implementation 'com.zzhoujay.richtext:richtext:2.5.2'
-
 
 //    //友盟
 //    //友盟推送  友盟统计

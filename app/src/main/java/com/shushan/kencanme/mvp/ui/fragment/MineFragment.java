@@ -42,6 +42,7 @@ import com.shushan.kencanme.mvp.ui.activity.personInfo.EditPersonalInfoActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.MyAlbumActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.UploadPhotoActivity;
+import com.shushan.kencanme.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
@@ -160,6 +161,15 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        //显示当前fragment isVisibleToUser=true
+        if (isVisibleToUser) {
+            setUserInfo();
+        }
+    }
+
+
+    @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
             setUserInfo();
@@ -263,7 +273,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         } else {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_female);
         }
-        String mSexYearTvValue = mLoginUser.age + " "+getResources().getString(R.string.HomeViewPagerAdapter_years);
+        String mSexYearTvValue = mLoginUser.age + " " + getResources().getString(R.string.HomeViewPagerAdapter_years);
         mSexYearTv.setText(mSexYearTvValue);
         //svip不为0显示图标
         if (mLoginUser.svip == 0) {
@@ -311,7 +321,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(EditMakeFriendsInfoActivity.class);
                 break;
             case R.id.barn_hi_beans:
-                showToast("waiting development...");
+                startActivitys(EarnBeansActivity.class);
                 break;
             case R.id.recharge:
                 //充值

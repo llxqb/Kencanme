@@ -14,10 +14,14 @@ import com.shushan.kencanme.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RechargeBeansModule;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.ReChargeBeansInfoResponse;
-import com.shushan.kencanme.mvp.ui.activity.register.AgreementActivity;
+import com.shushan.kencanme.help.GooglePayHelper;
+import com.shushan.kencanme.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.RechargeAdapter;
+import com.shushan.kencanme.mvp.utils.DataUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -50,6 +54,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     TextView mContactCustomer;
     private List<ReChargeBeansInfoResponse.BeansinfoBean> rechargeBeanList = new ArrayList<>();
     private RechargeAdapter rechargeAdapter;
+    private GooglePayHelper mGooglePayHelper;
 
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
@@ -67,6 +72,9 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
 
     @Override
     public void initView() {
+        //初始化google支付
+        mGooglePayHelper = new GooglePayHelper(this);
+        mGooglePayHelper.initGooglePay();
         mCommonTitleTv.setText(getResources().getString(R.string.RechargeActivity_title));
         mRechargeAgreement.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         mRechargeAgreement.getPaint().setAntiAlias(true);//抗锯齿
@@ -85,6 +93,9 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
             }
             beansinfoBean.isCheck = true;
             rechargeAdapter.notifyDataSetChanged();
+            //1.创建订单
+            //购买嗨豆
+            createOrder( String.valueOf(beansinfoBean.getB_id()), beansinfoBean.getPrice());
         });
     }
 
@@ -105,7 +116,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
             case R.id.common_iv_right:
                 break;
             case R.id.recharge_agreement:
-                startActivitys(AgreementActivity.class);
+                startActivitys(RechargeAgreementActivity.class);
                 break;
             case R.id.contact_customer:
 //                showToast("联系客服");
@@ -113,10 +124,36 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         }
     }
 
+
+    /**
+     * 创建订单
+     * type:1购买会员 2购买嗨豆
+     * relation_id:对应购买 会员/嗨豆id
+     */
+    private void createOrder( String relation_id, String price) {
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+        createOrderRequest.token = mBuProcessor.getToken();
+        createOrderRequest.type = "2";
+        createOrderRequest.relation_id = relation_id;
+        createOrderRequest.money = price;
+        createOrderRequest.from = "Android";
+        mPresenter.onRequestCreateOrder(createOrderRequest);
+    }
+
+
     @Override
     public void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse) {
         rechargeBeanList = reChargeBeansInfoResponse.getBeansinfo();
         rechargeAdapter.addData(rechargeBeanList);
+    }
+
+    /**
+     * 创建订单成功
+     */
+    @Override
+    public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
+        //2、进行支付
+        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
     private void initializeInjector() {

@@ -6,8 +6,10 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
 import com.shushan.kencanme.entity.request.UseBeansRequest;
+import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.UploadImageResponse;
+import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.MessageModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
@@ -54,7 +56,7 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
 
     @Override
     public void onRequestUseBeans(UseBeansRequest useBeansRequest) {
-        mConversationView.showLoading(mContext.getResources().getString(R.string.loading));
+//        mConversationView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mMessageModel.onRequestUseBeans(useBeansRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::useBeansRequestSuccess, throwable -> mConversationView.showErrMessage(throwable),
                         () -> mConversationView.dismissLoading());
@@ -89,6 +91,29 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
             mConversationView.showToast(responseData.errorMsg);
         }
     }
+
+
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    @Override
+    public void onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest) {
+        Disposable disposable = mMessageModel.onRequestUserInfoByRid(userInfoByRidRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUserInfoByRidSuccess, throwable -> mConversationView.showErrMessage(throwable),
+                        () -> mConversationView.dismissLoading());
+        mConversationView.addSubscription(disposable);
+    }
+
+    private void requestUserInfoByRidSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(UserInfoByRidResponse.class);
+            UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
+            mConversationView.getUserInfoSuccess(response);
+        } else {
+            mConversationView.showToast(responseData.errorMsg);
+        }
+    }
+
 
     @Override
     public void onCreate() {
