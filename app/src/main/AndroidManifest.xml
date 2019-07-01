@@ -18,8 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
     这个权限会导致部分手机一直提示开启定位权限/>
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -39,9 +39,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
 
-         <meta-data
-         android:name="UMENG_APPKEY"
-         android:value="5d104a194ca357b692000ff5" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5d104a194ca357b692000ff5" />
 
         <activity
             android:name=".mvp.ui.activity.splash.SplashActivity"
@@ -162,15 +162,18 @@
         <activity android:name=".mvp.ui.activity.register.RegisterAgreementActivity"></activity>
 
         <!-- facebook  @string/facebook_app_id-->
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="123456" />
         <activity
             android:name="com.umeng.facebook.FacebookActivity"
-
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider387656405197436"
+            android:exported="false" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>

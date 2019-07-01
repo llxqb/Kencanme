@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerOpenVipComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
@@ -24,8 +25,9 @@ import com.shushan.kencanme.help.GooglePayHelper;
 import com.shushan.kencanme.mvp.ui.activity.register.MemberAgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.OpenVipAdapter;
 import com.shushan.kencanme.mvp.ui.adapter.VipPrivilegeAdapter;
-import com.shushan.kencanme.mvp.utils.DataUtils;
+import com.shushan.kencanme.mvp.utils.PayUtil;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.utils.googlePayUtils.Purchase;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 
 import java.util.ArrayList;
@@ -72,6 +74,8 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     TextView mPayMoneyValue;
     @BindView(R.id.go_to_pay)
     TextView mGoToPay;
+    @BindView(R.id.test_tv)
+    TextView mTestTv;
     List<OpenVipResponse.VipinfoBean> vipinfoBeanList = new ArrayList<>();
     OpenVipAdapter openVipAdapter;
     private int[] mVipPrivilegeImg = {R.mipmap.privilege_vip_logo, R.mipmap.rectangle, R.mipmap.private_letter, R.mipmap.vip_photo_open, R.mipmap.vip_video_watch,
@@ -101,7 +105,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void initView() {
         //初始化google支付
-        mGooglePayHelper = new GooglePayHelper(this,this);
+        mGooglePayHelper = new GooglePayHelper(this, this);
         mGooglePayHelper.initGooglePay();
         mTitleName.setText(getResources().getString(R.string.OpenVipActivity_title));
         mVipTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -216,15 +220,16 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
         //2、进行支付
-        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
+        mGooglePayHelper.buyGoods(PayUtil.payGoodId(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
     /**
      * 支付成功
      */
     @Override
-    public void buyFinishSuccess(String orderId) {
+    public void buyFinishSuccess(Purchase purchase) {
         showToast("支付成功");
+        mTestTv.setText("purchase=" + new Gson().toJson(purchase));
         //购买成功后，应该将购买返回的信息发送到自己的服务端，自己的服务端再去利用public key去验签
 //        PaySuccessRequest paySuccessRequest = new PaySuccessRequest();
 //        paySuccessRequest.ord_no =

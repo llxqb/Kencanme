@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.kencanme"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 16
-        versionName "1.1.6"
+        versionCode 17
+        versionName "1.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -147,6 +147,8 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+    //facebook分享
+    implementation 'com.facebook.android:facebook-share:4.41.0'
 
 //    //友盟
 //    //友盟推送  友盟统计

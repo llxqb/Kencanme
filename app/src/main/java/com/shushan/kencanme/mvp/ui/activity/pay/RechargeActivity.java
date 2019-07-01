@@ -23,6 +23,7 @@ import com.shushan.kencanme.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.RechargeAdapter;
 import com.shushan.kencanme.mvp.utils.DataUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.mvp.utils.googlePayUtils.Purchase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +158,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     }
 
     @Override
-    public void buyFinishSuccess(String orderId) {
+    public void buyFinishSuccess(Purchase purchase) {
         showToast("支付成功");
     }
 

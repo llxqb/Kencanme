@@ -19,9 +19,13 @@ import android.widget.Toast;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.SnsPlatform;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +74,7 @@ public class EarnBeansActivity extends BaseActivity {
     public void initData() {
 
     }
+
     @OnClick({R.id.common_back, R.id.share_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -83,17 +88,16 @@ public class EarnBeansActivity extends BaseActivity {
     }
 
     private void share() {
-        new ShareAction(this).withText("hello").setDisplayList(SHARE_MEDIA.FACEBOOK)
-                .setCallback(umShareListener).open();
-
+        SnsPlatform snsPlatform = SHARE_MEDIA.FACEBOOK.toSnsPlatform();
         //分享链接
-//        UMWeb web = new UMWeb(Defaultcontent.url);
-//        web.setTitle("This is music title");//标题
-//        web.setThumb(thumb);  //缩略图
-//        web.setDescription("my description");//描述
-//        new ShareAction(EarnBeansActivity.this)
-//                .withMedia(web)
-//                .share();
+        UMWeb web = new UMWeb(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.down_app));
+        web.setTitle(getResources().getString(R.string.facebook_title));
+        web.setThumb(new UMImage(this, R.drawable.logo));
+        web.setDescription(getResources().getString(R.string.facebook_content));
+        new ShareAction(this)
+                .withMedia(web)
+                .setPlatform(snsPlatform.mPlatform)
+                .setCallback(umShareListener).share();
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
@@ -112,6 +116,7 @@ public class EarnBeansActivity extends BaseActivity {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
+            LogUtils.e("成功了");
             Toast.makeText(EarnBeansActivity.this, "成功了", Toast.LENGTH_LONG).show();
         }
 
@@ -122,6 +127,7 @@ public class EarnBeansActivity extends BaseActivity {
          */
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
+            LogUtils.e("失败");
             Toast.makeText(EarnBeansActivity.this, "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
@@ -131,6 +137,7 @@ public class EarnBeansActivity extends BaseActivity {
          */
         @Override
         public void onCancel(SHARE_MEDIA platform) {
+            LogUtils.e("取消了");
             Toast.makeText(EarnBeansActivity.this, "取消了", Toast.LENGTH_LONG).show();
 
         }

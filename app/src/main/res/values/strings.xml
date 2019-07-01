@@ -20,6 +20,7 @@
     <string name="album_num_max_8" translatable="false">最多传8张</string>
     <string name="album_num_max_6" translatable="false">最多传6张</string>
     <string name="money" translatable="false">$</string>
+    <string name="facebook_app_id" translatable="false">387656405197436</string>
     <!-- 提交和保存-->
     <string name="submit" translatable="false">Submit</string>
     <string name="Preserve" translatable="false">Preserve</string>
@@ -325,8 +326,15 @@ Don\'t release your choose. no body konw your choice unless you like each other.
 
     <!-- WebView-->
     <string name="earn_beans_wb" translatable="false">Kencanme/inviteApp-EN.html?code=YHI345</string>    <!--分享页-->
+    <string name="down_app" translatable="false">Kencanme/downApp-EN.html?code=YHI345</string>    <!--下载页-->
     <string name="member_agreement_wb" translatable="false">Kencanme/MemberAgreement-en.html</string>    <!--会员协议-->
     <string name="purchase_agreement_wb" translatable="false">Kencanme/RechargeAgreement-en.html</string>    <!--充值协议-->
     <string name="register_agreement_wb" translatable="false">Kencanme/RegistrationAgreement-en.html</string>    <!--注册协议-->
+
+    <!--facebook分享-->
+    <string name="facebook_title" translatable="false">invite friends</string>
+    <string name="facebook_content" translatable="false">Invite friends to use</string>
+
+
 
 </resources>
