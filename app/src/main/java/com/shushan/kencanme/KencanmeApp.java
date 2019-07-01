@@ -8,9 +8,11 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.di.components.AppComponent;
 import com.shushan.kencanme.di.components.DaggerAppComponent;
 import com.shushan.kencanme.di.modules.AppModule;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.help.CrashHandler;
 import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessage;
 import com.shushan.kencanme.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
+import com.umeng.commonsdk.UMConfigure;
 
 import javax.inject.Inject;
 
@@ -26,10 +28,10 @@ public class KencanmeApp extends Application {
 
     private AppComponent mAppComponent;
     public Context mContext;
-    @Inject
-    Gson mGson;
     @SuppressLint("StaticFieldLeak")
     public static CustomizeMessageItemProvider mCustomizeMessageItemProvider;
+    @Inject
+    Gson mGson;
 //    @Inject
 //    BuProcessor mBuProcessor;
 
@@ -42,7 +44,8 @@ public class KencanmeApp extends Application {
         mAppComponent.inject(this);//必须有
         //初始化融云
         initRongYun();
-//        //友盟init
+        //友盟init
+        initUM();
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
 //        UMConfigure.setLogEnabled(true);
     }
@@ -67,5 +70,10 @@ public class KencanmeApp extends Application {
             mCustomizeMessageItemProvider = new CustomizeMessageItemProvider();
             RongIM.registerMessageTemplate(mCustomizeMessageItemProvider);
         }
+    }
+
+    private void initUM(){
+        UMConfigure.init(this,ServerConstant.UM_APP_KEY
+                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
     }
 }

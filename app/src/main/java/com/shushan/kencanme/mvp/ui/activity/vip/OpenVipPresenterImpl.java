@@ -5,6 +5,7 @@ import android.content.Context;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
+import com.shushan.kencanme.entity.request.PaySuccessRequest;
 import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
@@ -67,6 +68,29 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
 
 
     private void createOrderSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderResponse.class);
+            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+            mOpenVipView.createOrderSuccess(response);
+        } else {
+            mOpenVipView.showLoading(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 支付成功上报
+     */
+    @Override
+    public void onRequestPaySuccess(PaySuccessRequest paySuccessRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onRequestPaySuccess(paySuccessRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::paySuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+
+    private void paySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(CreateOrderResponse.class);
             CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;

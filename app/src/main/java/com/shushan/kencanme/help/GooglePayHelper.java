@@ -19,9 +19,11 @@ public class GooglePayHelper {
     private IabHelper mHelper;
     private String sku;
     private String mOrderId;
+    private BuyFinishListener mBuyFinishListener;
 
-    public GooglePayHelper(Activity context) {
+    public GooglePayHelper(Activity context, BuyFinishListener buyFinishListener) {
         this.mContext = context;
+        mBuyFinishListener = buyFinishListener;
     }
 
     /**
@@ -120,8 +122,6 @@ public class GooglePayHelper {
         } catch (IabHelper.IabAsyncInProgressException e) {
             e.printStackTrace();
             LogUtils.e("IabHelper--e:" + e.toString());
-        } catch (Exception e) {
-            LogUtils.e("e:" + e.toString());
         }
 
     }
@@ -137,13 +137,21 @@ public class GooglePayHelper {
             if (result.isFailure()) {
                 // Oh noes! pay fail
                 Log.d(TAG, "Error purchasing: " + result);
+                if (mBuyFinishListener != null) {
+                    mBuyFinishListener.buyFinishFail();
+                }
                 return;
             }
 
+            //INAPP_PURCHASE_DATA,INAPP_DATA_SIGNATURE,order_no
             Log.d(TAG, "Purchase successful.");
             //模拟检测public key
             //购买成功后，应该将购买返回的信息发送到自己的服务端，自己的服务端再去利用public key去验签
 //            checkPk(purchase);
+
+            if (mBuyFinishListener != null) {
+                mBuyFinishListener.buyFinishSuccess( purchase.getOrderId());
+            }
         }
     };
 
@@ -170,4 +178,11 @@ public class GooglePayHelper {
             }
         }
     };
+
+
+    public interface BuyFinishListener {
+        void buyFinishSuccess(String orderId);
+
+        void buyFinishFail();
+    }
 }

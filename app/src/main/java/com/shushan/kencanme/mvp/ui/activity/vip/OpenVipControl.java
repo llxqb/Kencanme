@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.vip;
 
 import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
+import com.shushan.kencanme.entity.request.PaySuccessRequest;
 import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.OpenVipResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
@@ -25,6 +26,10 @@ public class OpenVipControl {
          * 创建订单
          */
         void onRequestCreateOrder(CreateOrderRequest createOrderRequest);
+        /**
+         * APPLE支付成功上报
+         */
+        void onRequestPaySuccess(PaySuccessRequest paySuccessRequest);
     }
 
 

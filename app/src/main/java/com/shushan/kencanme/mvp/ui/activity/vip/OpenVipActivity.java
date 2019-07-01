@@ -40,7 +40,7 @@ import butterknife.OnClick;
 /**
  * 购买/打开 会员
  */
-public class OpenVipActivity extends BaseActivity implements OpenVipControl.OpenVipView {
+public class OpenVipActivity extends BaseActivity implements OpenVipControl.OpenVipView, GooglePayHelper.BuyFinishListener {
 
     @BindView(R.id.back)
     ImageView mBack;
@@ -101,7 +101,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void initView() {
         //初始化google支付
-        mGooglePayHelper = new GooglePayHelper(this);
+        mGooglePayHelper = new GooglePayHelper(this,this);
         mGooglePayHelper.initGooglePay();
         mTitleName.setText(getResources().getString(R.string.OpenVipActivity_title));
         mVipTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -219,10 +219,32 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
+    /**
+     * 支付成功
+     */
+    @Override
+    public void buyFinishSuccess(String orderId) {
+        showToast("支付成功");
+        //购买成功后，应该将购买返回的信息发送到自己的服务端，自己的服务端再去利用public key去验签
+//        PaySuccessRequest paySuccessRequest = new PaySuccessRequest();
+//        paySuccessRequest.ord_no =
+//        mPresenter.onRequestPaySuccess();
+    }
+
+    /**
+     * 支付失败
+     */
+    @Override
+    public void buyFinishFail() {
+        showToast("支付取消");
+        finish();
+    }
+
     private void initializeInjector() {
         DaggerOpenVipComponent.builder().appComponent(getAppComponent())
                 .openVipModule(new OpenVipModule(OpenVipActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 }

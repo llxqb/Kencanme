@@ -27,4 +27,9 @@ public interface BuyApi {
      */
     @POST("menggoda/order")
     Observable<String> onRequestCreateOrder(@Body String request);
+    /**
+     * 支付成功上报
+     */
+    @POST("menggoda/apple")
+    Observable<String> onRequestPaySuccess(@Body String request);
 }

@@ -10,13 +10,18 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +40,8 @@ public class EarnBeansActivity extends BaseActivity {
     ProgressBar mProgressbar;
     @BindView(R.id.webview)
     WebView mWebview;
+    @BindView(R.id.share_btn)
+    Button mShareBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +70,71 @@ public class EarnBeansActivity extends BaseActivity {
     public void initData() {
 
     }
-
-    @OnClick(R.id.common_back)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.common_back, R.id.share_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.common_back:
+                finish();
+                break;
+            case R.id.share_btn:
+                share();
+                break;
+        }
     }
 
+    private void share() {
+        new ShareAction(this).withText("hello").setDisplayList(SHARE_MEDIA.FACEBOOK)
+                .setCallback(umShareListener).open();
+
+        //分享链接
+//        UMWeb web = new UMWeb(Defaultcontent.url);
+//        web.setTitle("This is music title");//标题
+//        web.setThumb(thumb);  //缩略图
+//        web.setDescription("my description");//描述
+//        new ShareAction(EarnBeansActivity.this)
+//                .withMedia(web)
+//                .share();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        /**
+         * @descrption 分享开始的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        /**
+         * @descrption 分享成功的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(EarnBeansActivity.this, "成功了", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享失败的回调
+         * @param platform 平台类型
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(EarnBeansActivity.this, "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @descrption 分享取消的回调
+         * @param platform 平台类型
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(EarnBeansActivity.this, "取消了", Toast.LENGTH_LONG).show();
+
+        }
+    };
     //WebViewClient主要帮助WebView处理各种通知、请求事件
     private WebViewClient webViewClient = new WebViewClient() {
         @Override
@@ -86,4 +152,6 @@ public class EarnBeansActivity extends BaseActivity {
             return super.shouldOverrideUrlLoading(view, url);
         }
     };
+
+
 }

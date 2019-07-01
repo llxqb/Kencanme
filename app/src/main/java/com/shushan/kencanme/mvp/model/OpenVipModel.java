@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.OpenVipRequest;
+import com.shushan.kencanme.entity.request.PaySuccessRequest;
 import com.shushan.kencanme.network.networkapi.BuyApi;
 
 import javax.inject.Inject;
@@ -35,6 +36,12 @@ public class OpenVipModel {
      */
     public Observable<ResponseData> onRequestCreateOrder(CreateOrderRequest request) {
         return mBuyApi.onRequestCreateOrder(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 支付成功上报
+     */
+    public Observable<ResponseData> onRequestPaySuccess(PaySuccessRequest request) {
+        return mBuyApi.onRequestPaySuccess(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 

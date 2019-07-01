@@ -50,7 +50,7 @@ public class BaseDialogFragment extends DialogFragment implements View.OnClickLi
     }
 
     public void showToast(String des) {
-        ToastUtil.showToast(getContext(), des);
+        ToastUtil.showToast(getActivity(), des);
     }
 
     @Override

@@ -36,7 +36,7 @@ import butterknife.OnClick;
 /**
  * desc:购买嗨豆Activity
  */
-public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView {
+public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView,GooglePayHelper.BuyFinishListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -73,7 +73,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     @Override
     public void initView() {
         //初始化google支付
-        mGooglePayHelper = new GooglePayHelper(this);
+        mGooglePayHelper = new GooglePayHelper(this,this);
         mGooglePayHelper.initGooglePay();
         mCommonTitleTv.setText(getResources().getString(R.string.RechargeActivity_title));
         mRechargeAgreement.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -156,11 +156,21 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
+    @Override
+    public void buyFinishSuccess(String orderId) {
+        showToast("支付成功");
+    }
+
+    @Override
+    public void buyFinishFail() {
+        showToast("支付取消");
+    }
     private void initializeInjector() {
         DaggerRechargeComponent.builder().appComponent(getAppComponent())
                 .rechargeBeansModule(new RechargeBeansModule(RechargeActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 
 }

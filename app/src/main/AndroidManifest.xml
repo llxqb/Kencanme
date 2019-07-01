@@ -39,9 +39,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
 
-        <!-- <meta-data -->
-        <!-- android:name="UMENG_APPKEY" -->
-        <!-- android:value="5d104a194ca357b692000ff5" /> -->
+         <meta-data
+         android:name="UMENG_APPKEY"
+         android:value="5d104a194ca357b692000ff5" />
 
         <activity
             android:name=".mvp.ui.activity.splash.SplashActivity"
@@ -160,6 +160,17 @@
         <activity android:name=".mvp.ui.activity.register.EarnBeansActivity" />
         <activity android:name=".mvp.ui.activity.register.MemberAgreementActivity" />
         <activity android:name=".mvp.ui.activity.register.RegisterAgreementActivity"></activity>
+
+        <!-- facebook  @string/facebook_app_id-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="123456" />
+        <activity
+            android:name="com.umeng.facebook.FacebookActivity"
+
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
