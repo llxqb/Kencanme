@@ -5,326 +5,336 @@
     <!--请检查网络Cek koneksi internet anda-->
     <!--请稍后重试Mohon coba kembali-->
     <!--加载中Sedang diproses-->
-    <string name="text_check_internet" translatable="false">check your network connection</string>
-    <string name="text_wait_try" translatable="false">Please try again later</string>
-    <string name="loading" translatable="false">loading…</string>
+    <string name="text_check_internet">Silakan periksa koneksi jaringan</string>
+    <string name="text_wait_try">Silakan coba lagi nanti</string>
+    <string name="loading">Memuat…</string>
 
     <!-- app相关-->
-    <string name="this_is_desc" translatable="false">This is a description</string>
-    <string name="app_name" translatable="false">Kencanme</string>
-    <string name="success" translatable="false">success</string>
-    <string name="google" translatable="false">Google</string>
-    <string name="facebook" translatable="false">Facebook</string>
-    <string name="whatsapp" translatable="false">WhatsApp</string>
-    <string name="album_num_max_12" translatable="false">最多传12张</string>
-    <string name="album_num_max_8" translatable="false">最多传8张</string>
-    <string name="album_num_max_6" translatable="false">最多传6张</string>
-    <string name="money" translatable="false">$</string>
+    <string name="this_is_desc">This is a description</string>
+    <string name="app_name">Kencanme</string>
+    <string name="success">sukses</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="whatsapp">WhatsApp</string>
+    <string name="album_num_max_12">Pass hingga 12</string>
+    <string name="album_num_max_8">Pass hingga 8</string>
+    <string name="album_num_max_6">Pass hingga 6</string>
+    <string name="money">$</string>
+    <string name="facebook_app_id">387656405197436</string>
     <!-- 提交和保存-->
-    <string name="submit" translatable="false">Submit</string>
-    <string name="Preserve" translatable="false">Preserve</string>
-    <string name="Complete" translatable="false">Complete</string>
-    <string name="Payment" translatable="false">Payment</string>
+    <string name="submit">Kirim</string>
+    <string name="Preserve">Simpan</string>
+    <string name="Complete">Lengkap</string>
+    <string name="Payment">Pembayaran</string>
     <!--赚嗨bean 和充值 -->
-    <string name="earn_beans" translatable="false">Earn Hey Beans</string>
-    <string name="recharge" translatable="false">Purchase</string>
+    <string name="earn_beans">Dapatkan Hai Koin</string>
+    <string name="recharge">Top Up</string>
     <!-- 敬请期待-->
-    <string name="wait_develop" translatable="false">waiting…</string>
-    <string name="app_like" translatable="false">Like</string>
-    <string name="app_chat" translatable="false">Chat</string>
-    <string name="app_view" translatable="false">Check now</string>
-    <string name="Hi_Beans" translatable="false">Hey Coins</string>
+    <string name="wait_develop">Menunggu…</string>
+    <string name="app_like">Like</string>
+    <string name="app_chat">Privasi</string>
+    <string name="app_view">Lihat</string>
+    <string name="Hi_Beans">Hai Koin</string>
 
 
     <!--Activity 相关 -->
     <!-- LoginActivity-->
-    <string name="login_hint" translatable="false">Welcome to login,please choose the following way to login.</string>
+    <string name="login_hint">Selamat datang, Silahkan Pilih opsi Log in</string>
     <!-- RechargeActivity-->
-    <string name="recharge_current_beans_num_hint" translatable="false">Hey beans balance</string>
-    <string name="recharge_amount_of_money" translatable="false">Amount of money</string>
-    <string name="recharge_means_hint" translatable="false">* purchase means agree </string>
-    <string name="recharge_app_agreement" translatable="false">《Kencanme payment agreement》</string>
-    <string name="recharge_problems_hint" translatable="false">if your encounter purchase difficults please </string>
-    <string name="recharge_contact_customer" translatable="false">&amp;#160contact customer services</string>
+    <string name="recharge_current_beans_num_hint">Sisa Hai Koin</string>
+    <string name="recharge_amount_of_money">Jumlah</string>
+    <string name="recharge_means_hint">* Dengan ini anda telah menyetujui  </string>
+    <string name="recharge_app_agreement">Persyaratan dan Ketentuan Top Up Kencanme</string>
+    <string name="recharge_problems_hint">Jika ada masalah dengan top up </string>
+    <string name="recharge_contact_customer">&amp;#160hubungi customer service</string>
     <!--MainActivity -->
-    <string name="main_bottom_home" translatable="false">Hey</string>
-    <string name="main_bottom_message" translatable="false">Message</string>
-    <string name="main_bottom_mine" translatable="false">My Profile</string>
+    <string name="main_bottom_home">Hai</string>
+    <string name="main_bottom_message">Profile</string>
+    <string name="main_bottom_mine">Akunku</string>
     <!--CreatePersonalInfoActivity -->
-    <string name="personal_info_name" translatable="false">Nickname</string>
-    <string name="personal_info_declaration" translatable="false">Declaration of Friendship</string>
-    <string name="personal_info_birthday" translatable="false">Birthday</string>
-    <string name="personal_info_sex_tv" translatable="false">Gender</string>
-    <string name="personal_info_address" translatable="false">Address</string>
+    <string name="personal_info_name">Nickname</string>
+    <string name="personal_info_declaration">Deskripsi pertemanan</string>
+    <string name="personal_info_birthday">tanggal lahir</string>
+    <string name="personal_info_sex_tv">Gender</string>
+    <string name="personal_info_address">Lokasi</string>
 
     <!-- Personal information-->
-    <string name="create_personal_info_title" translatable="false">Personal information</string>
-    <string name="create_personal_info_name_et_hint" translatable="false">Please enter a name</string>
-    <string name="create_personal_info_sex_tv_hint" translatable="false">（After select your gender, it can not be modified.）</string>
-    <string name="create_personal_info_male_tv" translatable="false">Male</string>
-    <string name="create_personal_info_female_tv" translatable="false">Female</string>
-    <string name="create_personal_info_select_date_tv" translatable="false">select date</string>
-    <string name="create_personal_info_address_hint_et" translatable="false">Please enter the name of your city</string>
-    <string name="personal_info_declaration_hint_ev" translatable="false">Sincere friends, I hope you like me.</string>
-    <string name="PersonalInfoUploadPhotoActivity_hint_tv" translatable="false">Please upload clear photos or videos with clear facial features to pair success</string>
-    <string name="PersonalInfoUploadPhotoActivity_declaration_ev" translatable="false">Please write your declaration of friendship</string>
-    <string name="male" translatable="false">Male</string>
-    <string name="female" translatable="false">Female</string>
-    <string name="Unlimited" translatable="false">No limit</string>
-    <string name="Height" translatable="false">Height:</string>
-    <string name="Weight" translatable="false">Weight:</string>
-    <string name="Chest" translatable="false">Chest:</string>
-    <string name="Birthday" translatable="false">Birthday:</string>
-    <string name="Professional" translatable="false">Professional:</string>
+    <string name="create_personal_info_title">Profil</string>
+    <string name="create_personal_info_name_et_hint">Silakan masukkan nama</string>
+    <string name="create_personal_info_sex_tv_hint">（Gender tidak dapat diubah setelah dipilih）</string>
+    <string name="create_personal_info_male_tv">Pria</string>
+    <string name="create_personal_info_female_tv">Wanita</string>
+    <string name="create_personal_info_select_date_tv">pilih tanggal</string>
+    <string name="create_personal_info_address_hint_et">Silakan masukkan nama kota Anda</string>
+    <string name="personal_info_declaration_hint_ev">Teman-teman yang tulus, saya harap Anda menyukai saya.</string>
+    <string name="PersonalInfoUploadPhotoActivity_hint_tv">Unggah Foto atau Video yang Jelas menunjukan wajah anda</string>
+    <string name="PersonalInfoUploadPhotoActivity_declaration_ev">Tuliskan pertemanan yang anda inginkan</string>
+    <string name="male">Pria</string>
+    <string name="female">Wanita</string>
+    <string name="Unlimited">No limit</string>
+    <string name="Height">Tinggi:</string>
+    <string name="Weight">Berat:</string>
+    <string name="Chest">Ukuran Bra:</string>
+    <string name="Birthday">Tanggal Lahir:</string>
+    <string name="Professional">Pekerjaan:</string>
 
 
     <!-- EditContactWayActivity-->
-    <string name="EditContactWay_contact_is_noll" translatable="false">please add contact</string>
-    <string name="EditContactWay_select_contact_way" translatable="false">Select Contact way</string>
-    <string name="EditContactWay_add_more" translatable="false">add more</string>
+    <string name="EditContactWay_contact_is_noll">tolong tambahkan kontak</string>
+    <string name="EditContactWay_select_contact_way">Pilih Cara kontak</string>
+    <string name="EditContactWay_add_more">tambah</string>
 
     <!-- EditLabelActivity-->
-    <string name="EditLabelActivity_dialog_delete_label_hint" translatable="false">delete the label?</string>
-    <string name="EditLabelActivity_dialog_add_label_hint" translatable="false">please add label</string>
-    <string name="EditLabelActivity_tag_hint" translatable="false">please write your tag</string>
-    <string name="EditLabelActivity_tag_add" translatable="false">Add to </string>
+    <string name="EditLabelActivity_dialog_delete_label_hint">hapus label?</string>
+    <string name="EditLabelActivity_dialog_add_label_hint">silakan tambahkan label</string>
+    <string name="EditLabelActivity_tag_hint">tolong tulis tag Anda</string>
+    <string name="EditLabelActivity_tag_add">Tambahkan</string>
 
     <!-- chat-->
     <!-- CustomizeMessageItemProvider-->
-    <string name="CustomizeMessageItemProvider_left_photo" translatable="false">Received One Private Photo</string>
-    <string name="CustomizeMessageItemProvider_left_photo_hint" translatable="false">This is a private message users only</string>
-    <string name="CustomizeMessageItemProvider_right_photo" translatable="false">Send a private photo</string>
-    <string name="CustomizeMessageItemProvider_right_photo_hint" translatable="false">This is a private message </string>
+    <string name="CustomizeMessageItemProvider_left_photo">Menerima Satu Foto Pribadi</string>
+    <string name="CustomizeMessageItemProvider_left_photo_hint">Ini adalah pesan pribadi pengguna saja</string>
+    <string name="CustomizeMessageItemProvider_right_photo">Kirim foto pribadi</string>
+    <string name="CustomizeMessageItemProvider_right_photo_hint">Ini pesan pribadi</string>
 
 
     <!--EditMakeFriendsInfoActivity -->
-    <string name="EditMakeFriendsInfoActivity_upload_hint" translatable="false">reload your photos/videos</string>
-    <string name="EditMakeFriendsInfoActivity_head_img" translatable="false">Profile photo</string>
+    <string name="EditMakeFriendsInfoActivity_upload_hint">muat ulang foto / video Anda</string>
+    <string name="EditMakeFriendsInfoActivity_head_img">Foto</string>
 
-    <string name="RecommendUserInfoActivity_look_over_hint" translatable="false">Look over</string>
-    <string name="RecommendUserInfoActivity_label_hint" translatable="false">The Label</string>
-    <string name="RecommendUserInfoActivity_no_friends" translatable="false">你们不是好友关系</string>
+    <string name="RecommendUserInfoActivity_look_over_hint">Lihatlah</string>
+    <string name="RecommendUserInfoActivity_label_hint">Label</string>
+    <string name="RecommendUserInfoActivity_no_friends">Anda belum berteman.</string>
 
 
     <!-- CreatePersonalInfoActivity-->
     <!--Empty -->
-    <string name="CreatePersonalInfoActivity_nice_is_empty" translatable="false">Nickname can not be empty</string>
-    <string name="CreatePersonalInfoActivity_sex_is_empty" translatable="false">Gender can not be empty</string>
-    <string name="CreatePersonalInfoActivity_birthday_is_empty" translatable="false">Birthday can not be empty</string>
-    <string name="CreatePersonalInfoActivity_address_is_empty" translatable="false">City can not be empty</string>
-    <string name="CreatePersonalInfoActivity_cover_is_empty" translatable="false">Cover can not be empty</string>
-    <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty" translatable="false">Declaration of Friendship can not be empty</string>
+    <string name="CreatePersonalInfoActivity_nice_is_empty">Nickname tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_sex_is_empty">Jenis kelamin tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_birthday_is_empty">Ulang tahun tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_address_is_empty">Kota tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_cover_is_empty">Penutup tidak boleh kosong</string>
+    <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">Pernyataan kencan tidak boleh kosong</string>
     <!-- app hint语句 -->
-    <string name="app_nick_hint" translatable="false">请输入昵称</string>
+    <string name="app_nick_hint">Silakan masukkan nama panggilan</string>
 
     <!--EditPersonalInfoActivity-->
-    <string name="EditPersonalInfoActivity_Address" translatable="false">Address</string>
-    <string name="EditPersonalInfoActivity_address_hint" translatable="false">Please enter your city</string>
-    <string name="EditPersonalInfoActivity_Height" translatable="false">Height</string>
-    <string name="EditPersonalInfoActivity_Height_hint" translatable="false">Please enter your height</string>
-    <string name="EditPersonalInfoActivity_Weight" translatable="false">Weight</string>
-    <string name="EditPersonalInfoActivity_Weight_hint" translatable="false">Please enter your Weight</string>
-    <string name="EditPersonalInfoActivity_Chest" translatable="false">Chest</string>
-    <string name="EditPersonalInfoActivity_Chest_hint" translatable="false">Please enter your Chest</string>
-    <string name="EditPersonalInfoActivity_Birthday" translatable="false">Birthday</string>
-    <string name="EditPersonalInfoActivity_Birthday_hint" translatable="false">Please enter your Birthday</string>
-    <string name="EditPersonalInfoActivity_Occupation" translatable="false">Occupation</string>
-    <string name="EditPersonalInfoActivity_Occupation_hint" translatable="false">Please enter your Occupation</string>
+    <string name="EditPersonalInfoActivity_Address">Lokasi</string>
+    <string name="EditPersonalInfoActivity_address_hint">Silakan masukkan kota Anda</string>
+    <string name="EditPersonalInfoActivity_Height">Tinggi</string>
+    <string name="EditPersonalInfoActivity_Height_hint">Silakan masukkan tinggi badan Anda</string>
+    <string name="EditPersonalInfoActivity_Weight">Berat</string>
+    <string name="EditPersonalInfoActivity_Weight_hint">Silakan masukkan Berat Anda</string>
+    <string name="EditPersonalInfoActivity_Chest">Ukuran Bra</string>
+    <string name="EditPersonalInfoActivity_Chest_hint">Silakan masukkan pengukuran Anda</string>
+    <string name="EditPersonalInfoActivity_Birthday">Tanggal Lahir</string>
+    <string name="EditPersonalInfoActivity_Birthday_hint">Silakan masukkan Ulang Tahun Anda</string>
+    <string name="EditPersonalInfoActivity_Occupation">Career</string>
+    <string name="EditPersonalInfoActivity_Occupation_hint">Silakan masukkan Pekerjaan Anda</string>
     <!--UploadPhotoActivity -->
-    <string name="UploadPhotoActivity_upload_pic_or_video_hint" translatable="false">请先上传图片或者视频</string>
-    <string name="UploadPhotoActivity_upload_pic_hint" translatable="false">请选择照片类型</string>
-    <string name="UploadPhotoActivity_upload_beans_hint" translatable="false">请选择嗨豆数量</string>
-    <string name="UploadPhotoActivity_video_hint" translatable="false">Please upload vivid photos or videos with clear facial features.</string>
-    <string name="UploadPhotoActivity_video_or_photo_type_hint" translatable="false">Choose Photo/Video Type</string>
-    <string name="UploadPhotoActivity_ordinary" translatable="false">Ordinary Photo/Video</string>
-    <string name="UploadPhotoActivity_ordinary_hint" translatable="false">（Anyone can view it）</string>
-    <string name="UploadPhotoActivity_membership" translatable="false">Membership Photos/Videos</string>
-    <string name="UploadPhotoActivity_membership_hint" translatable="false">（vip can view it）</string>
-    <string name="UploadPhotoActivity_private" translatable="false">Private Photos/Videos</string>
-    <string name="UploadPhotoActivity_private_hint" translatable="false">（Users need to pay you Hey Dou for checking）</string>
-    <string name="UploadPhotoActivity_custom_num" translatable="false">custom</string>
+    <string name="UploadPhotoActivity_upload_pic_or_video_hint">Unggah foto atau video yang jelas</string>
+    <string name="UploadPhotoActivity_upload_pic_hint">Silakan pilih jenis foto</string>
+    <string name="UploadPhotoActivity_upload_beans_hint">Silahkan pilih Hai koin jumlah</string>
+    <string name="UploadPhotoActivity_video_hint">Unggah foto atau video yang jelas dengan fitur wajah yang jelas.</string>
+    <string name="UploadPhotoActivity_video_or_photo_type_hint">Pilih foto/video</string>
+    <string name="UploadPhotoActivity_ordinary">Common Photo/Video</string>
+    <string name="UploadPhotoActivity_ordinary_hint">（Dapat dilihat semua pengguna）</string>
+    <string name="UploadPhotoActivity_membership">Foto/video member</string>
+    <string name="UploadPhotoActivity_membership_hint">（Ekslusif untuk VIP member）</string>
+    <string name="UploadPhotoActivity_private">Foto/Video pribadi</string>
+    <string name="UploadPhotoActivity_private_hint">（Pengguna harus memberi anda Hai Koin）</string>
+    <string name="UploadPhotoActivity_custom_num">Custom</string>
     <!--DataFraudActivity -->
-    <string name="DataFraudActivity_desc_is_null" translatable="false">Please describe your problem</string>
-    <string name="DataFraudActivity_only_100_word" translatable="false">only 100 word.</string>
-    <string name="DataFraudActivity_head_portraits" translatable="false">Fake Profile or Photo Data</string>
-    <string name="DataFraudActivity_pic_num" translatable="false">Upload Screenshots, Improve Accuracy</string>
-    <string name="DataFraudActivity_other_content" translatable="false">More Detail Your Want to Report(multi-line)</string>
+    <string name="DataFraudActivity_desc_is_null">Tolong jelaskan masalah Anda</string>
+    <string name="DataFraudActivity_only_100_word">hanya 100 kata.</string>
+    <string name="DataFraudActivity_head_portraits">Foto palsu</string>
+    <string name="DataFraudActivity_pic_num">Unggah Screenshot untuk meningkatkan kualitas report</string>
+    <string name="DataFraudActivity_other_content">Penjelasan lain</string>
     <!--ReportUserActivity -->
-    <string name="ReportUserActivity_advertising" translatable="false">Advertise 、Promotion</string>
-    <string name="ReportUserActivity_Fraud" translatable="false">Fraud</string>
-    <string name="ReportUserActivity_Pornography" translatable="false">Vulgar or Pornographic Contant</string>
-    <string name="ReportUserActivity_Malicious" translatable="false">Malicious Harassment</string>
-    <string name="ReportUserActivity_Other" translatable="false">Others</string>
-    <string name="ReportUserActivity_buttom_tv" translatable="false">Please tell us detail about your reporting, make Hey App better!</string>
-    <string name="ReportUserActivity_buttom_tv_hint" translatable="false">(Anonymous reporting , Don\'t worry, we protect your privacy.)</string>
+    <string name="ReportUserActivity_advertising">Spam iklan</string>
+    <string name="ReportUserActivity_Fraud">Penipuan, Di bawah umur</string>
+    <string name="ReportUserActivity_Pornography">Pornografi</string>
+    <string name="ReportUserActivity_Malicious">Membuli, berkata kasar dan tidak pantas</string>
+    <string name="ReportUserActivity_Other">Others</string>
+    <string name="ReportUserActivity_buttom_tv">Tuliskan kritik dan saran anda untuk Kencanme. </string>
+    <string name="ReportUserActivity_buttom_tv_hint">(Data diri dan Id anda dirahasiakan)!</string>
     <!--ConversationActivity -->
-    <string name="ConversationActivity_private_photo_hint" translatable="false">To view private photos, you need to pay</string>
-    <string name="ConversationListFragment_add" translatable="false">Find </string>
-    <string name="ConversationListFragment_new_like_people_hint" translatable="false"> new people like you</string>
-    <string name="ConversationListFragment_New_Pairing" translatable="false">New Pair</string>
-    <string name="ConversationListFragment_Chat" translatable="false">Chat</string>
-    <string name="ConversationListFragment_System_message_title" translatable="false">System message</string>
-    <string name="ConversationListFragment_System_message_title_hint" translatable="false">There are more girls waiting for you to call …</string>
-    <string name="ConversationListFragment_top_title_hint" translatable="false">Private message 1 Hey beans/per,VIP Free</string>
-    <string name="ConversationListFragment_top_title_hint_btn" translatable="false">No more reminder</string>
+    <string name="ConversationActivity_private_photo_hint">Untuk melihat foto pribadi, Anda harus membayar</string>
+    <string name="ConversationListFragment_add">Menemukan </string>
+    <string name="ConversationListFragment_new_like_people_hint"> orang seperti Anda</string>
+    <string name="ConversationListFragment_New_Pairing">Pairing baru</string>
+    <string name="ConversationListFragment_Chat">Chat</string>
+    <string name="ConversationListFragment_System_message_title">Notifikasi</string>
+    <string name="ConversationListFragment_System_message_title_hint">Ada lebih banyak orang menunggu Anda untuk mengobrol …</string>
+    <string name="ConversationListFragment_top_title_hint">Pesan Pribadi 1 Hai Koin/pesan, VIP gratis</string>
+    <string name="ConversationListFragment_top_title_hint_btn">Jangan Tampilkan lagi</string>
     <!--ClearCacheActivity -->
-    <string name="ClearCacheActivity_value" translatable="false">Clear Cache（0K）</string>
-    <string name="ClearCacheActivity_value_hint" translatable="false">Empty local cached data only removes all media files. All content will be downloaded from the server again when needed. </string>
+    <string name="ClearCacheActivity_value">Hapus Cache（0K）</string>
+    <string name="ClearCacheActivity_value_hint">Mengosongkan data cache lokal hanya akan menghapus file tertentu di media. Semua konten akan diunduh ulang dari server bila diperlukan. </string>
     <!--FeedbackProblemActivity -->
-    <string name="FeedbackProblemActivity_problem_desc" translatable="false">feedback can not be empty</string>
-    <string name="FeedbackProblemActivity_Pictures_optional" translatable="false">Pictures (optional)</string>
-    <string name="FeedbackProblemActivity_Contact_optional" translatable="false">Contact information (optional)</string>
-    <string name="FeedbackProblemActivity_e_mail" translatable="false">Email address</string>
-    <string name="FeedbackProblemActivity_problem_desc_null" translatable="false">feedback can not be empty</string>
-    <string name="FeedbackProblemActivity_e_mail_null" translatable="false">email can not be empty</string>
-    <string name="FeedbackProblemActivity_only_400_word" translatable="false">only 400 word.</string>
+    <string name="FeedbackProblemActivity_problem_desc">Tulis masalah anda</string>
+    <string name="FeedbackProblemActivity_Pictures_optional">Gambar (pilih)</string>
+    <string name="FeedbackProblemActivity_Contact_optional">Kontak ( pilih ）</string>
+    <string name="FeedbackProblemActivity_e_mail">email</string>
+    <string name="FeedbackProblemActivity_problem_desc_null">umpan balik tidak boleh kosong</string>
+    <string name="FeedbackProblemActivity_e_mail_null">email tidak boleh kosong</string>
+    <string name="FeedbackProblemActivity_only_400_word">hanya 400 kata.</string>
     <!--MessageReminderActivity -->
-    <string name="MessageReminderActivity_message_preview" translatable="false">Display message preview</string>
-    <string name="MessageReminderActivity_Shock" translatable="false">vibrate</string>
-    <string name="MessageReminderActivity_Voice" translatable="false">volume</string>
+    <string name="MessageReminderActivity_message_preview">Tampilkan Notifikasi Pesan</string>
+    <string name="MessageReminderActivity_Shock">Shake</string>
+    <string name="MessageReminderActivity_Voice">Suara</string>
     <!--SettingActivity -->
-    <string name="SettingActivity_push_tv" translatable="false">Push to me</string>
-    <string name="SettingActivity_Age" translatable="false">age</string>
-    <string name="SettingActivity_Pushing_gender" translatable="false">Push  Gender</string>
-    <string name="SettingActivity_Message_reminder" translatable="false">Message reminder</string>
-    <string name="SettingActivity_Clear_cache" translatable="false">Clear cache</string>
-    <string name="SettingActivity_Problem_feedback" translatable="false">Problem feedback</string>
-    <string name="SettingActivity_About_us" translatable="false">About us</string>
-    <string name="Logout" translatable="false">log out</string>
+    <string name="SettingActivity_push_tv">Direkomendasikan ke saya</string>
+    <string name="SettingActivity_Age">Umur</string>
+    <string name="SettingActivity_Pushing_gender">Rekomendasi berdasar gender</string>
+    <string name="SettingActivity_Message_reminder">Reminder</string>
+    <string name="SettingActivity_Clear_cache">Hapus Cache</string>
+    <string name="SettingActivity_Problem_feedback">Feedback</string>
+    <string name="SettingActivity_About_us">Tentang Kencanme</string>
+    <string name="Logout">Log out</string>
     <!--OpenVipActivity -->
-    <string name="not_vip" translatable="false">Not register</string>
-    <string name="is_vip" translatable="false">Is Vip</string>
-    <string name="OpenVipActivity_agreement" translatable="false">* Opening membership means agrees to the 《Kencanme Friendship Membership Agreement》</string>
-    <string name="OpenVipActivity_Membership_privileges" translatable="false">Member Reights</string>
-    <string name="AboutUsActivity_content" translatable="false">Kencanme is a location-based stranger dating software. It will push people who Pair you nearby according to your information. You can upload photos or videos when you register to show your best side. You can also improve your personal data, upload more photos or videos, so that he/she will get a deeper understanding of you and likes you.
-Kencanme features is simple, if you like just double-click, if not slide up, both like will pair success, build  friendship, you can start a pleasant friendship trip.A variety of forms of show youself, so that he/she will  understanding you more.
-Don\'t release your choose. no body konw your choice unless you like each other.Before talking and chatting, it is known that the other party likes you too, which will increase the rate of success.Pair moments, bring you a sweet heart.</string>
+    <string name="not_vip">Tidak tersedia</string>
+    <string name="is_vip">Is Vip</string>
+    <string name="OpenVipActivity_agreement">* Dengan menjadi member, anda setuju dengan Persyaratan Kencanme</string>
+    <string name="OpenVipActivity_Membership_privileges">Keuntungan member</string>
+    <string name="AboutUsActivity_content">Kencanme adalah aplikasi pertemanan untuk anda berdasarkan lokasi. Berdasarkan informasi Anda, Anda dapat mencari pasangan yang cocok dengan anda. Anda dapat memberikan sisi terbaik Anda kepada pasangan dengan mengunggah foto atau video. Anda juga dapat meningkatkan profil anda dan mengunggah lebih banyak foto atau video Anda sendiri untuk membuat orang tahu lebih banyak tentang Anda dan menyukai Anda.
+Kencanme sangat sederhana, dan hanya butuh 2 kali klik. Jika Anda tidak menyukainya, slide ke atas. Jika Kedua belah pihak saling menyukai, maka pairing baru berhasil. Pairing berhasil dan saling berteman dapat membuka perjalanan yang menyenangkan untuk anda.
+Berbagai informasi yang menunjukkan diri Anda, biarkan pasangan mengetahui anda lebih lengkap sesuai dengan kemauan anda.Data anda tidak akan bocor, calon pasangan tidak akan tahu pilihan anda dan data anda, kecuali anda dan dia saling menyukai.
+Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda bisa memulai percakapan yang lebih menyenangkan.Momen bersama akan membawa anda dan pasangan saling dekat di hati dan memulai perjalanan indah.</string>
 
 
     <!-- MineFragment-->
-    <string name="MineFragment_photo_album_hint" translatable="false">Photo Album</string>
-    <string name="MineFragment_personal_information_hint" translatable="false">Personal Information</string>
-    <string name="MineFragment_contact_way_hint" translatable="false">Contact Way</string>
-    <string name="MineFragment_desc_tv" translatable="false">Sincere friends, like to send me video bar，I hope you like me.</string>
-    <string name="MineFragment_My_Album" translatable="false">My Album</string>
-    <string name="MineFragment_Add_contact_way" translatable="false">add contact information</string>
-    <string name="MineFragment_The_Label" translatable="false">The Label</string>
-    <string name="MineFragment_The_Label_hint" translatable="false">add my tags</string>
-    <string name="MineFragment_beans" translatable="false">Hey Beans:</string>
+    <string name="MineFragment_photo_album_hint">Album Foto</string>
+    <string name="MineFragment_personal_information_hint">Profil</string>
+    <string name="MineFragment_contact_way_hint">Kontak</string>
+    <string name="MineFragment_desc_tv">Teman-teman yang tulus, ingin mengirimi saya bilah video , Saya harap Anda menyukai saya.</string>
+    <string name="MineFragment_My_Album">Galeri Saya</string>
+    <string name="MineFragment_Add_contact_way">tambahkan informasi kontak</string>
+    <string name="MineFragment_The_Label">Label</string>
+    <string name="MineFragment_The_Label_hint">tambahkan tag saya</string>
+    <string name="MineFragment_beans">Hai Koin:</string>
     <!--HomeFragment -->
-    <string name="HomeFragment_Super_exposure_hint" translatable="false">Super exposure! Counting down: </string>
-    <string name="HomeFragment_Super_exposure_content_hint" translatable="false">Pairs! 10 times more exposure over others in 30 minutes </string>
+    <string name="HomeFragment_Super_exposure_hint">Super Eksposur ! Waktu tersisa: </string>
+    <string name="HomeFragment_Super_exposure_content_hint">Pencarian super !Dalam 30 menit jumlah pengguna yang melihat anda 10 kali lebih banyak !  </string>
     <!--MessageFragment -->
-    <string name="MessageFragment_message" translatable="false">Message</string>
-    <string name="MessageFragment_My_friend" translatable="false">My friend</string>
+    <string name="MessageFragment_message">Profile</string>
+    <string name="MessageFragment_My_friend">Daftar Teman</string>
     <!--MineFragment -->
-    <string name="MineFragment_Become_VIP" translatable="false">Join the membership Club</string>
-    <string name="MineFragment_hello_VIP" translatable="false">Hi~SVIP</string>
+    <string name="MineFragment_Become_VIP">Daftar VIP</string>
+    <string name="MineFragment_hello_VIP">Hi~SVIP</string>
 
     <!-- adapter-->
-    <string name="AlbumAdapter_vip_can_view" translatable="false">Member Photos</string>
-    <string name="AlbumAdapter_vip_can_Video" translatable="false">Member Video</string>
-    <string name="AlbumAdapter_Beans_photo" translatable="false">Hey Bean Album</string>
-    <string name="AlbumAdapter_Beans_video" translatable="false">Hey Bean Video</string>
+    <string name="AlbumAdapter_vip_can_view">Foto anggota</string>
+    <string name="AlbumAdapter_vip_can_Video">Video anggota</string>
+    <string name="AlbumAdapter_Beans_photo">Kencanme Foto</string>
+    <string name="AlbumAdapter_Beans_video">Kencanme Video</string>
     <!-- BuyDialogAdapter-->
-    <string name="BuyDialogAdapter_time" translatable="false">time</string>
+    <string name="BuyDialogAdapter_time">kali</string>
     <!-- ContactWayAdapter-->
-    <string name="ContactWayAdapter_et_hint" translatable="false">input your account number</string>
+    <string name="ContactWayAdapter_et_hint">masukan nomor akun anda</string>
     <!-- HomeViewPagerAdapter-->
-    <string name="HomeViewPagerAdapter_years" translatable="false"> years</string>
-    <string name="HomeViewPagerAdapter_active" translatable="false">active </string>
-    <string name="HomeViewPagerAdapter_minute_ago" translatable="false"> minute ago </string>
+    <string name="HomeViewPagerAdapter_years"> tahun</string>
+    <string name="HomeViewPagerAdapter_active">Aktif</string>
+    <string name="HomeViewPagerAdapter_minute_ago">menit yang lalu</string>
     <!-- LoveMeFriendsAdapter-->
-    <string name="LoveMeFriendsAdapter_like_you" translatable="false"> like you</string>
-    <string name="LoveMeFriendsAdapter_like" translatable="false">like</string>
-    <string name="LoveMeFriendsAdapter_liked" translatable="false">liked</string>
+    <string name="LoveMeFriendsAdapter_like_you"> seperti kamu</string>
+    <string name="LoveMeFriendsAdapter_like">like</string>
+    <string name="LoveMeFriendsAdapter_liked">liked</string>
+    <string name="LoveMeFriendsAdapter_match_success">Mulai mengobrol</string>
     <!-- MyAlbumAdapter-->
-    <string name="MyAlbumAdapter_vip_can_look" translatable="false">VIP can look</string>
-    <string name="MyAlbumAdapter_beans_can_look" translatable="false">Hi-Beans can look</string>
+    <string name="MyAlbumAdapter_vip_can_look">VIP bisa melihat</string>
+    <string name="MyAlbumAdapter_beans_can_look">Hai Koin bisa melihat</string>
 
     <!--dialog -->
     <!-- dialog 相关-->
-    <string name="dialog_sure" translatable="false">sure</string>
-    <string name="dialog_cancal" translatable="false">cancal</string>
-    <string name="dialog_style2_hint" translatable="false">About VIP</string>
-    <string name="dialog_use_beans_chat" translatable="false">Register for Super VIP Chat free</string>
-    <string name="dialog_use_beans_album" translatable="false">Look photo Use</string>
-    <string name="dialog_open_vip_like" translatable="false">No "Likes" for today.  Register for membership today, enjoy unlimited "Likes"</string>
-    <string name="dialog_open_vip_chat" translatable="false">Open Super VIP Free Chat~</string>
-    <string name="dialog_open_vip_album" translatable="false">Open Super VIP look more</string>
-    <string name="dialog_open_vip_chat_like" translatable="false">Buy Super VIP to see who likes you</string>
-    <string name="dialog_use_beans_chat_num" translatable="false">Hey beans is required</string>
+    <string name="dialog_sure">Tentukan</string>
+    <string name="dialog_cancal">Batalkan</string>
+    <string name="dialog_style2_hint">Tentang VIP</string>
+    <string name="dialog_use_beans_chat">Gabung Super VIP untuk Free Private Chat</string>
+    <string name="dialog_use_beans_album">Lihat Penggunaan foto</string>
+    <string name="dialog_use_beans_contact">Lihat Cara Penggunaan Kontak</string>
+    <string name="dialog_open_vip_like">Kuota Like hari ini sudah habis Jadi member VIP dan nikmati Like tanpa batas</string>
+    <string name="dialog_open_vip_chat">Gabung Super VIP untuk Free Private Chat</string>
+    <string name="dialog_open_vip_album">Buka Super VIP untuk melihat lebih banyak</string>
+    <string name="dialog_open_vip_chat_like">Buka Super VIP untuk melihat siapa yang menyukai Anda</string>
+    <string name="dialog_use_beans_chat_num">Hai Koin Kebutuhan</string>
     <!-- buyDialog-->
-    <string name="buy_dailog_title" translatable="false">Super exposure</string>
-    <string name="buy_dailog_hint" translatable="false">Available Hey Beans：</string>
-    <string name="buy_dialog_buy" translatable="false">Purchase</string>
-    <string name="buy_dialog_no_beans" translatable="false">You don\'t have enough Heybeans</string>
+    <string name="buy_dailog_title">Super Eksposur</string>
+    <string name="buy_dailog_hint">Gunakan Hai koin：</string>
+    <string name="buy_dialog_buy">Beli</string>
+    <string name="buy_dialog_no_beans">Hai Koin anda tidak cukup.</string>
     <!-- UseExposureDialog-->
-    <string name="use_exposure_dialog_hint" translatable="false">number of times</string>
-    <string name="use_exposure_dialog_use" translatable="false">Use once</string>
-    <string name="use_exposure_dialog_desc" translatable="false">Pairs! 10 times more exposure over others in 30 minutes</string>
-    <string name="album_vip_view" translatable="false">VIP can view</string>
-    <string name="album_hi_beans_view" translatable="false">Hi-beans photo</string>
+    <string name="use_exposure_dialog_hint">berkali-kali</string>
+    <string name="use_exposure_dialog_use">Gunakan sekali</string>
+    <string name="use_exposure_dialog_desc">Pencarian super ! Dalam 30 menit jumlah pengguna yang melihat anda 10 kali lebih banyak ! </string>
+    <string name="album_vip_view">VIP dapat melihat</string>
+    <string name="album_hi_beans_view">Hai Koin dapat melihat</string>
     <!--PhotoDialog -->
-    <string name="PhotoDialog_title" translatable="false">select</string>
-    <string name="PhotoDialog_photo" translatable="false">photo</string>
-    <string name="PhotoDialog_album" translatable="false">Album</string>
+    <string name="PhotoDialog_title">memilih</string>
+    <string name="PhotoDialog_photo">Foto</string>
+    <string name="PhotoDialog_album">Mengambil Gambar</string>
     <!--RechargeBeansDialog -->
-    <string name="RechargeBeansDialog_no_beans_hint" translatable="false">Hey, you don\'t have enough beans!</string>
-    <string name="PhotoDialog_title_hint" translatable="false">Select video or photo</string>
-    <string name="RechargeBeansDialog_beans_or_vip_hint" translatable="false">You don\'t have enough Heybeans? Register for super VIP chat for free</string>
-    <string name="Video" translatable="false">Video</string>
-    <string name="Photo" translatable="false">Photo</string>
-    <!-- 加入黑名单-->
-    <string name="dialog_add_black_friend" translatable="false">Are Your Sure to Add to Blacklist?We Will Stop Pushing This Friend When Add to Blacklist</string>
-    <string name="dialog_delete_friend" translatable="false">Are You Sure to Delete Your Friend?Please Reconsider.</string>
+    <string name="RechargeBeansDialog_no_beans_hint">Anda tidak punya cukup Hai Koin!</string>
+    <string name="PhotoDialog_title_hint">Pilih video atau foto</string>
+    <string name="RechargeBeansDialog_beans_or_vip_hint">Hai Koin anda tidak cukup. Anda juga bisa Free Chat dengan Super VIP</string>
+    <string name="Video">Video</string>
+    <string name="Photo">Foto</string>
+    <!-- 加入黑名单 TODO-->
+    <string name="dialog_add_black_friend">Yakin ingin menambahkan ke Blacklist?Blacklist user tidak bisa menjawab anda</string>
+    <string name="dialog_delete_friend">Yakin ingin menghapus pertemanan?Tolong pertimbangkan sekali lagi</string>
 
-    <string name="CommonChoiceDialog_add_blacklist" translatable="false">Add to blacklist</string>
-    <string name="CommonChoiceDialog_anonymous_report" translatable="false">Anonymous Reporting </string>
-    <string name="CommonChoiceDialog_delete_friends" translatable="false">Delete friends</string>
-    <string name="LoginDialog_count_hint" translatable="false">Select an account to continue using Kencanme APP</string>
-    <string name="LoginDialog_other_accounts" translatable="false">Use other accounts</string>
-    <string name="LoginDialog_agreement" translatable="false">To continue, Google will provide your name, email address, and profile photo to the Kencanme app.</string>
-    <string name="UseExposureDialog_select_photo_type" translatable="false">Please select the type of photo you </string>
+    <string name="CommonChoiceDialog_add_blacklist">Tambah ke Blacklist</string>
+    <string name="CommonChoiceDialog_anonymous_report">Report sebagai anonim</string>
+    <string name="CommonChoiceDialog_delete_friends">Hapus pertemanan</string>
+    <string name="LoginDialog_count_hint">Pilih akun Kembali ke Kencanme</string>
+    <string name="LoginDialog_other_accounts">Gunakan akun lain</string>
+    <string name="LoginDialog_agreement">Untuk melanjutkan, Google akan menambahkan nama, alamat email, dan foto profil Anda ke aplikasi Kencanme</string>
+    <string name="UseExposureDialog_select_photo_type">Silakan pilih jenis foto Anda </string>
 
 
     <!-- Activity 类 相关  返回箭头后title-->
-    <string name="AgreementActivity_title" translatable="false">Agreement</string>
-    <string name="RechargeActivity_title" translatable="false">Purchase Hey beans</string>
-    <string name="EditMakeFriendsInfoActivity_title" translatable="false">Edit your profile</string>
-    <string name="EditPersonalInfoActivity_title" translatable="false">Edit personal data</string>
-    <string name="EditLabelActivity_title" translatable="false">Editing personal Tags</string>
-    <string name="ReportUserActivity_title" translatable="false">Anonymous Reporting </string>
-    <string name="EditContactWayActivity_title" translatable="false">Edit contact data</string>
-    <string name="SettingActivity_title" translatable="false">Set up</string>
-    <string name="MessageReminderActivity_title" translatable="false">Message reminder</string>
-    <string name="ClearCacheActivity_title" translatable="false">Clear up local cached data</string>
-    <string name="FeedbackProblemActivity_title" translatable="false">Feedback problem</string>
-    <string name="UploadPhotoActivity_title" translatable="false">Upload my real photo or video</string>
-    <string name="OpenVipActivity_title" translatable="false">Open VIP</string>
-    <string name="LoveMePeopleActivity_title" translatable="false">People who like me</string>
-    <string name="SystemMsgActivity_title" translatable="false">System message</string>
-    <string name="MyAlbumActivity_title" translatable="false">My Album</string>
-    <string name="DataFraudActivity_title" translatable="false">Anonymous Reporting </string>
-    <string name="AboutUsActivity_title" translatable="false">About us </string>
-
-
-
-
-
-
+    <string name="AgreementActivity_title">Persetujuan</string>
+    <string name="RechargeActivity_title">Dapatkan Hai Koin</string>
+    <string name="EditMakeFriendsInfoActivity_title">Ubah Informasi pencarian teman</string>
+    <string name="EditPersonalInfoActivity_title">Edit profil</string>
+    <string name="EditLabelActivity_title">Edit label</string>
+    <string name="ReportUserActivity_title">Report sebagai anonim </string>
+    <string name="EditContactWayActivity_title">Edit Kontak</string>
+    <string name="SettingActivity_title">Pengaturan</string>
+    <string name="MessageReminderActivity_title">Reminder</string>
+    <string name="ClearCacheActivity_title">Bersihkan data cache lokal</string>
+    <string name="FeedbackProblemActivity_title">Feedback</string>
+    <string name="UploadPhotoActivity_title">Unggah foto atau video asli saya</string>
+    <string name="OpenVipActivity_title">Buka VIP</string>
+    <string name="LoveMePeopleActivity_title">Fans anda</string>
+    <string name="SystemMsgActivity_title">Notifikasi</string>
+    <string name="MyAlbumActivity_title">Galeri Saya</string>
+    <string name="DataFraudActivity_title">Report sebagai anonim </string>
+    <string name="AboutUsActivity_title">Tentang Kencanme </string>
+    <string name="EarnBeansActivity_title">Dapatkan Hai Koin </string>
 
 
     <!-- 请求成功返回msg-->
-    <string name="msg_super_expsure_success" translatable="false">Super expsure success </string>
-    <string name="msg_purchase_success" translatable="false">purchase success </string>
-    <string name="msg_delete_success" translatable="false">Delete success </string>
-    <string name="add_to_blacklist_success" translatable="false">add to blacklist success </string>
-    <string name="edit_personal_info_successfully" translatable="false">edit successfully</string>
-    <string name="modify_successfully" translatable="false">Modify successfully</string>
-    <string name="add_successfully" translatable="false">Add succefully</string>
+    <string name="login_google_fail">info masuk google gagal</string>
+    <string name="msg_super_expsure_success">Super Eksposur berhasil!</string>
+    <string name="msg_purchase_success">Pembelian berhasil</string>
+    <string name="msg_delete_success">Berhasil menghapus </string>
+    <string name="add_to_blacklist_success">Tambah Daftar blacklist berhasil </string>
+    <string name="edit_personal_info_successfully">berhasil diedit</string>
+    <string name="modify_successfully">Dimodifikasi dengan sukses</string>
+    <string name="add_successfully">Tambahkan dengan sukses</string>
 
 
+    <!-- WebView-->
+    <string name="earn_beans_wb">Kencanme/inviteApp-yn.html?code=YHI345</string>    <!--分享页  邀请页-->
+    <string name="down_app">Kencanme/downApp-yn.html?code=YHI345</string>    <!--下载页  落地页-->
+    <string name="member_agreement_wb">Kencanme/MemberAgreement-yn.html</string>    <!--会员协议-->
+    <string name="purchase_agreement_wb">Kencanme/RechargeAgreement-yn.html</string>    <!--充值协议-->
+    <string name="register_agreement_wb">Kencanme/RegistrationAgreement-yn.html</string>    <!--注册协议-->
+
+    <!--facebook分享-->
+    <string name="facebook_title">mengundang teman-teman</string>
+    <string name="facebook_content">Undang teman untuk digunakan</string>
 
 
 </resources>

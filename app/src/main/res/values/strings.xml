@@ -16,9 +16,9 @@
     <string name="google" translatable="false">Google</string>
     <string name="facebook" translatable="false">Facebook</string>
     <string name="whatsapp" translatable="false">WhatsApp</string>
-    <string name="album_num_max_12" translatable="false">最多传12张</string>
-    <string name="album_num_max_8" translatable="false">最多传8张</string>
-    <string name="album_num_max_6" translatable="false">最多传6张</string>
+    <string name="album_num_max_12" translatable="false">Pass up to 12</string>
+    <string name="album_num_max_8" translatable="false">Pass up to 8</string>
+    <string name="album_num_max_6" translatable="false">Pass up to 6</string>
     <string name="money" translatable="false">$</string>
     <string name="facebook_app_id" translatable="false">387656405197436</string>
     <!-- 提交和保存-->
@@ -42,7 +42,7 @@
     <string name="login_hint" translatable="false">Welcome to login,please choose the following way to login.</string>
     <!-- RechargeActivity-->
     <string name="recharge_current_beans_num_hint" translatable="false">Hey beans balance</string>
-    <string name="recharge_amount_of_money" translatable="false">Amount of money</string>
+    <string name="recharge_amount_of_money" translatable="false">Amount</string>
     <string name="recharge_means_hint" translatable="false">* purchase means agree </string>
     <string name="recharge_app_agreement" translatable="false">《Kencanme payment agreement》</string>
     <string name="recharge_problems_hint" translatable="false">if your encounter purchase difficults please </string>
@@ -76,7 +76,7 @@
     <string name="Weight" translatable="false">Weight:</string>
     <string name="Chest" translatable="false">Chest:</string>
     <string name="Birthday" translatable="false">Birthday:</string>
-    <string name="Professional" translatable="false">Professional:</string>
+    <string name="Professional" translatable="false">Career:</string>
 
 
     <!-- EditContactWayActivity-->
@@ -104,7 +104,7 @@
 
     <string name="RecommendUserInfoActivity_look_over_hint" translatable="false">Look over</string>
     <string name="RecommendUserInfoActivity_label_hint" translatable="false">The Label</string>
-    <string name="RecommendUserInfoActivity_no_friends" translatable="false">你们不是好友关系</string>
+    <string name="RecommendUserInfoActivity_no_friends" translatable="false">You are not friends yet.</string>
 
 
     <!-- CreatePersonalInfoActivity-->
@@ -116,7 +116,7 @@
     <string name="CreatePersonalInfoActivity_cover_is_empty" translatable="false">Cover can not be empty</string>
     <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty" translatable="false">Declaration of Friendship can not be empty</string>
     <!-- app hint语句 -->
-    <string name="app_nick_hint" translatable="false">请输入昵称</string>
+    <string name="app_nick_hint" translatable="false">Please enter a nickname</string>
 
     <!--EditPersonalInfoActivity-->
     <string name="EditPersonalInfoActivity_Address" translatable="false">Address</string>
@@ -137,10 +137,10 @@
     <string name="UploadPhotoActivity_upload_beans_hint" translatable="false">Please select Hey beans num</string>
     <string name="UploadPhotoActivity_video_hint" translatable="false">Please upload vivid photos or videos with clear facial features.</string>
     <string name="UploadPhotoActivity_video_or_photo_type_hint" translatable="false">Choose Photo/Video Type</string>
-    <string name="UploadPhotoActivity_ordinary" translatable="false">Ordinary Photo/Video</string>
-    <string name="UploadPhotoActivity_ordinary_hint" translatable="false">（Anyone can view it）</string>
+    <string name="UploadPhotoActivity_ordinary" translatable="false">Common Photo/Video</string>
+    <string name="UploadPhotoActivity_ordinary_hint" translatable="false">（Show it to Everyone）</string>
     <string name="UploadPhotoActivity_membership" translatable="false">Membership Photos/Videos</string>
-    <string name="UploadPhotoActivity_membership_hint" translatable="false">（vip can view it）</string>
+    <string name="UploadPhotoActivity_membership_hint" translatable="false">（VIP only）</string>
     <string name="UploadPhotoActivity_private" translatable="false">Private Photos/Videos</string>
     <string name="UploadPhotoActivity_private_hint" translatable="false">（Users need to pay you Hey Dou for checking）</string>
     <string name="UploadPhotoActivity_custom_num" translatable="false">custom</string>
@@ -162,10 +162,10 @@
     <string name="ConversationActivity_private_photo_hint" translatable="false">To view private photos, you need to pay</string>
     <string name="ConversationListFragment_add" translatable="false">Find </string>
     <string name="ConversationListFragment_new_like_people_hint" translatable="false"> new people like you</string>
-    <string name="ConversationListFragment_New_Pairing" translatable="false">New Pair</string>
+    <string name="ConversationListFragment_New_Pairing" translatable="false">Pairing baru</string>
     <string name="ConversationListFragment_Chat" translatable="false">Chat</string>
     <string name="ConversationListFragment_System_message_title" translatable="false">System message</string>
-    <string name="ConversationListFragment_System_message_title_hint" translatable="false">There are more girls waiting for you to call …</string>
+    <string name="ConversationListFragment_System_message_title_hint" translatable="false">There are more people waiting for you to call …</string>
     <string name="ConversationListFragment_top_title_hint" translatable="false">Private message 1 Hey beans/per,VIP Free</string>
     <string name="ConversationListFragment_top_title_hint_btn" translatable="false">No more reminder</string>
     <!--ClearCacheActivity -->
@@ -189,7 +189,7 @@
     <string name="SettingActivity_Pushing_gender" translatable="false">Push  Gender</string>
     <string name="SettingActivity_Message_reminder" translatable="false">Message reminder</string>
     <string name="SettingActivity_Clear_cache" translatable="false">Clear cache</string>
-    <string name="SettingActivity_Problem_feedback" translatable="false">Problem feedback</string>
+    <string name="SettingActivity_Problem_feedback" translatable="false">Feedback</string>
     <string name="SettingActivity_About_us" translatable="false">About us</string>
     <string name="Logout" translatable="false">Log out</string>
     <!--OpenVipActivity -->
@@ -242,7 +242,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="LoveMeFriendsAdapter_match_success" translatable="false">Start chatting</string>
     <!-- MyAlbumAdapter-->
     <string name="MyAlbumAdapter_vip_can_look" translatable="false">VIP can look</string>
-    <string name="MyAlbumAdapter_beans_can_look" translatable="false">Hi-Beans can look</string>
+    <string name="MyAlbumAdapter_beans_can_look" translatable="false">Hey Beans can look</string>
 
     <!--dialog -->
     <!-- dialog 相关-->
