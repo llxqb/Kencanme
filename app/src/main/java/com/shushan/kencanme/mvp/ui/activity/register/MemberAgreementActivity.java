@@ -1,12 +1,11 @@
 package com.shushan.kencanme.mvp.ui.activity.register;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,9 +42,10 @@ public class MemberAgreementActivity extends BaseActivity {
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     @Override
     public void initView() {
+        mProgressbar.setMax(100);
         mCommonTitleTv.setText(getResources().getString(R.string.AgreementActivity_title));
         mAgreementWb.addJavascriptInterface(this, "android");//添加js监听 这样html就能调用客户端
-        mAgreementWb.setWebViewClient(webViewClient);
+        mAgreementWb.setWebChromeClient(new WebChromeViewClient());
         WebSettings webSettings = mAgreementWb.getSettings();
         webSettings.setJavaScriptEnabled(true);//允许使用js
         //支持屏幕缩放
@@ -60,23 +60,17 @@ public class MemberAgreementActivity extends BaseActivity {
     }
 
     //WebViewClient主要帮助WebView处理各种通知、请求事件
-    private WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public void onPageFinished(WebView view, String url) {//页面加载完成
-            mProgressbar.setVisibility(View.GONE);
-        }
+    private class WebChromeViewClient extends WebChromeClient {
 
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
-            mProgressbar.setVisibility(View.VISIBLE);
+        public void onProgressChanged(WebView view, int newProgress) {
+            mProgressbar.setProgress(newProgress);
+            if (newProgress == 100) {
+                mProgressbar.setVisibility(View.GONE);
+            }
+            super.onProgressChanged(view, newProgress);
         }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return super.shouldOverrideUrlLoading(view, url);
-        }
-
-    };
+    }
 
     @OnClick(R.id.common_back)
     public void onViewClicked() {

@@ -29,6 +29,7 @@ import com.shushan.kencanme.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.mvp.ui.fragment.MineFragment;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.LoginUtils;
 import com.shushan.kencanme.mvp.views.MyNoScrollViewPager;
 
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 finish();
             }
             LoginUser loginUser = mBuProcessor.getLoginUser();
-            Log.e("ddd","loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }
         List<Fragment> fragments = new ArrayList<>();
@@ -107,6 +108,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private void connectRongCloud() {
         //"MbbN5DyzAEs2Vruc4Sirkac3QJl342gyNW2NyYV7fKr3kEu705lRicWjNXyo5Ok1T7F5rN+y/6ypnXiFpNArqFxA4Ai8GBqr"
         String rToken = mSharePreferenceUtil.getData("ryToken");
+        LogUtils.d("rToken:" + rToken);
         String rongId = mSharePreferenceUtil.getData("rongId");
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {

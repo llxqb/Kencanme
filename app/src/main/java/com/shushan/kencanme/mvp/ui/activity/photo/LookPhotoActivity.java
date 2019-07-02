@@ -77,7 +77,7 @@ public class LookPhotoActivity extends BaseActivity {
     public void initData() {
     }
 
-    @OnClick(R.id.common_back)
+    @OnClick(R.id.photo_iv)
     public void onViewClicked() {
         finish();
     }

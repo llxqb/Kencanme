@@ -10,13 +10,13 @@
     <item
         android:id="@+id/action_message"
         android:enabled="true"
-        android:icon="@mipmap/tab_cart_normal"
+        android:icon="@mipmap/bottom_bar_message"
         android:title="@string/main_bottom_message"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_mine"
         android:enabled="true"
-        android:icon="@mipmap/tab_setting_normal"
+        android:icon="@mipmap/bottom_bar_mine"
         android:title="@string/main_bottom_mine"
         app:showAsAction="ifRoom" />
 </menu>

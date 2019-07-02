@@ -103,6 +103,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
             }
             pushSexAdapter.notifyDataSetChanged();
         });
+
     }
 
     @Override
@@ -132,6 +133,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                 sexList.get(1).isCheck = true;
             }
         }
+
     }
 
     @OnClick({R.id.common_back, R.id.message_reminder_tv, R.id.clear_cache_tv, R.id.problem_feedback_tv, R.id.about_us_tv, R.id.logout_tv})
@@ -180,7 +182,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         showToast(msg);
         updatLoginUser();
         //更新首页推送内容
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
         super.onBackPressed();
     }
 

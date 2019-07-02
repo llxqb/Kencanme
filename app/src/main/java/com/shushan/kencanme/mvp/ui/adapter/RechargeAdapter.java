@@ -39,12 +39,14 @@ public class RechargeAdapter extends BaseQuickAdapter<ReChargeBeansInfoResponse.
             helper.setText(R.id.vip_give, " / VIP give" + String.valueOf(item.getVip_give()));
             helper.setText(R.id.rp_money, "$" + String.valueOf(item.getPrice()));
 
-            if(item.isCheck){
-//                helper.setBackgroundRes(R.id.item_recharge_rl,R.drawable.yellow_btn);
-                helper.setVisible(R.id.check_iv,true);
-            }else {
-//                helper.setBackgroundRes(R.id.item_recharge_rl,R.drawable.item_recharge_bg);
-                helper.setVisible(R.id.check_iv,false);
+            if (item.isCheck) {
+                helper.setBackgroundRes(R.id.item_recharge_rl, R.drawable.item_recharge_check_bg);
+                helper.setBackgroundColor(R.id.line,mContext.getResources().getColor(R.color.color_yellow_line));
+                helper.setVisible(R.id.check_iv, true);
+            } else {
+                helper.setBackgroundRes(R.id.item_recharge_rl, R.drawable.item_recharge_bg);
+                helper.setBackgroundColor(R.id.line,mContext.getResources().getColor(R.color.line_color));
+                helper.setVisible(R.id.check_iv, false);
             }
         }
     }

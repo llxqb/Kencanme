@@ -26,6 +26,7 @@ import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
+import com.shushan.kencanme.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.utils.ConversationUtil;
 import com.shushan.kencanme.mvp.utils.PicUtils;
@@ -290,6 +291,14 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mContent = content;
         mCustomizeMessage = message;
         DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.ConversationActivity_private_photo_hint), content.beans);
+    }
+
+    /**
+     * 查看已用hai-bean查看的图片
+     */
+    @Override
+    public void lookPictureOnClickListener(String coverUrl) {
+        LookPhotoActivity.start(this, coverUrl);
     }
 
     /**

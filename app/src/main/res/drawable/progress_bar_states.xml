@@ -2,7 +2,7 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="2dp" />
+            <corners android:radius="@dimen/dp_2" />
 
             <gradient
                 android:angle="270"
@@ -14,7 +14,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="2dp" />
+                <corners android:radius="@dimen/dp_2" />
 
                 <gradient
                     android:centerColor="#4AEA2F"

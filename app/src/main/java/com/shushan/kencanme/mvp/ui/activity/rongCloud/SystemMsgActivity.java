@@ -14,11 +14,14 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerSystemMsgComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.SystemMsgModule;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.SystemMsgRequest;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.SystemMsgResponse;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.SystemMsgAdapter;
+import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.SystemMsgView, BaseQuickAdapter.RequestLoadMoreListener {
+public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.SystemMsgView, BaseQuickAdapter.RequestLoadMoreListener, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -90,9 +93,13 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
                 finish();
                 break;
             case R.id.common_iv_right:
-                clearMsg();
+                showClearMsgDialog();
                 break;
         }
+    }
+
+    private void showClearMsgDialog() {
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.SystemMsgActivity_clear_msg_hint), Constant.DIALOG_ONE);
     }
 
     private void clearMsg() {
@@ -111,6 +118,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
             }
         } else {
             systemMsgAdapter.addData(systemMsgResponse.getData());
+            systemMsgAdapter.loadMoreComplete();
         }
     }
 
@@ -130,6 +138,14 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     public void onLoadMoreRequested() {
         page++;
         requestMsgList();
+    }
+
+    /**
+     * 清空系统消息
+     */
+    @Override
+    public void commonDialogBtnOkListener() {
+        clearMsg();
     }
 
     private void initializeInjector() {

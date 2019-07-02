@@ -73,7 +73,7 @@
                 android:layout_toEndOf="@id/dialog_style_2_iv"
                 android:text="@string/dialog_sure"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_18" />
         </RelativeLayout>
 
     </LinearLayout>

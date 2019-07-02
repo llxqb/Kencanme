@@ -121,6 +121,21 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
+        <activity
+            android:name=".mvp.ui.activity.photo.LookPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.ui.activity.loveMe.LoveMePeopleActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".mvp.ui.activity.register.EarnBeansActivity" />
+        <activity android:name=".mvp.ui.activity.register.MemberAgreementActivity" />
+        <activity android:name=".mvp.ui.activity.register.RegisterAgreementActivity"/>
+
+        <!-- 融云-->
+
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
         <!-- 否则使用拍照功能时，会崩溃 -->
         <provider
@@ -132,6 +147,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+
         <!-- 会话界面 -->
         <activity
             android:name=".mvp.ui.activity.rongCloud.ConversationActivity"
@@ -148,20 +164,35 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".mvp.ui.activity.photo.LookPhotoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mvp.ui.activity.rongCloud.SystemMsgActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".mvp.ui.activity.loveMe.LoveMePeopleActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".mvp.ui.activity.register.EarnBeansActivity" />
-        <activity android:name=".mvp.ui.activity.register.MemberAgreementActivity" />
-        <activity android:name=".mvp.ui.activity.register.RegisterAgreementActivity"></activity>
 
-        <!-- facebook  @string/facebook_app_id-->
+        <receiver
+            android:name=".help.NotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
+
+        <!--<activity-->
+            <!--android:name="自定义 activity"-->
+            <!--android:exported="true"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait">-->
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+                <!--<data-->
+                    <!--android:host=""${applicationId}""-->
+                <!--android:pathPrefix="/push_message"-->
+                <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!-- facebook 分享 @string/facebook_app_id-->
         <activity
             android:name="com.umeng.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

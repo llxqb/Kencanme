@@ -3,7 +3,6 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.help.ImageLoaderHelper;
@@ -88,9 +86,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.beansNum.setVisibility(View.VISIBLE);
             holder.beansNum.setText(String.valueOf(content.beans));
             ImageLoaderHelper.displayImage2(v, content.cover_url, holder.coverIv, Constant.LOADING_SMALL);
+            holder.coverIv.setOnClickListener(v12 -> {
+                if (mLookViewListener != null) {
+                    mLookViewListener.lookPictureOnClickListener(content.cover_url);
+                }
+            });
         } else {
-            Log.e("ddd", "content:" + new Gson().toJson(content)+"  uid:"+message.getUId());
-            Log.e("ddd", "mMessageIdList:" + new Gson().toJson(mMessageIdList));
+//            Log.e("ddd", "content:" + new Gson().toJson(content)+"  uid:"+message.getUId());
+//            Log.e("ddd", "mMessageIdList:" + new Gson().toJson(mMessageIdList));
             holder.msgLayout.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_left);
             holder.customizeMsgTv.setTextColor(v.getResources().getColor(R.color.first_text_color));
             holder.customizeMsgTv.setText(v.getResources().getString(R.string.CustomizeMessageItemProvider_left_photo));
@@ -106,6 +109,11 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
                 ImageLoaderHelper.displayImage2(v, content.cover_url, holder.coverIv, Constant.LOADING_SMALL);
                 holder.isLockedIv.setVisibility(View.GONE);
                 holder.lookTv.setVisibility(View.GONE);
+                holder.coverIv.setOnClickListener(v12 -> {
+                    if (mLookViewListener != null) {
+                        mLookViewListener.lookPictureOnClickListener(content.cover_url);
+                    }
+                });
             }
         }
 
@@ -119,7 +127,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public Spannable getContentSummary(CustomizeMessage data) {
-        return new SpannableString("Received a private message");
+        return new SpannableString("This is a private message");
     }
 
 
@@ -135,6 +143,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     public interface LookViewListener {
         void lookViewOnClickListener(View v, int position, CustomizeMessage content, UIMessage message);
+
+        void lookPictureOnClickListener(String coverUrl);
     }
 
 }

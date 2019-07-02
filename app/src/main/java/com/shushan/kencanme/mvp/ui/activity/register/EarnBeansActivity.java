@@ -4,9 +4,9 @@ package com.shushan.kencanme.mvp.ui.activity.register;
  */
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -59,15 +59,34 @@ public class EarnBeansActivity extends BaseActivity {
     @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     @Override
     public void initView() {
+        mProgressbar.setMax(100);
         mCommonTitleTv.setText(getResources().getString(R.string.EarnBeansActivity_title));
         mWebview.addJavascriptInterface(this, "android");//添加js监听 这样html就能调用客户端
-        mWebview.setWebViewClient(webViewClient);
+        mWebview.setWebChromeClient(new WebChromeViewClient());
         WebSettings webSettings = mWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);//允许使用js
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         mWebview.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.earn_beans_wb));//加载url
+
+        mWebview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                Log.e("ddd", "url:" + url);
+//                if (url.contains("js-call:")) {
+//                    if (url.contains("PlaySnake")) {
+//                        Log.d("X5WebViewActivity", "玩蛇");
+//                    }
+//                    return false;
+//                }
+                if (url.contains("share")) {
+                    share();
+                }
+//                view.loadUrl(url);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -82,12 +101,13 @@ public class EarnBeansActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.share_btn:
-                share();
+//                share();
                 break;
         }
     }
 
     private void share() {
+        //分享到facebook
         SnsPlatform snsPlatform = SHARE_MEDIA.FACEBOOK.toSnsPlatform();
         //分享链接
         UMWeb web = new UMWeb(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.down_app));
@@ -102,7 +122,7 @@ public class EarnBeansActivity extends BaseActivity {
 
     private UMShareListener umShareListener = new UMShareListener() {
         /**
-         * @descrption 分享开始的回调
+         *  分享开始的回调
          * @param platform 平台类型
          */
         @Override
@@ -111,7 +131,7 @@ public class EarnBeansActivity extends BaseActivity {
         }
 
         /**
-         * @descrption 分享成功的回调
+         *  分享成功的回调
          * @param platform 平台类型
          */
         @Override
@@ -121,7 +141,7 @@ public class EarnBeansActivity extends BaseActivity {
         }
 
         /**
-         * @descrption 分享失败的回调
+         *  分享失败的回调
          * @param platform 平台类型
          * @param t 错误原因
          */
@@ -142,23 +162,19 @@ public class EarnBeansActivity extends BaseActivity {
 
         }
     };
+
     //WebViewClient主要帮助WebView处理各种通知、请求事件
-    private WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public void onPageFinished(WebView view, String url) {//页面加载完成
-            mProgressbar.setVisibility(View.GONE);
-        }
+    private class WebChromeViewClient extends WebChromeClient {
 
         @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
-            mProgressbar.setVisibility(View.VISIBLE);
+        public void onProgressChanged(WebView view, int newProgress) {
+            mProgressbar.setProgress(newProgress);
+            if (newProgress == 100) {
+                mProgressbar.setVisibility(View.GONE);
+            }
+            super.onProgressChanged(view, newProgress);
         }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            return super.shouldOverrideUrlLoading(view, url);
-        }
-    };
+    }
 
 
 }

@@ -254,6 +254,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         LogUtils.d("response:" + new Gson().toJson(response));
         List<HomeFragmentResponse.ListBean> dataList = response.getList();
         mHomeAdapter.addData(dataList);
+        mHomeAdapter.loadMoreComplete();
     }
 
     @Override
