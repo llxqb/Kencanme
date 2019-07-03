@@ -26,6 +26,7 @@ public class AboutUsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

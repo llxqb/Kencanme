@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
 
 /**
  * MessageFragment2
@@ -72,9 +73,18 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
         mMyFriendsRecyclerView.setAdapter(myFriendsAdapter);
         myFriendsAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             MyFriendsResponse.ListBean listBean = (MyFriendsResponse.ListBean) adapter.getItem(position);
-            //跳到好友详情
             assert listBean != null;
-            RecommendUserInfoActivity.start(getActivity(), listBean.getUid());
+            switch (view.getId()) {
+                case R.id.my_friends_rl:
+                    //跳到聊天
+                    //启动单聊页面
+                    RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
+                    break;
+                case R.id.friends_avator_iv:
+                    //跳到好友详情
+                    RecommendUserInfoActivity.start(getActivity(), listBean.getUid());
+                    break;
+            }
         });
     }
 
@@ -88,7 +98,6 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void getMyFriendsListInfoSuccess(MyFriendsResponse myFriendsResponse) {
-
         //没做分页可以这样表示
         if (myFriendsResponse.getList().size() == 0) {
             myFriendsAdapter.setEmptyView(mEmptyView);

@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.shushan.kencanme.R;
+import com.shushan.kencanme.mvp.utils.LogUtils;
 
 /**
  * Created by Administrator on 2017/10/30.
@@ -60,7 +61,7 @@ public class TwoWayRattingBar extends View {
     }
 
     public interface OnProgressChangeListener {
-        void onProgressChange(int leftProgress,int  rightProgress);
+        void onProgressChange(int leftProgress,int  rightProgress,boolean isFirstComeIn);
 
 //        void onLeftProgressChange(float progress);
 //
@@ -111,27 +112,36 @@ public class TwoWayRattingBar extends View {
         textPaint.setTextSize(text_size);
         textPaint.setColor(text_color);
         textPaint.setStyle(Paint.Style.STROKE);
+
     }
 
-    public void setLeftProgress(float progress) {
+//    public void setLeftProgress2(float progress) {
+//        LogUtils.e("progress:"+progress);
+//    }
+
+    /**
+     * isFirstComeIn  用来记录是默认进来activity  退出activity不更新个人信息
+     */
+    public void setLeftProgress(float progress,int width,boolean isFirstComeIn) {
         float end_progress;
-        end_progress = rightProgress - (leftProgressIcon.getWidth() * 1.0f / getWidth()) * 2;
-        if (progress <= 0f) {
+        end_progress = rightProgress - (leftProgressIcon.getWidth() * 1.0f /width ) * 2;
+        if (progress <= 0) {
             progress = 0f;
         }
         if (progress >= end_progress) {
             progress = end_progress;
         }
         this.leftProgress = progress;
+
         if (onProgressChangeListener != null) {
-            onProgressChangeListener.onProgressChange((int)(progress * leftMinNum) + 18,(int)(rightProgress * rightMaxNum)+18);
+            onProgressChangeListener.onProgressChange((int)(progress * leftMinNum) + 18,(int)(rightProgress * rightMaxNum)+18,isFirstComeIn);
         }
         invalidate();
     }
 
-    public void setRightProgress(float progress) {
+    public void setRightProgress(float progress,int width,boolean isFirstComeIn) {
         float start_progress;
-        start_progress = leftProgress + (leftProgressIcon.getWidth() * 1.0f / getWidth()) * 2;
+        start_progress = leftProgress + (leftProgressIcon.getWidth() * 1.0f / width) * 2;
         if (progress <= start_progress) {
             progress = start_progress;
         }
@@ -140,8 +150,7 @@ public class TwoWayRattingBar extends View {
         }
         this.rightProgress = progress;
         if (onProgressChangeListener != null) {
-//            onProgressChangeListener.onRightProgressChange(String.valueOf(progress * rightMaxNum + 18));
-            onProgressChangeListener.onProgressChange((int)(leftProgress * leftMinNum) + 18,(int)(progress * rightMaxNum)+18);
+            onProgressChangeListener.onProgressChange((int)(leftProgress * leftMinNum) + 18,(int)(progress * rightMaxNum)+18,isFirstComeIn);
         }
         invalidate();
     }
@@ -217,9 +226,11 @@ public class TwoWayRattingBar extends View {
                 //触摸点落在有效范围内则跟随手指移动
                 float change_progress = (event.getX() - pressX) / getWidth();
                 if (touchStatus == 1) {
-                    setLeftProgress(leftProgress + change_progress);
+                    LogUtils.d("leftProgress:"+(leftProgress + change_progress));
+                    setLeftProgress(leftProgress + change_progress,getWidth(),false);
                 } else if (touchStatus == 2) {
-                    setRightProgress(rightProgress + change_progress);
+                    LogUtils.d("rightProgress:"+(rightProgress + change_progress));
+                    setRightProgress(rightProgress + change_progress,getWidth(),false);
                 }
                 pressX = event.getX();
                 break;

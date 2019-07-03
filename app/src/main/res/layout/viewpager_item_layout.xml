@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#000000"
     android:layout_height="match_parent">
 
@@ -8,13 +9,17 @@
     <ImageView
         android:id="@+id/viewpager_item_iv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop" />
 
     <cn.jzvd.JzvdStd
         android:id="@+id/jz_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:visibility="gone" />
 
     <RelativeLayout
@@ -35,6 +40,8 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentStart="true"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="@dimen/dp_2"
             android:src="@mipmap/head_photo_loading" />
 
         <TextView

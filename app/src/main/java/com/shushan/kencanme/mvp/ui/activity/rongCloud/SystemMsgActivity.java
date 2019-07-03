@@ -56,6 +56,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
         setContentView(R.layout.activity_system_msg);
         ButterKnife.bind(this);
         initializeInjector();
+        setStatusBar();
         initView();
         initData();
     }

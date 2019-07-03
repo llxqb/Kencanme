@@ -6,9 +6,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.bumptech.glide.load.HttpException;
 import com.shushan.kencanme.KencanmeApp;
@@ -59,13 +63,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         addFilter();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, mFilter);
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
-        setStatusBar();
     }
 
-    protected void setStatusBar() {
-//        StatusBarUtil.setColor(this, getResources().getColor(R.color.white));
-        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.app_color));
+    /**
+     * 设置白底黑字状态栏
+     */
+    public void setStatusBar() {
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.white));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View content = ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
+            if (content!=null && !isUseFullScreenMode()) {
+                content.setFitsSystemWindows(true);
+            }
+        }
     }
+
+
 
     public abstract void initView();
 
@@ -77,6 +90,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             showToast("登入过期,请重新登入");
             clearSwitchToLogin();
         }
+    }
+
+    /**
+     * 判断界面是否全屏
+     */
+    private boolean isUseFullScreenMode(){
+        return (getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
     /**

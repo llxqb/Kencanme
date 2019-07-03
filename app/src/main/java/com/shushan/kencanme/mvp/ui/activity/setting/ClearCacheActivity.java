@@ -33,6 +33,7 @@ public class ClearCacheActivity extends BaseActivity implements CommonDialog.Com
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clear_cache);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

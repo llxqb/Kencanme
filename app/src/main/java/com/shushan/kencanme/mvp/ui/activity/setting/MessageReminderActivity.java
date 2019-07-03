@@ -44,6 +44,7 @@ public class MessageReminderActivity extends BaseActivity {
         setContentView(R.layout.activity_message_reminder);
         ButterKnife.bind(this);
         ((KencanmeApp) getApplication()).getAppComponent().inject(this);
+        setStatusBar();
         initView();
         initData();
     }

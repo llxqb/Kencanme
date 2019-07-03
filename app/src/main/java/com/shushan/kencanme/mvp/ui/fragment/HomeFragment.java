@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -69,7 +70,7 @@ import io.rong.imkit.RongIM;
  */
 
 public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener,
-        MyTimer.MyTimeListener, BaseQuickAdapter.RequestLoadMoreListener {
+        MyTimer.MyTimeListener, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.home_recycler_view)
     RecyclerView homeRecyclerView;
@@ -79,6 +80,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     TextView mExposureTimeTv;
     @BindView(R.id.use_exposuring_hint)
     TextView mUseExposuringHint;
+    @BindView(R.id.swipe_ly)
+    SwipeRefreshLayout mSwipeLy;
 
     private List<HomeFragmentResponse.ListBean> viewPagerResponseList = new ArrayList<>();
     private HomeAdapter mHomeAdapter;
@@ -106,6 +109,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_INFO)) {
+            mSwipeLy.setRefreshing(true);
             requestHomeData();
         } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_DATA_INFO)) {
             requestHomeUserInfo();
@@ -124,6 +128,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
+        mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeLy.setOnRefreshListener(this);
         RxView.clicks(mUseExposureIv).throttleFirst(1, TimeUnit.SECONDS).subscribe(o -> useSuperExposure());
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHomeAdapter = new HomeAdapter(getActivity(), viewPagerResponseList, mImageLoaderHelper);
@@ -253,8 +259,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void getInfoSuccess(HomeFragmentResponse response) {
         LogUtils.d("response:" + new Gson().toJson(response));
         List<HomeFragmentResponse.ListBean> dataList = response.getList();
-        mHomeAdapter.addData(dataList);
-        mHomeAdapter.loadMoreComplete();
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+            mHomeAdapter.setNewData(dataList);
+        } else {
+            mHomeAdapter.addData(dataList);
+            mHomeAdapter.loadMoreComplete();
+        }
     }
 
     @Override
@@ -289,13 +300,19 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
+    /**
+     * 刷新
+     */
+    @Override
+    public void onRefresh() {
+        requestHomeData();
+    }
 
     /**
      * 加载更多
      */
     @Override
     public void onLoadMoreRequested() {
-        LogUtils.d("onLoadMoreRequested()");
         requestHomeData();
     }
 

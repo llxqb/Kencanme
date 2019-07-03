@@ -335,6 +335,7 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <!--facebook分享-->
     <string name="facebook_title">mengundang teman-teman</string>
     <string name="facebook_content">Undang teman untuk digunakan</string>
+    <string name="exit_app">Tekan lagi untuk keluar dari aplikasi</string>
 
 
 </resources>

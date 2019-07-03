@@ -20,7 +20,7 @@
         <EditText
             android:id="@+id/text_et"
             android:layout_width="@dimen/dp_240"
-            android:layout_height="@dimen/dp_34"
+            android:layout_height="@dimen/dp_35"
             android:background="@drawable/label_search_bg1"
             android:gravity="start|center_vertical"
             android:paddingEnd="@dimen/dp_10"

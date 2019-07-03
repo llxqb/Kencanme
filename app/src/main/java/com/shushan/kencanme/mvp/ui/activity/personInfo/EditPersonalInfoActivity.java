@@ -66,6 +66,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
         setContentView(R.layout.activity_edit_personal_info);
         initializeInjector();
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

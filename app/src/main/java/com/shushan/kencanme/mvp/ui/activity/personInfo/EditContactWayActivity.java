@@ -77,6 +77,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
         setContentView(R.layout.activity_edit_contact_way);
         initializeInjector();
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

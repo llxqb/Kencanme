@@ -339,4 +339,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <!-- add+++-->
     <string name="SystemMsgActivity_clear_msg_hint" translatable="false">You are sure to clear the system message?</string>
     <string name="ClearCacheActivity_clear_cache_hint" translatable="false">You are sure to clear the cache?</string>
+    <string name="log_out_hint" translatable="false">You are sure to log out?</string>
+    <string name="exit_app" translatable="false">Press again to exit the app</string>
 </resources>

@@ -94,6 +94,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
+        setStatusBar();
         initializeInjector();
         initView();
         initData();

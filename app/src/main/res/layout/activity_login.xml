@@ -78,7 +78,9 @@
         android:background="@drawable/bg_login_round_30_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_google_rl">
+        app:layout_constraintTop_toBottomOf="@id/login_google_rl"
+        android:visibility="invisible"
+        >
 
         <ImageView
             android:layout_width="@dimen/dp_50"
@@ -106,6 +108,7 @@
         android:background="@drawable/bg_login_round_30_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/login_facebook_rl">
 
         <ImageView

@@ -99,6 +99,7 @@ public class FeedbackProblemActivity extends BaseActivity implements TakePhoto.T
         setContentView(R.layout.activity_feedback_problem);
         ButterKnife.bind(this);
         initializeInjector();
+        setStatusBar();
         initView();
         initData();
     }

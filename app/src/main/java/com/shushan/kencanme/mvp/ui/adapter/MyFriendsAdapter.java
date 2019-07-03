@@ -30,7 +30,7 @@ public class MyFriendsAdapter extends BaseQuickAdapter<MyFriendsResponse.ListBea
 
     @Override
     protected void convert(BaseViewHolder helper, MyFriendsResponse.ListBean item) {
-        helper.addOnClickListener(R.id.my_friends_rl);
+        helper.addOnClickListener(R.id.my_friends_rl).addOnClickListener(R.id.friends_avator_iv);
         CircleImageView imageView = helper.getView(R.id.friends_avator_iv);
         mImageLoaderHelper.displayImage(mContext, item.getTrait(), imageView, Constant.LOADING_AVATOR);
         helper.setText(R.id.friends_nick_tv, item.getNickname());

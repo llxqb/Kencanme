@@ -6,6 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,11 +15,14 @@ import com.shushan.kencanme.di.components.DaggerSettingComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.SettingModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
+import com.shushan.kencanme.entity.Constants.Constant;
 import com.shushan.kencanme.entity.SexBean;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.user.LoginUser;
+import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.PushSexAdapter;
+import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.TwoWayRattingBar;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ import butterknife.OnClick;
 /**
  * desc:设置
  */
-public class SettingActivity extends BaseActivity implements TwoWayRattingBar.OnProgressChangeListener, SettingControl.SettingView {
+public class SettingActivity extends BaseActivity implements TwoWayRattingBar.OnProgressChangeListener, SettingControl.SettingView, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -70,6 +74,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         initializeInjector();
+        setStatusBar();
         initView();
         initData();
     }
@@ -85,8 +90,6 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         mSexRecyclerView.setAdapter(pushSexAdapter);
 
         pushSexAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            TextView sexTv = (TextView) adapter.getViewByPosition(mSexRecyclerView, position, R.id.sex_tv);
-//            sexTv.setBackgroundResource(R.drawable.bg_color_yellow_round_30);
             isUpdatePersonal = true;
             SexBean sexBean = (SexBean) adapter.getItem(position);
             assert sexBean != null;
@@ -115,13 +118,25 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
             sexBean.name = aSex;
             sexList.add(sexBean);
         }
-//        if (Integer.parseInt(loginUser.pushing_small_age) > 0) {
-////            mTwoWayRattingBar.setCurrentMinValue(Integer.parseInt(loginUser.pushing_small_age));
-//            mTwoWayRattingBar.setLeftProgress(Float.parseFloat(String.valueOf(Integer.parseInt(loginUser.pushing_small_age)/50)));
-//        }
-//        if (Integer.parseInt(loginUser.pushing_large_age) > 0) {
-//            mTwoWayRattingBar.setCurrentMaxValue(Integer.parseInt(loginUser.pushing_large_age));
-//        }
+
+        //等onCreate方法执行完了，我们定义的控件才会被度量(measure)，所以我们在onCreate方法里面通过view.getHeight()获取控件的高度或者宽度肯定是0
+        ViewTreeObserver vto = mTwoWayRattingBar.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mTwoWayRattingBar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                if (Integer.parseInt(loginUser.pushing_small_age) > 0) {
+                    float minValue = (float) (Integer.parseInt(loginUser.pushing_small_age) - 18) / 32;
+                    mTwoWayRattingBar.setLeftProgress(minValue, mTwoWayRattingBar.getWidth(), true);
+                }
+                if (Integer.parseInt(loginUser.pushing_large_age) > 0) {
+                    float maxValue = (float) (Integer.parseInt(loginUser.pushing_large_age) - 18) / 32;
+                    mTwoWayRattingBar.setRightProgress(maxValue, mTwoWayRattingBar.getWidth(), true);
+                }
+            }
+        });
+
+
         for (int i = 0; i < sexList.size(); i++) {
             if (loginUser.pushing_gender == 0) {
                 sexList.get(2).isCheck = true;
@@ -156,15 +171,20 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                 startActivitys(AboutUsActivity.class);
                 break;
             case R.id.logout_tv:
-                exitLogin(this);
+                showExitLoginDialog();
                 break;
         }
     }
 
+    private void showExitLoginDialog() {
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.log_out_hint), Constant.DIALOG_ONE);
+    }
+
     @Override
-    public void onProgressChange(int leftProgress, int rightProgress) {
-//        Log.e("ddd", "left_progress:" + leftProgress + " rightProgress:" + rightProgress);
-        isUpdatePersonal = true;
+    public void onProgressChange(int leftProgress, int rightProgress, boolean isFirstComeIn) {
+        if (!isFirstComeIn) {
+            isUpdatePersonal = true;
+        }
         minYear = String.valueOf(leftProgress);
         String ageSelectValue;
         if (rightProgress == 50) {
@@ -198,6 +218,14 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
 
     @Override
     public void feedbackProblemSuccess(String msg) {
+    }
+
+    /**
+     * 退出登录
+     */
+    @Override
+    public void commonDialogBtnOkListener() {
+        exitLogin(this);
     }
 
     /**

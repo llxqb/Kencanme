@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_home"
         android:enabled="true"
-        android:icon="@mipmap/bottom_bar_home"
+        android:icon="@mipmap/bottom_bar_home_choose"
         android:title="@string/main_bottom_home"
         app:showAsAction="ifRoom" />
     <item

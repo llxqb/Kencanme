@@ -27,7 +27,6 @@ import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.adapter.RecommendUserLabelAdapter;
-import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 
 import java.lang.reflect.Type;
@@ -76,6 +75,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
         setContentView(R.layout.activity_edit_label);
         ButterKnife.bind(this);
         initializeInjector();
+        setStatusBar();
         initView();
         initData();
     }

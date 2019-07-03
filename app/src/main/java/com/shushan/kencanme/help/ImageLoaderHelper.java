@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -21,7 +22,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.shushan.kencanme.R;
 import com.shushan.kencanme.mvp.utils.TranTools;
 
 import javax.inject.Inject;
@@ -40,7 +40,7 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView,int loadPic) {
+    public void displayImage(Context context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(loadPic)
@@ -52,7 +52,7 @@ public class ImageLoaderHelper extends GlideLoader {
 
 
     @Override
-    public void displayImage(Context context, Object path, ImageView imageView, int res,int loadPic) {
+    public void displayImage(Context context, Object path, ImageView imageView, int res, int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .error(loadPic)
@@ -64,7 +64,7 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     @Override
-    public void displayCircularImage(Context context, Object path, ImageView imageView,int loadPic) {
+    public void displayCircularImage(Context context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, 8)))//设置圆角大小
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
@@ -76,7 +76,7 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     @Override
-    public void displayRoundedCornerImage(Context context, Object path, ImageView imageView, Integer size,int loadPic) {
+    public void displayRoundedCornerImage(Context context, Object path, ImageView imageView, Integer size, int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new RoundedCorners(TranTools.dip2px(context, size)))//设置圆角大小
                 .skipMemoryCache(true)
@@ -88,7 +88,7 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     //设置圆角毛玻璃效果
-    public void displayGlassImage(Context context, Object path, ImageView imageView,int loadPic) {
+    public void displayGlassImage(Context context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = RequestOptions
                 .bitmapTransform(new MultiTransformation<>(new BlurTransformation(30, 3)
 //                        new RoundedCorners(TranTools.dip2px(context, 8))
@@ -103,14 +103,28 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
 
-    //设置背景图片
-    public void displayBackgroundImage(Context context, Object path, View imageView,int loadPic) {
+    /**
+     * 设置背景图片  不变形
+     */
+    public void displayBackgroundImage(Context context, Object path, View view, int loadPic) {
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(loadPic)
+                .skipMemoryCache(true)
+                .placeholder(loadPic)
+                .dontAnimate();
         Glide.with(context).asBitmap().load(path)//签到整体 背景
+                .apply(options)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         Drawable drawable = new BitmapDrawable(resource);
-                        imageView.setBackground(drawable);    //设置背景
+                        ((LinearLayout) view).removeAllViews();  //clear linearlayout
+                        ImageView imageView2 = new ImageView(context);
+                        imageView2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));  //设置图片宽高
+                        imageView2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        imageView2.setImageDrawable(drawable); //图片资源
+                        ((LinearLayout) view).addView(imageView2); //动态添加图片
                     }
                 });
     }
@@ -119,12 +133,12 @@ public class ImageLoaderHelper extends GlideLoader {
      * 设置自适应图片
      */
     @Override
-    public void displayMatchImage(Context context, Object path, ImageView imageView,int loadPic) {
+    public void displayMatchImage(Context context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.loading_big)
+                .error(loadPic)
                 .skipMemoryCache(true)
-                .placeholder(R.mipmap.loading_big)
+                .placeholder(loadPic)
                 .dontAnimate();
 
         RequestListener requestListener = new RequestListener<Drawable>() {
@@ -152,7 +166,6 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
 
-
     /**
      * 设置圆角毛玻璃效果
      * 静态方法
@@ -174,7 +187,7 @@ public class ImageLoaderHelper extends GlideLoader {
     /**
      *
      */
-    public static void displayImage2(View context, Object path, ImageView imageView,int loadPic) {
+    public static void displayImage2(View context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(loadPic)

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 首页订单状态-->
-    <string-array name="order_status">
-        <item>待配送</item>
-        <item>配送中</item>
-        <item>已送达</item>
-    </string-array>
-
-    <declare-styleable name="circleimageview">
-        <attr name="border_thickness" format="dimension" />
-        <attr name="border_inside_color" format="color" />
-        <attr name="border_outside_color" format="color" />
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
 </resources>

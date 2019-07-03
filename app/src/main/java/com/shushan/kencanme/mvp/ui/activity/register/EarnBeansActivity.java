@@ -52,6 +52,7 @@ public class EarnBeansActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earn_beans);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

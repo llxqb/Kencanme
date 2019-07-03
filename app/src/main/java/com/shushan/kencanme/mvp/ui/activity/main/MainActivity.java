@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.google.gson.Gson;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initView() {
+        mMainBottomNavigation.setItemIconTintList(null);
         if (!mBuProcessor.isValidLogin()) {
             startActivitys(LoginActivity.class);
             finish();
@@ -97,6 +99,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initData() {
         requestPersonalInfo();
+
     }
 
     private void requestPersonalInfo() {
@@ -133,18 +136,32 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        resetToDefaultIcon();//重置到默认不选中图片
         switch (menuItem.getItemId()) {
             case R.id.action_home:
+                //在这里替换图标
+                menuItem.setIcon(R.mipmap.bottom_bar_home_choose);
                 mMainViewpager.setCurrentItem(SWITCH_HOME_PAGE, false);
                 break;
             case R.id.action_message:
+                menuItem.setIcon(R.mipmap.bottom_bar_message_choose);
                 mMainViewpager.setCurrentItem(SWITCH_MESSAGE_PAGE, false);
                 break;
             case R.id.action_mine:
+                menuItem.setIcon(R.mipmap.bottom_bar_mine_choose);
                 mMainViewpager.setCurrentItem(SWITCH_MINE_PAGE, false);
                 break;
         }
         return true;
+    }
+
+    private void resetToDefaultIcon() {
+        MenuItem home = mMainBottomNavigation.getMenu().findItem(R.id.action_home);
+        MenuItem message = mMainBottomNavigation.getMenu().findItem(R.id.action_message);
+        MenuItem mine = mMainBottomNavigation.getMenu().findItem(R.id.action_mine);
+        home.setIcon(R.mipmap.bottom_bar_home);
+        message.setIcon(R.mipmap.bottom_bar_message);
+        mine.setIcon(R.mipmap.bottom_bar_mine);
     }
 
     @Override
@@ -182,6 +199,36 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         DaggerMainComponent.builder().appComponent(getAppComponent())
                 .mainModule(new MainModule(MainActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+    /**
+     * 捕捉返回事件按钮
+     * <p>
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
+                this.exitApp();
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    private long exitTime = 0;
+
+    /**
+     * 退出程序
+     */
+    private void exitApp() {
+        // 判断2次点击事件时间
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showToast(getResources().getString(R.string.exit_app));
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 
 }
