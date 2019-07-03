@@ -12,7 +12,7 @@ public class ActivityConstant {
     //更新首页数据
     public static final String UPDATE_HOME_INFO = "update_home_info";
     //更新首页推荐用户数据
-    public static final String UPDATE_HOME_DATA_INFO = "update_home_data_info";
+    public static final String UPDATE_HOME_LIST_INFO = "update_home_list_info";
     /**
      * 更新消息页面
      */

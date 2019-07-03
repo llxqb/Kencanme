@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -66,7 +67,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_send_photo_type, container, true);
         unbinder = ButterKnife.bind(this, view);

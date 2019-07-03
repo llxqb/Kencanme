@@ -89,6 +89,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         setContentView(R.layout.activity_personal_info_upload_photo);
         initializeInjector();
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }
@@ -153,7 +154,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        if (requestCode == 100 && data != null) {
             Uri selectedVideo = data.getData();
             String[] filePathColumn = {MediaStore.Video.Media.DATA};
             assert selectedVideo != null;

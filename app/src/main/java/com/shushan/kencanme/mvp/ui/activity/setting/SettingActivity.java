@@ -202,7 +202,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
         showToast(msg);
         updatLoginUser();
         //更新首页推送内容
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_LIST_INFO));
         super.onBackPressed();
     }
 

@@ -71,5 +71,11 @@ public class MessageModel {
     public Observable<ResponseData> onRequestUserInfoByRid(UserInfoByRidRequest request) {
         return mMessageApi.onRequestUserInfoByRid(mGson.toJson(request)).map(mTransform::transformCommon);
     }
+    /**
+     * 根据融云第三方id获取关系
+     */
+    public Observable<ResponseData> onRequestUserRelation(UserInfoByRidRequest request) {
+        return mMessageApi.onRequestUserRelation(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

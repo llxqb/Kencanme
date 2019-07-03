@@ -26,7 +26,6 @@ import cn.jzvd.JzvdStd;
  * desc:查看照片大图 或者是全屏看视频
  */
 public class LookPhotoActivity extends BaseActivity {
-
     @BindView(R.id.common_back)
     ImageView mCommonBack;
     @BindView(R.id.common_title_tv)
@@ -58,6 +57,7 @@ public class LookPhotoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
         if (getIntent() != null) {
             String path = getIntent().getStringExtra("path");
             if (TranTools.isVideo(path)) {
@@ -77,14 +77,26 @@ public class LookPhotoActivity extends BaseActivity {
     public void initData() {
     }
 
-    @OnClick(R.id.photo_iv)
-    public void onViewClicked() {
-        finish();
-    }
+//    @OnClick(R.id.photo_iv)
+//    public void onViewClicked() {
+//        finish();
+//    }
 
     private void initializeInjector() {
         DaggerLookPhotoComponent.builder().appComponent(getAppComponent())
                 .lookPhotoModule(new LookPhotoModule(LookPhotoActivity.this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
+    }
+
+    @OnClick({R.id.common_back, R.id.photo_iv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.common_back:
+                finish();
+                break;
+            case R.id.photo_iv:
+                finish();
+                break;
+        }
     }
 }

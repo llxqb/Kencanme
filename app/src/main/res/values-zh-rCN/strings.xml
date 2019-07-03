@@ -325,8 +325,8 @@ Don\'t release your choose. no body konw your choice unless you like each other.
 
 
     <!-- WebView-->
-    <string name="earn_beans_wb">Kencanme/inviteApp-EN.html?code=YHI345</string>    <!--分享页-->
-    <string name="down_app">Kencanme/downApp-EN.html?code=YHI345</string>    <!--下载页-->
+    <string name="earn_beans_wb">Kencanme/inviteApp-EN.html?code=</string>    <!--分享页-->
+    <string name="down_app">Kencanme/downApp-EN.html?code=</string>    <!--下载页-->
     <string name="member_agreement_wb">Kencanme/MemberAgreement-en.html</string>    <!--会员协议-->
     <string name="purchase_agreement_wb">Kencanme/RechargeAgreement-en.html</string>    <!--充值协议-->
     <string name="register_agreement_wb">Kencanme/RegistrationAgreement-en.html</string>    <!--注册协议-->
@@ -335,6 +335,10 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="facebook_title">invite friends</string>
     <string name="facebook_content">Invite friends to use</string>
 
-
+    <!-- add+++-->
+    <string name="SystemMsgActivity_clear_msg_hint" >You are sure to clear the system message?</string>
+    <string name="ClearCacheActivity_clear_cache_hint" >You are sure to clear the cache?</string>
+    <string name="log_out_hint" >You are sure to log out?</string>
+    <string name="exit_app" >Press again to exit the app</string>
 
 </resources>

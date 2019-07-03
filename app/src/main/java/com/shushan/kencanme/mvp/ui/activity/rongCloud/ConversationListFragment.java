@@ -126,12 +126,12 @@ public class ConversationListFragment extends BaseFragment implements Conversati
         switch (view.getId()) {
             case R.id.new_pairing_rl:
                 //查看谁喜欢过我  TODO
-                startActivitys(LoveMePeopleActivity.class);
-//                if (mLoginUser.userType == 3) {
-//                    startActivitys(LoveMePeopleActivity.class);
-//                } else {
-//                    showSuperVipDialog();
-//                }
+//                startActivitys(LoveMePeopleActivity.class);
+                if (mLoginUser.userType == 3) {
+                    startActivitys(LoveMePeopleActivity.class);
+                } else {
+                    showSuperVipDialog();
+                }
                 break;
             case R.id.system_msg_rl:
                 startActivitys(SystemMsgActivity.class);
@@ -143,7 +143,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
      * 提示开通超级vip
      */
     private void showSuperVipDialog() {
-        DialogFactory.showOpenVipDialogFragment(getActivity(),this, getResources().getString(R.string.dialog_open_vip_chat_like));
+        DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat_like));
     }
 
     @Override
@@ -158,7 +158,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
                 mImageLoaderHelper.displayGlassImage(getActivity(), likeBean.getTrait(), mNewPairingIv, Constant.LOADING_AVATOR);
             }
             mNewPairingNumTv.setText(String.valueOf(likeBean.getCount()));
-            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add)+ " <font color = '#FF2D5B'>" + likeBean.getCount() + "</font> " +getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
+            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add) + " <font color = '#FF2D5B'>" + likeBean.getCount() + "</font> " + getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
             mNewPairingTv.setText(Html.fromHtml(mNewPairingTvValue));
         } else {
             mNewPairingRl.setVisibility(View.GONE);

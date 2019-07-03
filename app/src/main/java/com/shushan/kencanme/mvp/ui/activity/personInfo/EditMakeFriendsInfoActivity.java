@@ -107,6 +107,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         setContentView(R.layout.activity_edit_make_friends_info);
         ButterKnife.bind(this);
         initializeInjector();
+        setStatusBar();
         initView();
         initData();
     }
@@ -213,7 +214,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        if (requestCode == 100 && data != null) {
             Uri selectedVideo = data.getData();
             String[] filePathColumn = {MediaStore.Video.Media.DATA};
             assert selectedVideo != null;

@@ -6,9 +6,10 @@ package com.shushan.kencanme.entity.response;
  */
 public class HomeUserInfoResponse {
 
+
     /**
-     * user : {"vip":0,"svip":1,"sex":2,"beans":25,"exposure":5,"exposure_type":0,"exposure_time":0,"now_time":1111111,"today_like":0,"today_chat":0,"today_see_contact":0,"nickname":"Meong kucing","trait":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559020915007&di=2bc7b18d1cc9ea420d0190e2b1e7e033&imgtype=0&src=http://image.uc.cn/o/wemedia/s/upload/2019/85230ab04aec373d557a2a3b4a849e39.png;,3,jpegx;3,310x"}
-     * contact : {"svip_num":10,"vip_num":20,"num":50}
+     * user : {"vip":1,"svip":0,"sex":1,"beans":568,"exposure":0,"code":"APUYG77","exposure_type":0,"exposure_time":0,"now_time":1562139334,"today_like":40,"today_chat":0,"today_see_contact":0,"nickname":"Aron Carter","trait":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190612/5d00935e3fea7.png"}
+     * contact : {"svip_num":5,"vip_num":10,"num":20}
      * message : {"num":20}
      */
 
@@ -42,19 +43,20 @@ public class HomeUserInfoResponse {
 
     public static class UserBean {
         /**
-         * vip : 0
-         * svip : 1
-         * sex : 2
-         * beans : 25
-         * exposure : 5
+         * vip : 1
+         * svip : 0
+         * sex : 1
+         * beans : 568
+         * exposure : 0
+         * code : APUYG77
          * exposure_type : 0
          * exposure_time : 0
-         * now_time : 1111111
-         * today_like : 0
+         * now_time : 1562139334
+         * today_like : 40
          * today_chat : 0
          * today_see_contact : 0
-         * nickname : Meong kucing
-         * trait : https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559020915007&di=2bc7b18d1cc9ea420d0190e2b1e7e033&imgtype=0&src=http://image.uc.cn/o/wemedia/s/upload/2019/85230ab04aec373d557a2a3b4a849e39.png;,3,jpegx;3,310x
+         * nickname : Aron Carter
+         * trait : https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190612/5d00935e3fea7.png
          */
 
         private int vip;
@@ -62,6 +64,7 @@ public class HomeUserInfoResponse {
         private int sex;
         private int beans;
         private int exposure;
+        private String code;
         private int exposure_type;
         private int exposure_time;
         private int now_time;
@@ -109,6 +112,14 @@ public class HomeUserInfoResponse {
 
         public void setExposure(int exposure) {
             this.exposure = exposure;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
 
         public int getExposure_type() {
@@ -178,9 +189,9 @@ public class HomeUserInfoResponse {
 
     public static class ContactBean {
         /**
-         * svip_num : 10
-         * vip_num : 20
-         * num : 5
+         * svip_num : 5
+         * vip_num : 10
+         * num : 20
          */
 
         private int svip_num;

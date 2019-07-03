@@ -12,6 +12,7 @@ import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.RecommendUserInfoModel;
@@ -111,7 +112,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
      */
     @Override
     public void onRequestLike(LikeRequest likeRequest) {
-        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+//        mRecommendUserInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mRecommendUserInfoModel.onRequestLike(likeRequest).compose(mRecommendUserInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestLikeSuccess, throwable -> mRecommendUserInfoView.showErrMessage(throwable),
                         () -> mRecommendUserInfoView.dismissLoading());
@@ -120,7 +121,9 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getLikeSuccess("success");
+            responseData.parseData(LikeResponse.class);
+            LikeResponse response = (LikeResponse) responseData.parsedData;
+            mRecommendUserInfoView.getLikeSuccess(response);
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }

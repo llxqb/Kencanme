@@ -42,4 +42,9 @@ public interface MessageApi {
      */
     @POST("menggoda/user/rongyun_info")
     Observable<String> onRequestUserInfoByRid(@Body String request);
+    /**
+     * 根据融云第三方id获取关系
+     */
+    @POST("menggoda/user/rongyun_relation")
+    Observable<String> onRequestUserRelation(@Body String request);
 }

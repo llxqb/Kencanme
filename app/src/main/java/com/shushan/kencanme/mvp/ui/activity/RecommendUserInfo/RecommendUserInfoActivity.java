@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.ui.activity.recommendUserInfo;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,12 +34,14 @@ import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.mvp.ui.activity.photo.LookPhotoActivity;
+import com.shushan.kencanme.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.mvp.ui.activity.reportUser.ReportUserActivity;
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.AlbumAdapter;
@@ -50,7 +52,9 @@ import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CircleImageView;
 import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.MyTimer;
 import com.shushan.kencanme.mvp.views.dialog.CommonChoiceDialog;
+import com.shushan.kencanme.mvp.views.dialog.MatchSuccessDialog;
 import com.shushan.kencanme.mvp.views.dialog.MessageUseBeansDialog;
 import com.shushan.kencanme.mvp.views.dialog.RechargeBeansDialog;
 
@@ -68,15 +72,15 @@ import io.rong.imkit.RongIM;
  * 推荐用户资料详情
  */
 public class RecommendUserInfoActivity extends BaseActivity implements RecommendUserInfoControl.RecommendUserInfoView, CommonChoiceDialog.commonChoiceDialogListener,
-        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener {
+        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener, MyTimer.MyTimeListener, MatchSuccessDialog.MatchSuccessListener {
     @BindView(R.id.back_iv)
     ImageView mBackIv;
     @BindView(R.id.more_iv)
     ImageView mMoreIv;
     @BindView(R.id.head_icon)
     CircleImageView mHeadIcon;
-    @BindView(R.id.recommend_user_head_bg)
-    LinearLayout mRecommendUserHeadBg;
+    @BindView(R.id.cover_iv)
+    ImageView mCoverIv;
     @BindView(R.id.recommend_username)
     TextView mRecommendUsername;
     @BindView(R.id.recommend_user_sex_year)
@@ -132,12 +136,15 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 1 使用嗨豆查看相册
      * 2 使用嗨豆查看联系方式
      */
+    private MyAlbumResponse.DataBean mAlbumBean;
     private int useBeansType;
-    @Inject
-    RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
-    List<String> labelList = new ArrayList<>();
+    private List<String> labelList = new ArrayList<>();
     private RecommendUserInfoResponse recommendUserInfoResponse;
     private LoginUser mLoginUser;
+    private Dialog likeDialog;
+    @Inject
+    RecommendUserInfoControl.PresenterRecommendUserInfo mPresenter;
+
 
     public static void start(Context context, int uid) {
         Intent intent = new Intent(context, RecommendUserInfoActivity.class);
@@ -172,7 +179,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         initData();
     }
 
-    MyAlbumResponse.DataBean mAlbumBean;
 
     @Override
     public void initView() {
@@ -280,7 +286,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 设置页面数据
      */
     private void setUserData(RecommendUserInfoResponse recommendUserInfoResponse) {
-        mImageLoaderHelper.displayBackgroundImage(this, recommendUserInfoResponse.getCover(), mRecommendUserHeadBg, Constant.LOADING_MIDDLE);
+        mImageLoaderHelper.displayMatchImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
         mImageLoaderHelper.displayImage(this, recommendUserInfoResponse.getTrait(), mHeadIcon, Constant.LOADING_AVATOR);
         mRecommendUsername.setText(recommendUserInfoResponse.getNickname());
         if (recommendUserInfoResponse.getSex() == 1) {
@@ -289,9 +295,14 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
         }
         String mSexYearTvValue = recommendUserInfoResponse.getAge() + " years";
-        String activeTimeValue = "active " + recommendUserInfoResponse.getActive_time() + " min age";
+        if (recommendUserInfoResponse.getActive_time() > 0) {
+            mRecommendActiveTime.setVisibility(View.VISIBLE);
+            String activeTimeValue = "active " + recommendUserInfoResponse.getActive_time() + " min age";
+            mRecommendActiveTime.setText(activeTimeValue);
+        } else {
+            mRecommendActiveTime.setVisibility(View.INVISIBLE);
+        }
         mRecommendUserSexYear.setText(mSexYearTvValue);
-        mRecommendActiveTime.setText(activeTimeValue);
         mRecommendDesc.setText(recommendUserInfoResponse.getDeclaration());
         //相册信息
         if (recommendUserInfoResponse.getAlbum().size() == 0)
@@ -353,6 +364,9 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * Go喜欢
      */
     private void likeIv() {
+        likeDialog = DialogFactory.showLikeDialog(this);
+        likeDialog.show();
+        setmRemainTime();
         if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
@@ -369,14 +383,19 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 去聊天
      */
     private void goChat() {
-        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+        if (recommendUserInfoResponse.getRelation() == 2) {
             //启动单聊页面
-            RequestFreeChat requestFreeChat = new RequestFreeChat();
-            requestFreeChat.token = mBuProcessor.getToken();
-            requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
-            mPresenter.onRequestChatNum(requestFreeChat);
+            RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
         } else {
-            showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
+            if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+                //启动单聊页面
+                RequestFreeChat requestFreeChat = new RequestFreeChat();
+                requestFreeChat.token = mBuProcessor.getToken();
+                requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
+                mPresenter.onRequestChatNum(requestFreeChat);
+            } else {
+                showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
+            }
         }
     }
 
@@ -386,10 +405,32 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     @Override
-    public void getLikeSuccess(String msg) {
+    public void getLikeSuccess(LikeResponse likeResponse) {
+        if (likeResponse.getState() == 1) {
+            //相互喜欢
+            showMatchSuccesDialog();
+        }
         likedBg();
         //更新用户数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+    }
+
+    /**
+     * 显示匹配成功弹框
+     */
+    private void showMatchSuccesDialog() {
+        MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
+        matchSuccessDialog.setListener(this);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
+    }
+
+    /**
+     * 开始聊天
+     */
+    @Override
+    public void startChatBtnListener() {
+        //启动单聊页面
+        RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
 
 
@@ -489,13 +530,39 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         showToast(msg);
     }
 
+    MyTimer myTimer;
+
+    /**
+     * 设置一分钟倒计时
+     */
+    private void setmRemainTime() {
+        myTimer = MyTimer.getInstance(1000, 1000, this);
+        myTimer.setListener(this);
+        myTimer.cancel();
+        myTimer.start();
+    }
+
+    /**
+     * 一分钟倒计时结束
+     */
+    @Override
+    public void onFinish() {
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
+        if (likeDialog.isShowing()) {
+            likeDialog.dismiss();
+        }
+    }
+
 
     /**
      * 赚嗨豆
      */
     @Override
     public void earnBeansDialogBtnListener() {
-        showToast(getResources().getString(R.string.wait_develop));
+        startActivitys(EarnBeansActivity.class);
     }
 
     /**

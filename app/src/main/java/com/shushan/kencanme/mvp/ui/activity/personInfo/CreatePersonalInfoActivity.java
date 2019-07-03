@@ -60,6 +60,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
         setContentView(R.layout.activity_create_personal_info);
         StatusBarUtil.setTranslucent(this);
         initializeInjector();
+        setStatusBar();
         ButterKnife.bind(this);
         initView();
         initData();

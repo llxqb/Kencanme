@@ -46,7 +46,7 @@
         android:id="@+id/login_google_rl"
         android:layout_width="@dimen/dp_255"
         android:layout_height="@dimen/dp_60"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
         android:background="@drawable/bg_login_round_30_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

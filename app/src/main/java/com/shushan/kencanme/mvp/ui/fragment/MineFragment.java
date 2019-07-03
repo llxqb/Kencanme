@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -94,6 +93,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     RecyclerView mAlbumRecyclerView;
     @BindView(R.id.personal_info_tv)
     TextView mPersonalInfoTv;
+    @BindView(R.id.cover_iv)
+    ImageView mCoverIv;
     @BindView(R.id.user_location)
     TextView mUserLocation;
     @BindView(R.id.user_height)
@@ -120,8 +121,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     RecyclerView mLabelRecyclerView;
     Unbinder unbinder;
     //个人资料
-    @BindView(R.id.personal_info_ll)
-    LinearLayout mPersonalInfoLl;
     @BindView(R.id.avator)
     CircleImageView mAvator;
     @BindView(R.id.username)
@@ -289,7 +288,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mVipTimeTv.setText(getResources().getString(R.string.MineFragment_hello_VIP));
         }
         mDescTv.setText(mLoginUser.declaration);
-        mImageLoaderHelper.displayBackgroundImage(getActivity(), mLoginUser.cover, mPersonalInfoLl, Constant.LOADING_MIDDLE);
+        mImageLoaderHelper.displayMatchImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
         //Personal Information
         mUserLocation.setText(mLoginUser.city);

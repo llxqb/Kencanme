@@ -168,12 +168,13 @@
         <Button
             android:id="@+id/sure_btn"
             android:layout_width="@dimen/dp_228"
-            android:layout_height="@dimen/dp_35"
+            android:layout_height="@dimen/dp_40"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/dialog_style_2"
             android:text="@string/dialog_sure"
+            android:textSize="@dimen/sp_16"
             android:textColor="@color/white" />
 
     </LinearLayout>

@@ -10,6 +10,7 @@ import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
@@ -22,7 +23,7 @@ public class HomeFragmentControl {
     public interface HomeView extends LoadDataView {
         void getInfoSuccess(HomeFragmentResponse response);
 
-        void getLikeSuccess(String msg);
+        void getLikeSuccess(LikeResponse likeResponse);
 
         void getBuyExposureTimeList(DialogBuyBean dialogBuyBean);
 

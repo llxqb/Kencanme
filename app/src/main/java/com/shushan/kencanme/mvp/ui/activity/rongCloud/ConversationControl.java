@@ -7,6 +7,7 @@ import com.shushan.kencanme.entity.request.UseBeansRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
+import com.shushan.kencanme.entity.response.UserRelationResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
 
@@ -23,7 +24,10 @@ public class ConversationControl {
         void UseBeansSuccess(String msg);
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
+
         void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse);
+
+        void getUserRelationSuccess(UserRelationResponse userRelationResponse);
 
     }
 
@@ -45,10 +49,16 @@ public class ConversationControl {
          * 查询用户信息（首页）
          */
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+
         /**
          * 根据融云第三方id获取用户头像和昵称
          */
         void onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest);
+
+        /**
+         * 根据融云第三方id获取关系
+         */
+        void onRequestUserRelation(UserInfoByRidRequest userInfoByRidRequest);
 
     }
 

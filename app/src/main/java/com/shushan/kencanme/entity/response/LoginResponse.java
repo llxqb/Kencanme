@@ -9,7 +9,7 @@ public class LoginResponse {
 
 
     /**
-     * userinfo : {"uid":6,"token":"6cda1757d2284313dba2696da301b445","trait":"","nickname":"","sex":1,"birthday":"","city":"","declaration":"","rongyun_token":"GoMAWtA2Lpma1NegEbv/eGRxbNxvsDT+04ag2atgcEOyMknjltF9Htk80pE8O5UoQxTCwGXOnGF/gIRZTisWrw==","rongyun_third_id":"Kencanme6"}
+     * userinfo : {"uid":932,"token":"def585fea7483596b58d7edfb013d67f","trait":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190628/5d1589a714384.png","nickname":"bee359","sex":2,"birthday":"669960449","city":"hhkkk","declaration":"hjkkk","cover":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190627/5d14412eaaf1f.png","code":"APUYG90","rongyun_token":"XRVfejvZJ5Pna8D5zgK4DXoWPWp5cMM/yK8w1Vf/zSfuVrMyufPPHstrj8Fa5CL1eY0reG7hqoqrUg1PPjxZY2h2AJSwo9r0","rongyun_third_id":"Kencanme932"}
      */
 
     private UserinfoBean userinfo;
@@ -24,16 +24,18 @@ public class LoginResponse {
 
     public static class UserinfoBean {
         /**
-         * uid : 6
-         * token : 6cda1757d2284313dba2696da301b445
-         * trait :
-         * nickname :
-         * sex : 1
-         * birthday :
-         * city :
-         * declaration :
-         * rongyun_token : GoMAWtA2Lpma1NegEbv/eGRxbNxvsDT+04ag2atgcEOyMknjltF9Htk80pE8O5UoQxTCwGXOnGF/gIRZTisWrw==
-         * rongyun_third_id : Kencanme6
+         * uid : 932
+         * token : def585fea7483596b58d7edfb013d67f
+         * trait : https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190628/5d1589a714384.png
+         * nickname : bee359
+         * sex : 2
+         * birthday : 669960449
+         * city : hhkkk
+         * declaration : hjkkk
+         * cover : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190627/5d14412eaaf1f.png
+         * code : APUYG90
+         * rongyun_token : XRVfejvZJ5Pna8D5zgK4DXoWPWp5cMM/yK8w1Vf/zSfuVrMyufPPHstrj8Fa5CL1eY0reG7hqoqrUg1PPjxZY2h2AJSwo9r0
+         * rongyun_third_id : Kencanme932
          */
 
         private int uid;
@@ -44,6 +46,8 @@ public class LoginResponse {
         private String birthday;
         private String city;
         private String declaration;
+        private String cover;
+        private String code;
         private String rongyun_token;
         private String rongyun_third_id;
 
@@ -109,6 +113,22 @@ public class LoginResponse {
 
         public void setDeclaration(String declaration) {
             this.declaration = declaration;
+        }
+
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
 
         public String getRongyun_token() {

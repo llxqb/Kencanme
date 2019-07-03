@@ -1,15 +1,11 @@
 package com.shushan.kencanme.help;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -19,9 +15,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.shushan.kencanme.mvp.utils.TranTools;
 
 import javax.inject.Inject;
@@ -107,26 +101,26 @@ public class ImageLoaderHelper extends GlideLoader {
      * 设置背景图片  不变形
      */
     public void displayBackgroundImage(Context context, Object path, View view, int loadPic) {
-        RequestOptions options = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(loadPic)
-                .skipMemoryCache(true)
-                .placeholder(loadPic)
-                .dontAnimate();
-        Glide.with(context).asBitmap().load(path)//签到整体 背景
-                .apply(options)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        Drawable drawable = new BitmapDrawable(resource);
-                        ((LinearLayout) view).removeAllViews();  //clear linearlayout
-                        ImageView imageView2 = new ImageView(context);
-                        imageView2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));  //设置图片宽高
-                        imageView2.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        imageView2.setImageDrawable(drawable); //图片资源
-                        ((LinearLayout) view).addView(imageView2); //动态添加图片
-                    }
-                });
+//        RequestOptions options = new RequestOptions()
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .error(loadPic)
+//                .skipMemoryCache(true)
+//                .placeholder(loadPic)
+//                .dontAnimate();
+//        Glide.with(context).asBitmap().load(path)//签到整体 背景
+//                .apply(options)
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                        Drawable drawable = new BitmapDrawable(resource);
+//                        ((LinearLayout) view).removeAllViews();  //clear linearlayout
+//                        ImageView imageView2 = new ImageView(context);
+//                        imageView2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));  //设置图片宽高
+//                        imageView2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                        imageView2.setImageDrawable(drawable); //图片资源
+//                        ((LinearLayout) view).addView(imageView2); //动态添加图片
+//                    }
+//                });
     }
 
     /**

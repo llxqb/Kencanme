@@ -325,8 +325,8 @@ Don\'t release your choose. no body konw your choice unless you like each other.
 
 
     <!-- WebView-->
-    <string name="earn_beans_wb" translatable="false">Kencanme/inviteApp-EN.html?code=YHI345</string>    <!--分享页-->
-    <string name="down_app" translatable="false">Kencanme/downApp-EN.html?code=YHI345</string>    <!--下载页-->
+    <string name="earn_beans_wb" translatable="false">Kencanme/inviteApp-EN.html?code=</string>    <!--分享页-->
+    <string name="down_app" translatable="false">Kencanme/downApp-EN.html?code=</string>    <!--下载页-->
     <string name="member_agreement_wb" translatable="false">Kencanme/MemberAgreement-en.html</string>    <!--会员协议-->
     <string name="purchase_agreement_wb" translatable="false">Kencanme/RechargeAgreement-en.html</string>    <!--充值协议-->
     <string name="register_agreement_wb" translatable="false">Kencanme/RegistrationAgreement-en.html</string>    <!--注册协议-->

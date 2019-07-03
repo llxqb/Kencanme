@@ -19,7 +19,6 @@
         android:layout_below="@id/loading_iv"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_m_12"
-        android:text="jiaziazhong "
         android:textColor="@color/color333"
         android:textSize="@dimen/sp_13" />
 

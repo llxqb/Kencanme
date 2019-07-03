@@ -13,6 +13,7 @@ import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.MainModel;
@@ -70,7 +71,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
      */
     @Override
     public void onRequestLike(LikeRequest likeRequest) {
-        mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
+//        mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mHomeFragmentModel.onRequestLike(likeRequest).compose(mHomeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestLikeSuccess, throwable -> mHomeView.showErrMessage(throwable),
                         () -> mHomeView.dismissLoading());
@@ -79,7 +80,9 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
 
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mHomeView.getLikeSuccess(mContext.getResources().getString(R.string.LoveMeFriendsAdapter_liked));
+            responseData.parseData(LikeResponse.class);
+            LikeResponse response = (LikeResponse) responseData.parsedData;
+            mHomeView.getLikeSuccess(response);
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }

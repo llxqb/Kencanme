@@ -4,6 +4,7 @@ package com.shushan.kencanme.di;
 import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.base.BaseFragment;
+import com.shushan.kencanme.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.mvp.ui.activity.setting.MessageReminderActivity;
 import com.shushan.kencanme.mvp.ui.activity.splash.SplashActivity;
 
@@ -20,6 +21,7 @@ public interface ComponetGraph {
 
     void inject(MessageReminderActivity messageReminderActivity);
     void inject(SplashActivity splashActivity);
+    void inject(EarnBeansActivity earnBeansActivity);
 
 //    void inject(CustomerService service);
 

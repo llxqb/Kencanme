@@ -16,9 +16,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
+import com.shushan.kencanme.entity.user.BuProcessor;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -26,6 +28,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,12 +50,15 @@ public class EarnBeansActivity extends BaseActivity {
     WebView mWebview;
     @BindView(R.id.share_btn)
     Button mShareBtn;
+    @Inject
+    protected BuProcessor mBuProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earn_beans);
         ButterKnife.bind(this);
+        ((KencanmeApp) getApplication()).getAppComponent().inject(this);
         setStatusBar();
         initView();
         initData();
@@ -69,7 +76,7 @@ public class EarnBeansActivity extends BaseActivity {
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        mWebview.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.earn_beans_wb));//加载url
+        mWebview.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.earn_beans_wb) + mSharePreferenceUtil.getData("code"));//加载url
 
         mWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -111,7 +118,7 @@ public class EarnBeansActivity extends BaseActivity {
         //分享到facebook
         SnsPlatform snsPlatform = SHARE_MEDIA.FACEBOOK.toSnsPlatform();
         //分享链接
-        UMWeb web = new UMWeb(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.down_app));
+        UMWeb web = new UMWeb(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.down_app) + mSharePreferenceUtil.getData("code"));
         web.setTitle(getResources().getString(R.string.facebook_title));
         web.setThumb(new UMImage(this, R.drawable.logo));
         web.setDescription(getResources().getString(R.string.facebook_content));

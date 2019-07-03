@@ -10,6 +10,7 @@ import com.shushan.kencanme.entity.request.RecommendUserInfoRequest;
 import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.RecommendUserInfoResponse;
 import com.shushan.kencanme.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.mvp.presenter.Presenter;
@@ -26,7 +27,7 @@ public class RecommendUserInfoControl {
 
         void getDeleteUserSuccess(String msg);
 
-        void getLikeSuccess(String msg);
+        void getLikeSuccess(LikeResponse likeResponse);
 
         void getContactSuccess(String msg);
 

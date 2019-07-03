@@ -4,7 +4,6 @@ import java.util.List;
 
 public class HomeFragmentResponse {
 
-
     private List<ListBean> list;
 
     public List<ListBean> getList() {
@@ -17,18 +16,19 @@ public class HomeFragmentResponse {
 
     public static class ListBean {
         /**
-         * uid : 6
-         * nickname : yuu234
-         * trait : https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190613/5d01ba17036ed.png
-         * cover : https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/9ac885d2a646c393ba6bad6c7a8513f3.mp4
+         * uid : 731
+         * nickname : Elizabeth
+         * trait : https://pbs.twimg.com/media/D8Jlz-dVUAAKPB3.jpg
+         * cover : https://pbs.twimg.com/media/D8Jlz-dVUAAKPB3.jpg
          * sex : 2
-         * city : yy123
-         * last_login_time : 1560859023
-         * exposure_time : 1561003697
-         * age : 49
-         * active_time : 41
-         * is_like : 1
-         * rongyun_userid : Kencanme6
+         * city : Sula
+         * last_login_time : 0
+         * exposure_time : 0
+         * age : 29
+         * active_time : 20
+         * relation : 0
+         * is_like : 0
+         * rongyun_userid : Kencanme731
          */
 
         private int uid;
@@ -41,6 +41,10 @@ public class HomeFragmentResponse {
         private int exposure_time;
         private int age;
         private int active_time;
+        /**
+         * 0未喜欢1喜欢2好友
+         */
+        private int relation;
         private int is_like;
         private String rongyun_userid;
 
@@ -122,6 +126,14 @@ public class HomeFragmentResponse {
 
         public void setActive_time(int active_time) {
             this.active_time = active_time;
+        }
+
+        public int getRelation() {
+            return relation;
+        }
+
+        public void setRelation(int relation) {
+            this.relation = relation;
         }
 
         public int getIs_like() {

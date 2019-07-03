@@ -1,6 +1,5 @@
 package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ import com.shushan.kencanme.entity.request.UseBeansRequest;
 import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
+import com.shushan.kencanme.entity.response.UserRelationResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
 import com.shushan.kencanme.help.MyConversationClickListener;
@@ -86,6 +86,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      * 被聊天用户id
      */
     private String chatUid;
+    private UserRelationResponse mUserRelationResponse;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -110,7 +111,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         //注册自定义消息接收
         CustomizeMessageItemProvider.setListener(this);
         if (getIntent() != null) {
-            initIntent(getIntent());
+            mTargetId = Objects.requireNonNull(getIntent().getData()).getQueryParameter("targetId");
+            mCommonTitleTv.setText(getIntent().getData().getQueryParameter("title"));
+            mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
+            onRequestUserInfoByRid();
         }
     }
 
@@ -123,19 +127,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         if (chatTopHintRl.equals("true")) {
             mChatTopHintRl.setVisibility(View.GONE);
         }
-//        ConversationUtil.sendCustomizeMesage("Kencanme6", Conversation.ConversationType.PRIVATE,"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3071844911,2905106883&fm=26&gp=0.jpg",1,5);
     }
 
-
-    private void initIntent(Intent intent) {
-        mTargetId = Objects.requireNonNull(intent.getData()).getQueryParameter("targetId");
-        mCommonTitleTv.setText(intent.getData().getQueryParameter("title"));
-        mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
-        UserInfoByRidRequest userInfoByRidRequest = new UserInfoByRidRequest();
-        userInfoByRidRequest.token = mBuProcessor.getToken();
-        userInfoByRidRequest.rongyun_third_id = mTargetId;
-        mPresenter.onRequestUserInfoByRid(userInfoByRidRequest);
-    }
 
     @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right})
     public void onViewClicked(View view) {
@@ -153,6 +146,26 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 DialogFactory.showDialogFragment(this.getSupportFragmentManager(), commonChoiceDialog, CommonChoiceDialog.TAG);
                 break;
         }
+    }
+
+    /**
+     * 根据融云第三方id获取用户头像和昵称
+     */
+    private void onRequestUserInfoByRid() {
+        UserInfoByRidRequest userInfoByRidRequest = new UserInfoByRidRequest();
+        userInfoByRidRequest.token = mBuProcessor.getToken();
+        userInfoByRidRequest.rongyun_third_id = mTargetId;
+        mPresenter.onRequestUserInfoByRid(userInfoByRidRequest);
+    }
+
+    /**
+     * 根据融云第三方id获取关系
+     */
+    private void onRequestUserReleate() {
+        UserInfoByRidRequest userInfoByRidRequest = new UserInfoByRidRequest();
+        userInfoByRidRequest.token = mBuProcessor.getToken();
+        userInfoByRidRequest.rongyun_third_id = mTargetId;
+        mPresenter.onRequestUserRelation(userInfoByRidRequest);
     }
 
     @Override
@@ -173,11 +186,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     /**
      * 获取消息id
      */
-
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
-        if (mLoginUser.userType == 1 && mLoginUser.beans == 0) {
+        if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse.getState() != 2) {
             //男非VIP 和beans=0
             DialogFactory.showRechargeBeansDialog2(this);
         } else {
@@ -199,7 +211,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-        if (mLoginUser.userType == 1) {
+        if (mLoginUser.userType == 1 && mUserRelationResponse.getState() != 2) {
             UseBeansDialogFlag = 1;
             useBeansToChat("4", 1);
         }
@@ -349,7 +361,16 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse) {
+        onRequestUserReleate();
         chatUid = String.valueOf(userInfoByRidResponse.getUid());
+    }
+
+    /**
+     * 根据融云第三方id获取关系 成功
+     */
+    @Override
+    public void getUserRelationSuccess(UserRelationResponse userRelationResponse) {
+        mUserRelationResponse = userRelationResponse;
     }
 
     /**

@@ -188,6 +188,18 @@ public class DialogFactory {
         return loadingDialog;
     }
 
+    /**
+     * 显示喜欢的gif动画
+     */
+    public static Dialog showLikeDialog(Context context) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.like_loading, (ViewGroup) ((BaseActivity) context).getWindow().getDecorView(), false);// 得到加载view
+        final Dialog loadingDialog = new Dialog(context, R.style.like_dialog);// 创建自定义样式dialog
+        loadingDialog.setCancelable(true);
+        loadingDialog.setContentView(v);
+        return loadingDialog;
+    }
+
 
     /**
      * 提示成为VIP弹框

@@ -257,7 +257,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        if (requestCode == 100 && data != null) {
             Uri selectedVideo = data.getData();
             String[] filePathColumn = {MediaStore.Video.Media.DATA};
             assert selectedVideo != null;

@@ -10,6 +10,7 @@ import com.shushan.kencanme.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.entity.response.UploadImageResponse;
 import com.shushan.kencanme.entity.response.UserInfoByRidResponse;
+import com.shushan.kencanme.entity.response.UserRelationResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.MessageModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
@@ -109,6 +110,26 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
             responseData.parseData(UserInfoByRidResponse.class);
             UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
             mConversationView.getUserInfoSuccess(response);
+        } else {
+            mConversationView.showToast(responseData.errorMsg);
+        }
+    }
+    /**
+     * 根据融云第三方id获取关系
+     */
+    @Override
+    public void onRequestUserRelation(UserInfoByRidRequest userInfoByRidRequest) {
+        Disposable disposable = mMessageModel.onRequestUserRelation(userInfoByRidRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUserRelationSuccess, throwable -> mConversationView.showErrMessage(throwable),
+                        () -> mConversationView.dismissLoading());
+        mConversationView.addSubscription(disposable);
+    }
+
+    private void requestUserRelationSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(UserRelationResponse.class);
+            UserRelationResponse response = (UserRelationResponse) responseData.parsedData;
+            mConversationView.getUserRelationSuccess(response);
         } else {
             mConversationView.showToast(responseData.errorMsg);
         }

@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import com.shushan.kencanme.entity.request.RequestFreeChat;
 import com.shushan.kencanme.entity.request.TokenRequest;
 import com.shushan.kencanme.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.entity.response.LikeResponse;
 import com.shushan.kencanme.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.DialogFactory;
@@ -45,11 +47,13 @@ import com.shushan.kencanme.mvp.ui.activity.recommendUserInfo.RecommendUserInfoA
 import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.HomeAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
+import com.shushan.kencanme.mvp.utils.ClickUtil;
 import com.shushan.kencanme.mvp.utils.LogUtils;
 import com.shushan.kencanme.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.mvp.views.CommonDialog;
 import com.shushan.kencanme.mvp.views.MyTimer;
 import com.shushan.kencanme.mvp.views.dialog.BuyDialog;
+import com.shushan.kencanme.mvp.views.dialog.MatchSuccessDialog;
 import com.shushan.kencanme.mvp.views.dialog.UseExposureDialog;
 
 import java.util.ArrayList;
@@ -70,7 +74,7 @@ import io.rong.imkit.RongIM;
  */
 
 public class HomeFragment extends BaseFragment implements HomeFragmentControl.HomeView, CommonDialog.CommonDialogListener, BuyDialog.BuyDialogListener, UseExposureDialog.UseExposureDialogListener,
-        MyTimer.MyTimeListener, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+        MyTimer.MyTimeListener, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, MatchSuccessDialog.MatchSuccessListener {
 
     @BindView(R.id.home_recycler_view)
     RecyclerView homeRecyclerView;
@@ -87,6 +91,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     private HomeAdapter mHomeAdapter;
     private LoginUser mLoginUser;
     HomeFragmentResponse.ListBean listBean;
+    //喜欢动画
+    private Dialog likeDialog;
+    private boolean likeRemainTime;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
 
@@ -109,10 +116,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_INFO)) {
+            requestHomeUserInfo();
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_LIST_INFO)) {
             mSwipeLy.setRefreshing(true);
             requestHomeData();
-        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_DATA_INFO)) {
-            requestHomeUserInfo();
         }
         super.onReceivePro(context, intent);
     }
@@ -121,7 +128,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_HOME_INFO);
-        mFilter.addAction(ActivityConstant.UPDATE_HOME_DATA_INFO);
+        mFilter.addAction(ActivityConstant.UPDATE_HOME_LIST_INFO);
     }
 
 
@@ -135,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mHomeAdapter = new HomeAdapter(getActivity(), viewPagerResponseList, mImageLoaderHelper);
         mHomeAdapter.setOnLoadMoreListener(this, homeRecyclerView);
         homeRecyclerView.setAdapter(mHomeAdapter);
-        //一次滑动一个item（LinearSnapHelper ）  不能快速滑动（PagerSnapHelper）
+        //设置一次滑动一个item（LinearSnapHelper ）  不能快速滑动（PagerSnapHelper）
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(homeRecyclerView);
         //如果当前页面不可见，暂停播放
@@ -158,6 +165,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 listBean = (HomeFragmentResponse.ListBean) adapter.getItem(position);
                 switch (view.getId()) {
+                    case R.id.home_item_rl:
+                        if (ClickUtil.isDoubleClick(getActivity(), view)) {//双击
+                            if (listBean.getIs_like() != 1) {
+                                goLike(listBean.getUid());
+                            }
+                        }
+                        break;
                     case R.id.recommend_user_rl:
                         assert listBean != null;
                         goRecommendUser(listBean.getUid());
@@ -184,6 +198,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         requestHomeData();
     }
 
+
     private void requestHomeData() {
         HomeFragmentRequest homeFragmentRequest = new HomeFragmentRequest();
         homeFragmentRequest.token = mBuProcessor.getToken();
@@ -196,10 +211,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         JzvdStd.goOnPlayOnPause();
     }
 
+
     /**
      * 去喜欢
      */
     public void goLike(int uId) {
+        likeDialog = DialogFactory.showLikeDialog(getActivity());
+        likeDialog.show();
+        likeRemainTime = true;
+        setmRemainTime(1000);
         if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
@@ -214,14 +234,20 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      * 去聊天
      */
     public void goChat() {
-        if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
-            RequestFreeChat requestFreeChat = new RequestFreeChat();
-            requestFreeChat.token = mBuProcessor.getToken();
-            requestFreeChat.secret_id = String.valueOf(listBean.getUid());
-            mPresenter.onRequestChatNum(requestFreeChat);
-        } else {
-            DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
+        if (listBean.getRelation() == 2) {//好友
+            //启动单聊页面
+            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
+        } else {//非好友
+            if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+                RequestFreeChat requestFreeChat = new RequestFreeChat();
+                requestFreeChat.token = mBuProcessor.getToken();
+                requestFreeChat.secret_id = String.valueOf(listBean.getUid());
+                mPresenter.onRequestChatNum(requestFreeChat);
+            } else {
+                DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
+            }
         }
+
     }
 
     /**
@@ -241,13 +267,35 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mPresenter.onRequestBuyExposureTimeList(tokenRequest);
     }
 
+    /**
+     * 显示匹配成功弹框
+     */
+    private void showMatchSuccesDialog() {
+        MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
+        matchSuccessDialog.setListener(this);
+        DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
+    }
+
+    /**
+     * 开始聊天
+     */
+    @Override
+    public void startChatBtnListener() {
+        //启动单聊页面
+        RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
+    }
+
     @Override
     public void commonDialogBtnOkListener() {
         startActivitys(OpenVipActivity.class);
     }
 
     @Override
-    public void getLikeSuccess(String msg) {
+    public void getLikeSuccess(LikeResponse likeResponse) {
+        if (likeResponse.getState() == 1) {
+            //相互喜欢
+            showMatchSuccesDialog();
+        }
         listBean.setIs_like(1);
         mHomeAdapter.notifyDataSetChanged();
         requestHomeUserInfo();
@@ -340,7 +388,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mRemainTime = remainTime / 60 + 1;
             String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + remainTime / 60 + " min";
             mUseExposuringHint.setText(exposureValue);
-            setmRemainTime();
+            setmRemainTime(60000);
         } else {
             mUseExposuringHint.setVisibility(View.INVISIBLE);
         }
@@ -349,8 +397,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     /**
      * 设置一分钟倒计时
      */
-    private void setmRemainTime() {
-        myTimer = MyTimer.getInstance(60000, 1000, getActivity());
+    private void setmRemainTime(int totalTime) {
+        myTimer = MyTimer.getInstance(totalTime, 1000, getActivity());
         myTimer.setListener(this);
         myTimer.cancel();
         myTimer.start();
@@ -361,19 +409,30 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void onFinish() {
-        mRemainTime--;
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
-        }
-        if (mRemainTime > 0) {
-            setmRemainTime();
-            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + mRemainTime + " min";
-            mUseExposuringHint.setText(exposureValue);
-        } else {
-            mUseExposuringHint.setVisibility(View.INVISIBLE);
-        }
+        if (likeRemainTime) {//喜欢动画倒计时
+            likeRemainTime = false;
+            if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+                myTimer.cancel();
+                myTimer = null;
+            }
+            if (likeDialog.isShowing()) {
+                likeDialog.dismiss();
+            }
+        } else {//超级曝光倒计时
+            mRemainTime--;
+            if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+                myTimer.cancel();
+                myTimer = null;
+            }
+            if (mRemainTime > 0) {
+                setmRemainTime(60000);
+                String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + mRemainTime + " min";
+                mUseExposuringHint.setText(exposureValue);
+            } else {
+                mUseExposuringHint.setVisibility(View.INVISIBLE);
+            }
 //        requestHomeUserInfo();   不用走接口了
+        }
     }
 
     @Override
