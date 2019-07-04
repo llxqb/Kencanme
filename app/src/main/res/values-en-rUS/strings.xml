@@ -72,11 +72,11 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="Unlimited">No limit</string>
-    <string name="Height">Height:</string>
-    <string name="Weight">Weight:</string>
-    <string name="Chest">Chest:</string>
-    <string name="Birthday">Birthday:</string>
-    <string name="Professional">Career:</string>
+    <string name="Height">Height:&#160;</string>
+    <string name="Weight">Weight:&#160;</string>
+    <string name="Chest">Chest:&#160;</string>
+    <string name="Birthday">Birthday:&#160;</string>
+    <string name="Professional">Career:&#160;</string>
 
 
     <!-- EditContactWayActivity-->

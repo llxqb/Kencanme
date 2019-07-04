@@ -36,7 +36,7 @@
         android:paddingEnd="@dimen/dp_10"
         android:paddingStart="@dimen/dp_6">
 
-        <com.shushan.kencanme.mvp.views.CircleImageView
+        <com.shushan.kencanme.app.mvp.views.CircleImageView
             android:id="@+id/recommend_user_head_iv"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"

@@ -19,7 +19,7 @@
         app:itemTextColor="@drawable/selector_menu"
         app:menu="@menu/main_navigation_icon" />
 
-    <com.shushan.kencanme.mvp.views.MyNoScrollViewPager
+    <com.shushan.kencanme.app.mvp.views.MyNoScrollViewPager
         android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

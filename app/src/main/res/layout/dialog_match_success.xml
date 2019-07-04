@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/dp_26"
             android:orientation="horizontal">
 
-            <com.shushan.kencanme.mvp.views.CircleImageView
+            <com.shushan.kencanme.app.mvp.views.CircleImageView
                 android:id="@+id/match_mine_avatar_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 app:civ_border_color="@color/white"
                 app:civ_border_width="@dimen/dp_2" />
 
-            <com.shushan.kencanme.mvp.views.CircleImageView
+            <com.shushan.kencanme.app.mvp.views.CircleImageView
                 android:id="@+id/match_friend_avatar_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

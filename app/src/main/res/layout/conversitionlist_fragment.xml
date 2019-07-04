@@ -23,7 +23,7 @@
             android:textSize="@dimen/sp_15"
             android:textStyle="bold" />
 
-        <com.shushan.kencanme.mvp.views.CircleImageView
+        <com.shushan.kencanme.app.mvp.views.CircleImageView
             android:id="@+id/new_pairing_iv"
             android:layout_width="@dimen/dp_46"
             android:layout_height="@dimen/dp_46"

@@ -13,7 +13,7 @@
         android:paddingEnd="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_5">
 
-        <com.shushan.kencanme.mvp.views.CircleImageView
+        <com.shushan.kencanme.app.mvp.views.CircleImageView
             android:id="@+id/friends_avator_iv"
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"

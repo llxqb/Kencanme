@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.shushan.kencanme">
+    package="com.shushan.kencanme.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -140,7 +140,7 @@
         <!-- 否则使用拍照功能时，会崩溃 -->
         <provider
             android:name=".help.MyProvider"
-            android:authorities="com.shushan.kencanme.FileProvider"
+            android:authorities="com.shushan.kencanme.app.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -159,7 +159,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.shushan.kencanme"
+                    android:host="com.shushan.kencanme.app"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>

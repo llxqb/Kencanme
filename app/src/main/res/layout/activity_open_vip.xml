@@ -56,7 +56,7 @@
         </android.support.v7.widget.Toolbar>
 
 
-        <com.shushan.kencanme.mvp.views.CircleImageView
+        <com.shushan.kencanme.app.mvp.views.CircleImageView
             android:id="@+id/avator"
             android:layout_width="@dimen/dp_56"
             android:layout_height="@dimen/dp_56"

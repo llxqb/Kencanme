@@ -42,7 +42,7 @@
                         android:scaleType="centerCrop"
                         android:src="@mipmap/loading_middle" />
 
-                    <com.shushan.kencanme.mvp.views.CircleImageView
+                    <com.shushan.kencanme.app.mvp.views.CircleImageView
                         android:id="@+id/head_icon"
                         android:layout_width="@dimen/dp_45"
                         android:layout_height="@dimen/dp_45"

@@ -72,11 +72,11 @@
     <string name="male" translatable="false">Male</string>
     <string name="female" translatable="false">Female</string>
     <string name="Unlimited" translatable="false">No limit</string>
-    <string name="Height" translatable="false">Height:</string>
-    <string name="Weight" translatable="false">Weight:</string>
-    <string name="Chest" translatable="false">Chest:</string>
-    <string name="Birthday" translatable="false">Birthday:</string>
-    <string name="Professional" translatable="false">Career:</string>
+    <string name="Height" translatable="false">Height:&#160;</string>
+    <string name="Weight" translatable="false">Weight:&#160;</string>
+    <string name="Chest" translatable="false">Chest:&#160;</string>
+    <string name="Birthday" translatable="false">Birthday:&#160;</string>
+    <string name="Professional" translatable="false">Career:&#160;</string>
 
 
     <!-- EditContactWayActivity-->

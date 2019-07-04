@@ -61,7 +61,7 @@
                         android:textSize="@dimen/sp_16" />
                 </LinearLayout>
 
-                <com.shushan.kencanme.mvp.views.TwoWayRattingBar
+                <com.shushan.kencanme.app.mvp.views.TwoWayRattingBar
                     android:id="@+id/twoWayRattingBar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_60"
