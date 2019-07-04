@@ -13,11 +13,13 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.RechargeBeansModule;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.entity.response.ReChargeBeansInfoResponse;
+import com.shushan.kencanme.entity.user.LoginUser;
 import com.shushan.kencanme.help.GooglePayHelper;
 import com.shushan.kencanme.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.mvp.ui.adapter.RechargeAdapter;
@@ -33,6 +35,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * desc:购买嗨豆Activity
@@ -56,6 +60,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     private List<ReChargeBeansInfoResponse.BeansinfoBean> rechargeBeanList = new ArrayList<>();
     private RechargeAdapter rechargeAdapter;
     private GooglePayHelper mGooglePayHelper;
+    private LoginUser mLoginUser;
 
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
@@ -73,6 +78,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
 
     @Override
     public void initView() {
+        mLoginUser = mBuProcessor.getLoginUser();
         //初始化google支付
         mGooglePayHelper = new GooglePayHelper(this,this);
         mGooglePayHelper.initGooglePay();
@@ -115,16 +121,33 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
                 finish();
                 break;
             case R.id.common_iv_right:
+                contactCustomer();
                 break;
             case R.id.recharge_agreement:
                 startActivitys(RechargeAgreementActivity.class);
                 break;
             case R.id.contact_customer:
 //                showToast("联系客服");
+                contactCustomer();
                 break;
         }
     }
 
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mLoginUser.nickname).build();
+        /**
+         * 启动客户服聊天界面。
+         * @param context           应用上下文。
+         * @param customerServiceId 要与之聊天的客服 Id。
+         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+         */
+        RongIM.getInstance().startCustomerServiceChat(this, ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
+        mSharePreferenceUtil.setData("chatType",1);//在线客服
+    }
 
     /**
      * 创建订单

@@ -6,7 +6,7 @@ android {
         applicationId "com.shushan.kencanme"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 20
+        versionCode 22
         versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容

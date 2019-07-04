@@ -14,6 +14,7 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.di.components.DaggerOpenVipComponent;
 import com.shushan.kencanme.di.modules.ActivityModule;
 import com.shushan.kencanme.di.modules.OpenVipModule;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.VipPrivilege;
 import com.shushan.kencanme.entity.base.BaseActivity;
 import com.shushan.kencanme.entity.request.CreateOrderRequest;
@@ -38,6 +39,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * 购买/打开 会员
@@ -155,6 +158,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 break;
             case R.id.line_customer:
                 //在线客服
+                contactCustomer();
                 break;
             case R.id.open_vip_super_vip_rl:
                 //成为超级VIP
@@ -172,6 +176,22 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 }
                 break;
         }
+    }
+
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mLoginUser.nickname).build();
+        /**
+         * 启动客户服聊天界面。
+         * @param context           应用上下文。
+         * @param customerServiceId 要与之聊天的客服 Id。
+         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+         */
+        RongIM.getInstance().startCustomerServiceChat(this, ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
+        mSharePreferenceUtil.setData("chatType",1);//在线客服
     }
 
     /**

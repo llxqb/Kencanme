@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/recharge_app_agreement"
+                android:padding="@dimen/dp_2"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12" />
 
