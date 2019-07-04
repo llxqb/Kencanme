@@ -421,6 +421,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     private void showMatchSuccesDialog() {
         MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
         matchSuccessDialog.setListener(this);
+        matchSuccessDialog.setContent(mLoginUser.nickname,mLoginUser.trait,recommendUserInfoResponse.getNickname(),recommendUserInfoResponse.getTrait());
         DialogFactory.showDialogFragment(getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
     }
 

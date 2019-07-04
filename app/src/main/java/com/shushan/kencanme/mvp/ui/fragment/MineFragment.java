@@ -28,6 +28,7 @@ import com.shushan.kencanme.di.modules.MainModule;
 import com.shushan.kencanme.di.modules.MineFragmentModule;
 import com.shushan.kencanme.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.entity.Constants.Constant;
+import com.shushan.kencanme.entity.Constants.ServerConstant;
 import com.shushan.kencanme.entity.base.BaseFragment;
 import com.shushan.kencanme.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.entity.response.ContactWay;
@@ -62,6 +63,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * MineFragment
@@ -138,6 +141,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     private AlbumAdapter mAlbumAdapter;
     private MimeContactWayAdapter mimeContactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
+    private LoginUser mLoginUser;
 
     @Inject
     MineFragmentControl.mineFragmentPresenter mPresenter;
@@ -192,6 +196,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void initView() {
+        mLoginUser = mBuProcessor.getLoginUser();
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
@@ -313,7 +318,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(SettingActivity.class);
                 break;
             case R.id.line_customer:
-                showToast("waiting development...");
+                contactCustomer();
                 break;
             case R.id.edit_personal_info_fab:
                 //编辑个人资料
@@ -343,6 +348,23 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 startActivitys(EditLabelActivity.class);
                 break;
         }
+    }
+
+
+    private void contactCustomer() {
+        //进入客服
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName(mLoginUser.nickname).build();
+        /**
+         * 启动客户服聊天界面。
+         * @param context           应用上下文。
+         * @param customerServiceId 要与之聊天的客服 Id。
+         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+         */
+        RongIM.getInstance().startCustomerServiceChat(Objects.requireNonNull(getActivity()), ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
+        mSharePreferenceUtil.setData("chatType",1);//在线客服
     }
 
     @Override

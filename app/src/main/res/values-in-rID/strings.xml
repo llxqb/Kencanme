@@ -1,6 +1,6 @@
 <resources>
     <!-- 不是中、英、印尼语显示-->
-    <!--&amp;#160   表示空格-->
+    <!--&#160;   表示空格-->
     <!--网络相关 -->
     <!--请检查网络Cek koneksi internet anda-->
     <!--请稍后重试Mohon coba kembali-->
@@ -46,7 +46,7 @@
     <string name="recharge_means_hint">* Dengan ini anda telah menyetujui  </string>
     <string name="recharge_app_agreement">Persyaratan dan Ketentuan Top Up Kencanme</string>
     <string name="recharge_problems_hint">Jika ada masalah dengan top up </string>
-    <string name="recharge_contact_customer">&amp;#160hubungi customer service</string>
+    <string name="recharge_contact_customer">&#160;hubungi customer service</string>
     <!--MainActivity -->
     <string name="main_bottom_home">Hai</string>
     <string name="main_bottom_message">Profile</string>
@@ -323,7 +323,7 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="edit_personal_info_successfully">berhasil diedit</string>
     <string name="modify_successfully">Dimodifikasi dengan sukses</string>
     <string name="add_successfully">Tambahkan dengan sukses</string>
-
+    <string name="update_successfully">Berhasil diperbarui</string>
 
     <!-- WebView-->
     <string name="earn_beans_wb">Kencanme/inviteApp-yn.html?code=</string>    <!--分享页  邀请页-->
@@ -342,4 +342,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="ClearCacheActivity_clear_cache_hint">Anda yakin untuk menghapus cache?</string>
     <string name="log_out_hint">Anda yakin ingin keluar dari aplikasi?</string>
     <string name="exit_app">Tekan lagi untuk keluar dari aplikasi</string><!--再按一次退出程序-->
+    <string name="and">dan</string><!--MatchSuccessDialog -->
+    <string name="match_success_tv">&#160; Saling mencintai dan sukses bersama!</string><!--MatchSuccessDialog -->
 </resources>

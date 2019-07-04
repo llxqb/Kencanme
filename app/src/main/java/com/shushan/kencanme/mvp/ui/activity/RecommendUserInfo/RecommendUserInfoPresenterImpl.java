@@ -59,8 +59,10 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(RecommendUserInfoResponse.class);
-            RecommendUserInfoResponse response = (RecommendUserInfoResponse) responseData.parsedData;
-            mRecommendUserInfoView.getRecommendUserInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                RecommendUserInfoResponse response = (RecommendUserInfoResponse) responseData.parsedData;
+                mRecommendUserInfoView.getRecommendUserInfoSuccess(response);
+            }
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -81,7 +83,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestBlackUserSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getBlackUserSuccess("success");
+            mRecommendUserInfoView.getBlackUserSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -101,7 +103,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestDeleteUserSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getDeleteUserSuccess("success");
+            mRecommendUserInfoView.getDeleteUserSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -122,8 +124,10 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(LikeResponse.class);
-            LikeResponse response = (LikeResponse) responseData.parsedData;
-            mRecommendUserInfoView.getLikeSuccess(response);
+            if (responseData.parsedData != null) {
+                LikeResponse response = (LikeResponse) responseData.parsedData;
+                mRecommendUserInfoView.getLikeSuccess(response);
+            }
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -143,7 +147,7 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
 
     private void requestContactSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRecommendUserInfoView.getContactSuccess("success");
+            mRecommendUserInfoView.getContactSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
@@ -184,15 +188,17 @@ public class RecommendUserInfoPresenterImpl implements RecommendUserInfoControl.
     private void requestHomeUserInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(HomeUserInfoResponse.class);
-            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
-            mRecommendUserInfoView.getHomeUserInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mRecommendUserInfoView.getHomeUserInfoSuccess(response);
+            }
         } else {
             mRecommendUserInfoView.showToast(responseData.errorMsg);
         }
     }
 
     /**
-     *统计今日密聊次数
+     * 统计今日密聊次数
      */
     @Override
     public void onRequestChatNum(RequestFreeChat requestFreeChat) {

@@ -95,7 +95,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
             mEditChestEt.setText(mLoginUser.bust);
         }
         if (!TextUtils.isEmpty(mLoginUser.birthday)) {
-            mEditBirthdayTv.setText(mLoginUser.birthday);
+            mEditBirthdayTv.setText(DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd"));
         }
         if (!TextUtils.isEmpty(mLoginUser.occupation)) {
             mEditOccupationEt.setText(mLoginUser.occupation);

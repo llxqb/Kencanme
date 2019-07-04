@@ -47,8 +47,10 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(ReChargeBeansInfoResponse.class);
-            ReChargeBeansInfoResponse response = (ReChargeBeansInfoResponse) responseData.parsedData;
-            mRechargeView.RechargeBeansInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                ReChargeBeansInfoResponse response = (ReChargeBeansInfoResponse) responseData.parsedData;
+                mRechargeView.RechargeBeansInfoSuccess(response);
+            }
         } else {
             mRechargeView.showLoading(responseData.errorMsg);
         }
@@ -70,8 +72,10 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
     private void createOrderSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(CreateOrderResponse.class);
-            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
-            mRechargeView.createOrderSuccess(response);
+            if (responseData.parsedData != null) {
+                CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+                mRechargeView.createOrderSuccess(response);
+            }
         } else {
             mRechargeView.showLoading(responseData.errorMsg);
         }

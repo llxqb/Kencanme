@@ -94,6 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     //喜欢动画
     private Dialog likeDialog;
     private boolean likeRemainTime;
+    private int clickPos;
     @Inject
     HomeFragmentControl.homeFragmentPresenter mPresenter;
 
@@ -167,6 +168,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                 switch (view.getId()) {
                     case R.id.home_item_rl:
                         if (ClickUtil.isDoubleClick(getActivity(), view)) {//双击
+                            clickPos = position;
                             if (listBean.getIs_like() != 1) {
                                 goLike(listBean.getUid());
                             }
@@ -273,6 +275,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     private void showMatchSuccesDialog() {
         MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
         matchSuccessDialog.setListener(this);
+        matchSuccessDialog.setContent(mLoginUser.nickname,mLoginUser.trait,listBean.getNickname(),listBean.getTrait());
         DialogFactory.showDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
     }
 
@@ -296,8 +299,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             //相互喜欢
             showMatchSuccesDialog();
         }
-        listBean.setIs_like(1);
-        mHomeAdapter.notifyDataSetChanged();
+        listBean.setRelation(1);
+        mHomeAdapter.notifyItemChanged(clickPos);
         requestHomeUserInfo();
     }
 

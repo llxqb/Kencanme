@@ -1,6 +1,6 @@
 <resources>
     <!-- 不是中、英、印尼语显示-->
-    <!--&amp;#160   表示空格-->
+    <!--&#160;  表示空格-->
     <!--网络相关 -->
     <!--请检查网络Cek koneksi internet anda-->
     <!--请稍后重试Mohon coba kembali-->
@@ -46,7 +46,7 @@
     <string name="recharge_means_hint" translatable="false">* purchase means agree </string>
     <string name="recharge_app_agreement" translatable="false">《Kencanme payment agreement》</string>
     <string name="recharge_problems_hint" translatable="false">if your encounter purchase difficults please </string>
-    <string name="recharge_contact_customer" translatable="false">&amp;#160contact customer services</string>
+    <string name="recharge_contact_customer" translatable="false">&#160;contact customer services</string>
     <!--MainActivity -->
     <string name="main_bottom_home" translatable="false">Hey</string>
     <string name="main_bottom_message" translatable="false">Message</string>
@@ -322,6 +322,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="edit_personal_info_successfully" translatable="false">edit successfully</string>
     <string name="modify_successfully" translatable="false">Modify successfully</string>
     <string name="add_successfully" translatable="false">Add succefully</string>
+    <string name="update_successfully" translatable="false">update completed</string>
 
 
     <!-- WebView-->
@@ -341,4 +342,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="ClearCacheActivity_clear_cache_hint" translatable="false">You are sure to clear the cache?</string>
     <string name="log_out_hint" translatable="false">You are sure to log out?</string>
     <string name="exit_app" translatable="false">Press again to exit the app</string>
+    <string name="and" translatable="false">and</string><!--MatchSuccessDialog -->
+    <string name="match_success_tv" translatable="false">&#160; like each other and are successful together!</string><!--MatchSuccessDialog -->
+    <string name="online_customer" translatable="false">online service</string><!--MineFragment -->
 </resources>

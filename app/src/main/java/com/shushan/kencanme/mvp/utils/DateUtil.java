@@ -104,7 +104,7 @@ public class DateUtil {
             long l = d.getTime();
             String str = String.valueOf(l);
             re_time = str.substring(0, 9);
-        }catch (ParseException e) {
+        }catch (ParseException ignored) {
         }
         return re_time;
     }

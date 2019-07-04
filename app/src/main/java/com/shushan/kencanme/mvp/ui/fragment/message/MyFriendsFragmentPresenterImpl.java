@@ -46,8 +46,10 @@ public class MyFriendsFragmentPresenterImpl implements MyFriendsFragmentControl.
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(MyFriendsResponse.class);
-            MyFriendsResponse response = (MyFriendsResponse) responseData.parsedData;
-            mMyFriendsView.getMyFriendsListInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                MyFriendsResponse response = (MyFriendsResponse) responseData.parsedData;
+                mMyFriendsView.getMyFriendsListInfoSuccess(response);
+            }
         } else {
             mMyFriendsView.showToast(responseData.errorMsg);
         }

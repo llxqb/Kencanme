@@ -6,7 +6,6 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.FeedbackProblemRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UploadImageResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.ResponseData;
 import com.shushan.kencanme.mvp.model.SettingModel;
@@ -45,7 +44,7 @@ public class SettingPresenterImpl implements SettingControl.PresenterSetting {
 
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mSettingView.updateSuccess("update success");
+            mSettingView.updateSuccess(mContext.getResources().getString(R.string.update_successfully));
         } else {
             mSettingView.updateFail(responseData.errorMsg);
         }
@@ -64,7 +63,7 @@ public class SettingPresenterImpl implements SettingControl.PresenterSetting {
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(UploadImageResponse.class);
+//            responseData.parseData(UploadImageResponse.class);
             mSettingView.uploadImageSuccess(responseData.result);
         } else {
             mSettingView.showToast(responseData.errorMsg);

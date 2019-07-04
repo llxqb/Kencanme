@@ -1,6 +1,7 @@
 package com.shushan.kencanme.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.shushan.kencanme.KencanmeApp;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.help.DialogFactory;
+import com.shushan.kencanme.help.ImageLoaderHelper;
+import com.shushan.kencanme.mvp.views.CircleImageView;
+
+import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +39,16 @@ public class MatchSuccessDialog extends BaseDialogFragment {
     @BindView(R.id.dialog_match_success_layout)
     RelativeLayout mDialogMatchSuccessLayout;
     Unbinder unbinder;
+    @BindView(R.id.match_mine_avatar_iv)
+    CircleImageView mMatchMineAvatarIv;
+    @BindView(R.id.match_friend_avatar_iv)
+    CircleImageView mMatchFriendAvatarIv;
+    @BindView(R.id.match_success_tv)
+    TextView mMatchSuccessTv;
     private MatchSuccessListener matchSuccessListener;
+    private String mMimeName, mMineAvatar, mFriendName, mFriendAvatar;
+    @Inject
+    protected ImageLoaderHelper mImageLoaderHelper;
 
     public static MatchSuccessDialog newInstance() {
         return new MatchSuccessDialog();
@@ -41,16 +58,28 @@ public class MatchSuccessDialog extends BaseDialogFragment {
         this.matchSuccessListener = dialogBtnListener;
     }
 
+    public void setContent(String mimeName, String mineAvatar, String friendName, String friendAvatar) {
+        mMimeName = mimeName;
+        mMineAvatar = mineAvatar;
+        mFriendName = friendName;
+        mFriendAvatar = friendAvatar;
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_match_success, container, true);
         unbinder = ButterKnife.bind(this, view);
+        ((KencanmeApp) Objects.requireNonNull(getActivity()).getApplication()).getAppComponent().inject(this);
         initView();
         return view;
     }
 
     private void initView() {
+        mImageLoaderHelper.displayImage(getActivity(), mMineAvatar, mMatchMineAvatarIv, R.mipmap.head_photo_loading);
+        mImageLoaderHelper.displayImage(getActivity(), mFriendAvatar, mMatchFriendAvatarIv, R.mipmap.head_photo_loading);
+        String successTv = mMimeName + " and " + mFriendName + getResources().getString(R.string.match_success_tv);
+        mMatchSuccessTv.setText(successTv);
     }
 
     @Override
@@ -85,7 +114,7 @@ public class MatchSuccessDialog extends BaseDialogFragment {
         try {
             this.dismiss();
         } catch (Exception e) {
-            DialogFactory.dismissDialogFragment(getActivity().getSupportFragmentManager(), TAG);
+            DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
 }

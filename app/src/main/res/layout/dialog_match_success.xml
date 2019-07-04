@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dialog_match_success_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#90000000">
 
-
-    <ImageView
-        android:id="@+id/match_success_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_355"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/matching_success" />
+        android:layout_centerVertical="true">
 
-    <TextView
-        android:id="@+id/match_success_chat_tv"
-        android:layout_width="@dimen/dp_200"
-        android:layout_height="@dimen/dp_40"
-        android:layout_below="@id/match_success_iv"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/dp_m_30"
-        android:background="@drawable/match_success_tv_bg"
-        android:gravity="center"
-        android:text="@string/LoveMeFriendsAdapter_match_success"
-        android:textColor="#C84769"
-        android:textSize="@dimen/sp_20" />
+        <ImageView
+            android:id="@+id/match_success_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/matching_success" />
+
+        <LinearLayout
+            android:id="@+id/match_head_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_26"
+            android:orientation="horizontal">
+
+            <com.shushan.kencanme.mvp.views.CircleImageView
+                android:id="@+id/match_mine_avatar_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/head_photo_loading"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/dp_2" />
+
+            <com.shushan.kencanme.mvp.views.CircleImageView
+                android:id="@+id/match_friend_avatar_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_m_10"
+                android:src="@mipmap/head_photo_loading"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/dp_2" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/match_success_tv"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/match_head_ll"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_70"
+            android:gravity="center"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/match_success_chat_tv"
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_40"
+            android:layout_below="@id/match_success_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp_m_30"
+            android:background="@drawable/match_success_tv_bg"
+            android:gravity="center"
+            android:text="@string/LoveMeFriendsAdapter_match_success"
+            android:textColor="#C84769"
+            android:textSize="@dimen/sp_20" />
+    </RelativeLayout>
+
+
 </RelativeLayout>

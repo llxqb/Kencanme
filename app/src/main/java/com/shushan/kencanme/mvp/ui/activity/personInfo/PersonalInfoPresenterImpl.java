@@ -6,7 +6,6 @@ import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UploadImageResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
@@ -48,7 +47,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
         if (responseData.resultCode == 0) {
 //            responseData.parseData(UpdatePersonalInfoResponse.class);
 //            UpdatePersonalInfoResponse response = (UpdatePersonalInfoResponse) responseData.parsedData;
-            mPersonalInfoView.updateSuccess("success");
+            mPersonalInfoView.updateSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }
@@ -85,7 +84,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     private void requestVideoSuccess(ResponseData responseData) {
         mPersonalInfoView.dismissLoading();
         if (responseData.resultCode == 0) {
-            responseData.parseData(UploadImageResponse.class);
+//            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadVideoSuccess(responseData.result);
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
@@ -94,7 +93,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(UploadImageResponse.class);
+//            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadImageSuccess(responseData.result);
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
@@ -103,7 +102,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     private void updateMyAlbumSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mPersonalInfoView.updateMyAlbumSuccess("success");
+            mPersonalInfoView.updateMyAlbumSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }

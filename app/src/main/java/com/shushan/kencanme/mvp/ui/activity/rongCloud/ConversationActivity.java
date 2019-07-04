@@ -3,6 +3,7 @@ package com.shushan.kencanme.mvp.ui.activity.rongCloud;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -87,6 +89,11 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     private String chatUid;
     private UserRelationResponse mUserRelationResponse;
+    /**
+     * 用户聊天还是与客服聊天
+     * 0:用户聊天  1:客服聊天
+     */
+    private int chatType;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -103,6 +110,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public void initView() {
+        chatType = mSharePreferenceUtil.getIntData("chatType");//在线客服
 //        mCommonRightIv.setVisibility(View.VISIBLE);
         //设置融云会话点击监听
         RongIM.setConversationClickListener(new MyConversationClickListener());
@@ -116,6 +124,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
             onRequestUserInfoByRid();
         }
+
     }
 
     @Override
@@ -123,8 +132,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         mLoginUser = mBuProcessor.getLoginUser();
         mMessageIdList = (List<String>) mSharePreferenceUtil.readObjData("messageIdList");
         CustomizeMessageItemProvider.setMessageList(mMessageIdList);
-        String chatTopHintRl = mSharePreferenceUtil.getData("chat_top_rl");
-        if (chatTopHintRl.equals("true")) {
+        boolean chatTopHintRl = mSharePreferenceUtil.getBooleanData("chat_top_rl");
+        if (chatType == 1 || chatTopHintRl) {
             mChatTopHintRl.setVisibility(View.GONE);
         }
     }
@@ -137,7 +146,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 finish();
                 break;
             case R.id.chat_top_hint_btn:
-                mSharePreferenceUtil.setData("chat_top_rl", "true");
+                mSharePreferenceUtil.setData("chat_top_rl", true);
                 mChatTopHintRl.setVisibility(View.GONE);
                 break;
             case R.id.common_iv_right:
@@ -189,29 +198,33 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public Message onSend(Message message) {
         //开发者根据自己需求自行处理逻辑
-        if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse.getState() != 2) {
-            //男非VIP 和beans=0
-            DialogFactory.showRechargeBeansDialog2(this);
-        } else {
-            MessageContent messageContent = message.getContent();
-            if (messageContent instanceof ImageMessage) {//图片消息
-                if (!isSendPic) {
-                    imgMsg = (ImageMessage) messageContent;
-                    sendImgMsgDialog();
-                    return null;
-                } else {
-                    isSendPic = false;
-                }
-            }
-            isSendPic = false;
+        if (chatType == 1) {//客服
             return message;
+        } else {
+            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse.getState() != 2) {
+                //男非VIP 和beans=0  和 不是好友关系
+                DialogFactory.showRechargeBeansDialog2(this);
+            } else {
+                MessageContent messageContent = message.getContent();
+                if (messageContent instanceof ImageMessage) {//图片消息
+                    if (!isSendPic) {
+                        imgMsg = (ImageMessage) messageContent;
+                        sendImgMsgDialog();
+                        return null;
+                    } else {
+                        isSendPic = false;
+                    }
+                }
+                isSendPic = false;
+                return message;
+            }
         }
         return null;
     }
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-        if (mLoginUser.userType == 1 && mUserRelationResponse.getState() != 2) {
+        if (mLoginUser.userType == 1 && mUserRelationResponse.getState() != 2 && chatType != 1) {
             UseBeansDialogFlag = 1;
             useBeansToChat("4", 1);
         }
@@ -391,8 +404,23 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     protected void onDestroy() {
+        mSharePreferenceUtil.setData("chatType", 0);//设为默认聊天类型
         KencanmeApp.mCustomizeMessageItemProvider.setListenerNoll();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        ConversationFragment fragment = (ConversationFragment) getSupportFragmentManager().findFragmentById(R.id.conversation);
+        assert fragment != null;
+        if (!fragment.onBackPressed()) {
+            finish();
+        }
     }
 
     private void initializeInjector() {

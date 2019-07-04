@@ -48,8 +48,10 @@ public class LoveMePeoplePresenterImpl implements LoveMePeopleControl.PresenterL
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(MyFriendsResponse.class);
-            MyFriendsResponse response = (MyFriendsResponse) responseData.parsedData;
-            mLoveMePeopleView.getLoveMePeopleInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                MyFriendsResponse response = (MyFriendsResponse) responseData.parsedData;
+                mLoveMePeopleView.getLoveMePeopleInfoSuccess(response);
+            }
         } else {
             mLoveMePeopleView.showToast(responseData.errorMsg);
         }

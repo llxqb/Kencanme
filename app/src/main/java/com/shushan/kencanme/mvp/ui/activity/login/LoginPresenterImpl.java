@@ -60,8 +60,10 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(LoginResponse.class);
-            LoginResponse response = (LoginResponse) responseData.parsedData;
-            mLoginView.loginSuccess(response);
+            if (responseData.parsedData != null) {
+                LoginResponse response = (LoginResponse) responseData.parsedData;
+                mLoginView.loginSuccess(response);
+            }
         } else {
             mLoginView.loginFail(responseData.errorMsg);
         }
@@ -70,8 +72,10 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
     private void requestPersonalInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(PersonalInfoResponse.class);
-            PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
-            mLoginView.personalInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+                mLoginView.personalInfoSuccess(response);
+            }
         } else {
             mLoginView.personalInfoFail(responseData.errorMsg);
         }

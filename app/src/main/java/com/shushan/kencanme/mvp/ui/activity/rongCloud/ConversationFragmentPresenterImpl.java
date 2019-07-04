@@ -46,8 +46,10 @@ public class ConversationFragmentPresenterImpl implements ConversationFragmentCo
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(SystemMsgNewResponse.class);
-            SystemMsgNewResponse response = (SystemMsgNewResponse) responseData.parsedData;
-            mConversationView.getSystemMsgNewInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                SystemMsgNewResponse response = (SystemMsgNewResponse) responseData.parsedData;
+                mConversationView.getSystemMsgNewInfoSuccess(response);
+            }
         } else {
             mConversationView.showToast(responseData.errorMsg);
         }

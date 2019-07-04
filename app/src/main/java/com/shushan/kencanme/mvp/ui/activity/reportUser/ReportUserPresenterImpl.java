@@ -5,7 +5,6 @@ import android.content.Context;
 import com.shushan.kencanme.R;
 import com.shushan.kencanme.entity.request.ReportUserRequest;
 import com.shushan.kencanme.entity.request.UploadImage;
-import com.shushan.kencanme.entity.response.UploadImageResponse;
 import com.shushan.kencanme.help.RetryWithDelay;
 import com.shushan.kencanme.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.mvp.model.ResponseData;
@@ -46,7 +45,7 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
         if (responseData.resultCode == 0) {
 //            responseData.parseData(UpdatePersonalInfoResponse.class);
 //            UpdatePersonalInfoResponse response = (UpdatePersonalInfoResponse) responseData.parsedData;
-            mReportUserView.reportUserSuccess("success");
+            mReportUserView.reportUserSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mReportUserView.showToast(responseData.errorMsg);
         }
@@ -63,7 +62,7 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(UploadImageResponse.class);
+//            responseData.parseData(UploadImageResponse.class);
             mReportUserView.uploadImageSuccess(responseData.result);
         } else {
             mReportUserView.showToast(responseData.errorMsg);

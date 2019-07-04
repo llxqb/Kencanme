@@ -1,5 +1,6 @@
 package com.shushan.kencanme.mvp.ui.activity.loveMe;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -27,6 +28,7 @@ import com.shushan.kencanme.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.mvp.ui.adapter.LoveMeFriendsAdapter;
 import com.shushan.kencanme.mvp.utils.AppUtils;
 import com.shushan.kencanme.mvp.views.CommonDialog;
+import com.shushan.kencanme.mvp.views.MyTimer;
 import com.shushan.kencanme.mvp.views.dialog.MatchSuccessDialog;
 
 import java.util.ArrayList;
@@ -42,7 +44,8 @@ import io.rong.imkit.RongIM;
 /**
  * 查看喜欢我的人
  */
-public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener, MatchSuccessDialog.MatchSuccessListener {
+public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener, MatchSuccessDialog.MatchSuccessListener,
+        MyTimer.MyTimeListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -57,6 +60,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     private List<MyFriendsResponse.ListBean> listBeanList = new ArrayList<>();
     private LoginUser mLoginUser;
     private MyFriendsResponse.ListBean listBean;
+    private Dialog likeDialog;
     @Inject
     LoveMePeopleControl.PresenterLoveMePeople mPresenter;
 
@@ -86,6 +90,9 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                 switch (view.getId()) {
                     case R.id.like_iv:
                         if (!listBean.isLike) {
+                            likeDialog = DialogFactory.showLikeDialog(LoveMePeopleActivity.this);
+                            likeDialog.show();
+                            setmRemainTime();
                             if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
                                 LikeRequest likeRequest = new LikeRequest();
                                 likeRequest.token = mBuProcessor.getToken();
@@ -146,6 +153,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     private void showMatchSuccesDialog() {
         MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
         matchSuccessDialog.setListener(this);
+        matchSuccessDialog.setContent(mLoginUser.nickname,mLoginUser.trait,listBean.getNickname(),listBean.getTrait());
         DialogFactory.showDialogFragment(this.getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
     }
 
@@ -175,6 +183,32 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         startActivitys(OpenVipActivity.class);
     }
 
+    MyTimer myTimer;
+
+    /**
+     * 设置一分钟倒计时
+     */
+    private void setmRemainTime() {
+        myTimer = MyTimer.getInstance(1000, 1000, this);
+        myTimer.setListener(this);
+        myTimer.cancel();
+        myTimer.start();
+    }
+
+    /**
+     * 一分钟倒计时结束
+     */
+    @Override
+    public void onFinish() {
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
+        if (likeDialog.isShowing()) {
+            likeDialog.dismiss();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
@@ -186,5 +220,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                 .loveMePeopleModule(new LoveMePeopleModule(LoveMePeopleActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 }

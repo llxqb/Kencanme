@@ -54,7 +54,7 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
     
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mMyAlbumView.deleteSuccess("success");
+            mMyAlbumView.deleteSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mMyAlbumView.showToast(responseData.errorMsg);
         }
@@ -64,7 +64,9 @@ public class MyAlbumPresenterImpl implements MyAlbumControl.PresenterMyAlbum {
     private void requestMyAlbumSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             MyAlbumResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MyAlbumResponse.class);
-            mMyAlbumView.getMyAlbumSuccess(response);
+            if(response!=null){
+                mMyAlbumView.getMyAlbumSuccess(response);
+            }
         } else {
             mMyAlbumView.showToast(responseData.errorMsg);
         }

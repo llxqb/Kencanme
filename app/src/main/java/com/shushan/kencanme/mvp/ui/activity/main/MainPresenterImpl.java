@@ -54,8 +54,10 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
     private void requestPersonalInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(PersonalInfoResponse.class);
-            PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
-            mMainView.personalInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+                mMainView.personalInfoSuccess(response);
+            }
         } else {
             mMainView.showToast(responseData.errorMsg);
         }
@@ -121,8 +123,10 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
     private UserInfo requestUserInfoByRidSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(UserInfoByRidResponse.class);
-            UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
-            return new UserInfo(mUserInfoByRidRequest.rongyun_third_id, response.getNickname(), Uri.parse(response.getTrait()));
+            if (responseData.parsedData != null) {
+                UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
+                return new UserInfo(mUserInfoByRidRequest.rongyun_third_id, response.getNickname(), Uri.parse(response.getTrait()));
+            }
         } else {
             mMainView.showToast(responseData.errorMsg);
         }

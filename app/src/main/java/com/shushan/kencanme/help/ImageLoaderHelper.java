@@ -33,6 +33,14 @@ public class ImageLoaderHelper extends GlideLoader {
     public ImageLoaderHelper(final Context ctx) {
     }
 
+    public void displayImage(Context context, Object path, ImageView imageView) {
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
+                .dontAnimate();
+        Glide.with(context).load(path).apply(options).into(imageView);
+    }
+
     @Override
     public void displayImage(Context context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = new RequestOptions()

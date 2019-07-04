@@ -59,8 +59,10 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(HomeFragmentResponse.class);
-            HomeFragmentResponse response = (HomeFragmentResponse) responseData.parsedData;
-            mHomeView.getInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                HomeFragmentResponse response = (HomeFragmentResponse) responseData.parsedData;
+                mHomeView.getInfoSuccess(response);
+            }
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -81,8 +83,10 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestLikeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(LikeResponse.class);
-            LikeResponse response = (LikeResponse) responseData.parsedData;
-            mHomeView.getLikeSuccess(response);
+            if (responseData.parsedData != null) {
+                LikeResponse response = (LikeResponse) responseData.parsedData;
+                mHomeView.getLikeSuccess(response);
+            }
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -124,7 +128,7 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestBuyExposureTimeSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
 //            DialogBuyBean response = new Gson().fromJson(responseData.mJsonObject.toString(), DialogBuyBean.class);
-            mHomeView.getBuyExposureTime("success");
+            mHomeView.getBuyExposureTime(mContext.getResources().getString(R.string.success));
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -145,8 +149,10 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestPersonalInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(PersonalInfoResponse.class);
-            PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
-            mHomeView.personalInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+                mHomeView.personalInfoSuccess(response);
+            }
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }
@@ -167,8 +173,10 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
     private void requestHomeUserInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(HomeUserInfoResponse.class);
-            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
-            mHomeView.homeUserInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mHomeView.homeUserInfoSuccess(response);
+            }
         } else {
             mHomeView.showToast(responseData.errorMsg);
         }

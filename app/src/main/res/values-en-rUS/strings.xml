@@ -1,6 +1,6 @@
 <resources>
     <!-- 不是中、英、印尼语显示-->
-    <!--&amp;#160   表示空格-->
+    <!--&#160;   表示空格-->
     <!--网络相关 -->
     <!--请检查网络Cek koneksi internet anda-->
     <!--请稍后重试Mohon coba kembali-->
@@ -46,7 +46,7 @@
     <string name="recharge_means_hint">* purchase means agree </string>
     <string name="recharge_app_agreement">《Kencanme payment agreement》</string>
     <string name="recharge_problems_hint">if your encounter purchase difficults please </string>
-    <string name="recharge_contact_customer">&amp;#160contact customer services</string>
+    <string name="recharge_contact_customer">&#160;contact customer services</string>
     <!--MainActivity -->
     <string name="main_bottom_home">Hey</string>
     <string name="main_bottom_message">Message</string>
@@ -322,7 +322,7 @@ Don\'t release your choose. no body know your choice unless you like each other.
     <string name="edit_personal_info_successfully">edit successfully</string>
     <string name="modify_successfully">Modify successfully</string>
     <string name="add_successfully">Add succefully</string>
-
+    <string name="update_successfully">update completed</string>
 
     <!-- WebView-->
     <string name="earn_beans_wb">Kencanme/inviteApp-EN.html?code=</string>    <!--分享页-->
@@ -340,5 +340,6 @@ Don\'t release your choose. no body know your choice unless you like each other.
     <string name="ClearCacheActivity_clear_cache_hint" >You are sure to clear the cache?</string>
     <string name="log_out_hint" >You are sure to log out?</string>
     <string name="exit_app" >Press again to exit the app</string>
-
+    <string name="and" >and</string><!--MatchSuccessDialog -->
+    <string name="match_success_tv" >&#160; like each other and are successful together!</string><!--MatchSuccessDialog -->
 </resources>

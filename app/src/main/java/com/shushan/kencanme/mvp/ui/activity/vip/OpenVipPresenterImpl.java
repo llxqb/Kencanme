@@ -47,8 +47,10 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     private void requestDataSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(OpenVipResponse.class);
-            OpenVipResponse response = (OpenVipResponse) responseData.parsedData;
-            mOpenVipView.OpenVipListSuccess(response);
+            if (responseData.parsedData != null) {
+                OpenVipResponse response = (OpenVipResponse) responseData.parsedData;
+                mOpenVipView.OpenVipListSuccess(response);
+            }
         } else {
             mOpenVipView.showLoading(responseData.errorMsg);
         }
@@ -70,8 +72,10 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     private void createOrderSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(CreateOrderResponse.class);
-            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
-            mOpenVipView.createOrderSuccess(response);
+            if (responseData.parsedData != null) {
+                CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+                mOpenVipView.createOrderSuccess(response);
+            }
         } else {
             mOpenVipView.showLoading(responseData.errorMsg);
         }
@@ -93,8 +97,10 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     private void paySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(CreateOrderResponse.class);
-            CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
-            mOpenVipView.createOrderSuccess(response);
+            if (responseData.parsedData != null) {
+                CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
+                mOpenVipView.createOrderSuccess(response);
+            }
         } else {
             mOpenVipView.showLoading(responseData.errorMsg);
         }

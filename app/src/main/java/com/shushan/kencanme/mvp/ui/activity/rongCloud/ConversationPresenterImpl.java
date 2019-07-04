@@ -66,7 +66,7 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
 
     private void useBeansRequestSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mConversationView.UseBeansSuccess("success");
+            mConversationView.UseBeansSuccess(mContext.getResources().getString(R.string.success));
         } else {
             mConversationView.uploadImageFail(responseData.errorMsg);
         }
@@ -86,8 +86,10 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
     private void requestHomeUserInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(HomeUserInfoResponse.class);
-            HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
-            mConversationView.homeUserInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mConversationView.homeUserInfoSuccess(response);
+            }
         } else {
             mConversationView.showToast(responseData.errorMsg);
         }
@@ -108,12 +110,15 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
     private void requestUserInfoByRidSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(UserInfoByRidResponse.class);
-            UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
-            mConversationView.getUserInfoSuccess(response);
+            if (responseData.parsedData != null) {
+                UserInfoByRidResponse response = (UserInfoByRidResponse) responseData.parsedData;
+                mConversationView.getUserInfoSuccess(response);
+            }
         } else {
             mConversationView.showToast(responseData.errorMsg);
         }
     }
+
     /**
      * 根据融云第三方id获取关系
      */
@@ -128,8 +133,10 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
     private void requestUserRelationSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(UserRelationResponse.class);
-            UserRelationResponse response = (UserRelationResponse) responseData.parsedData;
-            mConversationView.getUserRelationSuccess(response);
+            if (responseData.parsedData != null) {
+                UserRelationResponse response = (UserRelationResponse) responseData.parsedData;
+                mConversationView.getUserRelationSuccess(response);
+            }
         } else {
             mConversationView.showToast(responseData.errorMsg);
         }
