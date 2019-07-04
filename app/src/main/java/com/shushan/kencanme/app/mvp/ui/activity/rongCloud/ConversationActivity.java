@@ -122,7 +122,9 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             mTargetId = Objects.requireNonNull(getIntent().getData()).getQueryParameter("targetId");
             mCommonTitleTv.setText(getIntent().getData().getQueryParameter("title"));
             mConversationType = Conversation.ConversationType.valueOf("PRIVATE");
-            onRequestUserInfoByRid();
+            if (chatType != 1) {
+                onRequestUserInfoByRid();
+            }
         }
 
     }
@@ -201,7 +203,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         if (chatType == 1) {//客服
             return message;
         } else {
-            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse.getState() != 2) {
+            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse!=null && mUserRelationResponse.getState() != 2) {
                 //男非VIP 和beans=0  和 不是好友关系
                 DialogFactory.showRechargeBeansDialog2(this);
             } else {
@@ -224,9 +226,11 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-        if (mLoginUser.userType == 1 && mUserRelationResponse.getState() != 2 && chatType != 1) {
-            UseBeansDialogFlag = 1;
-            useBeansToChat("4", 1);
+        if (chatType != 1) {
+            if (mLoginUser.userType == 1 && mUserRelationResponse!=null &&mUserRelationResponse.getState() != 2) {
+                UseBeansDialogFlag = 1;
+                useBeansToChat("4", 1);
+            }
         }
         return false;
     }

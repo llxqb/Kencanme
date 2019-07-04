@@ -49,6 +49,7 @@ import com.shushan.kencanme.app.mvp.ui.adapter.AlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
+import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 
@@ -297,11 +298,11 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
         //Personal Information
         mUserLocation.setText(mLoginUser.city);
-        String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + " " + mLoginUser.height + "cm" : "Height: ";
-        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight) + " " + mLoginUser.weight + "kg" : "Weight: ";
-        String mUserChestValue = getResources().getString(R.string.Chest) + " " + mLoginUser.bust;
-        String mUserBirthdayValue = getResources().getString(R.string.Birthday) + " " + mLoginUser.birthday;
-        String mUserProfessionalValue = getResources().getString(R.string.Professional) + " " + mLoginUser.occupation;
+        String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + mLoginUser.height + "cm" : getResources().getString(R.string.Height);
+        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight)  + mLoginUser.weight + "kg" : getResources().getString(R.string.Weight);
+        String mUserChestValue = getResources().getString(R.string.Chest) +mLoginUser.bust;
+        String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd");
+        String mUserProfessionalValue = getResources().getString(R.string.Professional) + mLoginUser.occupation;
         mUserHeight.setText(mUserHeightValue);
         mUserWeight.setText(mUserWeightValue);
         mUserChest.setText(mUserChestValue);

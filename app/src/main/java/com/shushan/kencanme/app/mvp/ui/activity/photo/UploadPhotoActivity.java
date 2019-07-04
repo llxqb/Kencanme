@@ -111,6 +111,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_photo);
         initializeInjector();
+        setStatusBar();
         ButterKnife.bind(this);
         initView();
         initData();
