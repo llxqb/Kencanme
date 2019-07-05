@@ -105,7 +105,7 @@
     <string name="RecommendUserInfoActivity_look_over_hint" translatable="false">Look over</string>
     <string name="RecommendUserInfoActivity_label_hint" translatable="false">The Label</string>
     <string name="RecommendUserInfoActivity_no_friends" translatable="false">You are not friends yet.</string>
-
+    <string name="RecommendUserInfoActivity_look_contact_hint" translatable="false">Are you sure look contact?</string>
 
     <!-- CreatePersonalInfoActivity-->
     <!--Empty -->
@@ -146,6 +146,7 @@
     <string name="UploadPhotoActivity_custom_num" translatable="false">custom</string>
     <!--DataFraudActivity -->
     <string name="DataFraudActivity_desc_is_null" translatable="false">Please describe your problem</string>
+    <string name="DataFraudActivity_only_80_word" translatable="false">only 80 word.</string>
     <string name="DataFraudActivity_only_100_word" translatable="false">only 100 word.</string>
     <string name="DataFraudActivity_head_portraits" translatable="false">Fake Profile or Photo Data</string>
     <string name="DataFraudActivity_pic_num" translatable="false">Upload Screenshots, Improve Accuracy</string>
@@ -324,7 +325,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="add_successfully" translatable="false">Add succefully</string>
     <string name="update_successfully" translatable="false">update completed</string>
 
-
     <!-- WebView-->
     <string name="earn_beans_wb" translatable="false">Kencanme/inviteApp-EN.html?code=</string>    <!--分享页-->
     <string name="down_app" translatable="false">Kencanme/downApp-EN.html?code=</string>    <!--下载页-->
@@ -336,7 +336,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="facebook_title" translatable="false">invite friends</string>
     <string name="facebook_content" translatable="false">Invite friends to use</string>
 
-
     <!-- add+++-->
     <string name="SystemMsgActivity_clear_msg_hint" translatable="false">You are sure to clear the system message?</string>
     <string name="ClearCacheActivity_clear_cache_hint" translatable="false">You are sure to clear the cache?</string>
@@ -345,4 +344,5 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="and" translatable="false">and</string><!--MatchSuccessDialog -->
     <string name="match_success_tv" translatable="false">&#160; like each other and are successful together!</string><!--MatchSuccessDialog -->
     <string name="online_customer" translatable="false">online service</string><!--MineFragment -->
+    <string name="already_like" translatable="false">Already like</string><!--已喜欢 -->
 </resources>

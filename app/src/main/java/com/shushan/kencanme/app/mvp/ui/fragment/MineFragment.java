@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +51,10 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
+import com.shushan.kencanme.app.mvp.utils.LogUtils;
+import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 
 import java.lang.reflect.Type;
@@ -64,6 +68,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jzvd.JzvdStd;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.CSCustomServiceInfo;
 
@@ -99,6 +104,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     TextView mPersonalInfoTv;
     @BindView(R.id.cover_iv)
     ImageView mCoverIv;
+    @BindView(R.id.jz_video)
+    JzvdStd mJzvdStd;
     @BindView(R.id.user_location)
     TextView mUserLocation;
     @BindView(R.id.user_height)
@@ -153,7 +160,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         //设置有图片状态栏
         StatusBarUtil.setTransparentForImageView(getActivity(), null);
@@ -164,13 +171,13 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        //显示当前fragment isVisibleToUser=true
-        if (isVisibleToUser) {
-            setUserInfo();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        //显示当前fragment isVisibleToUser=true  返回时页面时不会执行
+//        if (isVisibleToUser) {
+//            setUserInfo();
+//        }
+//    }
 
 
     @Override
@@ -194,6 +201,11 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        JzvdStd.goOnPlayOnPause();
+    }
 
     @Override
     public void initView() {
@@ -242,7 +254,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
      */
     private void setUserInfo() {
         //contactWay
-        String contactWayString = mBuProcessor.getLoginUser().contact; //转换联系方式为list
+        mLoginUser = mBuProcessor.getLoginUser();
+        LogUtils.d("mime_mLoginUser:"+new Gson().toJson(mLoginUser));
+        String contactWayString = mLoginUser.contact; //转换联系方式为list
         Gson gson = new Gson();
         Type listType = new TypeToken<List<ContactWay>>() {
         }.getType();
@@ -256,7 +270,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mContactWayHintTv.setVisibility(View.GONE);
         }
         //label
-        String labelString = mBuProcessor.getLoginUser().label; //转换联系方式为list
+        String labelString = mLoginUser.label; //转换标签方式为list
         Gson gson2 = new Gson();
         Type labelListType = new TypeToken<List<String>>() {
         }.getType();
@@ -269,8 +283,16 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         } else {
             mLabelHintTv.setVisibility(View.GONE);
         }
-
-        LoginUser mLoginUser = mBuProcessor.getLoginUser();
+        if (TranTools.isVideo(mLoginUser.cover)) {
+            mCoverIv.setVisibility(View.GONE);
+            mJzvdStd.setVisibility(View.VISIBLE);
+            mJzvdStd.setUp(mLoginUser.cover, "");
+            PicUtils.loadVideoScreenshot(getActivity(), mLoginUser.cover, mJzvdStd.thumbImageView, 0);
+        } else {
+            mCoverIv.setVisibility(View.VISIBLE);
+            mJzvdStd.setVisibility(View.GONE);
+            mImageLoaderHelper.displayMatchImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
+        }
         mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_AVATOR);
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.sex == 1) {
@@ -294,13 +316,12 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mVipTimeTv.setText(getResources().getString(R.string.MineFragment_hello_VIP));
         }
         mDescTv.setText(mLoginUser.declaration);
-        mImageLoaderHelper.displayMatchImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
         mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
         //Personal Information
         mUserLocation.setText(mLoginUser.city);
         String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + mLoginUser.height + "cm" : getResources().getString(R.string.Height);
-        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight)  + mLoginUser.weight + "kg" : getResources().getString(R.string.Weight);
-        String mUserChestValue = getResources().getString(R.string.Chest) +mLoginUser.bust;
+        String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight) + mLoginUser.weight + "kg" : getResources().getString(R.string.Weight);
+        String mUserChestValue = getResources().getString(R.string.Chest) + mLoginUser.bust;
         String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd");
         String mUserProfessionalValue = getResources().getString(R.string.Professional) + mLoginUser.occupation;
         mUserHeight.setText(mUserHeightValue);
@@ -365,7 +386,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
          * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
          */
         RongIM.getInstance().startCustomerServiceChat(Objects.requireNonNull(getActivity()), ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
-        mSharePreferenceUtil.setData("chatType",1);//在线客服
+        mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
 
     @Override

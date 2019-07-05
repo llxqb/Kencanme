@@ -29,6 +29,7 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.PersonalInfoControl;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
@@ -389,6 +390,11 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         showToast(msg);
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_MY_ALBUM));
         finish();
+    }
+
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+
     }
 
 

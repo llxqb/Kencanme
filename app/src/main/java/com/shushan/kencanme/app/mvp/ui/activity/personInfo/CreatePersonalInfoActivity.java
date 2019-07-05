@@ -17,6 +17,7 @@ import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
@@ -112,6 +113,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
                     request.city = mAddress.getText().toString();
                     request.token = mToken;
                     PersonalInfoUploadPhotoActivity.start(this, request);
+                    finish();
                 }
                 break;
         }
@@ -130,7 +132,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
                 .setCancelText(getResources().getString(R.string.dialog_cancal))//取消按钮文字
                 .setSubmitText(getResources().getString(R.string.dialog_sure))//确认按钮文字
-                .setTitleSize(16)//标题文字大小
+                .setTitleSize(18)//标题文字大小
                 .setTitleText(getResources().getString(R.string.personal_info_birthday))//标题文字
                 .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
                 .isCyclic(true)//是否循环滚动
@@ -190,6 +192,11 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
 
     @Override
     public void updateMyAlbumSuccess(String msg) {
+
+    }
+
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
 
     }
 

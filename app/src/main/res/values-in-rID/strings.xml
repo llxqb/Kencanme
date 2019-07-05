@@ -105,7 +105,7 @@
     <string name="RecommendUserInfoActivity_look_over_hint">Lihatlah</string>
     <string name="RecommendUserInfoActivity_label_hint">Label</string>
     <string name="RecommendUserInfoActivity_no_friends">Anda belum berteman.</string>
-
+    <string name="RecommendUserInfoActivity_look_contact_hint">Anda yakin ingin memeriksa informasi kontak?</string>
 
     <!-- CreatePersonalInfoActivity-->
     <!--Empty -->
@@ -146,6 +146,7 @@
     <string name="UploadPhotoActivity_custom_num">Custom</string>
     <!--DataFraudActivity -->
     <string name="DataFraudActivity_desc_is_null">Tolong jelaskan masalah Anda</string>
+    <string name="DataFraudActivity_only_80_word">hanya 80 kata.</string>
     <string name="DataFraudActivity_only_100_word">hanya 100 kata.</string>
     <string name="DataFraudActivity_head_portraits">Foto palsu</string>
     <string name="DataFraudActivity_pic_num">Unggah Screenshot untuk meningkatkan kualitas report</string>
@@ -313,7 +314,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="AboutUsActivity_title">Tentang Kencanme </string>
     <string name="EarnBeansActivity_title">Dapatkan Hai Koin </string>
 
-
     <!-- 请求成功返回msg-->
     <string name="login_google_fail">info masuk google gagal</string>
     <string name="msg_super_expsure_success">Super Eksposur berhasil!</string>
@@ -336,7 +336,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="facebook_title">mengundang teman-teman</string>
     <string name="facebook_content">Undang teman untuk digunakan</string>
 
-
     <!-- add+++-->
     <string name="SystemMsgActivity_clear_msg_hint">Anda yakin ingin menghapus pesan sistem?</string>
     <string name="ClearCacheActivity_clear_cache_hint">Anda yakin untuk menghapus cache?</string>
@@ -344,4 +343,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="exit_app">Tekan lagi untuk keluar dari aplikasi</string><!--再按一次退出程序-->
     <string name="and">dan</string><!--MatchSuccessDialog -->
     <string name="match_success_tv">&#160; Saling mencintai dan sukses bersama!</string><!--MatchSuccessDialog -->
+    <string name="online_customer">Hubungi layanan pelanggan</string><!--MineFragment -->
+    <string name="already_like">Sudah suka</string><!--已喜欢 -->
 </resources>

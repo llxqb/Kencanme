@@ -88,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void judgeToken(Integer code) {
         if (code == 100401 || code == 100107) {
             showToast("登入过期,请重新登入");
-            clearSwitchToLogin();
+//            clearSwitchToLogin();
         }
     }
 
@@ -100,13 +100,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
-    /**
-     * 清除登录数据
-     */
-    public void clearSwitchToLogin() {
-//        mBuProcessor.clearLoginUser();
-//        LoginActivity.start(getContext());
-    }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override

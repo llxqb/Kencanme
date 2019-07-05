@@ -8,24 +8,31 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerPersonalInfoComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
-import com.shushan.kencanme.app.entity.user.LoginUser;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
+import com.shushan.kencanme.app.mvp.utils.LogUtils;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.PhotoDialog;
 
@@ -66,7 +73,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @BindView(R.id.jz_video)
     JzvdStd mJzVideo;
     @BindView(R.id.declaration_ev)
-    EditText mdeclarationEv;
+    EditText mDeclarationEv;
     @BindView(R.id.upload_photo_world_limit_text)
     TextView mUploadPhotoWorldLimitText;
     @BindView(R.id.complete_btn)
@@ -76,7 +83,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     String mToken;
     //成功取得照片
     Bitmap bitmap;
-    private LoginUser mLoginUser;
 
     private UpdatePersonalInfoRequest mPersonalInfoRequest;
     @Inject
@@ -94,9 +100,17 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         initData();
     }
 
+    public static void start(Context context, UpdatePersonalInfoRequest personalInfoRequest) {
+        Intent intent = new Intent(context, PersonalInfoUploadPhotoActivity.class);
+        intent.putExtra("personalInfoRequest", personalInfoRequest);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initView() {
         mToken = mBuProcessor.getToken();
+        mCommonTitleTv.setText(getResources().getString(R.string.UploadPhotoActivity_title));
+        mDeclarationEv.addTextChangedListener(search_text_OnChange);
         if (getIntent() != null) {
             mPersonalInfoRequest = getIntent().getParcelableExtra("personalInfoRequest");
         }
@@ -104,7 +118,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     @Override
     public void initData() {
-        mLoginUser = mBuProcessor.getLoginUser();
     }
 
     @OnClick({R.id.common_back, R.id.photo_iv_rl, R.id.complete_btn})
@@ -117,26 +130,53 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
                 showVideoDialog();
                 break;
             case R.id.complete_btn:
-//                startActivitys(AgreementActivity.class);
-//                finish();
                 if (isValidEmpty()) {
-                    mPersonalInfoRequest.declaration = mdeclarationEv.getText().toString();
-                    mPresenter.onRequestPersonalInfo(mPersonalInfoRequest);
+                    mPersonalInfoRequest.declaration = mDeclarationEv.getText().toString();
+                    mPresenter.updatePersonalInfo(mPersonalInfoRequest);
                 }
                 break;
         }
     }
 
     private boolean isValidEmpty() {
-        if (TextUtils.isEmpty(mdeclarationEv.getText())) {
+        if (TextUtils.isEmpty(mDeclarationEv.getText())) {
             showToast(getResources().getString(R.string.PersonalInfoUploadPhotoActivity_declaration_is_empty));
             return false;
         }
-        if(mPersonalInfoRequest.cover==null){
+        if (mPersonalInfoRequest.cover == null) {
             showToast(getResources().getString(R.string.CreatePersonalInfoActivity_cover_is_empty));
             return false;
         }
         return true;
+    }
+
+    /**
+     * 更新个人信息成功
+     */
+    @Override
+    public void updateSuccess(String response) {
+        requestPersonalInfo();
+    }
+
+    /**
+     * 查询 我的
+     */
+    private void requestPersonalInfo() {
+        PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
+        personalInfoRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestPersonalInfo(personalInfoRequest);
+    }
+
+    /**
+     * 查询我的成功
+     */
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+        LogUtils.d("response:" + new Gson().toJson(response));
+        //保存用户信息
+        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
+        startActivitys(MainActivity.class);
+        finish();
     }
 
     /**
@@ -208,7 +248,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //以下代码为处理Android6.0、7.0动态权限所需
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -236,22 +276,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         return takePhoto;
     }
 
-    @Override
-    public void updateSuccess(String response) {
-        updateUserInfo();
-        startActivitys(MainActivity.class);
-        finish();
-    }
-
-    private void updateUserInfo() {
-        mLoginUser.nickname = mPersonalInfoRequest.nickname;
-        mLoginUser.sex = mPersonalInfoRequest.sex;
-        mLoginUser.birthday = mPersonalInfoRequest.birthday;
-        mLoginUser.city = mPersonalInfoRequest.city;
-        mLoginUser.cover = mPersonalInfoRequest.cover;
-        mLoginUser.declaration = mPersonalInfoRequest.declaration;
-        mBuProcessor.setLoginUser(mLoginUser);
-    }
 
     @Override
     public void uploadVideoSuccess(String videoPath) {
@@ -276,14 +300,9 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
 
     @Override
     public void updateMyAlbumSuccess(String msg) {
-
     }
 
-    public static void start(Context context, UpdatePersonalInfoRequest personalInfoRequest) {
-        Intent intent = new Intent(context, PersonalInfoUploadPhotoActivity.class);
-        intent.putExtra("personalInfoRequest", personalInfoRequest);
-        context.startActivity(intent);
-    }
+
 
 
     @Override
@@ -302,6 +321,37 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     public void photoDialogBtn3OkListener() {
 
     }
+
+    public TextWatcher search_text_OnChange = new TextWatcher() {
+        private int selectionStart;
+        private int selectionEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = mDeclarationEv.getSelectionStart();
+            selectionEnd = mDeclarationEv.getSelectionEnd();
+            int worldTextNum = s.length();
+            if (s.length() > 80) {
+                showToast(getResources().getString(R.string.DataFraudActivity_only_80_word));
+                s.delete(selectionStart - 1, selectionEnd);
+                int tempSelection = selectionStart;
+                mUploadPhotoWorldLimitText.setText(worldTextNum + "/80");
+                mDeclarationEv.setSelection(tempSelection);
+            } else {
+                mUploadPhotoWorldLimitText.setText(worldTextNum + "/80");
+            }
+        }
+    };
+
 
     private void initializeInjector() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())

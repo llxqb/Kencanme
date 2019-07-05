@@ -105,7 +105,7 @@
     <string name="RecommendUserInfoActivity_look_over_hint">Look over</string>
     <string name="RecommendUserInfoActivity_label_hint">The Label</string>
     <string name="RecommendUserInfoActivity_no_friends">You are not friends yet.</string>
-
+    <string name="RecommendUserInfoActivity_look_contact_hint">Are you sure look contact?</string>
 
     <!-- CreatePersonalInfoActivity-->
     <!--Empty -->
@@ -146,6 +146,7 @@
     <string name="UploadPhotoActivity_custom_num">custom</string>
     <!--DataFraudActivity -->
     <string name="DataFraudActivity_desc_is_null">Please describe your problem</string>
+    <string name="DataFraudActivity_only_80_word" >only 80 word.</string>
     <string name="DataFraudActivity_only_100_word">only 100 word.</string>
     <string name="DataFraudActivity_head_portraits">Fake Profile or Photo Data</string>
     <string name="DataFraudActivity_pic_num">Upload Screenshots, Improve Accuracy</string>
@@ -342,4 +343,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="exit_app" >Press again to exit the app</string>
     <string name="and" >and</string><!--MatchSuccessDialog -->
     <string name="match_success_tv" >&#160; like each other and are successful together!</string><!--MatchSuccessDialog -->
+    <string name="online_customer" >online service</string><!--MineFragment -->
+    <string name="already_like" >Already like</string><!--已喜欢 -->
 </resources>

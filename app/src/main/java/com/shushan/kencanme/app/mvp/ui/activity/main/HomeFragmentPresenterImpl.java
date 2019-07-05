@@ -8,13 +8,11 @@ import com.shushan.kencanme.app.entity.DialogBuyBean;
 import com.shushan.kencanme.app.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.app.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.app.entity.request.LikeRequest;
-import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.LikeResponse;
-import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.MainModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -134,29 +132,6 @@ public class HomeFragmentPresenterImpl implements HomeFragmentControl.homeFragme
         }
     }
 
-    /**
-     * 获取个人信息
-     */
-    @Override
-    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
-        mHomeView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mHomeFragmentModel.onRequestPersonalInfo(personalInfoRequest).compose(mHomeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPersonalInfoSuccess, throwable -> mHomeView.showErrMessage(throwable),
-                        () -> mHomeView.dismissLoading());
-        mHomeView.addSubscription(disposable);
-    }
-
-    private void requestPersonalInfoSuccess(ResponseData responseData) {
-        if (responseData.resultCode == 0) {
-            responseData.parseData(PersonalInfoResponse.class);
-            if (responseData.parsedData != null) {
-                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
-                mHomeView.personalInfoSuccess(response);
-            }
-        } else {
-            mHomeView.showToast(responseData.errorMsg);
-        }
-    }
 
     /**
      * 获取个人信息（首页）

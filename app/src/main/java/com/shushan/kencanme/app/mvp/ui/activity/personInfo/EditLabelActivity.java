@@ -24,6 +24,7 @@ import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
@@ -154,7 +155,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
             updatePersonalInfoRequest.token = mBuProcessor.getToken();
             updatePersonalInfoRequest.label = new Gson().toJson(recommendUserLabelAdapter.getData());
 //            LogUtils.e("updatePersonalInfoRequest:" + new Gson().toJson(updatePersonalInfoRequest));
-            mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
+            mPresenter.updatePersonalInfo(updatePersonalInfoRequest);
         } else {
             showToast(getResources().getString(R.string.EditLabelActivity_dialog_add_label_hint));
         }
@@ -164,7 +165,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
         updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
         updatePersonalInfoRequest.token = mBuProcessor.getToken();
         updatePersonalInfoRequest.label = new Gson().toJson(recommendUserLabelAdapter.getData());
-        mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
+        mPresenter.updatePersonalInfo(updatePersonalInfoRequest);
     }
 
 
@@ -201,6 +202,11 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
 
     @Override
     public void updateMyAlbumSuccess(String msg) {
+
+    }
+
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
 
     }
 

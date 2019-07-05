@@ -60,5 +60,9 @@ public interface PersonalInfoApi {
     @POST("menggoda/user/feedback")
     Observable<String> onRequestFeedbackProblem(@Body String request);
 
-
+    /**
+     * 请求个人信息（我的）
+     */
+    @POST("menggoda/user")
+    Observable<String> onRequestPersonalInfo(@Body String request);
 }

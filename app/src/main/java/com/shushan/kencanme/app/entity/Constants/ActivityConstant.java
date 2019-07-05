@@ -11,6 +11,8 @@ public class ActivityConstant {
     public static final String UPDATE_MY_ALBUM_FROM_MYALBUM = "update_my_album_from_MyAlbumActivity";
     //更新首页数据
     public static final String UPDATE_HOME_INFO = "update_home_info";
+    //更新首页喜欢图标 如：详情页喜欢返回之后执行
+    public static final String UPDATE_HOME_LIKE_INFO = "update_home_like_info";
     //更新首页推荐用户数据
     public static final String UPDATE_HOME_LIST_INFO = "update_home_list_info";
     /**

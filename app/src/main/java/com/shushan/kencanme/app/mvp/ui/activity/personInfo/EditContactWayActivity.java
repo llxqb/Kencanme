@@ -24,6 +24,7 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
 import com.shushan.kencanme.app.entity.response.ContactWay2;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.ContactWayAdapter;
@@ -144,7 +145,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
                     contactWayList2.add(contactWay2);
                 }
                 updatePersonalInfoRequest.contact = new Gson().toJson(contactWayList2);
-                mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
+                mPresenter.updatePersonalInfo(updatePersonalInfoRequest);
                 break;
         }
     }
@@ -215,6 +216,11 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
 
     @Override
     public void updateMyAlbumSuccess(String msg) {
+
+    }
+
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
 
     }
 

@@ -4,12 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.google.gson.Gson;
-import com.shushan.kencanme.app.R;
-import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
-import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.MainModel;
@@ -39,29 +36,6 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         mMainView = mainView;
     }
 
-    /**
-     * 请求个人信息
-     */
-    @Override
-    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
-        mMainView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMainModel.onRequestPersonalInfo(personalInfoRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPersonalInfoSuccess, throwable -> mMainView.showErrMessage(throwable),
-                        () -> mMainView.dismissLoading());
-        mMainView.addSubscription(disposable);
-    }
-
-    private void requestPersonalInfoSuccess(ResponseData responseData) {
-        if (responseData.resultCode == 0) {
-            responseData.parseData(PersonalInfoResponse.class);
-            if (responseData.parsedData != null) {
-                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
-                mMainView.personalInfoSuccess(response);
-            }
-        } else {
-            mMainView.showToast(responseData.errorMsg);
-        }
-    }
 
     /**
      * 请求个人信息（首页）

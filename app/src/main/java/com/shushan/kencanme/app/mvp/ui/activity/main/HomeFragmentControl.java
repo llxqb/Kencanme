@@ -5,13 +5,11 @@ import com.shushan.kencanme.app.entity.DialogBuyBean;
 import com.shushan.kencanme.app.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.app.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.app.entity.request.LikeRequest;
-import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.LikeResponse;
-import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.app.mvp.presenter.Presenter;
 
@@ -29,7 +27,7 @@ public class HomeFragmentControl {
 
         void getBuyExposureTime(String msg);
 
-        void personalInfoSuccess(PersonalInfoResponse response);
+//        void personalInfoSuccess(PersonalInfoResponse response);
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
 
@@ -58,10 +56,6 @@ public class HomeFragmentControl {
          * 嗨豆购买曝光次数
          */
         void onRequestBuyExposureTime(BuyExposureTimeRequest buyExposureTimeRequest);
-        /**
-         * 请求查询用户信息
-         */
-        void onRequestPersonalInfo(PersonalInfoRequest request);
         /**
          * 查询用户信息（首页）
          */

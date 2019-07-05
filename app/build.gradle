@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -44,7 +44,7 @@ android {
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             signingConfig signingConfigs.release
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         //打包输出路径 gradlew assembleRelease

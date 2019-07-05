@@ -50,7 +50,9 @@ import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.LogUtils;
+import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.MyTimer;
@@ -67,6 +69,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JzvdStd;
 import io.rong.imkit.RongIM;
 
 /**
@@ -82,6 +85,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     CircleImageView mHeadIcon;
     @BindView(R.id.cover_iv)
     ImageView mCoverIv;
+    @BindView(R.id.jz_video)
+    JzvdStd mJzvdStd;
     @BindView(R.id.recommend_username)
     TextView mRecommendUsername;
     @BindView(R.id.recommend_user_sex_year)
@@ -138,6 +143,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 2 使用嗨豆查看联系方式
      */
     private MyAlbumResponse.DataBean mAlbumBean;
+    /**
+     * 使用beans 查看相册和联系方式
+     * 1:查看相册
+     * 2:联系方式
+     */
     private int useBeansType;
     private List<String> labelList = new ArrayList<>();
     private RecommendUserInfoResponse recommendUserInfoResponse;
@@ -180,6 +190,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         initData();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        JzvdStd.goOnPlayOnPause();
+    }
 
     @Override
     public void initView() {
@@ -191,10 +206,11 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 switch (view.getId()) {
                     case R.id.photo_item_rl:
                         assert mAlbumBean != null;
+                        //type 1:普通图片 2：vip可查看 3：嗨豆图片  state:0 未查看 1：已查看
                         if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
                             LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
                         } else if (mAlbumBean.getAlbum_type() == 2) {
-                            if (mLoginUser.userType == 2 || mLoginUser.userType == 3 || mLoginUser.userType == 5) {
+                            if (AppUtils.isVip(mLoginUser.userType)) {
                                 LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
                             } else {
                                 showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_album));
@@ -275,6 +291,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 //0没有关系1喜欢2互相喜欢（好友）3黑名单  喜欢了不可以取消喜欢
                 if (recommendUserInfoResponse.getRelation() == 0) {
                     likeIv();
+                } else if (recommendUserInfoResponse.getRelation() == 1 || recommendUserInfoResponse.getRelation() == 2) {
+                    showToast(getResources().getString(R.string.already_like));
                 }
                 break;
             case R.id.recommend_chat_iv:
@@ -283,11 +301,62 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
     }
 
+    @Override
+    public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response) {
+        recommendUserInfoResponse = response;
+        LogUtils.e("response:" + new Gson().toJson(response));
+        setUserData(response);
+        for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
+            MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
+            dataBean.setId(albumBean.getId());
+            dataBean.setAlbum_url(albumBean.getAlbum_url());
+            dataBean.setAlbum_type(albumBean.getAlbum_type());
+            dataBean.setCost(albumBean.getCost());
+            dataBean.setState(albumBean.getState());
+            albumInfoLists.add(dataBean);
+        }
+        albumAdapter.setNewData(albumInfoLists);
+        contactWayList = response.getContact();
+        //是否查看过联系方式
+        if (recommendUserInfoResponse.getIs_see_contact() == 1) {
+            mLookOverTv.setVisibility(View.GONE);
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = true;
+            }
+        } else {
+            for (ContactWay contactWay : contactWayList) {
+                contactWay.isShow = false;
+            }
+        }
+        if (contactWayList.size() > 0) {
+            contactWayAdapter.setNewData(contactWayList);
+            mContactRl.setVisibility(View.VISIBLE);
+        } else {
+            mContactRl.setVisibility(View.GONE);
+        }
+        labelList = response.getLabel();
+        if (labelList != null && labelList.size() > 0) {
+            recommendUserLabelAdapter.setNewData(labelList);
+            mLabelTv.setVisibility(View.VISIBLE);
+        } else {
+            mLabelTv.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 设置页面数据
      */
     private void setUserData(RecommendUserInfoResponse recommendUserInfoResponse) {
-        mImageLoaderHelper.displayMatchImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
+        if (TranTools.isVideo(recommendUserInfoResponse.getCover())) {
+            mCoverIv.setVisibility(View.GONE);
+            mJzvdStd.setVisibility(View.VISIBLE);
+            mJzvdStd.setUp(recommendUserInfoResponse.getCover(), "");
+            PicUtils.loadVideoScreenshot(this, recommendUserInfoResponse.getCover(), mJzvdStd.thumbImageView, 0);
+        } else {
+            mCoverIv.setVisibility(View.VISIBLE);
+            mJzvdStd.setVisibility(View.GONE);
+            mImageLoaderHelper.displayMatchImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
+        }
         mImageLoaderHelper.displayImage(this, recommendUserInfoResponse.getTrait(), mHeadIcon, Constant.LOADING_AVATOR);
         mRecommendUsername.setText(recommendUserInfoResponse.getNickname());
         if (recommendUserInfoResponse.getSex() == 1) {
@@ -344,21 +413,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      */
     private void showFreeBeansDialog() {
         commonDialogOperationType = 4;
-        DialogFactory.showCommonDialog(this, "Are you sure look contact", Constant.DIALOG_FOUR);
-    }
-
-    /**
-     * 显示去充值嗨豆
-     */
-    private void showRechargeBeansDialog() {
-        DialogFactory.showRechargeBeansDialog(this);
-    }
-
-    /**
-     * 显示使用嗨豆
-     */
-    private void showUseBeansDialog(int beansNum) {
-        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_contact), beansNum);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.RecommendUserInfoActivity_look_contact_hint), Constant.DIALOG_FOUR);
     }
 
     /**
@@ -400,6 +455,22 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
     }
 
+
+    /**
+     * 显示去充值嗨豆
+     */
+    private void showRechargeBeansDialog() {
+        DialogFactory.showRechargeBeansDialog(this);
+    }
+
+    /**
+     * 显示使用嗨豆
+     */
+    private void showUseBeansDialog(int beansNum) {
+        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_contact), beansNum);
+    }
+
+
     private void showOpenVipDialog(String title) {
         commonDialogOperationType = 5;
         DialogFactory.showOpenVipDialog(this, title);
@@ -413,7 +484,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
         likedBg();
         //更新用户数据
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_LIKE_INFO));
+//        requestHomeUserInfo();
     }
 
     /**
@@ -435,48 +507,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
 
-
-    @Override
-    public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response) {
-        recommendUserInfoResponse = response;
-        LogUtils.e("response:" + new Gson().toJson(response));
-        setUserData(response);
-        for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
-            MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
-            dataBean.setId(albumBean.getId());
-            dataBean.setAlbum_url(albumBean.getAlbum_url());
-            dataBean.setAlbum_type(albumBean.getAlbum_type());
-            dataBean.setCost(albumBean.getCost());
-            dataBean.setState(albumBean.getState());
-            albumInfoLists.add(dataBean);
-        }
-        albumAdapter.setNewData(albumInfoLists);
-        contactWayList = response.getContact();
-        //是否查看过联系方式
-        if (recommendUserInfoResponse.getIs_see_contact() == 1) {
-            mLookOverTv.setVisibility(View.GONE);
-            for (ContactWay contactWay : contactWayList) {
-                contactWay.isShow = true;
-            }
-        } else {
-            for (ContactWay contactWay : contactWayList) {
-                contactWay.isShow = false;
-            }
-        }
-        if (contactWayList.size() > 0) {
-            contactWayAdapter.setNewData(contactWayList);
-            mContactRl.setVisibility(View.VISIBLE);
-        } else {
-            mContactRl.setVisibility(View.GONE);
-        }
-        labelList = response.getLabel();
-        if (labelList != null && labelList.size() > 0) {
-            recommendUserLabelAdapter.setNewData(labelList);
-            mLabelTv.setVisibility(View.VISIBLE);
-        } else {
-            mLabelTv.setVisibility(View.GONE);
-        }
-    }
 
     @Override
     public void blackUserListener() {
@@ -535,7 +565,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     MyTimer myTimer;
 
     /**
-     * 设置一分钟倒计时
+     * 设置一秒钟倒计时
      */
     private void setmRemainTime() {
         myTimer = MyTimer.getInstance(1000, 1000, this);
@@ -545,7 +575,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     /**
-     * 一分钟倒计时结束
+     * 一秒钟倒计时结束
      */
     @Override
     public void onFinish() {
@@ -622,7 +652,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
         contactWayAdapter.notifyDataSetChanged();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
-        requestHomeUserInfo();
+//        requestHomeUserInfo();
     }
 
     /**
@@ -632,8 +662,9 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     public void getAlbumByBeansSuccess(String msg) {
         mAlbumBean.setState(1);
         albumAdapter.notifyDataSetChanged();
+        //返回首页更新 我的 数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
-        requestHomeUserInfo();
+//        requestHomeUserInfo();
     }
 
     /**
@@ -659,7 +690,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         mLoginUser.exposure_time = userBean.getExposure_time();
         mLoginUser.today_like = userBean.getToday_like();
         mLoginUser.today_chat = userBean.getToday_chat();
-        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();//今日免费查看次数
         mBuProcessor.setLoginUser(mLoginUser);
     }
 
@@ -674,6 +705,15 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
+    }
 
     private void initializeInjector() {
         DaggerRecommendUserInfoComponent.builder().appComponent(getAppComponent())

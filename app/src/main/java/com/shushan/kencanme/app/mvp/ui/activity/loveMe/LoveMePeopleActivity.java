@@ -215,6 +215,15 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         super.onBackPressed();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
+            myTimer.cancel();
+            myTimer = null;
+        }
+    }
+
     private void initializeInjector() {
         DaggerLoveMePeopleComponent.builder().appComponent(getAppComponent())
                 .loveMePeopleModule(new LoveMePeopleModule(LoveMePeopleActivity.this, this))

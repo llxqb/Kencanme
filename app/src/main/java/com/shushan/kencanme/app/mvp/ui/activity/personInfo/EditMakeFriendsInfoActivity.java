@@ -26,6 +26,7 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
@@ -165,7 +166,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
                     UpdatePersonalInfoRequest personalInfoResponse = LoginUtils.tranPersonalInfoResponse(mLoginUser);
                     personalInfoResponse.nickname = mUserNameEv.getText().toString();
                     personalInfoResponse.declaration = mDeclarationEv.getText().toString();
-                    mPresenter.onRequestPersonalInfo(personalInfoResponse);
+                    mPresenter.updatePersonalInfo(personalInfoResponse);
                 }
                 break;
         }
@@ -336,6 +337,10 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
 
     }
 
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+    }
+
 
     @Override
     public void photoDialogBtnOkListener() {
@@ -385,7 +390,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
             selectionEnd = mDeclarationEv.getSelectionEnd();
             int worldTextNum = s.length();
             if (s.length() > 80) {
-                showToast(getResources().getString(R.string.DataFraudActivity_only_100_word));
+                showToast(getResources().getString(R.string.DataFraudActivity_only_80_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
                 mDeclarationWorldLimitTv.setText(worldTextNum + "/80");

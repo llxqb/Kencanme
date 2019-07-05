@@ -3,9 +3,11 @@ package com.shushan.kencanme.app.mvp.ui.activity.personInfo;
 import android.content.Context;
 
 import com.shushan.kencanme.app.R;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -35,7 +37,7 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
 
     @Override
-    public void onRequestPersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
+    public void updatePersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
         mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mPersonalInfoModel.updatePersonalInfoRequest(createPersonalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
@@ -84,7 +86,6 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     private void requestVideoSuccess(ResponseData responseData) {
         mPersonalInfoView.dismissLoading();
         if (responseData.resultCode == 0) {
-//            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadVideoSuccess(responseData.result);
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
@@ -93,7 +94,6 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-//            responseData.parseData(UploadImageResponse.class);
             mPersonalInfoView.uploadImageSuccess(responseData.result);
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
@@ -108,6 +108,29 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
         }
     }
 
+    /**
+     * 请求个人信息(我的)
+     */
+    @Override
+    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
+        mPersonalInfoView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mPersonalInfoModel.onRequestPersonalInfo(personalInfoRequest).compose(mPersonalInfoView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPersonalInfoSuccess, throwable -> mPersonalInfoView.showErrMessage(throwable),
+                        () -> mPersonalInfoView.dismissLoading());
+        mPersonalInfoView.addSubscription(disposable);
+    }
+
+    private void requestPersonalInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(PersonalInfoResponse.class);
+            if (responseData.parsedData != null) {
+                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+                mPersonalInfoView.personalInfoSuccess(response);
+            }
+        } else {
+            mPersonalInfoView.showToast(responseData.errorMsg);
+        }
+    }
 
     @Override
     public void onCreate() {

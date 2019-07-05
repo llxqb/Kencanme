@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.ReportUserRequest;
 import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
@@ -51,6 +52,12 @@ public class PersonalInfoModel {
      */
     public Observable<ResponseData> reportUserRequest(ReportUserRequest reportUserRequest) {
         return mPersonalInfoApi.reportUserRequest(mGson.toJson(reportUserRequest)).map(mTransform::transformCommon);
+    }
+    /**
+     * 请求个人信息（我的）
+     */
+    public Observable<ResponseData> onRequestPersonalInfo(PersonalInfoRequest request) {
+        return mPersonalInfoApi.onRequestPersonalInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

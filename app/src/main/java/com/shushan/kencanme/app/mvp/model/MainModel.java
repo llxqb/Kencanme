@@ -6,7 +6,6 @@ import com.shushan.kencanme.app.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.app.entity.request.LikeRequest;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.app.entity.request.MyFriendsRequest;
-import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
@@ -33,11 +32,6 @@ public class MainModel {
         mTransform = transform;
     }
 
-
-    //请求个人信息
-    public Observable<ResponseData> onRequestPersonalInfo(PersonalInfoRequest request) {
-        return mMainApi.onRequestPersonalInfo(mGson.toJson(request)).map(mTransform::transformCommon);
-    }
 
     //请求首页个人信息  如 是否喜欢数 聊天数
     public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {

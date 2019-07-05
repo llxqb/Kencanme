@@ -80,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create_personal_info_male_tv"
-                android:textColor="@color/color_blue_btn"
+                android:checked="true"
+                android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_16" />
 
             <RadioButton

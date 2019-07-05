@@ -1,9 +1,11 @@
 package com.shushan.kencanme.app.mvp.ui.activity.personInfo;
 
 
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.app.mvp.presenter.Presenter;
 
@@ -23,17 +25,23 @@ public class PersonalInfoControl {
 
         void updateMyAlbumSuccess(String msg);
 
+        void personalInfoSuccess(PersonalInfoResponse response);
+
     }
 
     public interface PresenterPersonalInfo extends Presenter<PersonalInfoView> {
         //编辑个人资料信息
-        void onRequestPersonalInfo(UpdatePersonalInfoRequest personalInfoRequest);
+        void updatePersonalInfo(UpdatePersonalInfoRequest personalInfoRequest);
         //上传视频
         void uploadVideo(MultipartBody.Part uploadVideo);
         //上传图片
         void uploadImage(UploadImage uploadImage);
         //我的相册增加、修改
         void updateMyAlbum(UpdateAlbumRequest updateAlbumRequest);
+        /**
+         * 我的
+         */
+        void onRequestPersonalInfo(PersonalInfoRequest request);
 
     }
 

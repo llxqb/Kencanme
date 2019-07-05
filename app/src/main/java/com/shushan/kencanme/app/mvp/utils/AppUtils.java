@@ -73,6 +73,13 @@ public class AppUtils {
     }
 
     /**
+     * 是否是vip/svip
+     */
+    public static boolean isVip(int userType) {
+        return userType == 2 || userType == 3 || userType == 5;
+    }
+
+    /**
      * 超级曝光时间30min
      * 现在时间-曝光时间
      */

@@ -11,12 +11,6 @@ import retrofit2.http.POST;
 
 public interface MainApi {
     /**
-     * 请求个人信息
-     */
-    @POST("menggoda/user")
-    Observable<String> onRequestPersonalInfo(@Body String request);
-
-    /**
      * 用户首页信息
      */
     @POST("menggoda/index/user_exposure")

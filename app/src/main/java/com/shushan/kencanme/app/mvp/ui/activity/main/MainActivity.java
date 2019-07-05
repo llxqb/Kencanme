@@ -16,22 +16,17 @@ import com.shushan.kencanme.app.di.components.DaggerMainComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.MainModule;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
-import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
-import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.RongCloudHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
-import com.shushan.kencanme.app.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 import com.shushan.kencanme.app.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MineFragment;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
-import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.views.MyNoScrollViewPager;
 
 import java.util.ArrayList;
@@ -69,14 +64,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initView() {
         mMainBottomNavigation.setItemIconTintList(null);
-        if (!mBuProcessor.isValidLogin()) {
+        if (!mBuProcessor.isValidLogin() || !mBuProcessor.isFinishFirstWrite()) {
             startActivitys(LoginActivity.class);
             finish();
         } else {
-            if (!mBuProcessor.isFinishFirstWrite()) {
-                startActivitys(CreatePersonalInfoActivity.class);
-                finish();
-            }
             LoginUser loginUser = mBuProcessor.getLoginUser();
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
@@ -98,21 +89,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
-        requestPersonalInfo();
-
+        reqMessageId();
     }
 
-    private void requestPersonalInfo() {
-        PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
-        personalInfoRequest.token = mBuProcessor.getToken();
-        mPresenter.onRequestPersonalInfo(personalInfoRequest);
-    }
+
 
     private void connectRongCloud() {
-        //"MbbN5DyzAEs2Vruc4Sirkac3QJl342gyNW2NyYV7fKr3kEu705lRicWjNXyo5Ok1T7F5rN+y/6ypnXiFpNArqFxA4Ai8GBqr"
         String rToken = mSharePreferenceUtil.getData("ryToken");
-        LogUtils.d("rToken:" + rToken);
-        String rongId = mSharePreferenceUtil.getData("rongId");
+//        LogUtils.d("rToken:" + rToken);
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
             RongCloudHelper.connect(rToken);
@@ -129,8 +113,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             //退出登录
             startActivitys(LoginActivity.class);
             finish();
-        } else if (intent.getBooleanExtra("update_personal_info", false)) {
-            requestPersonalInfo();
         }
     }
 
@@ -164,13 +146,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mine.setIcon(R.mipmap.bottom_bar_mine);
     }
 
-    @Override
-    public void personalInfoSuccess(PersonalInfoResponse response) {
-        //保存用户信息
-        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
-        reqMessageId();
-    }
-
+    /**
+     * 请求使用嗨豆查看私密照片message_id
+     */
     private void reqMessageId() {
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.token = mBuProcessor.getToken();
@@ -179,10 +157,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void messageIdSuccess(MessageIdResponse messageIdResponse) {
+        //根据messageIdList 对比查询出已经查看过的图片消息id ,(融云消息有唯一的uid)
         mSharePreferenceUtil.saveObjData("messageIdList", messageIdResponse.getData());
         CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
 
+    /**
+     * 获取融云列表用户头像和昵称
+     */
     @Override
     public UserInfo getUserInfo(String userId) {
         return findUserById(userId);
@@ -230,5 +212,4 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             finish();
         }
     }
-
 }
