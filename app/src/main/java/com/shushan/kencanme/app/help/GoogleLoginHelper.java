@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.shushan.kencanme.app.entity.Constants.Constant;
+import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 
 public class GoogleLoginHelper {
 
@@ -19,7 +20,7 @@ public class GoogleLoginHelper {
         //重点：用的Web 应用 客户端id 为秘钥 下载json也是web 端的
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestIdToken("611870031660-5f4t1bf30j1gj80cbkcvci0r0og9kcor.apps.googleusercontent.com")
+                .requestIdToken(ServerConstant.GOOGLE_LOGIN_KEY)
                 .build();
 
         if (mGoogleApiClient == null) {

@@ -177,7 +177,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     }
 
     private void showExitLoginDialog() {
-        DialogFactory.showCommonDialog(this, getResources().getString(R.string.log_out_hint), Constant.DIALOG_ONE);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.log_out_hint), Constant.DIALOG_FIVE);
     }
 
     @Override

@@ -176,38 +176,7 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".mvp.ui.activity.rongCloud.RongPushActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.shushan.kencanme"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-
-        <!--<activity-->
-        <!--android:name="自定义 activity"-->
-        <!--android:exported="true"-->
-        <!--android:launchMode="singleTask"-->
-        <!--android:screenOrientation="portrait">-->
-
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-
-        <!--<data-->
-        <!--android:host=""${applicationId}""-->
-        <!--android:pathPrefix="/push_message"-->
-        <!--android:scheme="rong" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
         <!-- facebook 分享 @string/facebook_app_id-->
         <activity
             android:name="com.umeng.facebook.FacebookActivity"

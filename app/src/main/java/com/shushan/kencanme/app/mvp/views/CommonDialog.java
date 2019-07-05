@@ -58,6 +58,12 @@ public class CommonDialog extends BaseDialogFragment {
     TextView mDialogStyle4Tv;
     @BindView(R.id.dialog_style_4_rl)
     RelativeLayout mDialogStyle4Rl;
+    @BindView(R.id.style5_left_btn)
+    Button mStyle5LeftBtn;
+    @BindView(R.id.style5_right_btn)
+    Button mStyle5RightBtn;
+    @BindView(R.id.dialog_style5_ll)
+    LinearLayout mDialogStyle5Ll;
     private CommonDialogListener dialogBtnListener;
     private String title, mContent;
     private int mType;// 0 方式一  1 方式二
@@ -94,21 +100,31 @@ public class CommonDialog extends BaseDialogFragment {
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.GONE);
             mDialogStyle4Rl.setVisibility(View.GONE);
+            mDialogStyle5Ll.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_TWO) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.VISIBLE);
             dialogStyle3Rl.setVisibility(View.GONE);
             mDialogStyle4Rl.setVisibility(View.GONE);
+            mDialogStyle5Ll.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_THREE) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.VISIBLE);
             mDialogStyle4Rl.setVisibility(View.GONE);
+            mDialogStyle5Ll.setVisibility(View.GONE);
         } else if (mType == Constant.DIALOG_FOUR) {
             dialogStyle1ll.setVisibility(View.GONE);
             dialogStyle2Rl.setVisibility(View.GONE);
             dialogStyle3Rl.setVisibility(View.GONE);
             mDialogStyle4Rl.setVisibility(View.VISIBLE);
+            mDialogStyle5Ll.setVisibility(View.GONE);
+        } else if (mType == Constant.DIALOG_FIVE) {
+            dialogStyle1ll.setVisibility(View.GONE);
+            dialogStyle2Rl.setVisibility(View.GONE);
+            dialogStyle3Rl.setVisibility(View.GONE);
+            mDialogStyle4Rl.setVisibility(View.GONE);
+            mDialogStyle5Ll.setVisibility(View.VISIBLE);
         }
         commonDialogTitle.setText(mContent);
         return view;
@@ -116,7 +132,8 @@ public class CommonDialog extends BaseDialogFragment {
 
 
     @OnClick({R.id.iv_close, R.id.pop_contain, R.id.common_dialog_sure, R.id.common_dialog_cancel,
-            R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout, R.id.dialog_style_4_rl})
+            R.id.dialog_style_2_rl, R.id.dialog_style_3_rl, R.id.common_dialog_layout, R.id.dialog_style_4_rl,
+            R.id.style5_left_btn, R.id.style5_right_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
@@ -151,6 +168,15 @@ public class CommonDialog extends BaseDialogFragment {
                 }
                 closeCommonDialog();
                 break;
+            case R.id.style5_left_btn:
+                closeCommonDialog();
+                break;
+            case R.id.style5_right_btn:
+                if (dialogBtnListener != null) {
+                    dialogBtnListener.commonDialogBtnOkListener();
+                }
+                closeCommonDialog();
+                break;
             case R.id.common_dialog_layout:
                 closeCommonDialog();
                 break;
@@ -162,6 +188,7 @@ public class CommonDialog extends BaseDialogFragment {
         super.onDestroyView();
         bind.unbind();
     }
+
 
     public interface CommonDialogListener {
         void commonDialogBtnOkListener();

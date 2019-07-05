@@ -9,7 +9,7 @@ import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
 /**
- * 融云的推送 （未用）
+ * 融云的推送
  */
 public class NotificationReceiver extends PushMessageReceiver {
 

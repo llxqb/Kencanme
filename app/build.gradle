@@ -40,11 +40,11 @@ android {
         debug {
 //            buildConfigField "boolean", "LOG_DEBUG", "true"
 //            signingConfig signingConfigs.debug
-            debuggable true //发布时候设置false   true为可调式，false为不可调试
+//            debuggable true //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         //打包输出路径 gradlew assembleRelease

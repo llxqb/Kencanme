@@ -33,7 +33,7 @@ public class RongCloudHelper {
              */
             @Override
             public void onTokenIncorrect() {
-//                Log.e("ddd","--onTokenIncorrect");
+                Log.e("ddd","--onTokenIncorrect");
             }
 
             /**
