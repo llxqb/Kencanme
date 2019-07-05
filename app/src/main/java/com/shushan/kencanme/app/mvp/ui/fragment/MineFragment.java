@@ -51,7 +51,6 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
@@ -255,7 +254,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     private void setUserInfo() {
         //contactWay
         mLoginUser = mBuProcessor.getLoginUser();
-        LogUtils.d("mime_mLoginUser:"+new Gson().toJson(mLoginUser));
+//        LogUtils.d("mime_mLoginUser:"+new Gson().toJson(mLoginUser));
         String contactWayString = mLoginUser.contact; //转换联系方式为list
         Gson gson = new Gson();
         Type listType = new TypeToken<List<ContactWay>>() {

@@ -219,8 +219,9 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                     showToast(getResources().getString(R.string.DataFraudActivity_desc_is_null));
                     return;
                 }
-                for (int i = 0; i < photoList.size(); i++) {
-                    TImage tImage = photoList.get(i);
+                for (int i = 1; i < photoAdapter.getItemCount(); i++) {
+                    TImage tImage = photoAdapter.getItem(i);
+                    assert tImage != null;
                     Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
                     String path = PicUtils.convertIconToString(bitmap);
                     uploadImage(path);

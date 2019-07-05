@@ -84,7 +84,7 @@ public class SettingPresenterImpl implements SettingControl.PresenterSetting {
 
     private void requestFeedbackProblemSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mSettingView.updateSuccess(responseData.errorMsg);
+            mSettingView.feedbackProblemSuccess(responseData.errorMsg);
         } else {
             mSettingView.showToast(responseData.errorMsg);
         }

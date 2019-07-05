@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -80,25 +80,25 @@ android {
         }
     }
 
-    /**
-     * Android APP Bundles
-     * app 瘦身   上传谷歌商店需要
-     */
-    bundle {
-        density {
-            // Different APKs are generated for devices with different screen densities; true by default.
-            enableSplit true
-        }
-        abi {
-            // Different APKs are generated for devices with different CPU architectures; true by default.
-            enableSplit true
-        }
-        language {
-            // This is disabled so that the App Bundle does NOT split the APK for each language.
-            // We're gonna use the same APK for all languages.
-            enableSplit true
-        }
-    }
+//    /**
+//     * Android APP Bundles
+//     * app 瘦身   上传谷歌商店需要
+//     */
+//    bundle {
+//        density {
+//            // Different APKs are generated for devices with different screen densities; true by default.
+//            enableSplit true
+//        }
+//        abi {
+//            // Different APKs are generated for devices with different CPU architectures; true by default.
+//            enableSplit true
+//        }
+//        language {
+//            // This is disabled so that the App Bundle does NOT split the APK for each language.
+//            // We're gonna use the same APK for all languages.
+//            enableSplit true
+//        }
+//    }
 
 }
 

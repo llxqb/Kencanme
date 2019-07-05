@@ -41,12 +41,12 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_3"
             android:paddingEnd="@dimen/dp_3"
-            android:paddingTop="@dimen/dp_6"
-            android:paddingBottom="@dimen/dp_6"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_4"
             android:singleLine="true"
             android:text="@string/ConversationListFragment_top_title_hint_btn"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_10" />
+            android:textSize="@dimen/sp_11" />
 
     </RelativeLayout>
 
