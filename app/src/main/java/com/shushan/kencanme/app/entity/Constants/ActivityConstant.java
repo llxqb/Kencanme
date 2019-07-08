@@ -20,7 +20,7 @@ public class ActivityConstant {
      */
     public static final String UPDATE_MESSAGE_INFO = "update_message_info";
     /**
-     * 充值完更新数据
+     * 支付完更新信息
      */
-    public static final String UPDATE_RECHARGE_INFO = "update_recharge_info";
+    public static final String PAY_SUCCESS_UPDATE_INFO = "pay_success_update_info";
 }

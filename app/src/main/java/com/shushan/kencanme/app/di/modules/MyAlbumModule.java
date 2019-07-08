@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.di.scopes.PerActivity;
-import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.mvp.model.ModelTransform;
 import com.shushan.kencanme.app.mvp.model.MyAlbumModel;
 import com.shushan.kencanme.app.mvp.ui.activity.photo.MyAlbumControl;
@@ -46,7 +45,7 @@ public class MyAlbumModule {
     MyAlbumModel provideMyAlbumModel(Gson gson, ModelTransform modelTransform) {
         return new MyAlbumModel(new RetrofitUtil.Builder()
                 .context(activity)
-                .baseUrl(ServerConstant.DISPATCH_SERVICE)
+                .baseUrl(BuildConfig.KENCANME_BASE_URL)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)

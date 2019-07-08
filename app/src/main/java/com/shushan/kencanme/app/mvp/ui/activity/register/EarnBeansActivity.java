@@ -16,9 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.KencanmeApp;
 import com.shushan.kencanme.app.R;
-import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.user.BuProcessor;
 import com.shushan.kencanme.app.mvp.utils.LogUtils;
@@ -34,6 +34,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.shushan.kencanme.app.BuildConfig.KENCANME_BASE_URL;
 
 /**
  * 邀请页
@@ -76,7 +78,7 @@ public class EarnBeansActivity extends BaseActivity {
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        mWebview.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.earn_beans_wb) + mSharePreferenceUtil.getData("code"));//加载url
+        mWebview.loadUrl(KENCANME_BASE_URL + getResources().getString(R.string.earn_beans_wb) + mSharePreferenceUtil.getData("code"));//加载url
 
         mWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -118,7 +120,7 @@ public class EarnBeansActivity extends BaseActivity {
         //分享到facebook
         SnsPlatform snsPlatform = SHARE_MEDIA.FACEBOOK.toSnsPlatform();
         //分享链接
-        UMWeb web = new UMWeb(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.down_app) + mSharePreferenceUtil.getData("code"));
+        UMWeb web = new UMWeb(BuildConfig.KENCANME_BASE_URL + getResources().getString(R.string.down_app) + mSharePreferenceUtil.getData("code"));
         web.setTitle(getResources().getString(R.string.facebook_title));
         web.setThumb(new UMImage(this, R.drawable.logo));
         web.setDescription(getResources().getString(R.string.facebook_content));

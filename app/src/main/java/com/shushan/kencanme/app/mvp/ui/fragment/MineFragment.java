@@ -170,14 +170,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         return view;
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        //显示当前fragment isVisibleToUser=true  返回时页面时不会执行
-//        if (isVisibleToUser) {
-//            setUserInfo();
-//        }
-//    }
-
 
     @Override
     public void onReceivePro(Context context, Intent intent) {
@@ -188,6 +180,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
             myAlbumRequest.token = mBuProcessor.getToken();
             mPresenter.onRequestMyAlbum(myAlbumRequest);
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
+            //TODO 充值后更新
+            mLoginUser = mBuProcessor.getLoginUser();
         }
         super.onReceivePro(context, intent);
     }
@@ -198,6 +193,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mFilter.addAction(ActivityConstant.UPDATE_USER_INFO);
         mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM);
         mFilter.addAction(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM);
+        mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
     }
 
     @Override
@@ -321,12 +317,14 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + mLoginUser.height + "cm" : getResources().getString(R.string.Height);
         String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight) + mLoginUser.weight + "kg" : getResources().getString(R.string.Weight);
         String mUserChestValue = getResources().getString(R.string.Chest) + mLoginUser.bust;
-        String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd");
+        if (TextUtils.isEmpty(mLoginUser.birthday) && !mLoginUser.birthday.contains("/")) {
+            String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd");
+            mUserBirthday.setText(mUserBirthdayValue);
+        }
         String mUserProfessionalValue = getResources().getString(R.string.Professional) + mLoginUser.occupation;
         mUserHeight.setText(mUserHeightValue);
         mUserWeight.setText(mUserWeightValue);
         mUserChest.setText(mUserChestValue);
-        mUserBirthday.setText(mUserBirthdayValue);
         mUserProfessional.setText(mUserProfessionalValue);
     }
 

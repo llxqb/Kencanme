@@ -18,8 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
     这个权限会导致部分手机一直提示开启定位权限/>
     -->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -38,7 +38,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
-
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5d104a194ca357b692000ff5" />
@@ -120,7 +119,6 @@
             android:name=".mvp.ui.activity.photo.UploadPhotoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name=".mvp.ui.activity.photo.LookPhotoActivity"
             android:screenOrientation="portrait" />
@@ -134,7 +132,8 @@
         <activity android:name=".mvp.ui.activity.register.MemberAgreementActivity" />
         <activity android:name=".mvp.ui.activity.register.RegisterAgreementActivity" />
 
-        <!-- 融云-->
+        <!-- 融云 -->
+
 
         <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
         <!-- 否则使用拍照功能时，会崩溃 -->
@@ -176,20 +175,23 @@
             </intent-filter>
         </receiver>
 
-
-        <!-- facebook 分享 @string/facebook_app_id-->
+        <!-- facebook 分享 @string/facebook_app_id -->
         <activity
             android:name="com.umeng.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider387656405197436"
             android:exported="false" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <activity android:name=".mvp.ui.activity.rongCloud.SystemMsgInfoActivity"></activity>
     </application>
 
 </manifest>

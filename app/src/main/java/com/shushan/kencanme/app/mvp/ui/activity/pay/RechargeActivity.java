@@ -1,7 +1,9 @@
 package com.shushan.kencanme.app.mvp.ui.activity.pay;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.RechargeBeansModule;
+import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
@@ -183,6 +186,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     @Override
     public void buyFinishSuccess(Purchase purchase) {
         showToast("支付成功");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
     }
 
     @Override

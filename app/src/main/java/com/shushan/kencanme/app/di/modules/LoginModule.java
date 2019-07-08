@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.di.scopes.PerActivity;
-import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.mvp.model.LoginModel;
 import com.shushan.kencanme.app.mvp.model.ModelTransform;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginControl;
@@ -15,6 +14,8 @@ import com.shushan.kencanme.app.network.networkapi.LoginApi;
 
 import dagger.Module;
 import dagger.Provides;
+
+import static com.shushan.kencanme.app.BuildConfig.KENCANME_BASE_URL;
 
 /**
  * Created by li.liu on 19/05/28.
@@ -46,7 +47,7 @@ public class LoginModule {
     LoginModel provideLoginModel(Gson gson, ModelTransform modelTransform) {
         return new LoginModel(new RetrofitUtil.Builder()
                 .context(activity)
-                .baseUrl(ServerConstant.DISPATCH_SERVICE)
+                .baseUrl(KENCANME_BASE_URL)
                 .isHttps(!BuildConfig.DEBUG)
 //                .key(BuildConfig.STORE_NAME,BuildConfig.STORE_PASSWORD)
                 .isToJson(false)

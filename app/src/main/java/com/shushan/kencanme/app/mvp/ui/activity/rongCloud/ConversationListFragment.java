@@ -92,6 +92,9 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MESSAGE_INFO)) {
             requestSystemMsgNew();
+        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)){
+            //TODO 充值后更新
+            mLoginUser = mBuProcessor.getLoginUser();
         }
         super.onReceivePro(context, intent);
     }
@@ -100,6 +103,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     public void addFilter() {
         super.addFilter();
         mFilter.addAction(ActivityConstant.UPDATE_MESSAGE_INFO);
+        mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
     }
 
     @Override

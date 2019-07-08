@@ -1,5 +1,8 @@
 package com.shushan.kencanme.app.entity.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class SystemMsgResponse {
@@ -38,7 +41,7 @@ public class SystemMsgResponse {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * msg_id : 1
          * uid : 1
@@ -54,6 +57,27 @@ public class SystemMsgResponse {
         private String detail;
         private int create_time;
         private int state;
+
+        protected DataBean(Parcel in) {
+            msg_id = in.readInt();
+            uid = in.readInt();
+            title = in.readString();
+            detail = in.readString();
+            create_time = in.readInt();
+            state = in.readInt();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel in) {
+                return new DataBean(in);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
 
         public int getMsg_id() {
             return msg_id;
@@ -101,6 +125,21 @@ public class SystemMsgResponse {
 
         public void setState(int state) {
             this.state = state;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(msg_id);
+            dest.writeInt(uid);
+            dest.writeString(title);
+            dest.writeString(detail);
+            dest.writeInt(create_time);
+            dest.writeInt(state);
         }
     }
 }

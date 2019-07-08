@@ -65,7 +65,7 @@ public class ClearCacheActivity extends BaseActivity implements CommonDialog.Com
     }
 
     private void showClearCacheDialog() {
-        DialogFactory.showCommonDialog(this, getResources().getString(R.string.ClearCacheActivity_clear_cache_hint), Constant.DIALOG_ONE);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.ClearCacheActivity_clear_cache_hint), Constant.DIALOG_FIVE);
     }
 
     /**

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerSystemMsgComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -69,9 +70,21 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
         mCommonTitleTv.setText(getResources().getString(R.string.SystemMsgActivity_title));
         mImageLoaderHelper.displayImage(this, R.mipmap.system_message_clean, mCommonIvRight, R.mipmap.system_message_clean);
         mSystemMsgRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        systemMsgAdapter = new SystemMsgAdapter(this, systemMsgResponseList, mImageLoaderHelper);
+        systemMsgAdapter = new SystemMsgAdapter(systemMsgResponseList);
         systemMsgAdapter.setOnLoadMoreListener(this, mSystemMsgRecyclerView);
         mSystemMsgRecyclerView.setAdapter(systemMsgAdapter);
+
+        mSystemMsgRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                SystemMsgResponse.DataBean dataBean = (SystemMsgResponse.DataBean) adapter.getItem(position);
+                switch (view.getId()) {
+                    case R.id.msg_item_ll:
+                        SystemMsgInfoActivity.start(SystemMsgActivity.this, dataBean);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -100,7 +113,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     }
 
     private void showClearMsgDialog() {
-        DialogFactory.showCommonDialog(this, getResources().getString(R.string.SystemMsgActivity_clear_msg_hint), Constant.DIALOG_ONE);
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.SystemMsgActivity_clear_msg_hint), Constant.DIALOG_FIVE);
     }
 
     private void clearMsg() {

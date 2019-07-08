@@ -127,6 +127,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             listBean.setRelation(1);
             mHomeAdapter.notifyItemChanged(clickPos);
             requestHomeUserInfo();
+        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)){
+            //TODO 充值后更新
+            mLoginUser = mBuProcessor.getLoginUser();
         }
         super.onReceivePro(context, intent);
     }
@@ -137,6 +140,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mFilter.addAction(ActivityConstant.UPDATE_HOME_INFO);
         mFilter.addAction(ActivityConstant.UPDATE_HOME_LIST_INFO);
         mFilter.addAction(ActivityConstant.UPDATE_HOME_LIKE_INFO);
+        mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
     }
 
 

@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.R;
-import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 
 import butterknife.BindView;
@@ -51,7 +51,7 @@ public class MemberAgreementActivity extends BaseActivity {
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        mAgreementWb.loadUrl(ServerConstant.DISPATCH_SERVICE + getResources().getString(R.string.member_agreement_wb));//加载url
+        mAgreementWb.loadUrl(BuildConfig.KENCANME_BASE_URL + getResources().getString(R.string.member_agreement_wb));//加载url
     }
 
     @Override

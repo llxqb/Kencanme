@@ -129,6 +129,9 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                     float minValue = (float) (Integer.parseInt(loginUser.pushing_small_age) - 18) / 32;
                     mTwoWayRattingBar.setLeftProgress(minValue, mTwoWayRattingBar.getWidth(), true);
                 }
+                if(loginUser.pushing_large_age.equals("50+")){
+                    loginUser.pushing_large_age = "50";
+                }
                 if (Integer.parseInt(loginUser.pushing_large_age) > 0) {
                     float maxValue = (float) (Integer.parseInt(loginUser.pushing_large_age) - 18) / 32;
                     mTwoWayRattingBar.setRightProgress(maxValue, mTwoWayRattingBar.getWidth(), true);

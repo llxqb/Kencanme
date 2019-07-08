@@ -1,6 +1,8 @@
 package com.shushan.kencanme.app.mvp.ui.activity.vip;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerOpenVipComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.OpenVipModule;
+import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.VipPrivilege;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
@@ -254,6 +257,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
 //        PaySuccessRequest paySuccessRequest = new PaySuccessRequest();
 //        paySuccessRequest.ord_no =
 //        mPresenter.onRequestPaySuccess();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
     }
 
     /**

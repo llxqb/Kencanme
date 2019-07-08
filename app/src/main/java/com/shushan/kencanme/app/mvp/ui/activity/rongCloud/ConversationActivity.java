@@ -1,5 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.rongCloud;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerConversationComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.ConversationModule;
+import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
@@ -106,6 +109,21 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         initializeInjector();
         initView();
         initData();
+    }
+
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
+            //TODO 充值后更新
+            mLoginUser = mBuProcessor.getLoginUser();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
     }
 
     @Override

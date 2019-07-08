@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.loveMe;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -74,6 +75,20 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         initData();
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
+            //TODO 充值后更新
+            mLoginUser = mBuProcessor.getLoginUser();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
+    }
 
     @Override
     public void initView() {
