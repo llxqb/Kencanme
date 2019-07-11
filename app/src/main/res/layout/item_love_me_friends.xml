@@ -10,6 +10,7 @@
         android:paddingStart="@dimen/dp_20"
         android:paddingTop="@dimen/dp_5"
         android:paddingEnd="@dimen/dp_20"
+        android:background="@drawable/ripple_bg"
         android:paddingBottom="@dimen/dp_5">
 
         <com.shushan.kencanme.app.mvp.views.CircleImageView
@@ -36,7 +37,6 @@
             android:layout_marginStart="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_toEndOf="@id/friends_nick_tv"
-            android:background="@mipmap/home_gender_female"
             android:paddingStart="@dimen/dp_18"
             android:paddingEnd="@dimen/dp_2"
             android:textColor="@color/white"

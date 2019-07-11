@@ -21,9 +21,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_204"
-                android:layout_marginEnd="@dimen/dp_15"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_15"
                 android:background="@mipmap/mine_install_background"
                 android:orientation="vertical">
 
@@ -39,9 +39,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_20"
-                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_14"
+                    android:layout_marginEnd="@dimen/dp_20"
                     android:orientation="horizontal">
 
                     <TextView
@@ -65,8 +65,8 @@
                     android:id="@+id/twoWayRattingBar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_60"
-                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
                     app:color_line_normal="@color/color_6029c9"
                     app:color_line_select="@color/red_color_btn"
                     app:stroke_width_normal="@dimen/dp_4"
@@ -78,8 +78,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
                     android:text="@string/SettingActivity_Pushing_gender"
                     android:textColor="#FFF651"
                     android:textSize="@dimen/sp_16" />
@@ -89,9 +89,9 @@
                     android:id="@+id/sex_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_12" />
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:layout_marginEnd="@dimen/dp_20" />
 
             </LinearLayout>
 
@@ -99,11 +99,12 @@
                 android:id="@+id/message_reminder_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/SettingActivity_Message_reminder"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
@@ -114,10 +115,11 @@
                 android:id="@+id/clear_cache_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/SettingActivity_Clear_cache"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
@@ -129,10 +131,11 @@
                 android:id="@+id/problem_feedback_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/SettingActivity_Problem_feedback"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
@@ -143,10 +146,11 @@
                 android:id="@+id/about_us_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
                 android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/SettingActivity_About_us"
                 android:textColor="@color/first_text_color"
                 android:textSize="@dimen/sp_14" />
@@ -157,10 +161,11 @@
                 android:id="@+id/logout_tv"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginStart="@dimen/dp_20"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/sign_out"
                 android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@string/Logout"
                 android:textColor="@color/app_color"
                 android:textSize="@dimen/sp_14" />

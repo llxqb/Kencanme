@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shushan.kencanme.app.R;
@@ -93,6 +94,12 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     TextView mBeansFive;
     @BindView(R.id.beans_custom_ev)
     EditText mBeansCustomEv;
+    @BindView(R.id.ordinary_photo_ll)
+    LinearLayout mOrdinaryPhotoLl;
+    @BindView(R.id.vip_photo_ll)
+    LinearLayout mVipPhotoLl;
+    @BindView(R.id.private_photo_ll)
+    LinearLayout mPrivatePhotoLl;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     //成功照片路径  用于点击完成时候判断资源是否为Empty
@@ -101,7 +108,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     private int picType = 0;
     //如果是私密照片 需支付嗨豆数量
     private int beansNumber = 0;
-    private UpdateAlbumRequest updateAlbumRequest;
     @Inject
     PersonalInfoControl.PresenterPersonalInfo mPresenter;
     private MyAlbumResponse.DataBean dataBean = null;
@@ -140,8 +146,8 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
 
     }
 
-    @OnClick({R.id.common_back, R.id.photo_iv, R.id.jz_video, R.id.ordinary_photo_check_iv, R.id.vip_photo_check_iv,
-            R.id.private_photo_check_iv, R.id.save_btn, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev})
+    @OnClick({R.id.common_back, R.id.photo_iv, R.id.jz_video, R.id.save_btn, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev,
+            R.id.ordinary_photo_ll, R.id.vip_photo_ll, R.id.private_photo_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
@@ -152,27 +158,30 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
                 break;
             case R.id.jz_video:
                 break;
-            case R.id.ordinary_photo_check_iv:
+            case R.id.ordinary_photo_ll:
                 //普通照片
                 setIvTypeBg();
-                mOrdinaryPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
                 picType = 1;
+                mOrdinaryPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
+                mOrdinaryPhotoTv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
-            case R.id.vip_photo_check_iv:
+            case R.id.vip_photo_ll:
                 //VIP照片
                 setIvTypeBg();
-                mVipPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
                 picType = 2;
+                mVipPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
+                mVipPhotoTv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
-            case R.id.private_photo_check_iv:
+            case R.id.private_photo_ll:
                 //私密照片
                 setIvTypeBg();
-                mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
                 picType = 3;
+                mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
+                mPrivatePhotoTv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
             case R.id.save_btn:
                 if (isValidEmpty()) {
-                    updateAlbumRequest = new UpdateAlbumRequest();
+                    UpdateAlbumRequest updateAlbumRequest = new UpdateAlbumRequest();
                     updateAlbumRequest.token = mBuProcessor.getToken();
                     updateAlbumRequest.album_type = picType;
                     updateAlbumRequest.album_url = photoUrl;
@@ -199,9 +208,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
-//                if(!TextUtils.isEmpty(mBeansCustomEv.getText())){
-//                    beansNumber = Integer.parseInt(mBeansCustomEv.getText().toString());
-//                }
                 break;
         }
     }
@@ -243,6 +249,9 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         mOrdinaryPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
         mVipPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
         mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
+        mOrdinaryPhotoTv.setTextColor(getResources().getColor(R.color.color_80));
+        mVipPhotoTv.setTextColor(getResources().getColor(R.color.color_80));
+        mPrivatePhotoTv.setTextColor(getResources().getColor(R.color.color_80));
     }
 
     /**

@@ -10,7 +10,7 @@
     <string name="loading">loading…</string>
 
     <!-- app相关-->
-    <string name="this_is_desc">This is a description</string>
+    <string name="this_is_desc">is a picture</string>
     <string name="app_name">Kencanme</string>
     <string name="success">success</string>
     <string name="google">Google</string>
@@ -34,7 +34,7 @@
     <string name="app_like">Like</string>
     <string name="app_chat">Chat</string>
     <string name="app_view">Check now</string>
-    <string name="Hi_Beans">Hey Coins</string>
+    <string name="Hi_Beans">Hey Beans</string>
 
 
     <!--Activity 相关 -->
@@ -96,7 +96,7 @@
     <string name="CustomizeMessageItemProvider_left_photo_hint">This is a private message users only</string>
     <string name="CustomizeMessageItemProvider_right_photo">Send a private photo</string>
     <string name="CustomizeMessageItemProvider_right_photo_hint">This is a private message </string>
-
+    <string name="CustomizeMessageItemProvider_private_message" >Private message </string>
 
     <!--EditMakeFriendsInfoActivity -->
     <string name="EditMakeFriendsInfoActivity_upload_hint">reload your photos/videos</string>
@@ -204,6 +204,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
 
 
     <!-- MineFragment-->
+    <string name="MineFragment_vip_time" >expire on&#160;</string>
     <string name="MineFragment_photo_album_hint">Photo Album</string>
     <string name="MineFragment_personal_information_hint">Personal Information</string>
     <string name="MineFragment_contact_way_hint">Contact Way</string>
@@ -270,7 +271,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="album_vip_view">VIP can view</string>
     <string name="album_hi_beans_view">Hi-beans photo</string>
     <!--PhotoDialog -->
-    <string name="PhotoDialog_title">select</string>
+    <string name="PhotoDialog_title">Choose how to open</string>
     <string name="PhotoDialog_photo">photo</string>
     <string name="PhotoDialog_album">Album</string>
     <!--RechargeBeansDialog -->

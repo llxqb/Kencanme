@@ -50,6 +50,14 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
     @BindView(R.id.pop_contain)
     LinearLayout mPopContain;
     Unbinder unbinder;
+    @BindView(R.id.ordinary_photo_tv)
+    TextView mOrdinaryPhotoTv;
+    @BindView(R.id.ordinary_photo_ll)
+    LinearLayout mOrdinaryPhotoLl;
+    @BindView(R.id.private_photo_tv)
+    TextView mPrivatePhotoTv;
+    @BindView(R.id.private_photo_ll)
+    LinearLayout mPrivatePhotoLl;
     //选择上传的图片类型  1 普通 2 VIP 3 私密
     private int picType = 0;
     //如果是私密照片 需支付嗨豆数量
@@ -79,25 +87,26 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
         mBeansCustomEv.addTextChangedListener(textWatcher);
     }
 
-
-    @OnClick({R.id.iv_close, R.id.ordinary_photo_check_iv, R.id.private_photo_check_iv, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev, R.id.sure_btn,
+    @OnClick({R.id.iv_close, R.id.ordinary_photo_ll, R.id.private_photo_ll, R.id.beans_one, R.id.beans_five, R.id.beans_custom_ev, R.id.sure_btn,
             R.id.dialog_send_photo_layout, R.id.pop_contain})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
                 closeCommonDialog();
                 break;
-            case R.id.ordinary_photo_check_iv:
+            case R.id.ordinary_photo_ll:
                 //普通照片
                 setIvTypeBg();
                 mOrdinaryPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
+                mOrdinaryPhotoTv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 picType = 1;
                 break;
-            case R.id.private_photo_check_iv:
+            case R.id.private_photo_ll:
                 //私密照片
                 setIvTypeBg();
-                mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
                 picType = 3;
+                mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_choose);
+                mPrivatePhotoTv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
             case R.id.beans_one:
                 initBeansBg();
@@ -111,6 +120,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
                 break;
             case R.id.beans_custom_ev:
                 initBeansBg();
+                mBeansCustomEv.setCursorVisible(true);
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
                 break;
             case R.id.sure_btn:
@@ -160,7 +170,10 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
     private void setIvTypeBg() {
         mOrdinaryPhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
         mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
+        mOrdinaryPhotoTv.setTextColor(getResources().getColor(R.color.color_80));
+        mPrivatePhotoTv.setTextColor(getResources().getColor(R.color.color_80));
     }
+
 
     public interface SendPhotoTypeDialogListener {
         void sendOrdinaryPhotoBtnOKListener();

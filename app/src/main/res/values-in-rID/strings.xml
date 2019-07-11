@@ -10,7 +10,7 @@
     <string name="loading">Memuat…</string>
 
     <!-- app相关-->
-    <string name="this_is_desc">This is a description</string>
+    <string name="this_is_desc">is a picture</string>
     <string name="app_name">Kencanme</string>
     <string name="success">sukses</string>
     <string name="google">Google</string>
@@ -96,7 +96,7 @@
     <string name="CustomizeMessageItemProvider_left_photo_hint">Ini adalah pesan pribadi pengguna saja</string>
     <string name="CustomizeMessageItemProvider_right_photo">Kirim foto pribadi</string>
     <string name="CustomizeMessageItemProvider_right_photo_hint">Ini pesan pribadi</string>
-
+    <string name="CustomizeMessageItemProvider_private_message">Pesan pribadi</string>
 
     <!--EditMakeFriendsInfoActivity -->
     <string name="EditMakeFriendsInfoActivity_upload_hint">muat ulang foto / video Anda</string>
@@ -205,6 +205,7 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
 
 
     <!-- MineFragment-->
+    <string name="MineFragment_vip_time">kedaluwarsa pada&#160;</string>
     <string name="MineFragment_photo_album_hint">Album Foto</string>
     <string name="MineFragment_personal_information_hint">Profil</string>
     <string name="MineFragment_contact_way_hint">Kontak</string>
@@ -235,8 +236,8 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="ContactWayAdapter_et_hint">masukan nomor akun anda</string>
     <!-- HomeViewPagerAdapter-->
     <string name="HomeViewPagerAdapter_years"> tahun</string>
-    <string name="HomeViewPagerAdapter_active">Aktif</string>
-    <string name="HomeViewPagerAdapter_minute_ago">menit yang lalu</string>
+    <string name="HomeViewPagerAdapter_active">aktif</string>
+    <string name="HomeViewPagerAdapter_minute_ago">menit lalu</string>
     <!-- LoveMeFriendsAdapter-->
     <string name="LoveMeFriendsAdapter_like_you"> seperti kamu</string>
     <string name="LoveMeFriendsAdapter_like">like</string>
@@ -271,7 +272,7 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="album_vip_view">VIP dapat melihat</string>
     <string name="album_hi_beans_view">Hai Koin dapat melihat</string>
     <!--PhotoDialog -->
-    <string name="PhotoDialog_title">memilih</string>
+    <string name="PhotoDialog_title">Pilih cara membuka</string>
     <string name="PhotoDialog_photo">Foto</string>
     <string name="PhotoDialog_album">Mengambil Gambar</string>
     <!--RechargeBeansDialog -->

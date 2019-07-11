@@ -43,6 +43,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
         MyJzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
         if (item != null) {
             if (!TextUtils.isEmpty(item.getAlbum_url())) {
+                helper.setVisible(R.id.photo_hint_tv, true);
                 if (TranTools.isVideo(item.getAlbum_url())) {
                     //video
                     helper.setVisible(R.id.album_jz_video, true);
@@ -110,6 +111,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
             } else {
                 helper.setVisible(R.id.photo_delete, false);
                 helper.setVisible(R.id.album_jz_video, false);
+                helper.setVisible(R.id.photo_hint_tv, false);
                 helper.setVisible(R.id.photo_iv, true);
                 mImageLoaderHelper.displayImage(mContext, R.mipmap.report_add_photo, imageView, R.mipmap.report_add_photo);//加载第一张+图片
             }

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.inject.Inject;
 
@@ -57,10 +56,9 @@ public class Sharedprefence {
         return mContext.getSharedPreferences(dataBasesName, 0);
     }
 
-    public HashMap<String, Object> getAllByBasesName(String dataBasesName) {
+    public HashMap getAllByBasesName(String dataBasesName) {
         SharedPreferences user = mContext.getSharedPreferences(dataBasesName, 0);
-        HashMap map = (HashMap) user.getAll();
-        return map;
+        return (HashMap) user.getAll();
     }
 
     public <T> T getValueByName(String dataBasesName, String key, int type) {
@@ -71,10 +69,30 @@ public class Sharedprefence {
                 value = user.getString(key, "");
                 break;
             case 1:
-                value = Integer.valueOf(user.getInt(key, 0));
+                value = user.getInt(key, 0);
                 break;
             case 2:
-                value = Boolean.valueOf(user.getBoolean(key, false));
+                value = user.getBoolean(key, false);
+        }
+
+        return (T) value;
+    }
+
+    /**
+     * 赋默认值
+     */
+    public <T> T getValueByName(String dataBasesName, String key, int type, Object defValue) {
+        SharedPreferences user = mContext.getSharedPreferences(dataBasesName, 0);
+        Object value = null;
+        switch (type) {
+            case 0:
+                value = user.getString(key, (String) defValue);
+                break;
+            case 1:
+                value = user.getInt(key, (Integer) defValue);
+                break;
+            case 2:
+                value = user.getBoolean(key, (Boolean) defValue);
         }
 
         return (T) value;
@@ -116,15 +134,15 @@ public class Sharedprefence {
 
     }
 
-    public  <T> T readObject(String data, String key) {
+    public <T> T readObject(String data, String key) {
         SharedPreferences preferences = mContext.getSharedPreferences(data, 0);
         return readObject(preferences, key);
     }
 
-    public  <T> T readObject(SharedPreferences preferences, String key) {
+    public <T> T readObject(SharedPreferences preferences, String key) {
         Object object = null;
         String string = preferences.getString(key, "");
-        if (string == "") {
+        if (string.equals("")) {
             return null;
         } else {
             byte[] base64 = Base64.decode(string.getBytes(), 0);
@@ -146,14 +164,13 @@ public class Sharedprefence {
         return readObject(preferences);
     }
 
-    public  <T> HashMap<String, T> readObject(SharedPreferences preferences) {
+    public <T> HashMap<String, T> readObject(SharedPreferences preferences) {
         Object object = null;
         HashMap map = (HashMap) preferences.getAll();
         HashMap datas = new HashMap();
-        Iterator var5 = map.keySet().iterator();
 
-        while (var5.hasNext()) {
-            String key = (String) var5.next();
+        for (Object o : map.keySet()) {
+            String key = (String) o;
             byte[] base64 = Base64.decode(((String) map.get(key)).getBytes(), 0);
             ByteArrayInputStream bais = new ByteArrayInputStream(base64);
 

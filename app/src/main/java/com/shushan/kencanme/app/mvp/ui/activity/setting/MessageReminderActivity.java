@@ -56,9 +56,9 @@ public class MessageReminderActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        showMessagePreview = mSharePreferenceUtil.getBooleanData("show_message_preview");
-        shock = mSharePreferenceUtil.getBooleanData("shock");
-        voice = mSharePreferenceUtil.getBooleanData("voice");
+        showMessagePreview = mSharePreferenceUtil.getBooleanData("show_message_preview", true);
+        shock = mSharePreferenceUtil.getBooleanData("shock", true);
+        voice = mSharePreferenceUtil.getBooleanData("voice", true);
         if (showMessagePreview) {
             mMessagePreviewIv.setImageResource(R.mipmap.mine_install_open);
         } else {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_send_photo_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dp_30"
         android:padding="@dimen/dp_15"
-        android:src="@mipmap/popup_close" />
+        android:src="@mipmap/popup_close"
+        android:contentDescription="@string/this_is_desc" />
 
 
     <LinearLayout
@@ -22,9 +24,9 @@
         android:layout_width="@dimen/dp_285"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="@dimen/dp_30"
-        android:layout_marginEnd="@dimen/dp_30"
         android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
         android:background="@drawable/bg_white_round_5"
         android:gravity="center_horizontal"
         android:minHeight="@dimen/dp_377"
@@ -33,9 +35,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_10"
             android:text="@string/UseExposureDialog_select_photo_type"
             android:textColor="@color/first_text_color"
             android:textSize="@dimen/sp_14" />
@@ -45,18 +47,19 @@
             android:id="@+id/ordinary_photo_ll"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:layout_marginEnd="@dimen/dp_22"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_22">
 
             <ImageView
                 android:id="@+id/ordinary_photo_check_iv"
                 android:layout_width="@dimen/dp_32"
                 android:layout_height="@dimen/dp_32"
                 android:padding="@dimen/dp_5"
-                android:src="@drawable/pay_hibeans_no_choose" />
+                android:src="@drawable/pay_hibeans_no_choose"
+                android:contentDescription="@string/this_is_desc" />
 
             <TextView
                 android:id="@+id/ordinary_photo_tv"
@@ -78,15 +81,17 @@
             android:id="@+id/private_photo_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_22"
-            android:layout_marginStart="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_20"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_22"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/private_photo_check_iv"
                 android:layout_width="@dimen/dp_32"
                 android:layout_height="@dimen/dp_32"
+                android:contentDescription="@string/this_is_desc"
                 android:padding="@dimen/dp_5"
                 android:src="@drawable/pay_hibeans_no_choose" />
 
@@ -105,8 +110,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_22"
             android:layout_marginStart="@dimen/dp_35"
+            android:layout_marginEnd="@dimen/dp_22"
             android:text="@string/UploadPhotoActivity_private_hint"
             android:textColor="@color/color_9b"
             android:textSize="@dimen/sp_12" />
@@ -114,8 +119,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_70"
-            android:layout_marginEnd="@dimen/dp_22"
             android:layout_marginStart="@dimen/dp_22"
+            android:layout_marginEnd="@dimen/dp_22"
             android:gravity="bottom"
             android:orientation="horizontal">
 
@@ -124,10 +129,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_beans_selector_5"
-                android:drawablePadding="@dimen/dp_2"
                 android:drawableStart="@mipmap/home_popup_hibeans"
-                android:paddingEnd="@dimen/dp_12"
+                android:drawablePadding="@dimen/dp_2"
                 android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
                 android:text="1"
                 android:textSize="@dimen/sp_24" />
 
@@ -137,10 +142,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_15"
                 android:background="@drawable/bg_beans_selector_5"
-                android:drawablePadding="@dimen/dp_2"
                 android:drawableStart="@mipmap/home_popup_hibeans"
-                android:paddingEnd="@dimen/dp_12"
+                android:drawablePadding="@dimen/dp_2"
                 android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
                 android:text="5"
                 android:textSize="@dimen/sp_24" />
 
@@ -148,18 +153,17 @@
                 android:id="@+id/beans_custom_ev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_2"
                 android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_2"
                 android:background="@drawable/bg_beans_selector_5"
-                android:drawablePadding="@dimen/dp_4"
+                android:cursorVisible="false"
                 android:drawableStart="@mipmap/home_popup_hibeans"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:drawablePadding="@dimen/dp_4"
                 android:hint="@string/UploadPhotoActivity_custom_num"
                 android:inputType="number"
                 android:minHeight="@dimen/dp_34"
-                android:paddingEnd="@dimen/dp_12"
                 android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_12"
                 android:textColorHint="@color/text_hint_color"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>
@@ -170,12 +174,12 @@
             android:layout_width="@dimen/dp_228"
             android:layout_height="@dimen/dp_40"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/dialog_style_2"
             android:text="@string/dialog_sure"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
 
     </LinearLayout>
 

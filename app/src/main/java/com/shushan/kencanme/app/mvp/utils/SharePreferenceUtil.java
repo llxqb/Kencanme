@@ -55,6 +55,13 @@ public class SharePreferenceUtil {
     }
 
     /**
+     * 赋默认值
+     */
+    public boolean getBooleanData(String key, boolean defValue) {
+        return mSharedprefence.getValueByName(projectKey, key, Sharedprefence.BOOLEAN, defValue);
+    }
+
+    /**
      * 写入对象
      *
      * @param key

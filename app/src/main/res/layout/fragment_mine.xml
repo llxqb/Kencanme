@@ -38,20 +38,31 @@
                     android:visibility="gone" />
 
                 <com.shushan.kencanme.app.mvp.views.CircleImageView
-                    android:id="@+id/avator"
+                    android:id="@+id/avatar"
                     android:layout_width="@dimen/dp_45"
                     android:layout_height="@dimen/dp_45"
                     android:layout_marginStart="@dimen/dp_22"
                     android:layout_marginTop="@dimen/dp_200"
+                    android:src="@mipmap/head_photo_loading"
                     app:civ_border_color="@color/white"
-                    app:civ_border_width="@dimen/dp_2"
-                    android:src="@mipmap/head_photo_loading" />
+                    app:civ_border_width="@dimen/dp_2" />
+
+                <ImageView
+                    android:id="@+id/vip_logo_iv"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_below="@id/avatar"
+                    android:layout_marginStart="@dimen/dp_m_15"
+                    android:layout_marginTop="@dimen/dp_m_15"
+                    android:layout_toEndOf="@id/avatar"
+                    android:src="@mipmap/mine_icon_vip"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/avator"
+                    android:layout_below="@id/vip_logo_iv"
                     android:layout_marginStart="@dimen/dp_22"
                     android:layout_marginTop="@dimen/dp_8"
                     android:textColor="@color/white"
@@ -70,7 +81,6 @@
                         android:id="@+id/sex_year_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/home_gender_female"
                         android:paddingStart="@dimen/dp_18"
                         android:paddingEnd="@dimen/dp_5"
                         android:textColor="@color/white"
@@ -80,7 +90,8 @@
                         android:id="@+id/svip_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/svip_icon" />
+                        android:src="@mipmap/svip_icon"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
 
@@ -142,7 +153,7 @@
         android:layout_marginEnd="@dimen/dp_20"
         android:scaleType="center"
         android:src="@mipmap/mine_edit"
-        app:backgroundTint="@color/app_color"
+        app:backgroundTint="@color/fab_color"
         app:borderWidth="@dimen/dp_0"
         app:elevation="@dimen/dp_5"
         app:fabSize="auto"
@@ -157,6 +168,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -227,6 +239,7 @@
                 android:id="@+id/vip_time_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
+                android:background="@drawable/ripple_bg"
                 android:paddingStart="@dimen/dp_22"
                 android:paddingEnd="@dimen/dp_22">
 
@@ -269,9 +282,10 @@
             <TextView
                 android:id="@+id/album_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_50"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_20"
                 android:paddingEnd="@dimen/dp_20"
                 android:text="@string/MineFragment_My_Album"
@@ -285,7 +299,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_16" />
 
             <View
@@ -298,9 +311,10 @@
             <TextView
                 android:id="@+id/personal_info_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_50"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_20"
                 android:paddingEnd="@dimen/dp_20"
                 android:text="@string/MineFragment_personal_information_hint"
@@ -312,7 +326,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginEnd="@dimen/dp_20">
 
                 <TextView
@@ -390,9 +403,10 @@
             <TextView
                 android:id="@+id/contact_way_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_50"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_22"
                 android:paddingEnd="@dimen/dp_22"
                 android:text="@string/MineFragment_contact_way_hint"
@@ -415,7 +429,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_20" />
 
             <View
@@ -428,9 +441,10 @@
             <TextView
                 android:id="@+id/label_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_50"
+                android:background="@drawable/ripple_bg"
                 android:drawableEnd="@mipmap/next_step"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/dp_20"
                 android:paddingEnd="@dimen/dp_20"
                 android:text="@string/MineFragment_The_Label"
@@ -452,7 +466,9 @@
                 android:id="@+id/label_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_20" />
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_30" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

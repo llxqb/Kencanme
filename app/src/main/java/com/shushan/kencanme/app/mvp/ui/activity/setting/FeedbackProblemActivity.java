@@ -30,7 +30,6 @@ import com.shushan.kencanme.app.entity.request.FeedbackProblemRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.FraudPhotoAdapter;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.PhotoDialog;
 
@@ -203,7 +202,7 @@ public class FeedbackProblemActivity extends BaseActivity implements TakePhoto.T
                         TImage tImage = photoAdapter.getItem(i);
                         assert tImage != null;
                         Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
-                        String path = PicUtils.convertIconToString(bitmap);
+                        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
                         uploadImage(path);
                     }
                 }
@@ -290,7 +289,7 @@ public class FeedbackProblemActivity extends BaseActivity implements TakePhoto.T
             feedbackProblemRequest.token = mBuProcessor.getToken();
             feedbackProblemRequest.problem = mQuestionDescEv.getText().toString();
             feedbackProblemRequest.email = mEmailEv.getText().toString();
-            LogUtils.e("mPicList:" + new Gson().toJson(mPicList));
+//            LogUtils.e("mPicList:" + new Gson().toJson(mPicList));
             feedbackProblemRequest.pics = new Gson().toJson(mPicList);
             mPresenter.onRequestFeedbackProblem(feedbackProblemRequest);
         }

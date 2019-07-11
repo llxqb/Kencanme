@@ -223,7 +223,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                     TImage tImage = photoAdapter.getItem(i);
                     assert tImage != null;
                     Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
-                    String path = PicUtils.convertIconToString(bitmap);
+                    String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
                     uploadImage(path);
                 }
                 break;

@@ -131,8 +131,10 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     RecyclerView mLabelRecyclerView;
     Unbinder unbinder;
     //个人资料
-    @BindView(R.id.avator)
-    CircleImageView mAvator;
+    @BindView(R.id.avatar)
+    CircleImageView mAvatar;
+    @BindView(R.id.vip_logo_iv)
+    ImageView mVipLogoIv;
     @BindView(R.id.username)
     TextView mUsername;
     @BindView(R.id.sex_year_tv)
@@ -288,7 +290,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mJzvdStd.setVisibility(View.GONE);
             mImageLoaderHelper.displayMatchImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
         }
-        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvator, Constant.LOADING_AVATOR);
+        mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvatar, Constant.LOADING_AVATOR);
+
         mUsername.setText(mLoginUser.nickname);
         if (mLoginUser.sex == 1) {
             mSexYearTv.setBackgroundResource(R.mipmap.message_gender_male);
@@ -302,12 +305,19 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mSVipIcon.setVisibility(View.GONE);
             //不是svip 判断是否是vip
             if (mLoginUser.vip == 1) {
-                mVipTimeTv.setText(String.valueOf(mLoginUser.vip_time));
+                String vipTimeValue = getResources().getString(R.string.MineFragment_vip_time) + String.valueOf(mLoginUser.vip_time);
+                mVipTimeTv.setText(vipTimeValue);
+                mAvatar.setBorderColor(getResources().getColor(R.color.vip_bg_color));
+                mVipLogoIv.setVisibility(View.VISIBLE);
             } else {
                 mVipTimeTv.setText(getResources().getString(R.string.MineFragment_Become_VIP));
+                mVipLogoIv.setVisibility(View.INVISIBLE);
+                mAvatar.setBorderColor(getResources().getColor(R.color.white));
             }
         } else {
             mSVipIcon.setVisibility(View.VISIBLE);
+            mVipLogoIv.setVisibility(View.VISIBLE);
+            mAvatar.setBorderColor(getResources().getColor(R.color.vip_bg_color));
             mVipTimeTv.setText(getResources().getString(R.string.MineFragment_hello_VIP));
         }
         mDescTv.setText(mLoginUser.declaration);
@@ -317,7 +327,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         String mUserHeightValue = !TextUtils.isEmpty(mLoginUser.height) ? getResources().getString(R.string.Height) + mLoginUser.height + "cm" : getResources().getString(R.string.Height);
         String mUserWeightValue = !TextUtils.isEmpty(mLoginUser.weight) ? getResources().getString(R.string.Weight) + mLoginUser.weight + "kg" : getResources().getString(R.string.Weight);
         String mUserChestValue = getResources().getString(R.string.Chest) + mLoginUser.bust;
-        if (TextUtils.isEmpty(mLoginUser.birthday) && !mLoginUser.birthday.contains("/")) {
+        if (!TextUtils.isEmpty(mLoginUser.birthday) && !mLoginUser.birthday.contains("/")) {
             String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(mLoginUser.birthday), "yyyy/MM/dd");
             mUserBirthday.setText(mUserBirthdayValue);
         }

@@ -10,7 +10,7 @@
     <string name="loading" translatable="false">loading…</string>
 
     <!-- app相关-->
-    <string name="this_is_desc" translatable="false">This is a description</string>
+    <string name="this_is_desc" translatable="false">is a picture</string>
     <string name="app_name" translatable="false">Kencanme</string>
     <string name="success" translatable="false">success</string>
     <string name="google" translatable="false">Google</string>
@@ -34,7 +34,7 @@
     <string name="app_like" translatable="false">Like</string>
     <string name="app_chat" translatable="false">Chat</string>
     <string name="app_view" translatable="false">Check now</string>
-    <string name="Hi_Beans" translatable="false">Hey Coins</string>
+    <string name="Hi_Beans" translatable="false">Hey Beans</string>
 
 
     <!--Activity 相关 -->
@@ -96,7 +96,7 @@
     <string name="CustomizeMessageItemProvider_left_photo_hint" translatable="false">This is a private message users only</string>
     <string name="CustomizeMessageItemProvider_right_photo" translatable="false">Send a private photo</string>
     <string name="CustomizeMessageItemProvider_right_photo_hint" translatable="false">This is a private message </string>
-
+    <string name="CustomizeMessageItemProvider_private_message" translatable="false">Private message </string>
 
     <!--EditMakeFriendsInfoActivity -->
     <string name="EditMakeFriendsInfoActivity_upload_hint" translatable="false">reload your photos/videos</string>
@@ -204,6 +204,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
 
 
     <!-- MineFragment-->
+    <string name="MineFragment_vip_time" translatable="false">expire on&#160;</string>
     <string name="MineFragment_photo_album_hint" translatable="false">Photo Album</string>
     <string name="MineFragment_personal_information_hint" translatable="false">Personal Information</string>
     <string name="MineFragment_contact_way_hint" translatable="false">Contact Way</string>
@@ -270,7 +271,7 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="album_vip_view" translatable="false">VIP can view</string>
     <string name="album_hi_beans_view" translatable="false">Hi-beans photo</string>
     <!--PhotoDialog -->
-    <string name="PhotoDialog_title" translatable="false">select</string>
+    <string name="PhotoDialog_title" translatable="false">Choose how to open</string>
     <string name="PhotoDialog_photo" translatable="false">photo</string>
     <string name="PhotoDialog_album" translatable="false">Album</string>
     <!--RechargeBeansDialog -->
