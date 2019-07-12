@@ -33,7 +33,7 @@ public class MainModel {
     }
 
 
-    //请求首页个人信息  如 是否喜欢数 聊天数
+    //请求我的-首页接口，更新个人信息
     public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
         return mMainApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }

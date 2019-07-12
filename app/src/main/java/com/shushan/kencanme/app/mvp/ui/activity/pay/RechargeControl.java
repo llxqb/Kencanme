@@ -3,7 +3,9 @@ package com.shushan.kencanme.app.mvp.ui.activity.pay;
 
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.app.mvp.presenter.Presenter;
@@ -17,15 +19,25 @@ public class RechargeControl {
         void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse);
 
         void createOrderSuccess(CreateOrderResponse createOrderResponse);
+
+        void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
     }
 
     public interface PresenterRecharge extends Presenter<RechargeView> {
+        /**
+         * 查询列表
+         */
         void onRequestBeansInfo(ReChargeBeansInfoRequest reChargeBeansInfoRequest);
 
         /**
          * 创建订单
          */
         void onRequestCreateOrder(CreateOrderRequest createOrderRequest);
+
+        /**
+         * 查询用户信息（首页）
+         */
+        void onRequestHomeUserInfo(TokenRequest tokenRequest);
     }
 
 }

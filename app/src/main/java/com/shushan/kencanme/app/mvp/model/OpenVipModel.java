@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
 import com.shushan.kencanme.app.entity.request.PaySuccessRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.network.networkapi.BuyApi;
 
 import javax.inject.Inject;
@@ -37,6 +38,14 @@ public class OpenVipModel {
     public Observable<ResponseData> onRequestCreateOrder(CreateOrderRequest request) {
         return mBuyApi.onRequestCreateOrder(mGson.toJson(request)).map(mTransform::transformCommon);
     }
+
+    /**
+     * 请求我的-首页接口，更新个人信息
+     */
+    public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
+        return mBuyApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
     /**
      * 支付成功上报
      */

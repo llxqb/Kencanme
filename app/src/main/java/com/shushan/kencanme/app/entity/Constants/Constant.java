@@ -36,4 +36,6 @@ public class Constant {
     public static final int LOADING_BIG = R.mipmap.loading_big;
     public static final int LOADING_AVATOR = R.mipmap.head_photo_loading;
 
+    //发起google支付
+    public static final int GOOGLE_PAY_REQ = 10001;
 }

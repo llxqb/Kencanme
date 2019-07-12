@@ -5,7 +5,9 @@ import android.content.Context;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.ReChargeBeansModel;
@@ -81,6 +83,29 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
         }
     }
 
+    /**
+     * 获取个人信息（首页）
+     */
+    @Override
+    public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onRequestHomeUserInfo(tokenRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestHomeUserInfoSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestHomeUserInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(HomeUserInfoResponse.class);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mRechargeView.homeUserInfoSuccess(response);
+            }
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
 
     @Override
     public void onCreate() {

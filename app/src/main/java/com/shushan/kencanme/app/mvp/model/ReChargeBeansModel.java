@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.network.networkapi.BuyApi;
 
 import javax.inject.Inject;
@@ -35,6 +36,13 @@ public class ReChargeBeansModel {
      */
     public Observable<ResponseData> onRequestCreateOrder(CreateOrderRequest request) {
         return mBuyApi.onRequestCreateOrder(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * 请求我的-首页接口，更新个人信息
+     */
+    public Observable<ResponseData> onRequestHomeUserInfo(TokenRequest request) {
+        return mBuyApi.onRequestHomeUserInfo(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 

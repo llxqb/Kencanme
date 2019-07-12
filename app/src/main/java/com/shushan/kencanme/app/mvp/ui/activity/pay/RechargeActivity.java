@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.ui.activity.pay;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,23 +12,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.RechargeBeansModule;
 import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
+import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.GooglePayHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.RechargeAdapter;
+import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DataUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
+import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.Purchase;
 
 import java.util.ArrayList;
@@ -44,7 +51,7 @@ import io.rong.imlib.model.CSCustomServiceInfo;
 /**
  * desc:购买嗨豆Activity
  */
-public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView,GooglePayHelper.BuyFinishListener {
+public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView, GooglePayHelper.BuyFinishListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -64,6 +71,10 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     private RechargeAdapter rechargeAdapter;
     private GooglePayHelper mGooglePayHelper;
     private LoginUser mLoginUser;
+    /**
+     * google支付util类
+     */
+    private IabHelper iabHelper;
 
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
@@ -79,12 +90,13 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         initData();
     }
 
+
     @Override
     public void initView() {
         mLoginUser = mBuProcessor.getLoginUser();
         //初始化google支付
-        mGooglePayHelper = new GooglePayHelper(this,this);
-        mGooglePayHelper.initGooglePay();
+        mGooglePayHelper = new GooglePayHelper(this, this);
+        iabHelper = mGooglePayHelper.initGooglePay();
         mCommonTitleTv.setText(getResources().getString(R.string.RechargeActivity_title));
         mRechargeAgreement.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         mRechargeAgreement.getPaint().setAntiAlias(true);//抗锯齿
@@ -105,13 +117,13 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
             rechargeAdapter.notifyDataSetChanged();
             //1.创建订单
             //购买嗨豆
-            createOrder( String.valueOf(beansinfoBean.getB_id()), beansinfoBean.getPrice());
+            createOrder(String.valueOf(beansinfoBean.getB_id()), beansinfoBean.getPrice());
         });
     }
 
     @Override
     public void initData() {
-        mCurrentHiBeansNum.setText(String.valueOf(mBuProcessor.getLoginUser().beans));
+        mCurrentHiBeansNum.setText(String.valueOf(mLoginUser.beans));
         ReChargeBeansInfoRequest reChargeBeansInfoRequest = new ReChargeBeansInfoRequest();
         reChargeBeansInfoRequest.token = mBuProcessor.getToken();
         mPresenter.onRequestBeansInfo(reChargeBeansInfoRequest);
@@ -136,6 +148,9 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         }
     }
 
+    /**
+     * 练习客服
+     */
     private void contactCustomer() {
         //进入客服
         //首先需要构造使用客服者的用户信息
@@ -149,7 +164,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
          * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
          */
         RongIM.getInstance().startCustomerServiceChat(this, ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
-        mSharePreferenceUtil.setData("chatType",1);//在线客服
+        mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
 
     /**
@@ -157,7 +172,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      * type:1购买会员 2购买嗨豆
      * relation_id:对应购买 会员/嗨豆id
      */
-    private void createOrder( String relation_id, String price) {
+    private void createOrder(String relation_id, String price) {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.token = mBuProcessor.getToken();
         createOrderRequest.type = "2";
@@ -180,25 +195,87 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     @Override
     public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
         //2、进行支付
-        mGooglePayHelper.buyGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
+        mGooglePayHelper.queryGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
+
 
     @Override
-    public void buyFinishSuccess(Purchase purchase) {
-        showToast("支付成功");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //一定记得调用这个方法，才能调起
+        if (iabHelper != null && requestCode == Constant.GOOGLE_PAY_REQ) {
+            iabHelper.handleActivityResult(requestCode, resultCode, data);
+        }
     }
 
+    /**
+     * 支付成功
+     */
+    @Override
+    public void buyFinishSuccess(Purchase purchase) {
+        showToast(new Gson().toJson(purchase));
+        //上传数据到服务器
+
+        //查询用户信息-->更新用户信息(我的-首页接口)
+        requestHomeUserInfo();
+
+    }
+
+    /**
+     * 支付失败或取消
+     */
     @Override
     public void buyFinishFail() {
         showToast("支付取消");
     }
+
+    /**
+     * 查询我的-首页接口，更新用户信息(首页)
+     */
+    private void requestHomeUserInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    }
+
+    /**
+     * 我的-首页接口  查询成功
+     */
+    @Override
+    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
+        mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.beans = userBean.getBeans();
+        mLoginUser.exposure_type = userBean.getExposure_type();
+        mLoginUser.exposure_time = userBean.getExposure_time();
+        mLoginUser.today_like = userBean.getToday_like();
+        mLoginUser.today_chat = userBean.getToday_chat();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        mBuProcessor.setLoginUser(mLoginUser);
+        //更新界面UI
+        updateUi();
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
+    }
+
+    /**
+     * 支付成功后更新UI
+     */
+    private void updateUi() {
+        mLoginUser = mBuProcessor.getLoginUser();
+        mCurrentHiBeansNum.setText(String.valueOf(mLoginUser.beans));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mGooglePayHelper != null) mGooglePayHelper.dispose();
+    }
+
+
     private void initializeInjector() {
         DaggerRechargeComponent.builder().appComponent(getAppComponent())
                 .rechargeBeansModule(new RechargeBeansModule(RechargeActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
-
-
-
 }

@@ -176,6 +176,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
+            mLoginUser = mBuProcessor.getLoginUser();
             setUserInfo();
         } else if (intent.getAction() != null && (intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM) || intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM))) {
             //更新我的相册
@@ -183,8 +184,9 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             myAlbumRequest.token = mBuProcessor.getToken();
             mPresenter.onRequestMyAlbum(myAlbumRequest);
         } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
-            //TODO 充值后更新
+            // 充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
+            setUserInfo();
         }
         super.onReceivePro(context, intent);
     }
@@ -251,7 +253,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
      */
     private void setUserInfo() {
         //contactWay
-        mLoginUser = mBuProcessor.getLoginUser();
 //        LogUtils.d("mime_mLoginUser:"+new Gson().toJson(mLoginUser));
         String contactWayString = mLoginUser.contact; //转换联系方式为list
         Gson gson = new Gson();

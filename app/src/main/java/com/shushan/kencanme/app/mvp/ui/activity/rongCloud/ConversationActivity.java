@@ -114,7 +114,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
-            //TODO 充值后更新
+            // 充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
         }
         super.onReceivePro(context, intent);

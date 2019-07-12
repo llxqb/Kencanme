@@ -6,7 +6,9 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
 import com.shushan.kencanme.app.entity.request.PaySuccessRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.OpenVipResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.OpenVipModel;
@@ -78,6 +80,30 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
             }
         } else {
             mOpenVipView.showLoading(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 获取个人信息（首页）
+     */
+    @Override
+    public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onRequestHomeUserInfo(tokenRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestHomeUserInfoSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+    private void requestHomeUserInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(HomeUserInfoResponse.class);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mOpenVipView.homeUserInfoSuccess(response);
+            }
+        } else {
+            mOpenVipView.showToast(responseData.errorMsg);
         }
     }
 

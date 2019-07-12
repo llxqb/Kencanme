@@ -78,8 +78,9 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
-            //TODO 充值后更新
+            //充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
+
         }
         super.onReceivePro(context, intent);
     }
@@ -108,15 +109,16 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                             likeDialog = DialogFactory.showLikeDialog(LoveMePeopleActivity.this);
                             likeDialog.show();
                             setmRemainTime();
-                            if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
-                                LikeRequest likeRequest = new LikeRequest();
-                                likeRequest.token = mBuProcessor.getToken();
-                                assert listBean != null;
-                                likeRequest.likeid = listBean.getUid();
-                                mPresenter.onRequestLike(likeRequest);
-                            } else {
-                                DialogFactory.showOpenVipDialog(LoveMePeopleActivity.this, getResources().getString(R.string.dialog_open_vip_like));
-                            }
+                            //能进来就是超级vip,超级VIP可以不用判断了
+//                            if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
+//                            } else {
+//                                DialogFactory.showOpenVipDialog(LoveMePeopleActivity.this, getResources().getString(R.string.dialog_open_vip_like));
+//                            }
+                            LikeRequest likeRequest = new LikeRequest();
+                            likeRequest.token = mBuProcessor.getToken();
+                            assert listBean != null;
+                            likeRequest.likeid = listBean.getUid();
+                            mPresenter.onRequestLike(likeRequest);
                         }
                         break;
                 }

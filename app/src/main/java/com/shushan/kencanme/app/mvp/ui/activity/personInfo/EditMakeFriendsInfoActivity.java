@@ -299,10 +299,10 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     public void updateSuccess(String response) {
         showToast(response);
         //更新用户信息
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         mLoginUser.nickname = mUserNameEv.getText().toString();
         mLoginUser.declaration = mDeclarationEv.getText().toString();
         mBuProcessor.setLoginUser(mLoginUser);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         finish();
     }
 

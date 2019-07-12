@@ -32,4 +32,9 @@ public interface BuyApi {
      */
     @POST("menggoda/apple")
     Observable<String> onRequestPaySuccess(@Body String request);
+    /**
+     * 用户首页信息
+     */
+    @POST("menggoda/index/user_exposure")
+    Observable<String> onRequestHomeUserInfo(@Body String request);
 }

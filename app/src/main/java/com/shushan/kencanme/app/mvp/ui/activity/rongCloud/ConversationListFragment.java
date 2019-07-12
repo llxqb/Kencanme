@@ -93,7 +93,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MESSAGE_INFO)) {
             requestSystemMsgNew();
         }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)){
-            //TODO 充值后更新
+            // 充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
         }
         super.onReceivePro(context, intent);
@@ -129,7 +129,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.new_pairing_rl:
-                //查看谁喜欢过我  TODO
+                //查看谁喜欢过我
 //                startActivitys(LoveMePeopleActivity.class);
                 if (mLoginUser.userType == 3) {
                     startActivitys(LoveMePeopleActivity.class);

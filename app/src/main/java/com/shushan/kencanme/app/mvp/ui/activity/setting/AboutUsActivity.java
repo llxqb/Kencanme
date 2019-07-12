@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
@@ -34,8 +35,11 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.AboutUsActivity_title));
-        mVersionName.setText(SystemUtils.getVersionName(this));
-
+        if (BuildConfig.DEBUG) {
+            mVersionName.setText("测试：" + SystemUtils.getVersionName(this));
+        } else {
+            mVersionName.setText(SystemUtils.getVersionName(this));
+        }
     }
 
     @Override
