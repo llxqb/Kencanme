@@ -35,6 +35,7 @@ public class MemberAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_agreement);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

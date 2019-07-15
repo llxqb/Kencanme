@@ -5,7 +5,7 @@ import android.content.Context;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
-import com.shushan.kencanme.app.entity.request.PaySuccessRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
@@ -108,27 +108,26 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     }
 
     /**
-     * 支付成功上报
+     * APP支付成功上报
      */
     @Override
-    public void onRequestPaySuccess(PaySuccessRequest paySuccessRequest) {
+    public void onPayFinishUpload(PayFinishUploadRequest payFinishUpload) {
         mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mOpenVipModel.onRequestPaySuccess(paySuccessRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::paySuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+        Disposable disposable = mOpenVipModel.onPayFinishUpload(payFinishUpload).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUploadPaySuccess, throwable -> mOpenVipView.showErrMessage(throwable),
                         () -> mOpenVipView.dismissLoading());
         mOpenVipView.addSubscription(disposable);
     }
 
-
-    private void paySuccess(ResponseData responseData) {
+    private void requestUploadPaySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(CreateOrderResponse.class);
-            if (responseData.parsedData != null) {
-                CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
-                mOpenVipView.createOrderSuccess(response);
-            }
+            mOpenVipView.getPayFinishUploadSuccess();
+//            responseData.parseData(PayFinishUploadResponse.class);
+//            if (responseData.parsedData != null) {
+//                PayFinishUploadResponse response = (PayFinishUploadResponse) responseData.parsedData;
+//            }
         } else {
-            mOpenVipView.showLoading(responseData.errorMsg);
+            mOpenVipView.showToast(responseData.errorMsg);
         }
     }
 

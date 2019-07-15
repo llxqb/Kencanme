@@ -2,6 +2,7 @@ package com.shushan.kencanme.app.mvp.ui.activity.pay;
 
 
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
@@ -21,6 +22,8 @@ public class RechargeControl {
         void createOrderSuccess(CreateOrderResponse createOrderResponse);
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
+
+        void getPayFinishUploadSuccess();
     }
 
     public interface PresenterRecharge extends Presenter<RechargeView> {
@@ -38,6 +41,10 @@ public class RechargeControl {
          * 查询用户信息（首页）
          */
         void onRequestHomeUserInfo(TokenRequest tokenRequest);
+        /**
+         * APP支付成功上报
+         */
+        void onPayFinishUpload(PayFinishUploadRequest payFinishUpload);
     }
 
 }

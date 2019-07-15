@@ -3,7 +3,7 @@ package com.shushan.kencanme.app.mvp.ui.activity.vip;
 
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
-import com.shushan.kencanme.app.entity.request.PaySuccessRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
@@ -22,6 +22,8 @@ public class OpenVipControl {
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
 
         void createOrderSuccess(CreateOrderResponse createOrderResponse);
+
+        void getPayFinishUploadSuccess();
     }
 
     public interface PresenterOpenVip extends Presenter<OpenVipView> {
@@ -39,7 +41,7 @@ public class OpenVipControl {
         /**
          * APPLE支付成功上报
          */
-        void onRequestPaySuccess(PaySuccessRequest paySuccessRequest);
+        void onPayFinishUpload(PayFinishUploadRequest payFinishUpload);
     }
 
 

@@ -3,7 +3,7 @@ package com.shushan.kencanme.app.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
-import com.shushan.kencanme.app.entity.request.PaySuccessRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.network.networkapi.BuyApi;
 
@@ -49,8 +49,8 @@ public class OpenVipModel {
     /**
      * 支付成功上报
      */
-    public Observable<ResponseData> onRequestPaySuccess(PaySuccessRequest request) {
-        return mBuyApi.onRequestPaySuccess(mGson.toJson(request)).map(mTransform::transformCommon);
+    public Observable<ResponseData> onPayFinishUpload(PayFinishUploadRequest request) {
+        return mBuyApi.onRequestPaySuccess(request.INAPP_PURCHASE_DATA,request.INAPP_DATA_SIGNATURE,request.order_no).map(mTransform::transformCommon);
     }
 
 

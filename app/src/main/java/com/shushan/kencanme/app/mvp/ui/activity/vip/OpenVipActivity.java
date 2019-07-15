@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerOpenVipComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -24,6 +23,7 @@ import com.shushan.kencanme.app.entity.VipPrivilege;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
@@ -88,8 +88,8 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     TextView mGoToPay;
     @BindView(R.id.test_tv)
     TextView mTestTv;
-    List<OpenVipResponse.VipinfoBean> vipinfoBeanList = new ArrayList<>();
-    OpenVipAdapter openVipAdapter;
+    private List<OpenVipResponse.VipinfoBean> vipinfoBeanList = new ArrayList<>();
+    private OpenVipAdapter openVipAdapter;
     private int[] mVipPrivilegeImg = {R.mipmap.privilege_vip_logo, R.mipmap.rectangle, R.mipmap.private_letter, R.mipmap.vip_photo_open, R.mipmap.vip_video_watch,
             R.mipmap.unlimited_love, R.mipmap.search, R.mipmap.active_secret_chat, R.mipmap.make_friend};
     private String[] mVipPrivilegeName = {"Supremacy VIP Sign", "Hey Bean on sale", "Free private messages", "unlimited member photos ", "unlimited member video",
@@ -244,7 +244,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 mPayMoneyValue.setText(moneyValue);
             }
         }
-        openVipAdapter.addData(vipinfoBeanList);
+        openVipAdapter.setNewData(vipinfoBeanList);
     }
 
     /**
@@ -255,6 +255,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         //2、进行支付
         mGooglePayHelper.queryGoods(PayUtil.payGoodId(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -270,9 +271,16 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     @Override
     public void buyFinishSuccess(Purchase purchase) {
-        showToast(new Gson().toJson(purchase));
         //上传数据到服务器
+        PayFinishUploadRequest payFinishUploadRequest = new PayFinishUploadRequest();
+        payFinishUploadRequest.order_no = purchase.getDeveloperPayload();
+        payFinishUploadRequest.INAPP_DATA_SIGNATURE = purchase.getSignature();
+        payFinishUploadRequest.INAPP_PURCHASE_DATA = purchase.getOriginalJson();
+        mPresenter.onPayFinishUpload(payFinishUploadRequest);
+    }
 
+    @Override
+    public void getPayFinishUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
     }
@@ -282,7 +290,6 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     @Override
     public void buyFinishFail() {
-        showToast("支付取消");
     }
 
 
@@ -300,7 +307,10 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        showToast(getResources().getString(R.string.success));
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        mLoginUser.vip = userBean.getVip();
+        mLoginUser.svip = userBean.getSvip();
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         mLoginUser.exposure = userBean.getExposure();
         mLoginUser.beans = userBean.getBeans();
@@ -320,6 +330,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     private void updateUi() {
         mLoginUser = mBuProcessor.getLoginUser();
+//        reqVipListRequest();
         if (mLoginUser.vip == 0) {
             mIsVipTv.setText(getResources().getString(R.string.not_vip));
         } else {

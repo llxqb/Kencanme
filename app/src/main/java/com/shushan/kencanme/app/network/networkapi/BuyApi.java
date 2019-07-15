@@ -2,6 +2,8 @@ package com.shushan.kencanme.app.network.networkapi;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 /**
@@ -28,13 +30,15 @@ public interface BuyApi {
     @POST("menggoda/order")
     Observable<String> onRequestCreateOrder(@Body String request);
     /**
-     * 支付成功上报
-     */
-    @POST("menggoda/apple")
-    Observable<String> onRequestPaySuccess(@Body String request);
-    /**
      * 用户首页信息
      */
     @POST("menggoda/index/user_exposure")
     Observable<String> onRequestHomeUserInfo(@Body String request);
+    /**
+     * 支付成功上报
+     * 多参数表单提交
+     */
+    @FormUrlEncoded
+    @POST("menggoda/google")
+    Observable<String> onRequestPaySuccess(@Field("INAPP_PURCHASE_DATA") String data, @Field("INAPP_DATA_SIGNATURE") String signature,@Field("order_no") String order_no);
 }

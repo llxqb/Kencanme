@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -22,6 +21,7 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
@@ -213,12 +213,13 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      */
     @Override
     public void buyFinishSuccess(Purchase purchase) {
-        showToast(new Gson().toJson(purchase));
+//        showToast(new Gson().toJson(purchase));
         //上传数据到服务器
-
-        //查询用户信息-->更新用户信息(我的-首页接口)
-        requestHomeUserInfo();
-
+        PayFinishUploadRequest payFinishUploadRequest = new PayFinishUploadRequest();
+        payFinishUploadRequest.order_no = purchase.getDeveloperPayload();
+        payFinishUploadRequest.INAPP_DATA_SIGNATURE = purchase.getSignature();
+        payFinishUploadRequest.INAPP_PURCHASE_DATA = purchase.getOriginalJson();
+        mPresenter.onPayFinishUpload(payFinishUploadRequest);
     }
 
     /**
@@ -226,7 +227,12 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      */
     @Override
     public void buyFinishFail() {
-        showToast("支付取消");
+    }
+
+    @Override
+    public void getPayFinishUploadSuccess() {
+        //查询用户信息-->更新用户信息(我的-首页接口)
+        requestHomeUserInfo();
     }
 
     /**
@@ -243,7 +249,10 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      */
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        showToast(getResources().getString(R.string.success));
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        mLoginUser.vip = userBean.getVip();
+        mLoginUser.svip = userBean.getSvip();
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         mLoginUser.exposure = userBean.getExposure();
         mLoginUser.beans = userBean.getBeans();
@@ -257,6 +266,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         updateUi();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
     }
+
 
     /**
      * 支付成功后更新UI

@@ -36,6 +36,7 @@ public class RechargeAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

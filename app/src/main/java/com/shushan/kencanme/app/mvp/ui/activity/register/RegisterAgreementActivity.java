@@ -36,6 +36,7 @@ public class RegisterAgreementActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_agreement);
         ButterKnife.bind(this);
+        setStatusBar();
         initView();
         initData();
     }

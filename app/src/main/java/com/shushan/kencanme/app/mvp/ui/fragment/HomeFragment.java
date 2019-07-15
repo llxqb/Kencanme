@@ -331,6 +331,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
 //        LogUtils.e("userBean:" + new Gson().toJson(userBean));
+        mLoginUser.vip = userBean.getVip();
+        mLoginUser.svip = userBean.getSvip();
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         //把另外几项LoginUser加入进来
         mLoginUser.exposure = userBean.getExposure();

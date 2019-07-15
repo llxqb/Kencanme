@@ -3,7 +3,6 @@ package com.shushan.kencanme.app.help;
 import android.app.Activity;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
@@ -35,7 +34,7 @@ public class GooglePayHelper {
         //设置自己从google控制台得到的公钥
         mHelper = new IabHelper(mContext, ServerConstant.GOOGLE_PAY_PUBLIC_KEY);
         //调试模式
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
         mHelper.startSetup(result -> {
             if (!result.isSuccess()) {
                 Log.d(TAG, "Setup fail.");
@@ -125,7 +124,7 @@ public class GooglePayHelper {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Log.e(TAG, "购买的回调 result: " + result.isSuccess());
-            Log.e(TAG, "购买的回调 purchase:" + new Gson().toJson(purchase));
+//            Log.e(TAG, "购买的回调 purchase:" + new Gson().toJson(purchase));
             if (result.isSuccess()) {
                 //支付成功
                 expendGoods(purchase);

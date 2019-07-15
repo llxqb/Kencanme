@@ -125,6 +125,7 @@ public class CommonDialog extends BaseDialogFragment {
             dialogStyle3Rl.setVisibility(View.GONE);
             mDialogStyle4Rl.setVisibility(View.GONE);
             mDialogStyle5Ll.setVisibility(View.VISIBLE);
+            ivClose.setVisibility(View.GONE);
         }
         commonDialogTitle.setText(mContent);
         return view;

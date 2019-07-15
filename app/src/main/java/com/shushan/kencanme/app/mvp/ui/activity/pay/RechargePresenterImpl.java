@@ -4,10 +4,12 @@ import android.content.Context;
 
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.app.entity.response.PayFinishUploadResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.ReChargeBeansModel;
@@ -102,6 +104,31 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
                 HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
                 mRechargeView.homeUserInfoSuccess(response);
             }
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * APP支付成功上报
+     */
+    @Override
+    public void onPayFinishUpload(PayFinishUploadRequest payFinishUpload) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onPayFinishUpload(payFinishUpload).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestUploadPaySuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestUploadPaySuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRechargeView.getPayFinishUploadSuccess();
+//            responseData.parseData(PayFinishUploadResponse.class);
+//            if (responseData.parsedData != null) {
+//                PayFinishUploadResponse response = (PayFinishUploadResponse) responseData.parsedData;
+//                mRechargeView.getPayFinishUploadSuccess(response);
+//            }
         } else {
             mRechargeView.showToast(responseData.errorMsg);
         }
