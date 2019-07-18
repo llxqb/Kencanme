@@ -19,7 +19,6 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
-import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.RongCloudHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
@@ -64,11 +63,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initView() {
         mMainBottomNavigation.setItemIconTintList(null);
+        showToast("进来了main");
         if (!mBuProcessor.isValidLogin() || !mBuProcessor.isFinishFirstWrite()) {
             startActivitys(LoginActivity.class);
             finish();
         } else {
-            LoginUser loginUser = mBuProcessor.getLoginUser();
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }

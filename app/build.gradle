@@ -130,6 +130,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:16.0.1'
     implementation files('libs/BCAXCOWidget.aar')
     implementation files('libs/PaymentSdk.aar')
+    //移动热更新
+    implementation 'com.aliyun.ams:alicloud-android-hotfix:3.2.3'
 
 //    //友盟
 //    //友盟推送  友盟统计

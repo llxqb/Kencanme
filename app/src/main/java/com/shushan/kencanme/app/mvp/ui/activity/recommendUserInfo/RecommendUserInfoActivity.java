@@ -251,6 +251,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
 
     @Override
     public void initData() {
+        showToast("进来了详情");
         mLoginUser = mBuProcessor.getLoginUser();
         if (getIntent() != null) {
             mUid = getIntent().getIntExtra("uid", 0);
