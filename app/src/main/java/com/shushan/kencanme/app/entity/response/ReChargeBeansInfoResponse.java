@@ -33,6 +33,7 @@ public class ReChargeBeansInfoResponse {
         private String price;
         private int give;
         private int vip_give;
+        private int yn_price;
         public boolean isCheck;
 
         public int getB_id() {
@@ -73,6 +74,14 @@ public class ReChargeBeansInfoResponse {
 
         public void setGive(int give) {
             this.give = give;
+        }
+
+        public int getYn_price() {
+            return yn_price;
+        }
+
+        public void setYn_price(int yn_price) {
+            this.yn_price = yn_price;
         }
 
         public int getVip_give() {

@@ -3,7 +3,9 @@ package com.shushan.kencanme.app.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.network.networkapi.BuyApi;
 
@@ -53,5 +55,18 @@ public class OpenVipModel {
         return mBuyApi.onRequestPaySuccess(request.INAPP_PURCHASE_DATA,request.INAPP_DATA_SIGNATURE,request.order_no).map(mTransform::transformCommon);
     }
 
+    /**
+     * 创建订单--AHDI支付
+     */
+    public Observable<ResponseData> onRequestCreateOrderAHDI(RequestOrderAHDIRequest request) {
+        return mBuyApi.onRequestCreateOrderAHDI(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * AHDI支付上报（查询是否已经支付完成）
+     */
+    public Observable<ResponseData> onPayFinishAHDIUpload(PayFinishAHDIRequest request) {
+        return mBuyApi.onPayFinishAHDIUpload(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
 
 }

@@ -60,6 +60,7 @@ public class HomeUserInfoResponse {
          */
 
         private int vip;
+        private int vip_time;
         private int svip;
         private int sex;
         private int beans;
@@ -80,6 +81,14 @@ public class HomeUserInfoResponse {
 
         public void setVip(int vip) {
             this.vip = vip;
+        }
+
+        public int getVip_time() {
+            return vip_time;
+        }
+
+        public void setVip_time(int vip_time) {
+            this.vip_time = vip_time;
         }
 
         public int getSvip() {

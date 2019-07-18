@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             listBean.setRelation(1);
             mHomeAdapter.notifyItemChanged(clickPos);
             requestHomeUserInfo();
-        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)){
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
             // 充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
         }
@@ -332,6 +332,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
 //        LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mLoginUser.vip = userBean.getVip();
+        mLoginUser.vip_time = userBean.getVip_time();
         mLoginUser.svip = userBean.getSvip();
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         //把另外几项LoginUser加入进来

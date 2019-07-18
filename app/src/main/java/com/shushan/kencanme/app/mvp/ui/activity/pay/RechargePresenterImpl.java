@@ -4,12 +4,14 @@ import android.content.Context;
 
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
-import com.shushan.kencanme.app.entity.response.PayFinishUploadResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.ReChargeBeansModel;
@@ -78,7 +80,7 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
             responseData.parseData(CreateOrderResponse.class);
             if (responseData.parsedData != null) {
                 CreateOrderResponse response = (CreateOrderResponse) responseData.parsedData;
-                mRechargeView.createOrderSuccess(response);
+                mRechargeView.createOrderGoogleSuccess(response);
             }
         } else {
             mRechargeView.showLoading(responseData.errorMsg);
@@ -129,6 +131,51 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
 //                PayFinishUploadResponse response = (PayFinishUploadResponse) responseData.parsedData;
 //                mRechargeView.getPayFinishUploadSuccess(response);
 //            }
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    /**
+     * AHDI支付创建订单
+     */
+    @Override
+    public void onRequestCreateOrderAHDI(RequestOrderAHDIRequest requestOrderAHDIRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onRequestCreateOrderAHDI(requestOrderAHDIRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestCreateAHDIOrderSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestCreateAHDIOrderSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderAHDIResponse.class);
+            if (responseData.parsedData != null) {
+                CreateOrderAHDIResponse response = (CreateOrderAHDIResponse) responseData.parsedData;
+                mRechargeView.createOrderAHDISuccess(response);
+            }
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * AHDI支付上报（查询是否已经支付完成）
+     */
+    @Override
+    public void onPayFinishAHDIUpload(PayFinishAHDIRequest payFinishAHDIRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onPayFinishAHDIUpload(payFinishAHDIRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestPayFinishAHDISuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRechargeView.getPayFinishAHDIUploadSuccess();
         } else {
             mRechargeView.showToast(responseData.errorMsg);
         }

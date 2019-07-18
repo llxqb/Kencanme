@@ -5,8 +5,11 @@ import android.content.Context;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.OpenVipResponse;
@@ -122,14 +125,55 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     private void requestUploadPaySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             mOpenVipView.getPayFinishUploadSuccess();
-//            responseData.parseData(PayFinishUploadResponse.class);
-//            if (responseData.parsedData != null) {
-//                PayFinishUploadResponse response = (PayFinishUploadResponse) responseData.parsedData;
-//            }
         } else {
             mOpenVipView.showToast(responseData.errorMsg);
         }
     }
+
+    /**
+     * AHDI支付创建订单
+     */
+    @Override
+    public void onRequestCreateOrderAHDI(RequestOrderAHDIRequest requestOrderAHDIRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onRequestCreateOrderAHDI(requestOrderAHDIRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestCreateAHDIOrderSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+    private void requestCreateAHDIOrderSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderAHDIResponse.class);
+            if (responseData.parsedData != null) {
+                CreateOrderAHDIResponse response = (CreateOrderAHDIResponse) responseData.parsedData;
+                mOpenVipView.createOrderAHDISuccess(response);
+            }
+        } else {
+            mOpenVipView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * AHDI支付上报（查询是否已经支付完成）
+     */
+    @Override
+    public void onPayFinishAHDIUpload(PayFinishAHDIRequest payFinishAHDIRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onPayFinishAHDIUpload(payFinishAHDIRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+    private void requestPayFinishAHDISuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mOpenVipView.getPayFinishAHDIUploadSuccess();
+        } else {
+            mOpenVipView.showToast(responseData.errorMsg);
+        }
+    }
+
 
     @Override
     public void onCreate() {

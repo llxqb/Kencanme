@@ -35,8 +35,8 @@ public class RechargeAdapter extends BaseQuickAdapter<ReChargeBeansInfoResponse.
             } else {
                 helper.setVisible(R.id.desc, false);
             }
-            helper.setText(R.id.give, "give" + String.valueOf(item.getVip_give()));
-            helper.setText(R.id.vip_give, " / VIP give" + String.valueOf(item.getVip_give()));
+            helper.setText(R.id.give, "give " + String.valueOf(item.getGive()));
+            helper.setText(R.id.vip_give, " / VIP give " + String.valueOf(item.getVip_give()));
             helper.setText(R.id.rp_money, "$" + String.valueOf(item.getPrice()));
 
             if (item.isCheck) {

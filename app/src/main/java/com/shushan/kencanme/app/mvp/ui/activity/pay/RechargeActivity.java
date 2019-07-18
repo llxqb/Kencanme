@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ahdi.sdk.payment.AhdiPay;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -21,13 +22,17 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
+import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.help.GooglePayHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.RechargeAdapter;
@@ -36,6 +41,7 @@ import com.shushan.kencanme.app.mvp.utils.DataUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.Purchase;
+import com.shushan.kencanme.app.mvp.views.dialog.PaySelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +56,12 @@ import io.rong.imlib.model.CSCustomServiceInfo;
 
 /**
  * desc:购买嗨豆Activity
+ * 三种支付方式：
+ * 1、google支付
+ * 2、Ahdi支付
+ * 3、UniPin支付
  */
-public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView, GooglePayHelper.BuyFinishListener {
+public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView, GooglePayHelper.BuyFinishListener, PaySelectDialog.payChoiceDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -75,6 +85,8 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      * google支付util类
      */
     private IabHelper iabHelper;
+    //点击item
+    ReChargeBeansInfoResponse.BeansinfoBean beansinfoBean;
 
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
@@ -106,18 +118,16 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         mRecyclerView.setLayoutManager(layoutManager);
         rechargeAdapter = new RechargeAdapter(this, rechargeBeanList);
         mRecyclerView.setAdapter(rechargeAdapter);
-
         rechargeAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            ReChargeBeansInfoResponse.BeansinfoBean beansinfoBean = (ReChargeBeansInfoResponse.BeansinfoBean) adapter.getItem(position);
+            beansinfoBean = (ReChargeBeansInfoResponse.BeansinfoBean) adapter.getItem(position);
             assert beansinfoBean != null;
             for (ReChargeBeansInfoResponse.BeansinfoBean bean : rechargeBeanList) {
                 if (bean.isCheck) bean.isCheck = false;
             }
             beansinfoBean.isCheck = true;
             rechargeAdapter.notifyDataSetChanged();
-            //1.创建订单
-            //购买嗨豆
-            createOrder(String.valueOf(beansinfoBean.getB_id()), beansinfoBean.getPrice());
+            //1、选择支付方式的弹框
+            showPayChooseDialog();
         });
     }
 
@@ -142,7 +152,6 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
                 startActivitys(RechargeAgreementActivity.class);
                 break;
             case R.id.contact_customer:
-//                showToast("联系客服");
                 contactCustomer();
                 break;
         }
@@ -156,23 +165,69 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         //首先需要构造使用客服者的用户信息
         CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
         CSCustomServiceInfo csInfo = csBuilder.nickName(mLoginUser.nickname).build();
-        /**
-         * 启动客户服聊天界面。
-         * @param context           应用上下文。
-         * @param customerServiceId 要与之聊天的客服 Id。
-         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-         */
+        //启动客户服聊天界面。
+        //         * @param context           应用上下文。
+        //         * @param customerServiceId 要与之聊天的客服 Id。
+        //         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+        //         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
         RongIM.getInstance().startCustomerServiceChat(this, ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
         mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
 
     /**
-     * 创建订单
+     * 获取充值Beans列表
+     */
+    @Override
+    public void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse) {
+        rechargeBeanList = reChargeBeansInfoResponse.getBeansinfo();
+        rechargeAdapter.addData(rechargeBeanList);
+    }
+
+    /**
+     * 选择三种支付方式弹框
+     */
+    private void showPayChooseDialog() {
+        PaySelectDialog paySelectDialog = PaySelectDialog.newInstance();
+        paySelectDialog.setListener(this);
+        paySelectDialog.setMoney(beansinfoBean.getPrice(), beansinfoBean.getYn_price());
+        DialogFactory.showDialogFragment(this.getSupportFragmentManager(), paySelectDialog, PaySelectDialog.TAG);
+    }
+
+    @Override
+    public void payType(int payType) {
+        switch (payType) {
+            case 1:
+                GooglePayChoose();
+                break;
+            case 2:
+                AHDIPayChoose();
+                break;
+            case 3:
+                UNiPinPayChoose();
+                break;
+        }
+    }
+
+    private void GooglePayChoose() {
+        //2.创建订单 - google支付
+        createOrderGoogle(String.valueOf(beansinfoBean.getB_id()), beansinfoBean.getPrice());
+    }
+
+    private void AHDIPayChoose() {
+        //2.创建订单 - AHDI支付
+        createOrderAHDI(String.valueOf(beansinfoBean.getB_id()), String.valueOf(beansinfoBean.getYn_price()));
+    }
+
+    private void UNiPinPayChoose() {
+
+    }
+
+    /**
+     * 创建订单 google支付
      * type:1购买会员 2购买嗨豆
      * relation_id:对应购买 会员/嗨豆id
      */
-    private void createOrder(String relation_id, String price) {
+    private void createOrderGoogle(String relation_id, String price) {
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.token = mBuProcessor.getToken();
         createOrderRequest.type = "2";
@@ -182,19 +237,12 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         mPresenter.onRequestCreateOrder(createOrderRequest);
     }
 
-
-    @Override
-    public void RechargeBeansInfoSuccess(ReChargeBeansInfoResponse reChargeBeansInfoResponse) {
-        rechargeBeanList = reChargeBeansInfoResponse.getBeansinfo();
-        rechargeAdapter.addData(rechargeBeanList);
-    }
-
     /**
-     * 创建订单成功
+     * 创建订单成功--Google
      */
     @Override
-    public void createOrderSuccess(CreateOrderResponse createOrderResponse) {
-        //2、进行支付
+    public void createOrderGoogleSuccess(CreateOrderResponse createOrderResponse) {
+        //购买嗨豆
         mGooglePayHelper.queryGoods(DataUtils.uppercaseToLowercase(createOrderResponse.getProduct_id()), createOrderResponse.getOrder_no());
     }
 
@@ -202,18 +250,17 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //一定记得调用这个方法，才能调起
+        //一定记得调用这个方法，才能调起Google回调
         if (iabHelper != null && requestCode == Constant.GOOGLE_PAY_REQ) {
             iabHelper.handleActivityResult(requestCode, resultCode, data);
         }
     }
 
     /**
-     * 支付成功
+     * 支付成功---Google
      */
     @Override
     public void buyFinishSuccess(Purchase purchase) {
-//        showToast(new Gson().toJson(purchase));
         //上传数据到服务器
         PayFinishUploadRequest payFinishUploadRequest = new PayFinishUploadRequest();
         payFinishUploadRequest.order_no = purchase.getDeveloperPayload();
@@ -223,14 +270,56 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     }
 
     /**
-     * 支付失败或取消
+     * 支付失败或取消--Google
      */
     @Override
     public void buyFinishFail() {
     }
 
+
     @Override
     public void getPayFinishUploadSuccess() {
+        //查询用户信息-->更新用户信息(我的-首页接口)
+        requestHomeUserInfo();
+    }
+
+
+    /**
+     * 创建订单 AHDI订单
+     */
+    private void createOrderAHDI(String relation_id, String price) {
+        RequestOrderAHDIRequest requestOrderAHDIRequest = new RequestOrderAHDIRequest();
+        requestOrderAHDIRequest.token = mLoginUser.token;
+        requestOrderAHDIRequest.type = "2";
+        requestOrderAHDIRequest.relation_id = relation_id;
+        requestOrderAHDIRequest.money = price;
+        mPresenter.onRequestCreateOrderAHDI(requestOrderAHDIRequest);
+    }
+
+    /**
+     * 创建订单成功--AHDI
+     */
+    @Override
+    public void createOrderAHDISuccess(CreateOrderAHDIResponse createOrderAHDIResponse) {
+        //调用 SDK 的 startPay 方法发起支付
+        AhdiPay.startPay(this, createOrderAHDIResponse.getAppid(), createOrderAHDIResponse.getApp_userid(), createOrderAHDIResponse.getToken(), (resultCode, signValue, resultInfo) -> {
+            if (resultCode == AhdiPay.PAY_SUCCESS) {
+                //支付成功，上传数据到服务器
+                PayFinishAHDIRequest payFinishAHDIRequest = new PayFinishAHDIRequest();
+                payFinishAHDIRequest.token = mLoginUser.token;
+                payFinishAHDIRequest.order_no = createOrderAHDIResponse.getOrder_no();
+                mPresenter.onPayFinishAHDIUpload(payFinishAHDIRequest);
+            } else {
+                showToast(getResources().getString(R.string.payment_fail));
+            }
+        });
+    }
+
+    /**
+     * AHDI上报 成功
+     */
+    @Override
+    public void getPayFinishAHDIUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
     }
@@ -288,4 +377,5 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
                 .rechargeBeansModule(new RechargeBeansModule(RechargeActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 }

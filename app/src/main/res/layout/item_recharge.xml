@@ -21,35 +21,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/hi_beans_num"
-        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
         android:textColor="@color/first_text_color"
         android:textSize="@dimen/sp_10" />
 
-    <TextView
-        android:id="@+id/give"
+    <LinearLayout
+        android:id="@+id/give_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/desc"
-        android:layout_marginStart="@dimen/dp_20"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_5"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_10" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/vip_give"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/desc"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_toEndOf="@id/give"
-        android:textColor="#DCB139"
-        android:textSize="@dimen/sp_10" />
+        <TextView
+            android:id="@+id/give"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/first_text_color"
+            android:textSize="@dimen/sp_10" />
+
+        <TextView
+            android:id="@+id/vip_give"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DCB139"
+            android:textSize="@dimen/sp_10" />
+    </LinearLayout>
+
 
     <View
         android:id="@+id/line"
         style="@style/line_height_05"
-        android:layout_below="@id/give"
+        android:layout_below="@id/give_ll"
         android:layout_marginTop="@dimen/dp_5" />
 
     <TextView
@@ -58,15 +65,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/line"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_5" />
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5" />
 
     <ImageView
         android:id="@+id/check_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:src="@mipmap/mine_hibeans_pay_choose"
         android:visibility="invisible" />
 </RelativeLayout>

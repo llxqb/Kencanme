@@ -306,7 +306,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mSVipIcon.setVisibility(View.GONE);
             //不是svip 判断是否是vip
             if (mLoginUser.vip == 1) {
-                String vipTimeValue = getResources().getString(R.string.MineFragment_vip_time) + String.valueOf(mLoginUser.vip_time);
+                String vipTimeValue = getResources().getString(R.string.MineFragment_vip_time) + DateUtil.getStrTime(mLoginUser.vip_time, "yyyy/MM/dd");
                 mVipTimeTv.setText(vipTimeValue);
                 mAvatar.setBorderColor(getResources().getColor(R.color.vip_bg_color));
                 mVipLogoIv.setVisibility(View.VISIBLE);

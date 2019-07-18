@@ -31,8 +31,8 @@ public class OpenVipAdapter extends BaseQuickAdapter<OpenVipResponse.VipinfoBean
         if (item != null) {
             TextView originalPriceTv = helper.getView(R.id.original_price);
             helper.setText(R.id.super_vip_hint,item.getName());
-            helper.setText(R.id.current_price,"/$ "+item.getSpecial_price());
-            helper.setText(R.id.original_price," $ "+item.getOriginal_price());
+            helper.setText(R.id.current_price,"/$"+item.getSpecial_price());
+            helper.setText(R.id.original_price," $"+item.getOriginal_price());
             originalPriceTv.getPaint().setAntiAlias(true);//抗锯齿
             originalPriceTv.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
             helper.setText(R.id.exclusive_tv,item.getPrivilege());

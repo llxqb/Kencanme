@@ -42,6 +42,8 @@ public class OpenVipResponse {
         private String describe;
         private String privilege;
         private int give;
+        private int yn_original_price;
+        private int yn_special_price;
         public boolean isCheck;
 
         public int getV_id() {
@@ -98,6 +100,22 @@ public class OpenVipResponse {
 
         public void setGive(int give) {
             this.give = give;
+        }
+
+        public int getYn_original_price() {
+            return yn_original_price;
+        }
+
+        public void setYn_original_price(int yn_original_price) {
+            this.yn_original_price = yn_original_price;
+        }
+
+        public int getYn_special_price() {
+            return yn_special_price;
+        }
+
+        public void setYn_special_price(int yn_special_price) {
+            this.yn_special_price = yn_special_price;
         }
     }
 }

@@ -20,6 +20,7 @@
     <string name="album_num_max_8">Pass hingga 8</string>
     <string name="album_num_max_6">Pass hingga 6</string>
     <string name="money">$</string>
+    <string name="money_yn" translatable="false">Rp</string>
     <string name="facebook_app_id">387656405197436</string>
     <!-- 提交和保存-->
     <string name="submit">Kirim</string>
@@ -346,4 +347,9 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="match_success_tv">&#160; Saling mencintai dan sukses bersama!</string><!--MatchSuccessDialog -->
     <string name="online_customer">Hubungi layanan pelanggan</string><!--MineFragment -->
     <string name="already_like">Sudah suka</string><!--已喜欢 -->
+
+    <string name="google_payment" translatable="false">Pembayaran Google</string><!--google支付 -->
+    <string name="ahdi_payment" translatable="false">Pembayaran AHDI</string><!--AHDI支付 -->
+    <string name="uniPin_payment" translatable="false">Pembayaran UniPin</string><!--UniPin支付 -->
+    <string name="payment_fail" translatable="false">Pembelian gagal</string><!--购买失败 -->
 </resources>
