@@ -124,8 +124,9 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
-    //facebook分享
+    //facebook分享和登录
     implementation 'com.facebook.android:facebook-share:4.41.0'
+    implementation 'com.facebook.android:facebook-login:5.1.1'
     //Ahdi支付
     implementation 'com.google.android.gms:play-services-base:16.0.1'
     implementation files('libs/BCAXCOWidget.aar')

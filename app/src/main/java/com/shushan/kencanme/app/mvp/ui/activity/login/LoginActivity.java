@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.app.di.components.LoginComponent;
@@ -24,10 +23,10 @@ import com.shushan.kencanme.app.entity.request.LoginRequest;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.LoginResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.help.FacebookLoginHelper;
 import com.shushan.kencanme.app.help.GoogleLoginHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.CreatePersonalInfoActivity;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
@@ -90,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
+                new FacebookLoginHelper(this).facebookLogin();
                 break;
             case R.id.login_whats_app_rl:
                 //WhatsApp登录
@@ -98,12 +98,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         }
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        // 已登录 account 不为空
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//    }
 
     /**
      * 登录回调
@@ -114,6 +108,9 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         if (requestCode == Constant.GOOGLE_LOGIN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        } else if (requestCode == Constant.FACEBOOK_LOGIN) {
+//            callbackManager.onActivityResult(requestCode, resultCode, data)
+
         }
     }
 
@@ -126,6 +123,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             GoogleSignInAccount account = result.getSignInAccount();
 //            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
             //登录后台系统
+            assert account != null;
             appLogin(account.getId(), account.getIdToken());
         } else {
             showToast(getResources().getString(R.string.login_google_fail));
@@ -138,7 +136,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         loginRequest.deviceId = SystemUtils.getDeviceId(this);
         loginRequest.access_token = accessToken;
         loginRequest.from = "android";
-        LogUtils.e("loginRequest:"+new Gson().toJson(loginRequest));
+//        LogUtils.e("loginRequest:"+new Gson().toJson(loginRequest));
         mPresenterLogin.onRequestLogin(loginRequest);
     }
 
@@ -147,7 +145,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
         mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
         mSharePreferenceUtil.setData("rongId", userinfoBean.getRongyun_third_id());
-        mSharePreferenceUtil.setData("code",userinfoBean.getCode());//邀请码
+        mSharePreferenceUtil.setData("code", userinfoBean.getCode());//邀请码
         //根据token请求个人信息    在MainActivity 中也会请求个人信息 会存在重复请求  <待优化>
         PersonalInfoRequest request = new PersonalInfoRequest();
         request.token = userinfoBean.getToken();
@@ -162,7 +160,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
         GoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
-        LogUtils.e("personalInfoResponse:" + new Gson().toJson(personalInfoResponse));
+//        LogUtils.e("personalInfoResponse:" + new Gson().toJson(personalInfoResponse));
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity

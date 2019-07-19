@@ -22,6 +22,8 @@ public class Constant {
 
     //Google登录回调
     public static final int GOOGLE_LOGIN = 100;
+    //facebook登录回调
+    public static final int FACEBOOK_LOGIN = 200;
 
     //图片类型 1头像2封面3相册4举报5消息
     public static final int PIC_AVATOR = 1;

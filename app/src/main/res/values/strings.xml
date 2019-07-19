@@ -21,7 +21,8 @@
     <string name="album_num_max_6" translatable="false">Pass up to 6</string>
     <string name="money" translatable="false">$</string>
     <string name="money_yn" translatable="false">Rp</string>
-    <string name="facebook_app_id" translatable="false">387656405197436</string>
+    <string name="facebook_app_id" translatable="false">477965629438121</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb477965629438121</string>
     <!-- 提交和保存-->
     <string name="submit" translatable="false">Submit</string>
     <string name="Preserve" translatable="false">Preserve</string>
