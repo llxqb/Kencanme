@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -345,6 +346,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mLoginUser.today_see_contact = userBean.getToday_see_contact();
         mBuProcessor.setLoginUser(mLoginUser);
         setExposureData(userBean.getNow_time());
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     /**
@@ -412,7 +414,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     MyTimer myTimer;
 
     /**
-     * 设置一分钟倒计时
+     * 设置三十分钟倒计时
      */
     private void setmRemainTime(int totalTime) {
         myTimer = MyTimer.getInstance(totalTime, 1000, getActivity());

@@ -63,7 +63,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initView() {
         mMainBottomNavigation.setItemIconTintList(null);
-        showToast("进来了main");
         if (!mBuProcessor.isValidLogin() || !mBuProcessor.isFinishFirstWrite()) {
             startActivitys(LoginActivity.class);
             finish();

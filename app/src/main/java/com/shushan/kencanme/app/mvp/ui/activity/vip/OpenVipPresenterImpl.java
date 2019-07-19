@@ -6,10 +6,13 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
+import com.shushan.kencanme.app.entity.response.CreateOrderByUniPinResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.OpenVipResponse;
@@ -175,6 +178,51 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     }
 
 
+    /**
+     * UniPin支付创建订单
+     */
+    @Override
+    public void onRequestCreateOrderByUniPin(RequestOrderUniPinPayRequest requestOrderUniPinPayRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onRequestCreateOrderByUniPin(requestOrderUniPinPayRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestCreateOrderByUniPinSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+    private void requestCreateOrderByUniPinSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderByUniPinResponse.class);
+            if (responseData.parsedData != null) {
+                CreateOrderByUniPinResponse response = (CreateOrderByUniPinResponse) responseData.parsedData;
+                mOpenVipView.createOrderByUniPinSuccess(response);
+            }
+        } else {
+            mOpenVipView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    /**
+     * UniPin支付上报
+     */
+    @Override
+    public void onPayFinishUploadByUniPin(PayFinishByUniPinRequest payFinishByUniPinRequest) {
+        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mOpenVipModel.onPayFinishUploadByUniPin(payFinishByUniPinRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                        () -> mOpenVipView.dismissLoading());
+        mOpenVipView.addSubscription(disposable);
+    }
+
+    private void requestPayFinishByUniPinSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mOpenVipView.getPayFinishUploadByUniPinSuccess();
+        } else {
+            mOpenVipView.showToast(responseData.errorMsg);
+        }
+    }
+    
     @Override
     public void onCreate() {
     }

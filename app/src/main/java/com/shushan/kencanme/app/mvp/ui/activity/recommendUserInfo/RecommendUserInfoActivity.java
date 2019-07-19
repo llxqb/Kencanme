@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRecommendUserInfoComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -49,7 +48,6 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
@@ -251,7 +249,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
 
     @Override
     public void initData() {
-        showToast("进来了详情");
         mLoginUser = mBuProcessor.getLoginUser();
         if (getIntent() != null) {
             mUid = getIntent().getIntExtra("uid", 0);
@@ -305,7 +302,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response) {
         recommendUserInfoResponse = response;
-        LogUtils.e("response:" + new Gson().toJson(response));
+//        LogUtils.e("response:" + new Gson().toJson(response));
         setUserData(response);
         for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
             MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
@@ -632,18 +629,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     /**
-     * 嗨豆查看相册
-     */
-    private void lookAlbumByBeansRequest() {
-        LookAlbumByBeansRequest lookAlbumByBeansRequest = new LookAlbumByBeansRequest();
-        lookAlbumByBeansRequest.token = mBuProcessor.getToken();
-        lookAlbumByBeansRequest.beans = String.valueOf(mAlbumBean.getCost());
-        lookAlbumByBeansRequest.album_id = String.valueOf(mAlbumBean.getId());
-        lookAlbumByBeansRequest.see_id = String.valueOf(mUid);
-        mPresenter.onRequestAlbumByBeans(lookAlbumByBeansRequest);
-    }
-
-    /**
      * 查看联系方式成功
      */
     @Override
@@ -657,16 +642,27 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
     /**
+     * 嗨豆查看相册
+     */
+    private void lookAlbumByBeansRequest() {
+        LookAlbumByBeansRequest lookAlbumByBeansRequest = new LookAlbumByBeansRequest();
+        lookAlbumByBeansRequest.token = mBuProcessor.getToken();
+        lookAlbumByBeansRequest.beans = String.valueOf(mAlbumBean.getCost());
+        lookAlbumByBeansRequest.album_id = String.valueOf(mAlbumBean.getId());
+        lookAlbumByBeansRequest.see_id = String.valueOf(mUid);
+        mPresenter.onRequestAlbumByBeans(lookAlbumByBeansRequest);
+    }
+
+    /**
      * 查看相册成功
      */
     @Override
     public void getAlbumByBeansSuccess(String msg) {
         mAlbumBean.setState(1);
         albumAdapter.notifyDataSetChanged();
-        //返回首页更新 我的 数据
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_HOME_INFO));
-//        requestHomeUserInfo();
+        requestHomeUserInfo();
     }
+
 
     /**
      * 更新个人信息
@@ -693,6 +689,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         mLoginUser.today_chat = userBean.getToday_chat();
         mLoginUser.today_see_contact = userBean.getToday_see_contact();//今日免费查看次数
         mBuProcessor.setLoginUser(mLoginUser);
+        //更新 我的 数据
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     /**

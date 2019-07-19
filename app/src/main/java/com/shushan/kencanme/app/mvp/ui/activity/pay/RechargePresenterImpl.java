@@ -5,11 +5,14 @@ import android.content.Context;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
+import com.shushan.kencanme.app.entity.response.CreateOrderByUniPinResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
@@ -176,6 +179,52 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
     private void requestPayFinishAHDISuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             mRechargeView.getPayFinishAHDIUploadSuccess();
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    /**
+     * UniPin支付创建订单
+     */
+    @Override
+    public void onRequestCreateOrderByUniPin(RequestOrderUniPinPayRequest requestOrderUniPinPayRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onRequestCreateOrderByUniPin(requestOrderUniPinPayRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestCreateOrderByUniPinSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestCreateOrderByUniPinSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(CreateOrderByUniPinResponse.class);
+            if (responseData.parsedData != null) {
+                CreateOrderByUniPinResponse response = (CreateOrderByUniPinResponse) responseData.parsedData;
+                mRechargeView.createOrderByUniPinSuccess(response);
+            }
+        } else {
+            mRechargeView.showToast(responseData.errorMsg);
+        }
+    }
+
+
+    /**
+     * UniPin支付上报
+     */
+    @Override
+    public void onPayFinishUploadByUniPin(PayFinishByUniPinRequest payFinishByUniPinRequest) {
+        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mReChargeBeansModel.onPayFinishUploadByUniPin(payFinishByUniPinRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                        () -> mRechargeView.dismissLoading());
+        mRechargeView.addSubscription(disposable);
+    }
+
+    private void requestPayFinishByUniPinSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mRechargeView.getPayFinishUploadByUniPinSuccess();
         } else {
             mRechargeView.showToast(responseData.errorMsg);
         }

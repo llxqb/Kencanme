@@ -25,6 +25,11 @@ public interface BuyApi {
     @POST("menggoda/user/vipinfo")
     Observable<String> openVipListRequest(@Body String request);
     /**
+     * 用户首页信息
+     */
+    @POST("menggoda/index/user_exposure")
+    Observable<String> onRequestHomeUserInfo(@Body String request);
+    /**
      * 创建订单Google支付
      */
     @POST("menggoda/order")
@@ -35,20 +40,25 @@ public interface BuyApi {
     @POST("menggoda/Ahdipay")
     Observable<String> onRequestCreateOrderAHDI(@Body String request);
     /**
-     * 用户首页信息
+     * 创建订单--UniPin支付
      */
-    @POST("menggoda/index/user_exposure")
-    Observable<String> onRequestHomeUserInfo(@Body String request);
+    @POST("menggoda/unipinpay")
+    Observable<String> onRequestCreateOrderByUniPin(@Body String request);
     /**
-     * 支付成功上报
+     * Google支付成功上报
      * 多参数表单提交
      */
     @FormUrlEncoded
     @POST("menggoda/google")
     Observable<String> onRequestPaySuccess(@Field("INAPP_PURCHASE_DATA") String data, @Field("INAPP_DATA_SIGNATURE") String signature,@Field("order_no") String order_no);
     /**
-     * 用户首页信息
+     * AHDI支付成功上报
      */
     @POST("menggoda/Ahdipay/report")
     Observable<String> onPayFinishAHDIUpload(@Body String request);
+    /**
+     * UniPin支付上报
+     */
+    @POST("menggoda/unipinpay/inquiry")
+    Observable<String> onPayFinishUploadByUniPin(@Body String request);
 }

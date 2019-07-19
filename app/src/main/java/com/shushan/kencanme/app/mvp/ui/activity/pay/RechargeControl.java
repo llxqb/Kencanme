@@ -3,11 +3,14 @@ package com.shushan.kencanme.app.mvp.ui.activity.pay;
 
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
+import com.shushan.kencanme.app.entity.response.CreateOrderByUniPinResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
@@ -26,11 +29,15 @@ public class RechargeControl {
 
         void createOrderAHDISuccess(CreateOrderAHDIResponse createOrderAHDIResponse);
 
+        void createOrderByUniPinSuccess(CreateOrderByUniPinResponse createOrderByUniPinResponse);
+
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
 
         void getPayFinishUploadSuccess();
 
         void getPayFinishAHDIUploadSuccess();
+
+        void getPayFinishUploadByUniPinSuccess();
     }
 
     public interface PresenterRecharge extends Presenter<RechargeView> {
@@ -63,6 +70,16 @@ public class RechargeControl {
          * AHDI支付上报（查询是否已经支付完成）
          */
         void onPayFinishAHDIUpload(PayFinishAHDIRequest payFinishAHDIRequest);
+
+        /**
+         * UniPin支付创建订单
+         */
+        void onRequestCreateOrderByUniPin(RequestOrderUniPinPayRequest requestOrderUniPinPayRequest);
+
+        /**
+         * UniPin支付上报，不管支付成功或者失败返回RechargeActivity进行上报
+         */
+        void onPayFinishUploadByUniPin(PayFinishByUniPinRequest payFinishByUniPinRequest);
     }
 
 }

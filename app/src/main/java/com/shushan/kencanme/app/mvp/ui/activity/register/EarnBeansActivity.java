@@ -1,7 +1,5 @@
 package com.shushan.kencanme.app.mvp.ui.activity.register;
-/**
- * 邀请页面
- */
+
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shushan.kencanme.app.BuildConfig;
 import com.shushan.kencanme.app.KencanmeApp;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
@@ -120,7 +117,7 @@ public class EarnBeansActivity extends BaseActivity {
         //分享到facebook
         SnsPlatform snsPlatform = SHARE_MEDIA.FACEBOOK.toSnsPlatform();
         //分享链接
-        UMWeb web = new UMWeb(BuildConfig.KENCANME_BASE_URL + getResources().getString(R.string.down_app) + mSharePreferenceUtil.getData("code"));
+        UMWeb web = new UMWeb(KENCANME_BASE_URL + getResources().getString(R.string.down_app) + mSharePreferenceUtil.getData("code"));
         web.setTitle(getResources().getString(R.string.facebook_title));
         web.setThumb(new UMImage(this, R.drawable.logo));
         web.setDescription(getResources().getString(R.string.facebook_content));

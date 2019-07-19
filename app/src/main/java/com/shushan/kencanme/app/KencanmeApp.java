@@ -38,6 +38,10 @@ public class KencanmeApp extends Application {
 //    @Inject
 //    BuProcessor mBuProcessor;
 
+    public AppComponent getAppComponent() {
+        return mAppComponent;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -51,18 +55,19 @@ public class KencanmeApp extends Application {
         mContext = this.getApplicationContext();
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mAppComponent.inject(this);//必须有
+        // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
+        SophixManager.getInstance().queryAndLoadNewPatch();
         //初始化融云
         initRongYun();
         //友盟init
         initUM();
-        // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-        SophixManager.getInstance().queryAndLoadNewPatch();
     }
 
-    public AppComponent getAppComponent() {
-        return mAppComponent;
-    }
 
+
+    /**
+     * 初始化阿里移动热更新
+     */
     private void initHotfix() {
         String appVersion;
         try {
@@ -92,12 +97,11 @@ public class KencanmeApp extends Application {
     }
 
 
-
+    /**
+     * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
+     * io.rong.push 为融云 push 进程名称，不可修改。
+     */
     public void initRongYun() {
-        /**
-         * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
-         * io.rong.push 为融云 push 进程名称，不可修改。
-         */
         if (getApplicationInfo().packageName
                 .equals(getCurProcessName(getApplicationContext()))
                 || "io.rong.push"
@@ -111,6 +115,10 @@ public class KencanmeApp extends Application {
         }
     }
 
+    /**
+     * 初始化友盟
+     * 用到了友盟分享
+     */
     private void initUM() {
         UMConfigure.init(this, ServerConstant.UM_APP_KEY
                 , "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");

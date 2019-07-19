@@ -2,17 +2,20 @@ package com.shushan.kencanme.app.mvp.ui.activity.pay;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahdi.sdk.payment.AhdiPay;
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -23,11 +26,14 @@ import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.ReChargeBeansInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
+import com.shushan.kencanme.app.entity.response.CreateOrderByUniPinResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.ReChargeBeansInfoResponse;
@@ -87,7 +93,10 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     private IabHelper iabHelper;
     //点击item
     ReChargeBeansInfoResponse.BeansinfoBean beansinfoBean;
-
+    /**
+     * 是否是打开了UniPin支付网页页面
+     */
+    private boolean openUniPinWeb = false;
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
 
@@ -219,7 +228,8 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     }
 
     private void UNiPinPayChoose() {
-
+        //2.创建订单 - UniPin支付
+        createOrderByUniPin(String.valueOf(beansinfoBean.getB_id()), String.valueOf(beansinfoBean.getYn_price()));
     }
 
     /**
@@ -324,6 +334,59 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         requestHomeUserInfo();
     }
 
+
+    /**
+     * 创建订单 UniPin订单
+     */
+    private void createOrderByUniPin(String relation_id, String price) {
+        RequestOrderUniPinPayRequest requestOrderUniPinPayRequest = new RequestOrderUniPinPayRequest();
+        requestOrderUniPinPayRequest.token = mLoginUser.token;
+        requestOrderUniPinPayRequest.type = "2";
+        requestOrderUniPinPayRequest.relation_id = relation_id;
+        requestOrderUniPinPayRequest.money = price;
+        mPresenter.onRequestCreateOrderByUniPin(requestOrderUniPinPayRequest);
+    }
+
+
+    CreateOrderByUniPinResponse mCreateOrderByUniPinResponse;
+    /**
+     * 创建订单成功--UniPin
+     */
+    @Override
+    public void createOrderByUniPinSuccess(CreateOrderByUniPinResponse createOrderByUniPinResponse) {
+        Log.e("ddd", "createOrderByUniPinResponse:" + new Gson().toJson(createOrderByUniPinResponse));
+        mCreateOrderByUniPinResponse = createOrderByUniPinResponse;
+        openUniPinWeb = true;
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(createOrderByUniPinResponse.getUrl());
+        intent.setData(content_url);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (openUniPinWeb) {
+            openUniPinWeb = false;
+            String orderId = mCreateOrderByUniPinResponse.getOrder_no();
+            //UniPin支付上报
+            PayFinishByUniPinRequest payFinishByUniPinRequest = new PayFinishByUniPinRequest();
+            payFinishByUniPinRequest.order_no = orderId;
+            mPresenter.onPayFinishUploadByUniPin(payFinishByUniPinRequest);
+        }
+    }
+
+    /**
+     * UniPin上报成功
+     */
+    @Override
+    public void getPayFinishUploadByUniPinSuccess() {
+        //查询用户信息-->更新用户信息(我的-首页接口)
+        requestHomeUserInfo();
+    }
+
+
     /**
      * 查询我的-首页接口，更新用户信息(首页)
      */
@@ -341,6 +404,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         showToast(getResources().getString(R.string.success));
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         mLoginUser.vip = userBean.getVip();
+        mLoginUser.vip_time = userBean.getVip_time();
         mLoginUser.svip = userBean.getSvip();
         mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
         mLoginUser.exposure = userBean.getExposure();

@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.vip;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -25,10 +26,13 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.CreateOrderAHDIResponse;
+import com.shushan.kencanme.app.entity.response.CreateOrderByUniPinResponse;
 import com.shushan.kencanme.app.entity.response.CreateOrderResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.OpenVipResponse;
@@ -109,6 +113,10 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     private IabHelper iabHelper;
     private LoginUser mLoginUser;
+    /**
+     * 是否是打开了UniPin支付网页页面
+     */
+    private boolean openUniPinWeb = false;
     @Inject
     OpenVipControl.PresenterOpenVip mPresenter;
 
@@ -268,7 +276,8 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     }
 
     private void UNiPinPayChoose() {
-
+        //2.创建订单 - UniPin支付
+        createOrderByUniPin(String.valueOf(mVipinfoBean.getV_id()), String.valueOf(mVipinfoBean.getYn_special_price()));
     }
 
     /**
@@ -366,6 +375,58 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
      */
     @Override
     public void getPayFinishAHDIUploadSuccess() {
+        //查询用户信息-->更新用户信息(我的-首页接口)
+        requestHomeUserInfo();
+    }
+
+    /**
+     * 创建订单 UniPin订单
+     */
+    private void createOrderByUniPin(String relation_id, String price) {
+        RequestOrderUniPinPayRequest requestOrderUniPinPayRequest = new RequestOrderUniPinPayRequest();
+        requestOrderUniPinPayRequest.token = mLoginUser.token;
+        requestOrderUniPinPayRequest.type = "1";
+        requestOrderUniPinPayRequest.relation_id = relation_id;
+        requestOrderUniPinPayRequest.money = price;
+        mPresenter.onRequestCreateOrderByUniPin(requestOrderUniPinPayRequest);
+    }
+
+    CreateOrderByUniPinResponse mCreateOrderByUniPinResponse;
+
+    /**
+     * 创建订单成功--UniPin
+     */
+    @Override
+    public void createOrderByUniPinSuccess(CreateOrderByUniPinResponse createOrderByUniPinResponse) {
+//        Log.e("ddd", "createOrderByUniPinResponse:" + new Gson().toJson(createOrderByUniPinResponse));
+        mCreateOrderByUniPinResponse = createOrderByUniPinResponse;
+        openUniPinWeb = true;
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(createOrderByUniPinResponse.getUrl());
+        intent.setData(content_url);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (openUniPinWeb) {
+            openUniPinWeb = false;
+            String orderId = mCreateOrderByUniPinResponse.getOrder_no();
+            //UniPin支付上报
+            PayFinishByUniPinRequest payFinishByUniPinRequest = new PayFinishByUniPinRequest();
+            payFinishByUniPinRequest.order_no = orderId;
+            mPresenter.onPayFinishUploadByUniPin(payFinishByUniPinRequest);
+        }
+    }
+
+
+    /**
+     * UniPin上报成功
+     */
+    @Override
+    public void getPayFinishUploadByUniPinSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
     }

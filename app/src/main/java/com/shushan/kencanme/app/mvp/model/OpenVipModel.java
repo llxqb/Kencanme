@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.CreateOrderRequest;
 import com.shushan.kencanme.app.entity.request.OpenVipRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishAHDIRequest;
+import com.shushan.kencanme.app.entity.request.PayFinishByUniPinRequest;
 import com.shushan.kencanme.app.entity.request.PayFinishUploadRequest;
 import com.shushan.kencanme.app.entity.request.RequestOrderAHDIRequest;
+import com.shushan.kencanme.app.entity.request.RequestOrderUniPinPayRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.network.networkapi.BuyApi;
 
@@ -69,4 +71,17 @@ public class OpenVipModel {
         return mBuyApi.onPayFinishAHDIUpload(new Gson().toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 创建订单--UniPin支付
+     */
+    public Observable<ResponseData> onRequestCreateOrderByUniPin(RequestOrderUniPinPayRequest request) {
+        return mBuyApi.onRequestCreateOrderByUniPin(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * UniPin支付上报
+     */
+    public Observable<ResponseData> onPayFinishUploadByUniPin(PayFinishByUniPinRequest request) {
+        return mBuyApi.onPayFinishUploadByUniPin(new Gson().toJson(request)).map(mTransform::transformCommon);
+    }
 }
