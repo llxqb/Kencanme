@@ -219,7 +219,7 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
         if (responseData.resultCode == 0) {
             mOpenVipView.getPayFinishUploadByUniPinSuccess();
         } else {
-            mOpenVipView.showToast(responseData.errorMsg);
+            mOpenVipView.showToast(mContext.getResources().getString(R.string.payment_fail));
         }
     }
     

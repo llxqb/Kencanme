@@ -31,6 +31,7 @@ import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.LoginDialog;
+import com.umeng.facebook.login.LoginResult;
 
 import javax.inject.Inject;
 
@@ -52,6 +53,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     RelativeLayout mLoginFacebookRl;
     @BindView(R.id.login_whats_app_rl)
     RelativeLayout mLoginWhatsAppRl;
+    private FacebookLoginHelper faceBookLoginManager;
 
     @Inject
     LoginControl.PresenterLogin mPresenterLogin;
@@ -68,15 +70,27 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         initData();
     }
 
+
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
+        initFaceBookLogin();
     }
 
 
     @Override
     public void initData() {
 
+    }
+
+    private void initFaceBookLogin() {
+        faceBookLoginManager = new FacebookLoginHelper(new FacebookLoginHelper.OnLoginSuccessListener() {
+            @Override
+            public void onSuccess(LoginResult result) {
+                //登录成功
+            }
+        });
+        faceBookLoginManager.initFaceBook(getApplicationContext());
     }
 
     @OnClick({R.id.login_google_rl, R.id.login_facebook_rl, R.id.login_whats_app_rl})
@@ -89,7 +103,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
-                new FacebookLoginHelper(this).facebookLogin();
+                faceBookLoginManager.faceBookLogin(this);
                 break;
             case R.id.login_whats_app_rl:
                 //WhatsApp登录
@@ -108,20 +122,18 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         if (requestCode == Constant.GOOGLE_LOGIN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        } else if (requestCode == Constant.FACEBOOK_LOGIN) {
-//            callbackManager.onActivityResult(requestCode, resultCode, data)
-
+        } else {
+            //facebook回调  64206
+            FacebookLoginHelper.mFaceBookCallBack.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     //处理google回调
     private void handleSignInResult(GoogleSignInResult result) {
         Log.e("ddd", "handleSignInResult----" + result.isSuccess());
-//        Log.e("ddd",new Gson().toJson(result));
         dismissLoading();
         if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-//            Log.e("ddd", "id--------" + account.getId() + "----name----" + account.getDisplayName() + "---photo--" + account.getPhotoUrl() + " token:" + account.getIdToken());
             //登录后台系统
             assert account != null;
             appLogin(account.getId(), account.getIdToken());
@@ -146,7 +158,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
         mSharePreferenceUtil.setData("rongId", userinfoBean.getRongyun_third_id());
         mSharePreferenceUtil.setData("code", userinfoBean.getCode());//邀请码
-        //根据token请求个人信息    在MainActivity 中也会请求个人信息 会存在重复请求  <待优化>
+        //根据token请求个人信息
         PersonalInfoRequest request = new PersonalInfoRequest();
         request.token = userinfoBean.getToken();
         mPresenterLogin.onRequestPersonalInfo(request);
@@ -160,7 +172,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
         GoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
-//        LogUtils.e("personalInfoResponse:" + new Gson().toJson(personalInfoResponse));
+        faceBookLoginManager.faceBookLoginOut();
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity

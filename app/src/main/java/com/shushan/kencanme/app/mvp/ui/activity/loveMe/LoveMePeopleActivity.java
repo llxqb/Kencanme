@@ -29,11 +29,12 @@ import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.LoveMeFriendsAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
-import com.shushan.kencanme.app.mvp.views.MyTimer;
 import com.shushan.kencanme.app.mvp.views.dialog.MatchSuccessDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -45,8 +46,7 @@ import io.rong.imkit.RongIM;
 /**
  * 查看喜欢我的人
  */
-public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener, MatchSuccessDialog.MatchSuccessListener,
-        MyTimer.MyTimeListener {
+public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleControl.LoveMePeopleView, CommonDialog.CommonDialogListener, MatchSuccessDialog.MatchSuccessListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -108,7 +108,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                         if (!listBean.isLike) {
                             likeDialog = DialogFactory.showLikeDialog(LoveMePeopleActivity.this);
                             likeDialog.show();
-                            setmRemainTime();
+                            setLikeRemainTime();
                             //能进来就是超级vip,超级VIP可以不用判断了
 //                            if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
 //                            } else {
@@ -124,6 +124,26 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
                 }
             }
         });
+    }
+
+    TimerTask task; //将原任务从队列中移除
+
+    /**
+     * 设置喜欢动画倒计时
+     */
+    private void setLikeRemainTime() {
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    likeDialog.dismiss();
+                    if (task != null) {
+                        task.cancel();  //将原任务从队列中移除
+                    }
+                });
+            }
+        };
+        new Timer().schedule(task, 600);
     }
 
     @Override
@@ -170,7 +190,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     private void showMatchSuccesDialog() {
         MatchSuccessDialog matchSuccessDialog = MatchSuccessDialog.newInstance();
         matchSuccessDialog.setListener(this);
-        matchSuccessDialog.setContent(mLoginUser.nickname,mLoginUser.trait,listBean.getNickname(),listBean.getTrait());
+        matchSuccessDialog.setContent(mLoginUser.nickname, mLoginUser.trait, listBean.getNickname(), listBean.getTrait());
         DialogFactory.showDialogFragment(this.getSupportFragmentManager(), matchSuccessDialog, MatchSuccessDialog.TAG);
     }
 
@@ -200,31 +220,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         startActivitys(OpenVipActivity.class);
     }
 
-    MyTimer myTimer;
-
-    /**
-     * 设置一分钟倒计时
-     */
-    private void setmRemainTime() {
-        myTimer = MyTimer.getInstance(1000, 1000, this);
-        myTimer.setListener(this);
-        myTimer.cancel();
-        myTimer.start();
-    }
-
-    /**
-     * 一分钟倒计时结束
-     */
-    @Override
-    public void onFinish() {
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
-        }
-        if (likeDialog.isShowing()) {
-            likeDialog.dismiss();
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -232,14 +227,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         super.onBackPressed();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
-        }
-    }
 
     private void initializeInjector() {
         DaggerLoveMePeopleComponent.builder().appComponent(getAppComponent())

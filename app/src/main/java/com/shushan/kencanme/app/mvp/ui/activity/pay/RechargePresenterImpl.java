@@ -226,7 +226,7 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
         if (responseData.resultCode == 0) {
             mRechargeView.getPayFinishUploadByUniPinSuccess();
         } else {
-            mRechargeView.showToast(responseData.errorMsg);
+            mRechargeView.showToast(mContext.getResources().getString(R.string.payment_fail));
         }
     }
 

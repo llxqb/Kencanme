@@ -58,6 +58,8 @@ import com.shushan.kencanme.app.mvp.views.dialog.UseExposureDialog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -92,7 +94,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     private HomeFragmentResponse.ListBean listBean;
     //喜欢动画
     private Dialog likeDialog;
-    private boolean likeRemainTime;
     private int clickPos;
     /**
      * 曝光剩余时间
@@ -246,8 +247,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void goLike(int uId) {
         likeDialog = DialogFactory.showLikeDialog(getActivity());
         likeDialog.show();
-        likeRemainTime = true;
-        setmRemainTime(1000);
+        setLikeRemainTime();
         if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
@@ -257,6 +257,26 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_like));
         }
     }
+
+    TimerTask task; //将原任务从队列中移除
+    /**
+     * 设置喜欢动画倒计时
+     */
+    private void setLikeRemainTime() {
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    likeDialog.dismiss();
+                    if (task != null) {
+                        task.cancel();  //将原任务从队列中移除
+                    }
+                });
+            }
+        };
+        new Timer().schedule(task, 600);
+    }
+
 
     /**
      * 去聊天
@@ -331,7 +351,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-//        LogUtils.e("userBean:" + new Gson().toJson(userBean));
+        LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mLoginUser.vip = userBean.getVip();
         mLoginUser.vip_time = userBean.getVip_time();
         mLoginUser.svip = userBean.getSvip();
@@ -405,22 +425,23 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mRemainTime = remainTime / 60 + 1;
             String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + remainTime / 60 + " min";
             mUseExposuringHint.setText(exposureValue);
-            setmRemainTime(60000);
+            setmRemainTime();
         } else {
             mUseExposuringHint.setVisibility(View.INVISIBLE);
         }
     }
 
-    MyTimer myTimer;
+    MyTimer myTimerExporse;
 
     /**
-     * 设置三十分钟倒计时
+     * 开启一分钟倒计时
      */
-    private void setmRemainTime(int totalTime) {
-        myTimer = MyTimer.getInstance(totalTime, 1000, getActivity());
-        myTimer.setListener(this);
-        myTimer.cancel();
-        myTimer.start();
+    private void setmRemainTime() {
+        //在曝光中
+        myTimerExporse = MyTimer.getInstance(60 * 1000, 1000, getActivity());
+        myTimerExporse.setListener(this);
+        myTimerExporse.cancel();
+        myTimerExporse.start();
     }
 
     /**
@@ -428,29 +449,17 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void onFinish() {
-        if (likeRemainTime) {//喜欢动画倒计时
-            likeRemainTime = false;
-            if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-                myTimer.cancel();
-                myTimer = null;
-            }
-            if (likeDialog.isShowing()) {
-                likeDialog.dismiss();
-            }
-        } else {//超级曝光倒计时
-            mRemainTime--;
-            if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-                myTimer.cancel();
-                myTimer = null;
-            }
-            if (mRemainTime > 0) {
-                setmRemainTime(60000);
-                String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + mRemainTime + " min";
-                mUseExposuringHint.setText(exposureValue);
-            } else {
-                mUseExposuringHint.setVisibility(View.INVISIBLE);
-            }
-//        requestHomeUserInfo();   不用走接口了
+        mRemainTime--;
+        if (myTimerExporse != null) {//显示CommonDialog时取消myTimer计时
+            myTimerExporse.cancel();
+            myTimerExporse = null;
+        }
+        if (mRemainTime > 0) {
+            setmRemainTime();
+            String exposureValue = getResources().getString(R.string.HomeFragment_Super_exposure_hint) + mRemainTime + " min";
+            mUseExposuringHint.setText(exposureValue);
+        } else {
+            mUseExposuringHint.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -524,9 +533,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
+        if (myTimerExporse != null) {//显示CommonDialog时取消myTimer计时
+            myTimerExporse.cancel();
+            myTimerExporse = null;
         }
     }
 

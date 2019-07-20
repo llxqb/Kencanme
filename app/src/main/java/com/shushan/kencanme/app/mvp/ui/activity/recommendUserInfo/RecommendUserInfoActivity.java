@@ -53,7 +53,6 @@ import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
-import com.shushan.kencanme.app.mvp.views.MyTimer;
 import com.shushan.kencanme.app.mvp.views.dialog.CommonChoiceDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.MatchSuccessDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.MessageUseBeansDialog;
@@ -61,6 +60,8 @@ import com.shushan.kencanme.app.mvp.views.dialog.RechargeBeansDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -74,7 +75,7 @@ import io.rong.imkit.RongIM;
  * 推荐用户资料详情
  */
 public class RecommendUserInfoActivity extends BaseActivity implements RecommendUserInfoControl.RecommendUserInfoView, CommonChoiceDialog.commonChoiceDialogListener,
-        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener, MyTimer.MyTimeListener, MatchSuccessDialog.MatchSuccessListener {
+        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener,MatchSuccessDialog.MatchSuccessListener {
     @BindView(R.id.back_iv)
     ImageView mBackIv;
     @BindView(R.id.more_iv)
@@ -420,7 +421,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     private void likeIv() {
         likeDialog = DialogFactory.showLikeDialog(this);
         likeDialog.show();
-        setmRemainTime();
+        setLikeRemainTime();
         if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
             LikeRequest likeRequest = new LikeRequest();
             likeRequest.token = mBuProcessor.getToken();
@@ -432,6 +433,25 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         }
     }
 
+    TimerTask task; //将原任务从队列中移除
+
+    /**
+     * 设置喜欢动画倒计时
+     */
+    private void setLikeRemainTime() {
+        task = new TimerTask() {
+            @Override
+            public void run() {
+               runOnUiThread(() -> {
+                    likeDialog.dismiss();
+                    if (task != null) {
+                        task.cancel();  //将原任务从队列中移除
+                    }
+                });
+            }
+        };
+        new Timer().schedule(task, 600);
+    }
 
     /**
      * 去聊天
@@ -560,33 +580,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         showToast(msg);
     }
 
-    MyTimer myTimer;
-
-    /**
-     * 设置一秒钟倒计时
-     */
-    private void setmRemainTime() {
-        myTimer = MyTimer.getInstance(1000, 1000, this);
-        myTimer.setListener(this);
-        myTimer.cancel();
-        myTimer.start();
-    }
-
-    /**
-     * 一秒钟倒计时结束
-     */
-    @Override
-    public void onFinish() {
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
-        }
-        if (likeDialog.isShowing()) {
-            likeDialog.dismiss();
-        }
-    }
-
-
     /**
      * 赚嗨豆
      */
@@ -705,14 +698,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (myTimer != null) {//显示CommonDialog时取消myTimer计时
-            myTimer.cancel();
-            myTimer = null;
-        }
-    }
 
     private void initializeInjector() {
         DaggerRecommendUserInfoComponent.builder().appComponent(getAppComponent())
