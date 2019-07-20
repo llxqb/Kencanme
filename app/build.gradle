@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 13
-        versionName "1.1.1"
+        versionCode 14
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -44,7 +44,7 @@ android {
 //            debuggable true //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
-            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL
+            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL_DEBUG
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

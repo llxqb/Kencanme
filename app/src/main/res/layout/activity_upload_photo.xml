@@ -210,11 +210,12 @@
                     android:drawableStart="@mipmap/home_popup_hibeans"
                     android:hint="@string/UploadPhotoActivity_custom_num"
                     android:minHeight="@dimen/dp_33"
+                    android:layout_marginTop="@dimen/dp_m_2"
                     android:inputType="number"
                     android:paddingEnd="@dimen/dp_12"
                     android:paddingStart="@dimen/dp_12"
                     android:textColorHint="@color/text_hint_color"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 

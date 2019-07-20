@@ -48,6 +48,7 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
@@ -672,16 +673,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getHomeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
-        //把另外几项LoginUser加入进来
-        mLoginUser.exposure = userBean.getExposure();
-        mLoginUser.beans = userBean.getBeans();
-        mLoginUser.exposure_type = userBean.getExposure_type();
-        mLoginUser.exposure_time = userBean.getExposure_time();
-        mLoginUser.today_like = userBean.getToday_like();
-        mLoginUser.today_chat = userBean.getToday_chat();
-        mLoginUser.today_see_contact = userBean.getToday_see_contact();//今日免费查看次数
-        mBuProcessor.setLoginUser(mLoginUser);
+        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
         //更新 我的 数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }

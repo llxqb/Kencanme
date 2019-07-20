@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.help.DialogFactory;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -111,17 +113,20 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
             case R.id.beans_one:
                 initBeansBg();
                 mBeansOne.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansOne.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = 1;
                 break;
             case R.id.beans_five:
                 initBeansBg();
                 mBeansFive.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansFive.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = 5;
                 break;
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setCursorVisible(true);
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansCustomEv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
             case R.id.sure_btn:
                 if (isValidEmpty()) {
@@ -148,6 +153,9 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
         mBeansOne.setBackgroundResource(R.drawable.bg_beans_selector_5);
         mBeansFive.setBackgroundResource(R.drawable.bg_beans_selector_5);
         mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selector_5);
+        mBeansOne.setTextColor(getResources().getColor(R.color.third_text_color));
+        mBeansFive.setTextColor(getResources().getColor(R.color.third_text_color));
+        mBeansCustomEv.setTextColor(getResources().getColor(R.color.third_text_color));
     }
 
     private boolean isValidEmpty() {
@@ -172,6 +180,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
         mPrivatePhotoCheckIv.setImageResource(R.mipmap.pay_hibeans_no_choose);
         mOrdinaryPhotoTv.setTextColor(getResources().getColor(R.color.color_80));
         mPrivatePhotoTv.setTextColor(getResources().getColor(R.color.color_80));
+
     }
 
 
@@ -199,6 +208,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
             if (!TextUtils.isEmpty(s)) {
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansCustomEv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = Integer.parseInt(s.toString());
             }
         }
@@ -214,7 +224,7 @@ public class SendPhotoTypeDialog extends BaseDialogFragment {
         try {
             this.dismiss();
         } catch (Exception e) {
-            DialogFactory.dismissDialogFragment(getActivity().getSupportFragmentManager(), TAG);
+            DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
 }

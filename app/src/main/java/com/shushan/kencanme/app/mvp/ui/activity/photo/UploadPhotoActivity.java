@@ -55,7 +55,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -134,7 +133,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.UploadPhotoActivity_title));
         mBeansCustomEv.addTextChangedListener(textWatcher);
-        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
         if (getIntent() != null) {
             dataBean = getIntent().getParcelableExtra("dataBean");
         }
@@ -198,16 +196,19 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
             case R.id.beans_one:
                 initBeansBg();
                 mBeansOne.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansOne.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = 1;
                 break;
             case R.id.beans_five:
                 initBeansBg();
                 mBeansFive.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansFive.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = 5;
                 break;
             case R.id.beans_custom_ev:
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansCustomEv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 break;
         }
     }
@@ -216,6 +217,9 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         mBeansOne.setBackgroundResource(R.drawable.bg_beans_selector_5);
         mBeansFive.setBackgroundResource(R.drawable.bg_beans_selector_5);
         mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selector_5);
+        mBeansOne.setTextColor(getResources().getColor(R.color.third_text_color));
+        mBeansFive.setTextColor(getResources().getColor(R.color.third_text_color));
+        mBeansCustomEv.setTextColor(getResources().getColor(R.color.third_text_color));
     }
 
     @Override
@@ -424,6 +428,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
             if (!TextUtils.isEmpty(s)) {
                 initBeansBg();
                 mBeansCustomEv.setBackgroundResource(R.drawable.bg_beans_selectored_5);
+                mBeansCustomEv.setTextColor(getResources().getColor(R.color.photo_check_text_color));
                 beansNumber = Integer.parseInt(s.toString());
             }
         }

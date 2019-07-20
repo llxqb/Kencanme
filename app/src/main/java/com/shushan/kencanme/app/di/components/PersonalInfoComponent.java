@@ -25,7 +25,7 @@ import dagger.Component;
 @Component(dependencies = AppComponent.class, modules = {PersonalInfoModule.class, ActivityModule.class})
 public interface PersonalInfoComponent extends ActivityComponent {
     //对LoginActivity进行依赖注入
-    void inject(CreatePersonalInfoActivity settingActivity);
+    void inject(CreatePersonalInfoActivity createPersonalInfoActivity);
 
     void inject(PersonalInfoUploadPhotoActivity personalInfoUploadPhotoActivity);
 

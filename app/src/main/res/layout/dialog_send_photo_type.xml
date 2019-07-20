@@ -134,6 +134,7 @@
                 android:paddingStart="@dimen/dp_12"
                 android:paddingEnd="@dimen/dp_12"
                 android:text="1"
+                android:textColor="@color/third_text_color"
                 android:textSize="@dimen/sp_24" />
 
             <TextView
@@ -146,6 +147,7 @@
                 android:drawablePadding="@dimen/dp_2"
                 android:paddingStart="@dimen/dp_12"
                 android:paddingEnd="@dimen/dp_12"
+                android:textColor="@color/third_text_color"
                 android:text="5"
                 android:textSize="@dimen/sp_24" />
 
@@ -164,6 +166,7 @@
                 android:minHeight="@dimen/dp_34"
                 android:paddingStart="@dimen/dp_12"
                 android:paddingEnd="@dimen/dp_12"
+                android:textColor="@color/third_text_color"
                 android:textColorHint="@color/text_hint_color"
                 android:textSize="@dimen/sp_16" />
         </LinearLayout>

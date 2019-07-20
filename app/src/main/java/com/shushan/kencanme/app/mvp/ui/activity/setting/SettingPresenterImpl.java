@@ -34,7 +34,7 @@ public class SettingPresenterImpl implements SettingControl.PresenterSetting {
 
 
     @Override
-    public void onRequestPersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
+    public void updatePersonalInfo(UpdatePersonalInfoRequest createPersonalInfoRequest) {
         mSettingView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mSettingModel.updatePersonalInfoRequest(createPersonalInfoRequest).compose(mSettingView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
                 .subscribe(this::requestDataSuccess, throwable -> mSettingView.showErrMessage(throwable),

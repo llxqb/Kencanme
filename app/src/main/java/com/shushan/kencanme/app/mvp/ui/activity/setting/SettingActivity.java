@@ -252,7 +252,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
             updatePersonalInfoRequest.pushing_small_age = minYear;
             updatePersonalInfoRequest.pushing_large_age = maxYear;
             updatePersonalInfoRequest.pushing_gender = pushSex;
-            mPresenter.onRequestPersonalInfo(updatePersonalInfoRequest);
+            mPresenter.updatePersonalInfo(updatePersonalInfoRequest);
         } else {
             super.onBackPressed();
         }

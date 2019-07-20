@@ -1,5 +1,6 @@
 package com.shushan.kencanme.app.mvp.ui.activity.login;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.app.di.components.LoginComponent;
@@ -31,6 +33,7 @@ import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.LoginDialog;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.facebook.login.LoginResult;
 
 import javax.inject.Inject;
@@ -54,7 +57,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     @BindView(R.id.login_whats_app_rl)
     RelativeLayout mLoginWhatsAppRl;
     private FacebookLoginHelper faceBookLoginManager;
-
     @Inject
     LoginControl.PresenterLogin mPresenterLogin;
 
@@ -87,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         faceBookLoginManager = new FacebookLoginHelper(new FacebookLoginHelper.OnLoginSuccessListener() {
             @Override
             public void onSuccess(LoginResult result) {
+                Log.e("ddd", "result:" + new Gson().toJson(result));
                 //登录成功
             }
         });
@@ -100,6 +103,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 //Google登录
                 showLoading(getResources().getString(R.string.loading));
                 GoogleLoginHelper.googleLogin(this);
+//                checkPermissions();
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
@@ -112,6 +116,21 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         }
     }
 
+    @SuppressLint("CheckResult")
+    private void checkPermissions() {
+        RxPermissions mRxPermissions = new RxPermissions(this);
+        mRxPermissions.request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        ).subscribe(permission -> {
+            if (!permission) {
+                showToast("请开启所有的权限");
+            }else {
+                showLoading(getResources().getString(R.string.loading));
+                GoogleLoginHelper.googleLogin(this);
+            }
+        });
+    }
 
     /**
      * 登录回调

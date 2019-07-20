@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ import com.shushan.kencanme.app.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.app.mvp.utils.ConversationUtil;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.dialog.CommonChoiceDialog;
@@ -380,15 +382,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        //把另外几项LoginUser加入进来
-        mLoginUser.exposure = userBean.getExposure();
-        mLoginUser.beans = userBean.getBeans();
-        mLoginUser.exposure_type = userBean.getExposure_type();
-        mLoginUser.exposure_time = userBean.getExposure_time();
-        mLoginUser.today_like = userBean.getToday_like();
-        mLoginUser.today_chat = userBean.getToday_chat();
-        mLoginUser.today_see_contact = userBean.getToday_see_contact();
-        mBuProcessor.setLoginUser(mLoginUser);
+        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     /**

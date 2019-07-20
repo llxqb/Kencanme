@@ -42,8 +42,8 @@ import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.help.GooglePayHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.register.RechargeAgreementActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.RechargeAdapter;
-import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DataUtils;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.Purchase;
@@ -349,6 +349,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
 
 
     CreateOrderByUniPinResponse mCreateOrderByUniPinResponse;
+
     /**
      * 创建订单成功--UniPin
      */
@@ -403,18 +404,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         showToast(getResources().getString(R.string.success));
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mLoginUser.vip = userBean.getVip();
-        mLoginUser.vip_time = userBean.getVip_time();
-        mLoginUser.svip = userBean.getSvip();
-        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
-        mLoginUser.exposure = userBean.getExposure();
-        mLoginUser.beans = userBean.getBeans();
-        mLoginUser.exposure_type = userBean.getExposure_type();
-        mLoginUser.exposure_time = userBean.getExposure_time();
-        mLoginUser.today_like = userBean.getToday_like();
-        mLoginUser.today_chat = userBean.getToday_chat();
-        mLoginUser.today_see_contact = userBean.getToday_see_contact();
-        mBuProcessor.setLoginUser(mLoginUser);
+        mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         //更新界面UI
         updateUi();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));

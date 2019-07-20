@@ -48,6 +48,7 @@ import com.shushan.kencanme.app.mvp.ui.adapter.HomeAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.ClickUtil;
 import com.shushan.kencanme.app.mvp.utils.LogUtils;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.MyTimer;
@@ -352,19 +353,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
-        mLoginUser.vip = userBean.getVip();
-        mLoginUser.vip_time = userBean.getVip_time();
-        mLoginUser.svip = userBean.getSvip();
-        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
-        //把另外几项LoginUser加入进来
-        mLoginUser.exposure = userBean.getExposure();
-        mLoginUser.beans = userBean.getBeans();
-        mLoginUser.exposure_type = userBean.getExposure_type();
-        mLoginUser.exposure_time = userBean.getExposure_time();
-        mLoginUser.today_like = userBean.getToday_like();
-        mLoginUser.today_chat = userBean.getToday_chat();
-        mLoginUser.today_see_contact = userBean.getToday_see_contact();
-        mBuProcessor.setLoginUser(mLoginUser);
+        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
         setExposureData(userBean.getNow_time());
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }

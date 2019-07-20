@@ -24,7 +24,7 @@ public class SettingControl {
 
     public interface PresenterSetting extends Presenter<SettingView> {
         //编辑个人资料信息
-        void onRequestPersonalInfo(UpdatePersonalInfoRequest personalInfoRequest);
+        void updatePersonalInfo(UpdatePersonalInfoRequest personalInfoRequest);
 
         /**
          * 上传图片

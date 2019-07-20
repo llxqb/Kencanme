@@ -19,10 +19,12 @@ import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
 
 import javax.inject.Inject;
@@ -59,6 +61,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     @Inject
     PersonalInfoControl.PresenterPersonalInfo mPresenter;
     LoginUser mLoginUser;
+    private String mBirthdayValue;
     UpdatePersonalInfoRequest updatePersonalInfoRequest;
 
     @Override
@@ -116,13 +119,19 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
                 showBirthdayDialog();
                 break;
             case R.id.save_btn:
+                if (TextUtils.isEmpty(mEditCityEt.getText())) {
+                    showToast(getResources().getString(R.string.CreatePersonalInfoActivity_address_is_empty));
+                    return;
+                }
                 updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
                 updatePersonalInfoRequest.token = mBuProcessor.getToken();
                 updatePersonalInfoRequest.city = mEditCityEt.getText().toString();
                 updatePersonalInfoRequest.height = mEditHeightEt.getText().toString();
                 updatePersonalInfoRequest.weight = mEditWeightEt.getText().toString();
                 updatePersonalInfoRequest.bust = mEditChestEt.getText().toString();
-                updatePersonalInfoRequest.birthday = mEditBirthdayTv.getText().toString();
+                if (!TextUtils.isEmpty(mBirthdayValue)) {
+                    updatePersonalInfoRequest.birthday = DateUtil.getTime(mBirthdayValue, DateUtil.TIME_YYMMDD_HHMMSS);
+                }
                 updatePersonalInfoRequest.occupation = mEditOccupationEt.getText().toString();
                 mPresenter.updatePersonalInfo(updatePersonalInfoRequest);
                 break;
@@ -134,6 +143,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
      */
     private void showBirthdayDialog() {
         TimePickerView pvTime = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            mBirthdayValue = DateUtil.dateTranString(date, DateUtil.TIME_YYMMDD_HHMMSS);
             mEditBirthdayTv.setText(DateUtil.dateTranString(date, "yyyy/MM/dd"));
         })
                 .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
@@ -155,24 +165,30 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
     @Override
     public void updateSuccess(String response) {
-        showToast(response);
-        updatLoginUser();
+        requestPersonalInfo();
+    }
+
+    /**
+     * 查询 我的
+     */
+    private void requestPersonalInfo() {
+        PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
+        personalInfoRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestPersonalInfo(personalInfoRequest);
+    }
+
+    /**
+     * 查询我的成功
+     */
+    @Override
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+        //更新用户数据
+        showToast(getResources().getString(R.string.success));
+        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
         finish();
     }
 
-    /**
-     * 更新用户数据
-     */
-    private void updatLoginUser() {
-        mLoginUser.city = updatePersonalInfoRequest.city;
-        mLoginUser.height = updatePersonalInfoRequest.height;
-        mLoginUser.weight = updatePersonalInfoRequest.weight;
-        mLoginUser.bust = updatePersonalInfoRequest.bust;
-        mLoginUser.birthday = updatePersonalInfoRequest.birthday;
-        mLoginUser.occupation = updatePersonalInfoRequest.occupation;
-        mBuProcessor.setLoginUser(mLoginUser);
-    }
 
     @Override
     public void uploadVideoSuccess(String videoPath) {
@@ -186,10 +202,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
     public void updateMyAlbumSuccess(String msg) {
     }
 
-    @Override
-    public void personalInfoSuccess(PersonalInfoResponse response) {
-
-    }
 
     private void initializeInjector() {
         DaggerPersonalInfoComponent.builder().appComponent(getAppComponent())

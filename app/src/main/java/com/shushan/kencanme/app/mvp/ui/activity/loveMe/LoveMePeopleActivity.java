@@ -28,6 +28,7 @@ import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.LoveMeFriendsAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
+import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.MatchSuccessDialog;
 
@@ -69,6 +70,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_like_me_people);
+        StatusBarUtil.setTransparentForImageView(this, null);
         ButterKnife.bind(this);
         initializeInjector();
         initView();
@@ -80,7 +82,6 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
             //充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
-
         }
         super.onReceivePro(context, intent);
     }
@@ -95,7 +96,7 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     public void initView() {
         mLoginUser = mBuProcessor.getLoginUser();
         mCommonTitleTv.setText(getResources().getString(R.string.LoveMePeopleActivity_title));
-        mCommonIvRight.setVisibility(View.VISIBLE);
+        mCommonIvRight.setVisibility(View.INVISIBLE);
         mLoveMeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         myFriendsAdapter = new LoveMeFriendsAdapter(this, listBeanList, mImageLoaderHelper);
         mLoveMeRecyclerView.setAdapter(myFriendsAdapter);

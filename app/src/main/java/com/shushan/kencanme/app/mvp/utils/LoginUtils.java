@@ -2,6 +2,7 @@ package com.shushan.kencanme.app.mvp.utils;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 
@@ -45,7 +46,7 @@ public class LoginUtils {
 
     /**
      * LoginUser 转换为 UpdatePersonalInfoRequest
-     * 只在登录才用到
+     * 只在编辑交友资料才用到
      */
     public static UpdatePersonalInfoRequest tranPersonalInfoResponse(LoginUser loginUser) {
         UpdatePersonalInfoRequest updatePersonalInfoRequest = new UpdatePersonalInfoRequest();
@@ -68,4 +69,22 @@ public class LoginUtils {
     }
 
 
+    /**
+     * 更新本地LoginUser信息
+     */
+    public static LoginUser upDateLoginUser(LoginUser mLoginUser, HomeUserInfoResponse.UserBean userBean) {
+        mLoginUser.vip = userBean.getVip();
+        mLoginUser.vip_time = userBean.getVip_time();
+        mLoginUser.svip = userBean.getSvip();
+        mLoginUser.userType = AppUtils.userType(userBean.getSvip(), userBean.getVip(), userBean.getSex());
+        //把另外几项LoginUser加入进来
+        mLoginUser.exposure = userBean.getExposure();
+        mLoginUser.beans = userBean.getBeans();
+        mLoginUser.exposure_type = userBean.getExposure_type();
+        mLoginUser.exposure_time = userBean.getExposure_time();
+        mLoginUser.today_like = userBean.getToday_like();
+        mLoginUser.today_chat = userBean.getToday_chat();
+        mLoginUser.today_see_contact = userBean.getToday_see_contact();
+        return mLoginUser;
+    }
 }
