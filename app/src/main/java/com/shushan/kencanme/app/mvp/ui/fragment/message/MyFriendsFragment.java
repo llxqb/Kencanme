@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.ui.fragment.message;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,8 +38,10 @@ import io.rong.imkit.RongIM;
  * 朋友列表
  */
 
-public class MyFriendsFragment extends BaseFragment implements MyFriendsFragmentControl.MyFriendsView {
+public class MyFriendsFragment extends BaseFragment implements MyFriendsFragmentControl.MyFriendsView, SwipeRefreshLayout.OnRefreshListener {
 
+    @BindView(R.id.swipe_ly)
+    SwipeRefreshLayout mSwipeLy;
     @BindView(R.id.my_friends_recycler_view)
     RecyclerView mMyFriendsRecyclerView;
     Unbinder unbinder;
@@ -67,6 +70,8 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void initView() {
+        mSwipeLy.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeLy.setOnRefreshListener(this);
         mEmptyView = LayoutInflater.from(getActivity()).inflate(R.layout.no_friends_layout, (ViewGroup) mMyFriendsRecyclerView.getParent(), false);
         mMyFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         myFriendsAdapter = new MyFriendsAdapter(getActivity(), listBeanList, mImageLoaderHelper);
@@ -90,6 +95,13 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void initData() {
+        reqFriendList();
+    }
+
+    /**
+     * 查找我的朋友列表
+     */
+    private void reqFriendList() {
         MyFriendsRequest myFriendsRequest = new MyFriendsRequest();
         myFriendsRequest.token = mBuProcessor.getToken();
         myFriendsRequest.type = "1";
@@ -99,11 +111,19 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
     @Override
     public void getMyFriendsListInfoSuccess(MyFriendsResponse myFriendsResponse) {
         //没做分页可以这样表示
+        if (mSwipeLy.isRefreshing()) {
+            mSwipeLy.setRefreshing(false);
+        }
         if (myFriendsResponse.getList().size() == 0) {
             myFriendsAdapter.setEmptyView(mEmptyView);
         } else {
             myFriendsAdapter.setNewData(myFriendsResponse.getList());
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        reqFriendList();
     }
 
     @Override
@@ -118,5 +138,6 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
                 .myFriendsFragmentModule(new MyFriendsFragmentModule(this))
                 .build().inject(this);
     }
+
 
 }

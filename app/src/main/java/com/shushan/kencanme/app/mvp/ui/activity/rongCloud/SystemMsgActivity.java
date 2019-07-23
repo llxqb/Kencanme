@@ -44,7 +44,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
     @BindView(R.id.system_msg_recycler_view)
     RecyclerView mSystemMsgRecyclerView;
     int page = 1;
-    String pageSize = "10";
+    int pageSize = 10;
     private View mEmptyView;
     List<SystemMsgResponse.DataBean> systemMsgResponseList = new ArrayList<>();
     SystemMsgAdapter systemMsgAdapter;
@@ -71,7 +71,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
         mImageLoaderHelper.displayImage(this, R.mipmap.system_message_clean, mCommonIvRight, R.mipmap.system_message_clean);
         mSystemMsgRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         systemMsgAdapter = new SystemMsgAdapter(systemMsgResponseList);
-        systemMsgAdapter.setOnLoadMoreListener(this, mSystemMsgRecyclerView);
+        systemMsgAdapter.setOnLoadMoreListener(SystemMsgActivity.this, mSystemMsgRecyclerView);
         mSystemMsgRecyclerView.setAdapter(systemMsgAdapter);
 
         mSystemMsgRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -96,7 +96,7 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
         SystemMsgRequest systemMsgRequest = new SystemMsgRequest();
         systemMsgRequest.token = mBuProcessor.getToken();
         systemMsgRequest.page = String.valueOf(page);
-        systemMsgRequest.pagesize = pageSize;
+        systemMsgRequest.pagesize = String.valueOf(pageSize);
         mPresenter.onRequestSystemMsgList(systemMsgRequest);
     }
 
@@ -124,14 +124,16 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
 
     @Override
     public void getSystemMsgSuccess(SystemMsgResponse systemMsgResponse) {
+        systemMsgResponseList = systemMsgResponse.getData();
         if (page == 1) {
             if (systemMsgResponse.getData().size() > 0) {
-                systemMsgAdapter.setNewData(systemMsgResponse.getData());
+                systemMsgAdapter.setNewData(systemMsgResponseList);
+                systemMsgAdapter.loadMoreComplete();
             } else {
                 systemMsgAdapter.setEmptyView(mEmptyView);
             }
         } else {
-            systemMsgAdapter.addData(systemMsgResponse.getData());
+            systemMsgAdapter.addData(systemMsgResponseList);
             systemMsgAdapter.loadMoreComplete();
         }
     }
@@ -150,8 +152,16 @@ public class SystemMsgActivity extends BaseActivity implements SystemMsgControl.
      */
     @Override
     public void onLoadMoreRequested() {
-        page++;
-        requestMsgList();
+        if (page == 1 && systemMsgResponseList.size() < 10) {
+            systemMsgAdapter.loadMoreEnd(true);
+        } else {
+            if (systemMsgResponseList.size() < pageSize) {
+                systemMsgAdapter.loadMoreEnd();
+            } else {
+                page++;
+                requestMsgList();
+            }
+        }
     }
 
     /**

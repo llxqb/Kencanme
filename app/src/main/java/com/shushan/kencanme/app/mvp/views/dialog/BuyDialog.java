@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.shushan.kencanme.app.mvp.ui.adapter.BuyDialogAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +46,7 @@ public class BuyDialog extends BaseDialogFragment {
     @BindView(R.id.buy_dialog_bean_tv)
     TextView dialogBuyBeanTv;
     private BuyDialogListener dialogBtnListener;
-    private String mTitle, mContent;
+    private String mContent;
     private Unbinder bind;
     private List<DialogBuyBean.DataBean> dialogBuyBeans = new ArrayList<>();
     private DialogBuyBean mDialogBuyBean;
@@ -70,12 +72,13 @@ public class BuyDialog extends BaseDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_buy, container, true);
         bind = ButterKnife.bind(this, view);
         buyDialogContentTv.setText(mContent);
-        dialogBuyBeanTv.setText(getResources().getString(R.string.buy_dailog_hint) + beans);
+        String beansValue = getResources().getString(R.string.buy_dailog_hint) + beans;
+        dialogBuyBeanTv.setText(beansValue);
         initView();
         return view;
     }
@@ -106,11 +109,13 @@ public class BuyDialog extends BaseDialogFragment {
         bind.unbind();
     }
 
-    @OnClick({R.id.dialog_buy_layout, R.id.iv_close, R.id.dialog_buy_buy})
+    @OnClick({R.id.dialog_buy_layout,R.id.pop_contain, R.id.iv_close, R.id.dialog_buy_buy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.dialog_buy_layout:
                 closeCommonDialog();
+                break;
+            case R.id.pop_contain:
                 break;
             case R.id.iv_close:
                 closeCommonDialog();
@@ -139,7 +144,7 @@ public class BuyDialog extends BaseDialogFragment {
         try {
             this.dismiss();
         } catch (Exception e) {
-            DialogFactory.dismissDialogFragment(getActivity().getSupportFragmentManager(), TAG);
+            DialogFactory.dismissDialogFragment(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), TAG);
         }
     }
 }

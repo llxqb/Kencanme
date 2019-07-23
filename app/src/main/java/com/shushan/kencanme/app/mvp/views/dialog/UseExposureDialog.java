@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.views.dialog;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,13 @@ public class UseExposureDialog extends BaseDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_use_exposure, container, true);
         bind = ButterKnife.bind(this, view);
         mDialogUseExposureBeansTv.setText(String.valueOf(mExposure));
-        mBeansTv.setText(getResources().getString(R.string.buy_dailog_hint) + String.valueOf(mBeans));
+        String beansValue = getResources().getString(R.string.buy_dailog_hint) + String.valueOf(mBeans);
+        mBeansTv.setText(beansValue);
         return view;
     }
 
@@ -75,11 +77,13 @@ public class UseExposureDialog extends BaseDialogFragment {
         bind.unbind();
     }
 
-    @OnClick({R.id.iv_close, R.id.dialog_buy_use_exposure, R.id.dialog_buy_layout})
+    @OnClick({R.id.iv_close,R.id.pop_contain, R.id.dialog_buy_use_exposure, R.id.dialog_buy_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
                 closeCommonDialog();
+                break;
+            case R.id.pop_contain:
                 break;
             case R.id.dialog_buy_use_exposure:
                 if (dialogBtnListener != null) {

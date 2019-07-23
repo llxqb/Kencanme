@@ -259,6 +259,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     }
 
     TimerTask task; //将原任务从队列中移除
+
     /**
      * 设置喜欢动画倒计时
      */
@@ -352,7 +353,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
-        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
+        mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         setExposureData(userBean.getNow_time());
     }
 
@@ -375,7 +376,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void getLikeSuccess(LikeResponse likeResponse) {
-        if (likeResponse.getState() == 0) {
+        if (likeResponse.getState() == 1) {
             //相互喜欢
             showMatchSuccesDialog();
         }

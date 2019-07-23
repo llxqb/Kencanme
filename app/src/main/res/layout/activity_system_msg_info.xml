@@ -11,9 +11,12 @@
 
     <TextView
         android:id="@+id/system_msg_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_32"
+        android:paddingStart="@dimen/dp_32"
+        android:paddingTop="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_20"
         android:textColor="@color/color_6941ff"
         android:textSize="@dimen/sp_20" />
 
@@ -21,7 +24,7 @@
         android:id="@+id/system_msg_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
         android:paddingStart="@dimen/dp_32"
         android:paddingEnd="@dimen/dp_32"
         android:textColor="@color/color_80"
