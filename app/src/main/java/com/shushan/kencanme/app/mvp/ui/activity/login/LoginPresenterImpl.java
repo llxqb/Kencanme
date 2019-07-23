@@ -3,8 +3,10 @@ package com.shushan.kencanme.app.mvp.ui.activity.login;
 import android.content.Context;
 
 import com.shushan.kencanme.app.R;
+import com.shushan.kencanme.app.entity.request.FacebookLoginRequest;
 import com.shushan.kencanme.app.entity.request.LoginRequest;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.app.entity.response.FacebookLoginResponse;
 import com.shushan.kencanme.app.entity.response.LoginResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
@@ -62,10 +64,10 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
             responseData.parseData(LoginResponse.class);
             if (responseData.parsedData != null) {
                 LoginResponse response = (LoginResponse) responseData.parsedData;
-                mLoginView.loginSuccess(response);
+                mLoginView.googleLoginSuccess(response);
             }
         } else {
-            mLoginView.loginFail(responseData.errorMsg);
+            mLoginView.showToast(responseData.errorMsg);
         }
     }
 
@@ -77,7 +79,31 @@ public class LoginPresenterImpl implements LoginControl.PresenterLogin {
                 mLoginView.personalInfoSuccess(response);
             }
         } else {
-            mLoginView.personalInfoFail(responseData.errorMsg);
+            mLoginView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * facebook登录
+     */
+    @Override
+    public void onRequestLoginFacebook(FacebookLoginRequest request) {
+        mLoginView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mLoginModel.onRequestLoginFacebook(request).compose(mLoginView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestFacebookDataSuccess, throwable -> mLoginView.showErrMessage(throwable),
+                        () -> mLoginView.dismissLoading());
+        mLoginView.addSubscription(disposable);
+    }
+
+    private void requestFacebookDataSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(FacebookLoginResponse.class);
+            if (responseData.parsedData != null) {
+                FacebookLoginResponse response = (FacebookLoginResponse) responseData.parsedData;
+                mLoginView.facebookLoginSuccess(response);
+            }
+        } else {
+            mLoginView.showToast(responseData.errorMsg);
         }
     }
 

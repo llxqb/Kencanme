@@ -1,7 +1,10 @@
 package com.shushan.kencanme.app.network.networkapi;
 
+import com.shushan.kencanme.app.mvp.model.ResponseData;
+
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -25,6 +28,12 @@ public interface PersonalInfoApi {
     @Multipart
     @POST("menggoda/upload/video")
     Observable<String> uploadVideoRequest(@Part MultipartBody.Part video);
+    /**
+     * 上传文件
+     */
+    @Multipart
+    @POST("menggoda/upload/video")
+    Call<ResponseData> uploadVideoRequest2(@Part MultipartBody.Part video);
 
     /**
      * 上传图片

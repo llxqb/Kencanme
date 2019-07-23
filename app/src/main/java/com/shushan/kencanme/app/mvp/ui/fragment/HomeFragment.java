@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -355,7 +354,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
         setExposureData(userBean.getNow_time());
-        LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
     /**
@@ -363,7 +361,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      */
     @Override
     public void getInfoSuccess(HomeFragmentResponse response) {
-        LogUtils.d("response:" + new Gson().toJson(response));
+//        LogUtils.d("response:" + new Gson().toJson(response));
         List<HomeFragmentResponse.ListBean> dataList = response.getList();
         if (mSwipeLy.isRefreshing()) {
             mSwipeLy.setRefreshing(false);
@@ -377,7 +375,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
 
     @Override
     public void getLikeSuccess(LikeResponse likeResponse) {
-        if (likeResponse.getState() == 1) {
+        if (likeResponse.getState() == 0) {
             //相互喜欢
             showMatchSuccesDialog();
         }

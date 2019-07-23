@@ -169,10 +169,14 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         }
         mImageLoaderHelper.displayImage(this, mLoginUser.trait, mAvator, R.mipmap.head_photo_loading);
         mUsername.setText(mLoginUser.nickname);
-        if (mLoginUser.vip == 0) {
-            mIsVipTv.setText(getResources().getString(R.string.not_vip));
+        if (mLoginUser.svip == 1) {
+            mIsVipTv.setText(getResources().getString(R.string.is_svip));
         } else {
-            mIsVipTv.setText(getResources().getString(R.string.is_vip));
+            if (mLoginUser.vip == 1) {
+                mIsVipTv.setText(getResources().getString(R.string.is_vip));
+            } else {
+                mIsVipTv.setText(getResources().getString(R.string.not_vip));
+            }
         }
     }
 
@@ -227,17 +231,22 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void OpenVipListSuccess(OpenVipResponse openVipResponse) {
         mVipHintTv.setText(openVipResponse.getNotice().toString());
-        vipinfoBeanList = openVipResponse.getVipinfo();
-        for (int i = 0; i < vipinfoBeanList.size(); i++) {
-            OpenVipResponse.VipinfoBean vipinfoBean = vipinfoBeanList.get(i);
-            if (i == 0) {
-                mVipinfoBean = vipinfoBean;
-                vipinfoBean.isCheck = true;
-                String moneyValue = getResources().getString(R.string.money) + " " + vipinfoBean.getSpecial_price();
-                mPayMoneyValue.setText(moneyValue);
+        if (!payFinishUpdate) {
+            mVipHintTv.setText(openVipResponse.getNotice().toString());
+            vipinfoBeanList = openVipResponse.getVipinfo();
+            for (int i = 0; i < vipinfoBeanList.size(); i++) {
+                OpenVipResponse.VipinfoBean vipinfoBean = vipinfoBeanList.get(i);
+                if (i == 0) {
+                    mVipinfoBean = vipinfoBean;
+                    vipinfoBean.isCheck = true;
+                    String moneyValue = getResources().getString(R.string.money) + " " + vipinfoBean.getSpecial_price();
+                    mPayMoneyValue.setText(moneyValue);
+                }
             }
+            openVipAdapter.setNewData(vipinfoBeanList);
+        } else {
+            payFinishUpdate = false;
         }
-        openVipAdapter.setNewData(vipinfoBeanList);
     }
 
     /**
@@ -447,23 +456,33 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         showToast(getResources().getString(R.string.success));
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
+        mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         //更新界面UI
         updateUi();
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.PAY_SUCCESS_UPDATE_INFO));
     }
 
     /**
+     * 支付成功后更新数据，不用更新list
+     */
+    boolean payFinishUpdate = false;
+
+    /**
      * 支付成功后更新UI
      */
     private void updateUi() {
         mLoginUser = mBuProcessor.getLoginUser();
-//        reqVipListRequest();
-        if (mLoginUser.vip == 0) {
-            mIsVipTv.setText(getResources().getString(R.string.not_vip));
+        if (mLoginUser.svip == 1) {
+            mIsVipTv.setText(getResources().getString(R.string.is_svip));
         } else {
-            mIsVipTv.setText(getResources().getString(R.string.is_vip));
+            if (mLoginUser.vip == 1) {
+                mIsVipTv.setText(getResources().getString(R.string.is_vip));
+            } else {
+                mIsVipTv.setText(getResources().getString(R.string.not_vip));
+            }
         }
+        payFinishUpdate = true;
+        reqVipListRequest();
     }
 
 

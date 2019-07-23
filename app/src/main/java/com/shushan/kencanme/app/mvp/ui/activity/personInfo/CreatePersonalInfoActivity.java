@@ -173,8 +173,6 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
 
     @Override
     public void updateSuccess(String response) {
-        showToast(response);
-        startActivitys(PersonalInfoUploadPhotoActivity.class);
     }
 
 

@@ -10,6 +10,9 @@ import retrofit2.http.POST;
  */
 
 public interface LoginApi {
+    /**
+     * Google登录
+     */
     @POST("menggoda/login")
     Observable<String> loginRequest(@Body String request);
 
@@ -18,4 +21,9 @@ public interface LoginApi {
      */
     @POST("menggoda/user")
     Observable<String> onRequestPersonalInfo(@Body String token);
+    /**
+     * facebook登录
+     */
+    @POST("menggoda/login/facebook")
+    Observable<String> onRequestLoginFacebook(@Body String token);
 }

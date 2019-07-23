@@ -32,7 +32,9 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.mvp.ui.activity.pay.RechargeActivity;
@@ -51,6 +53,8 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
+import com.shushan.kencanme.app.mvp.utils.LogUtils;
+import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
@@ -159,6 +163,14 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         return new MineFragment();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            //查询我的--主要是bean数量
+            requestHomeUserInfo();
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -167,6 +179,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         StatusBarUtil.setTransparentForImageView(getActivity(), null);
         unbinder = ButterKnife.bind(this, view);
         initializeInjector();
+        LogUtils.e("onCreateView()");
         initView();
         initData();
         return view;
@@ -190,6 +203,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
         super.onReceivePro(context, intent);
     }
+
 
     @Override
     public void addFilter() {
@@ -249,11 +263,19 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     }
 
     /**
+     * 查询我的（首页）
+     */
+    private void requestHomeUserInfo() {
+        TokenRequest tokenRequest = new TokenRequest();
+        tokenRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    }
+
+    /**
      * 设置用户信息
      */
     private void setUserInfo() {
         //contactWay
-//        LogUtils.d("mime_mLoginUser:"+new Gson().toJson(mLoginUser));
         String contactWayString = mLoginUser.contact; //转换联系方式为list
         Gson gson = new Gson();
         Type listType = new TypeToken<List<ContactWay>>() {
@@ -380,19 +402,17 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         }
     }
 
-
+    /**
+     * 启动客户服聊天界面。
+     * param customerServiceId 要与之聊天的客服 Id。
+     * param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+     * param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+     */
     private void contactCustomer() {
         //进入客服
         //首先需要构造使用客服者的用户信息
         CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
         CSCustomServiceInfo csInfo = csBuilder.nickName(mLoginUser.nickname).build();
-        /**
-         * 启动客户服聊天界面。
-         * @param context           应用上下文。
-         * @param customerServiceId 要与之聊天的客服 Id。
-         * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
-         */
         RongIM.getInstance().startCustomerServiceChat(Objects.requireNonNull(getActivity()), ServerConstant.RY_CUSTOMER_ID, getResources().getString(R.string.online_customer), csInfo);
         mSharePreferenceUtil.setData("chatType", 1);//在线客服
     }
@@ -404,6 +424,16 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         dataBean.setAlbum_url("");
         photoBeanList.add(0, dataBean); //设置RecyclerView第一张图片为默认图片
         mAlbumAdapter.setNewData(photoBeanList);
+    }
+
+    @Override
+    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
+        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
+        mLoginUser = LoginUtils.upDateLoginUser(mLoginUser, userBean);
+        mBuProcessor.setLoginUser(mLoginUser);
+        //设置嗨豆信息
+        mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
+//        setUserInfo();
     }
 
 

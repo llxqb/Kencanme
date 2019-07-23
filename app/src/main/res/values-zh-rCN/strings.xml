@@ -21,7 +21,7 @@
     <string name="album_num_max_6">Pass up to 6</string>
     <string name="money">$</string>
     <string name="money_yn" translatable="false">Rp</string>
-    <string name="facebook_app_id">2563996786985554</string>
+    <string name="facebook_app_id">763421974060062</string>
     <!-- 提交和保存-->
     <string name="submit">Submit</string>
     <string name="Preserve">Preserve</string>
@@ -195,8 +195,9 @@
     <string name="SettingActivity_About_us">About us</string>
     <string name="Logout">Log out</string>
     <!--OpenVipActivity -->
-    <string name="not_vip">Not register</string>
+    <string name="not_vip">Not Vip</string>
     <string name="is_vip">Is Vip</string>
+    <string name="is_svip">Is SVip</string>
     <string name="OpenVipActivity_agreement">* Opening membership means agrees to the 《Kencanme Friendship Membership Agreement》</string>
     <string name="OpenVipActivity_Membership_privileges">Member Reights</string>
     <string name="AboutUsActivity_content">Kencanme is a location-based stranger dating software. It will push people who Pair you nearby according to your information. You can upload photos or videos when you register to show your best side. You can also improve your personal data, upload more photos or videos, so that he/she will get a deeper understanding of you and likes you.
@@ -352,4 +353,5 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="ahdi_payment" translatable="false">AHDI payment</string><!--AHDI支付 -->
     <string name="uniPin_payment" translatable="false">UniPin payment</string><!--UniPin支付 -->
     <string name="payment_fail" translatable="false">Failed purchase</string><!--购买失败 -->
+    <string name="login_open_permission">Please open the permission</string><!--登录权限 -->
 </resources>

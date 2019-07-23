@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerLoginComponent;
 import com.shushan.kencanme.app.di.components.LoginComponent;
@@ -21,8 +20,10 @@ import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.LoginModule;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
+import com.shushan.kencanme.app.entity.request.FacebookLoginRequest;
 import com.shushan.kencanme.app.entity.request.LoginRequest;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
+import com.shushan.kencanme.app.entity.response.FacebookLoginResponse;
 import com.shushan.kencanme.app.entity.response.LoginResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.FacebookLoginHelper;
@@ -34,7 +35,6 @@ import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.LoginDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.umeng.facebook.login.LoginResult;
 
 import javax.inject.Inject;
 
@@ -82,18 +82,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     @Override
     public void initData() {
-
-    }
-
-    private void initFaceBookLogin() {
-        faceBookLoginManager = new FacebookLoginHelper(new FacebookLoginHelper.OnLoginSuccessListener() {
-            @Override
-            public void onSuccess(LoginResult result) {
-                Log.e("ddd", "result:" + new Gson().toJson(result));
-                //登录成功
-            }
-        });
-        faceBookLoginManager.initFaceBook(getApplicationContext());
     }
 
     @OnClick({R.id.login_google_rl, R.id.login_facebook_rl, R.id.login_whats_app_rl})
@@ -103,7 +91,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 //Google登录
                 showLoading(getResources().getString(R.string.loading));
                 GoogleLoginHelper.googleLogin(this);
-//                checkPermissions();
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录
@@ -116,21 +103,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         }
     }
 
-    @SuppressLint("CheckResult")
-    private void checkPermissions() {
-        RxPermissions mRxPermissions = new RxPermissions(this);
-        mRxPermissions.request(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        ).subscribe(permission -> {
-            if (!permission) {
-                showToast("请开启所有的权限");
-            }else {
-                showLoading(getResources().getString(R.string.loading));
-                GoogleLoginHelper.googleLogin(this);
-            }
-        });
-    }
 
     /**
      * 登录回调
@@ -155,43 +127,89 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             GoogleSignInAccount account = result.getSignInAccount();
             //登录后台系统
             assert account != null;
-            appLogin(account.getId(), account.getIdToken());
+            appGoogleLogin(account.getId(), account.getIdToken());
         } else {
             showToast(getResources().getString(R.string.login_google_fail));
         }
     }
 
-    private void appLogin(String gId, String accessToken) {
+    private void appGoogleLogin(String gId, String accessToken) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.id = gId;
         loginRequest.deviceId = SystemUtils.getDeviceId(this);
         loginRequest.access_token = accessToken;
-        loginRequest.from = "android";
-//        LogUtils.e("loginRequest:"+new Gson().toJson(loginRequest));
+        loginRequest.from = "Android";
         mPresenterLogin.onRequestLogin(loginRequest);
     }
 
     @Override
-    public void loginSuccess(LoginResponse response) {
+    public void googleLoginSuccess(LoginResponse response) {
         LoginResponse.UserinfoBean userinfoBean = response.getUserinfo();
         mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
         mSharePreferenceUtil.setData("rongId", userinfoBean.getRongyun_third_id());
         mSharePreferenceUtil.setData("code", userinfoBean.getCode());//邀请码
-        //根据token请求个人信息
-        PersonalInfoRequest request = new PersonalInfoRequest();
-        request.token = userinfoBean.getToken();
-        mPresenterLogin.onRequestPersonalInfo(request);
+        checkPermissions(userinfoBean.getToken());
+    }
+
+    private void initFaceBookLogin() {
+        faceBookLoginManager = new FacebookLoginHelper(result -> {
+            //登录成功
+            FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest();
+            if (result != null) {
+                showToast("facebook-token:" + result.getAccessToken().getToken());
+                facebookLoginRequest.access_token = result.getAccessToken().getToken();
+            }
+            facebookLoginRequest.from = "Android";
+            facebookLoginRequest.deviceId = SystemUtils.getDeviceId(LoginActivity.this);
+            mPresenterLogin.onRequestLoginFacebook(facebookLoginRequest);
+
+        });
+        faceBookLoginManager.initFaceBook(getApplicationContext());
     }
 
     @Override
-    public void loginFail(String errorMsg) {
-        showToast(errorMsg);
+    public void facebookLoginSuccess(FacebookLoginResponse facebookLoginResponse) {
+        FacebookLoginResponse.UserinfoBean userinfoBean = facebookLoginResponse.getUserinfo();
+        mSharePreferenceUtil.setData("ryToken", userinfoBean.getRongyun_token());
+        mSharePreferenceUtil.setData("rongId", userinfoBean.getRongyun_third_id());
+        mSharePreferenceUtil.setData("code", userinfoBean.getCode());//邀请码
+        checkPermissions(userinfoBean.getToken());
     }
+
+    /**
+     * 检查app 权限
+     */
+    @SuppressLint("CheckResult")
+    private void checkPermissions(String token) {
+        RxPermissions mRxPermissions = new RxPermissions(this);
+        mRxPermissions.request(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        ).subscribe(permission -> {
+            if (permission) {
+                reqPersonalInfo(token);
+            } else {
+                showToast(getResources().getString(R.string.login_open_permission));
+            }
+        });
+    }
+
+    /**
+     * 根据token请求个人信息
+     */
+    private void reqPersonalInfo(String token) {
+        PersonalInfoRequest request = new PersonalInfoRequest();
+        request.token = token;
+        mPresenterLogin.onRequestPersonalInfo(request);
+    }
+
 
     @Override
     public void personalInfoSuccess(PersonalInfoResponse personalInfoResponse) {
         GoogleLoginHelper.exitGoogleLogin();//执行退出登录  符合当前登录逻辑
-        faceBookLoginManager.faceBookLoginOut();
+        if (faceBookLoginManager != null) {
+            faceBookLoginManager.faceBookLoginOut();
+        }
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(personalInfoResponse));
         //没创建资料跳转到CreatePersonalInfoActivity  否则跳转到MainActivity
@@ -202,11 +220,6 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             startActivitys(CreatePersonalInfoActivity.class);
             finish();
         }
-    }
-
-    @Override
-    public void personalInfoFail(String errorMsg) {
-
     }
 
 

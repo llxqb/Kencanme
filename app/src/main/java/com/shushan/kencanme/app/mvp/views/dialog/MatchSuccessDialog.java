@@ -2,6 +2,7 @@ package com.shushan.kencanme.app.mvp.views.dialog;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,8 +79,8 @@ public class MatchSuccessDialog extends BaseDialogFragment {
     private void initView() {
         mImageLoaderHelper.displayImage(getActivity(), mMineAvatar, mMatchMineAvatarIv, R.mipmap.head_photo_loading);
         mImageLoaderHelper.displayImage(getActivity(), mFriendAvatar, mMatchFriendAvatarIv, R.mipmap.head_photo_loading);
-        String successTv = mMimeName + " and " + mFriendName + getResources().getString(R.string.match_success_tv);
-        mMatchSuccessTv.setText(successTv);
+        String successTv = " <font color = '#8160FF'>" + mMimeName + "</font> " + " and " + " <font color = '#8160FF'>" + mFriendName + "</font> " + getResources().getString(R.string.match_success_tv);
+        mMatchSuccessTv.setText(Html.fromHtml(successTv));
     }
 
     @Override

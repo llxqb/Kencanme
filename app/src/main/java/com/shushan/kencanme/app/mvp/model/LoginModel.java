@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.app.entity.request.FacebookLoginRequest;
 import com.shushan.kencanme.app.entity.request.LoginRequest;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.network.networkapi.LoginApi;
@@ -32,6 +33,13 @@ public class LoginModel {
 
     public Observable<ResponseData> onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
         return mLoginApi.onRequestPersonalInfo(mGson.toJson(personalInfoRequest)).map(mTransform::transformCommon);
+    }
+
+    /**
+     * facebook登录
+     */
+    public Observable<ResponseData> onRequestLoginFacebook(FacebookLoginRequest request) {
+        return mLoginApi.onRequestLoginFacebook(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

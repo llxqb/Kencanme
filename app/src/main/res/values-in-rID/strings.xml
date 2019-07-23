@@ -21,7 +21,7 @@
     <string name="album_num_max_6">Pass hingga 6</string>
     <string name="money">$</string>
     <string name="money_yn" translatable="false">Rp</string>
-    <string name="facebook_app_id">2563996786985554</string>
+    <string name="facebook_app_id">763421974060062</string>
     <!-- 提交和保存-->
     <string name="submit">Kirim</string>
     <string name="Preserve">Simpan</string>
@@ -195,8 +195,9 @@
     <string name="SettingActivity_About_us">Tentang Kencanme</string>
     <string name="Logout">Log out</string>
     <!--OpenVipActivity -->
-    <string name="not_vip">Tidak tersedia</string>
+    <string name="not_vip">Tidak Vip</string>
     <string name="is_vip">Is Vip</string>
+    <string name="is_svip">Is SVip</string>
     <string name="OpenVipActivity_agreement">* Dengan menjadi member, anda setuju dengan Persyaratan Kencanme</string>
     <string name="OpenVipActivity_Membership_privileges">Keuntungan member</string>
     <string name="AboutUsActivity_content">Kencanme adalah aplikasi pertemanan untuk anda berdasarkan lokasi. Berdasarkan informasi Anda, Anda dapat mencari pasangan yang cocok dengan anda. Anda dapat memberikan sisi terbaik Anda kepada pasangan dengan mengunggah foto atau video. Anda juga dapat meningkatkan profil anda dan mengunggah lebih banyak foto atau video Anda sendiri untuk membuat orang tahu lebih banyak tentang Anda dan menyukai Anda.
@@ -352,4 +353,5 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="ahdi_payment" translatable="false">Pembayaran AHDI</string><!--AHDI支付 -->
     <string name="uniPin_payment" translatable="false">Pembayaran UniPin</string><!--UniPin支付 -->
     <string name="payment_fail" translatable="false">Pembelian gagal</string><!--购买失败 -->
+    <string name="login_open_permission">Silakan buka izin</string><!--登录权限 -->
 </resources>

@@ -21,8 +21,8 @@
     <string name="album_num_max_6" translatable="false">Pass up to 6</string>
     <string name="money" translatable="false">$</string>
     <string name="money_yn" translatable="false">Rp</string>
-    <string name="facebook_app_id" translatable="false">2563996786985554</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb2563996786985554</string>
+    <string name="facebook_app_id" translatable="false">763421974060062</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb763421974060062</string>
     <!-- 提交和保存-->
     <string name="submit" translatable="false">Submit</string>
     <string name="Preserve" translatable="false">Preserve</string>
@@ -196,8 +196,9 @@
     <string name="SettingActivity_About_us" translatable="false">About us</string>
     <string name="Logout" translatable="false">Log out</string>
     <!--OpenVipActivity -->
-    <string name="not_vip" translatable="false">Not register</string>
+    <string name="not_vip" translatable="false">Not Vip</string>
     <string name="is_vip" translatable="false">Is Vip</string>
+    <string name="is_svip" translatable="false">Is SVip</string>
     <string name="OpenVipActivity_agreement" translatable="false">* Opening membership means agrees to the 《Kencanme Friendship Membership Agreement》</string>
     <string name="OpenVipActivity_Membership_privileges" translatable="false">Member Reights</string>
     <string name="AboutUsActivity_content" translatable="false">Kencanme is a location-based stranger dating software. It will push people who Pair you nearby according to your information. You can upload photos or videos when you register to show your best side. You can also improve your personal data, upload more photos or videos, so that he/she will get a deeper understanding of you and likes you.
@@ -353,4 +354,5 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="ahdi_payment" translatable="false">AHDI payment</string><!--AHDI支付 -->
     <string name="uniPin_payment" translatable="false">UniPin payment</string><!--UniPin支付 -->
     <string name="payment_fail" translatable="false">transaction failed</string><!--交易失败 -->
+    <string name="login_open_permission" translatable="false">Please open the permission</string><!--登录权限 -->
 </resources>

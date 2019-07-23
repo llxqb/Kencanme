@@ -5,6 +5,8 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.MainModel;
@@ -50,6 +52,30 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.mineFragme
         }
     }
 
+    /**
+     * 获取个人信息（首页）
+     */
+    @Override
+    public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
+        mMineView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mMineFragmentModel.onRequestHomeUserInfo(tokenRequest).compose(mMineView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestHomeUserInfoSuccess, throwable -> mMineView.showErrMessage(throwable),
+                        () -> mMineView.dismissLoading());
+        mMineView.addSubscription(disposable);
+    }
+
+    private void requestHomeUserInfoSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            responseData.parseData(HomeUserInfoResponse.class);
+            if (responseData.parsedData != null) {
+                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
+                mMineView.homeUserInfoSuccess(response);
+            }
+        } else {
+            mMineView.showToast(responseData.errorMsg);
+        }
+    }
+    
     @Override
     public void onCreate() {
     }

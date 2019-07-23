@@ -72,12 +72,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.white));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View content = ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
-            if (content!=null && !isUseFullScreenMode()) {
+            if (content != null && !isUseFullScreenMode()) {
                 content.setFitsSystemWindows(true);
             }
         }
     }
-
 
 
     public abstract void initView();
@@ -95,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 判断界面是否全屏
      */
-    private boolean isUseFullScreenMode(){
+    private boolean isUseFullScreenMode() {
         return (getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
                 == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }

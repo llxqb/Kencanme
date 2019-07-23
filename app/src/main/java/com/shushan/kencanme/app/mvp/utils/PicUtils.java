@@ -9,6 +9,7 @@ import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -21,9 +22,24 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.shushan.kencanme.app.R;
+import com.shushan.kencanme.app.entity.Constants.ServerConstant;
+import com.shushan.kencanme.app.mvp.model.ResponseData;
+import com.shushan.kencanme.app.network.networkapi.PersonalInfoApi;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.security.MessageDigest;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
@@ -83,7 +99,7 @@ public class PicUtils {
             }
 
             @Override
-            public void updateDiskCacheKey(MessageDigest messageDigest) {
+            public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
                 try {
                     messageDigest.update((context.getPackageName() + "RotateTransform").getBytes("utf-8"));
                 } catch (Exception e) {
@@ -116,34 +132,42 @@ public class PicUtils {
     }
 
 
-    //retrofit上传文件
-    private void file_img(String path) {
-//        Retrofit retrofitUpload = new Retrofit.Builder()
-//                .baseUrl(ServerConstant.DISPATCH_SERVICE)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//
-//
-//        PersonalInfoApi service = retrofitUpload.create(PersonalInfoApi.class);
-//        File file = new File(path);
-//        //设置Content-Type:application/octet-stream
-//        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-//        //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
-//        MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
-//        //添加参数用户名和密码，并且是文本类型
-//        Call<ResponseData> loadCall = service.uploadVideoRequest(photo);
-//        loadCall.enqueue(new Callback<ResponseData>() {
-//            @Override
-//            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-//                Log.e("APP", response.body().resultCode+"");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
+    /**
+     * retrofit上传文件  测试
+     */
+    public static void file_img(String path) {
+        OkHttpClient client = new OkHttpClient.Builder().
+                connectTimeout(60, TimeUnit.SECONDS).
+                readTimeout(60, TimeUnit.SECONDS).
+                writeTimeout(60, TimeUnit.SECONDS).build();
+
+        Retrofit retrofitUpload = new Retrofit.Builder()
+                .baseUrl(ServerConstant.DISPATCH_SERVICE)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        PersonalInfoApi service = retrofitUpload.create(PersonalInfoApi.class);
+        File file = new File(path);
+        //设置Content-Type:application/octet-stream
+        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
+        //添加参数用户名和密码，并且是文本类型
+        Call<ResponseData> loadCall = service.uploadVideoRequest2(photo);
+        Log.e("ddd","photo:"+photo);
+        loadCall.enqueue(new Callback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                Log.e("APP", response.body().resultCode+"");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
 }

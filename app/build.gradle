@@ -44,7 +44,7 @@ android {
 //            debuggable true //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
-            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL_DEBUG
+            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

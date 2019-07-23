@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -46,7 +47,6 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -146,6 +146,12 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         mDeclarationEv.setSelection(mDeclarationEv.getText().length());
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        JzvdStd.goOnPlayOnPause();
+    }
+
     @OnClick({R.id.common_back, R.id.cover_iv, R.id.head_icon_rl, R.id.save_tv, R.id.upload_hint_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -197,7 +203,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
         photoDialog.setData(getResources().getString(R.string.PhotoDialog_title), getResources().getString(R.string.PhotoDialog_photo), getResources().getString(R.string.PhotoDialog_album));
-        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 
     /**
@@ -209,7 +215,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
         photoDialog.setData("Select video or photo", "Video", "Photo");
-        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 
     @Override
@@ -266,7 +272,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //以下代码为处理Android6.0、7.0动态权限所需
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -388,15 +394,15 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         public void afterTextChanged(Editable s) {
             selectionStart = mDeclarationEv.getSelectionStart();
             selectionEnd = mDeclarationEv.getSelectionEnd();
-            int worldTextNum = s.length();
+            String worldTextNumValue = s.length() + "/80";
             if (s.length() > 80) {
                 showToast(getResources().getString(R.string.DataFraudActivity_only_80_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
-                mDeclarationWorldLimitTv.setText(worldTextNum + "/80");
+                mDeclarationWorldLimitTv.setText(worldTextNumValue);
                 mDeclarationEv.setSelection(tempSelection);
             } else {
-                mDeclarationWorldLimitTv.setText(worldTextNum + "/80");
+                mDeclarationWorldLimitTv.setText(worldTextNumValue);
             }
         }
     };
