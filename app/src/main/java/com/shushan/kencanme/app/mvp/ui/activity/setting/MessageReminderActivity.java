@@ -1,5 +1,6 @@
 package com.shushan.kencanme.app.mvp.ui.activity.setting;
 
+import android.app.NotificationChannel;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ public class MessageReminderActivity extends BaseActivity {
     private boolean showMessagePreview;
     private boolean shock;
     private boolean voice;
+    private NotificationChannel notificationChannel;
 
     @Inject
     protected SharePreferenceUtil mSharePreferenceUtil;
@@ -52,6 +54,7 @@ public class MessageReminderActivity extends BaseActivity {
     @Override
     public void initView() {
         mCommonTitleTv.setText(getResources().getString(R.string.MessageReminderActivity_title));
+
     }
 
     @Override
@@ -78,6 +81,9 @@ public class MessageReminderActivity extends BaseActivity {
 
     @OnClick({R.id.common_back, R.id.message_preview_iv, R.id.shock_iv, R.id.voice_iv})
     public void onViewClicked(View view) {
+        showMessagePreview = mSharePreferenceUtil.getBooleanData("show_message_preview", true);
+        shock = mSharePreferenceUtil.getBooleanData("shock", true);
+        voice = mSharePreferenceUtil.getBooleanData("voice", true);
         switch (view.getId()) {
             case R.id.common_back:
                 finish();
@@ -109,12 +115,33 @@ public class MessageReminderActivity extends BaseActivity {
                     //关闭
                     mSharePreferenceUtil.setData("voice", false);
                     mVoiceIv.setImageResource(R.mipmap.mine_install_close);
+//                    voiceTran(false);
                 } else {
                     //打开
                     mSharePreferenceUtil.setData("voice", true);
                     mVoiceIv.setImageResource(R.mipmap.mine_install_open);
+//                    voiceTran(true);
                 }
                 break;
         }
     }
+
+//    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "com.shushan.kencanme.app_id");
+//
+//    private void voiceTran(boolean open) {
+//        if (open) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                notificationChannel = new NotificationChannel("com.shushan.kencanme.app_id", "kencanme", NotificationManager.IMPORTANCE_MIN);
+//            } else {
+//                mBuilder.setDefaults(Notification.DEFAULT_ALL);
+//            }
+//        } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                notificationChannel = new NotificationChannel("com.shushan.kencanme.app_id", "kencanme", NotificationManager.IMPORTANCE_HIGH);
+//            } else {
+//                mBuilder.setDefaults(Notification.DEFAULT_ALL);
+//            }
+//        }
+//    }
+
 }

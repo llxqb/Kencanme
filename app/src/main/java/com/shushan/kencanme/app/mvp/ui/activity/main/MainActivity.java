@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerMainComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -71,7 +73,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             startActivitys(LoginActivity.class);
             finish();
         } else {
-//            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
+            Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }
         List<Fragment> fragments = new ArrayList<>();

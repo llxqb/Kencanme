@@ -40,6 +40,7 @@ public class LoginUtils {
         loginUser.last_login_time = personalInfoResponse.getLast_login_time();
         loginUser.contact = new Gson().toJson(personalInfoResponse.getContact());
         loginUser.label = new Gson().toJson(personalInfoResponse.getLabel());
+        loginUser.userType =  AppUtils.userType(personalInfoResponse.getSvip(), personalInfoResponse.getVip(), personalInfoResponse.getSex());
         return loginUser;
     }
 
