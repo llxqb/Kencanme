@@ -46,7 +46,7 @@ public class KencanmeApp extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //初始化热修复
-        initHotfix();
+//        initHotfix();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class KencanmeApp extends Application {
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mAppComponent.inject(this);//必须有
         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-        SophixManager.getInstance().queryAndLoadNewPatch();
+//        SophixManager.getInstance().queryAndLoadNewPatch();
         //初始化融云
         initRongYun();
         //友盟init
