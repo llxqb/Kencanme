@@ -36,9 +36,11 @@
 
         <activity android:name="io.rong.imkit.plugin.location.AMapRealTimeActivity" />
 
+        <!--开发 pvxdm17jpo7vr-->
+        <!--生产 uwd1c0sxuqsw1-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="pvxdm17jpo7vr" />
+            android:value="uwd1c0sxuqsw1" />
         <activity
             android:name="io.rong.imkit.plugin.image.PictureSelectorActivity"
             android:screenOrientation="portrait" />

@@ -3,18 +3,18 @@
 buildscript {
 
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "http://maven.aliyun.com/nexus/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         //配置Dagger2
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.6.1'
-
+        classpath 'com.aliyun.ams:emas-services:1.0.1'//移动热修复
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -22,8 +22,9 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+         maven { url "http://maven.aliyun.com/nexus/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
+//        maven { url 'https://dl.bintray.com/umsdk/release' }
         google()
         jcenter()
     }

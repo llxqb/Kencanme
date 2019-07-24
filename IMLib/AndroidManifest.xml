@@ -17,10 +17,11 @@
 
     <application>
 
-        <!-- imlib config begin -->
+        <!--开发 pvxdm17jpo7vr-->
+        <!--生产 uwd1c0sxuqsw1-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="pvxdm17jpo7vr" />
+            android:value="uwd1c0sxuqsw1" />
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

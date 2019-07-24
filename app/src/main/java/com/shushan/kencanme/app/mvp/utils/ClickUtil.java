@@ -20,7 +20,7 @@ public class ClickUtil {
     private static Map<Activity, SparseArray<Long>> viewIdMap = new HashMap<>();
 
     public static boolean isDoubleClick(Activity activity, View view) {
-        return isDoubleClick(activity, 1000, view);
+        return isDoubleClick(activity, 500, view);
     }
 
     //遍历当前activity内的view对应的点击时间

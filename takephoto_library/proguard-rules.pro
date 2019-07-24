@@ -34,3 +34,9 @@
 -keep class com.soundcloud.android.crop.** { *; }
 -dontwarn com.soundcloud.android.crop.**
 
+
+#AHDI支付
+# 保持 bca sdk 文件不被混淆
+-keep class com.bca.xco.widget.**{*;}
+# 保持支付 sdk 文件不被混淆
+-keep class com.ahdi.sdk.payment.**{*;}
