@@ -168,6 +168,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         if (isVisibleToUser) {
             //查询我的--主要是bean数量
             requestHomeUserInfo();
+        } else {
+            JzvdStd.goOnPlayOnPause();
         }
     }
 

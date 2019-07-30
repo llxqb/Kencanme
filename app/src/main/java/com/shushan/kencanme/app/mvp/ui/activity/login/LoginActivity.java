@@ -91,6 +91,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 //Google登录
                 showLoading(getResources().getString(R.string.loading));
                 GoogleLoginHelper.googleLogin(this);
+                //测试账户
+//                appGoogleLogin("112699516221168481510","eyJhbGciOiJSUzI1NiIsImtpZCI6ImRmMzc1ODkwOGI3OTIyOTNhZDk3N2EwYjk5MWQ5OGE3N2Y0ZWVlY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI2MTE4NzAwMzE2NjAtb2pqdWo3cXVybGlwbG9vcDcxM2hvY2Y3ajVzZ3JjcGMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI2MTE4NzAwMzE2NjAtNWY0dDFiZjMwajFnajgwY2JrY3ZjaTByMG9nOWtjb3IuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTI2OTk1MTYyMjExNjg0ODE1MTAiLCJlbWFpbCI6ImxseHFiX3R0QDEyNi5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Iueri-WImCIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLTZKYVRBQk9HcFlRL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FDSGkzcmM4TjVfaHRtQ2ptbGlLZm04THlzbk9xT2o1MUEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IuWImCIsImZhbWlseV9uYW1lIjoi56uLIiwibG9jYWxlIjoiemgtQ04iLCJpYXQiOjE1NjQ0Nzc5ODEsImV4cCI6MTU2NDQ4MTU4MX0.F9cTe0167tdoCMnd-oalxoBnnZaturAFMXDB_xK30vFe9-jR7mZIGd7NfIrLohiVwmP6A7qMjnLpNHHRxVsrAYEq7cEy9b74Dy-c6p2bYp33GZbw5BUKurFHkdnHQeF1VbkBZn_r-NgBEkm1Y-s7a6CcbimdBWx9KNePVQOAf7Dt0Ph3JYwGmi4Twl2bldN1g_V7x_OuRQUW9WSSCfO3zBW2M0OW0uuoCtvWk-l4HDVay1vXR_3c2493bb3y7hsk9zpnk3Ox969cfn5C3ubF7TP7LYbK8O_y70GB9gWPwYKc5NT46kxx_qeZBNR3FA3YUkHd8kCHnduKATlz_44ooQ");
                 break;
             case R.id.login_facebook_rl:
                 //facebook登录

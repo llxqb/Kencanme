@@ -6,8 +6,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 18
-        versionName "1.0.1"
+        versionCode 20
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -57,7 +57,7 @@ android {
                 if (variant.buildType.name.equals('release')) {
                     fileName = "kencanme_v" + versionName + ".apk"
                 } else if (variant.buildType.name.equals('debug')) {
-                    fileName = "kencanme-v" + versionName + "_debug.apk"
+                    fileName = "kencanme_v" + versionName + "_debug.apk"
                 }
                 output.outputFileName = fileName
                 //生成的文件名

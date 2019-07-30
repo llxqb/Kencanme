@@ -184,7 +184,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <provider
             android:name="com.umeng.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider2563996786985554"
+            android:authorities="com.facebook.app.FacebookContentProvider486430102169779"
             android:exported="false" />
 
         <!-- 阿里热修复 -->

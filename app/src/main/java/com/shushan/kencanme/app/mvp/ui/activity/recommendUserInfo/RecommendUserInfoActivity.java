@@ -223,7 +223,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                             } else {
                                 //去使用
                                 useBeansType = 1;
-                                showUseBeansDialog(mAlbumBean.getCost());
+                                showUseBeansDialog(mAlbumBean.getCost(),getResources().getString(R.string.dialog_use_beans_album));
                             }
                         }
                         break;
@@ -283,7 +283,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                         showRechargeBeansDialog();
                     } else {
                         useBeansType = 2;
-                        showUseBeansDialog(useBeansNum);
+                        showUseBeansDialog(useBeansNum,getResources().getString(R.string.dialog_use_beans_contact));
                     }
                 }
                 break;
@@ -485,8 +485,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     /**
      * 显示使用嗨豆
      */
-    private void showUseBeansDialog(int beansNum) {
-        DialogFactory.showUseBeansDialog(this, getResources().getString(R.string.dialog_use_beans_contact), beansNum);
+    private void showUseBeansDialog(int beansNum,String hintValue) {
+        DialogFactory.showUseBeansDialog(this, hintValue, beansNum);
     }
 
 
