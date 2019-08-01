@@ -1,5 +1,6 @@
 package com.shushan.kencanme.app.mvp.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -11,10 +12,11 @@ public class ToastUtil {
     private static Toast toast;
 
     public ToastUtil(){
-        throw new UnsupportedOperationException("不能被实例化");
+        throw new UnsupportedOperationException("toast_fail");//不能被实例化
     }
 
 
+    @SuppressLint("ShowToast")
     public static void showToast(Context mContext, String message) {
         if (toast == null) {
             toast = Toast.makeText(mContext, message, Toast.LENGTH_SHORT);

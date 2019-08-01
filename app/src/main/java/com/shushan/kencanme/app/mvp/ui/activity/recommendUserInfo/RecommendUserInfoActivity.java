@@ -76,7 +76,7 @@ import io.rong.imkit.RongIM;
  * 推荐用户资料详情
  */
 public class RecommendUserInfoActivity extends BaseActivity implements RecommendUserInfoControl.RecommendUserInfoView, CommonChoiceDialog.commonChoiceDialogListener,
-        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener,MatchSuccessDialog.MatchSuccessListener {
+        CommonDialog.CommonDialogListener, RechargeBeansDialog.RechargeDialogListener, MessageUseBeansDialog.MessageUseBeansDialogListener, MatchSuccessDialog.MatchSuccessListener {
     @BindView(R.id.back_iv)
     ImageView mBackIv;
     @BindView(R.id.more_iv)
@@ -223,7 +223,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                             } else {
                                 //去使用
                                 useBeansType = 1;
-                                showUseBeansDialog(mAlbumBean.getCost(),getResources().getString(R.string.dialog_use_beans_album));
+                                showUseBeansDialog(mAlbumBean.getCost(), getResources().getString(R.string.dialog_use_beans_album));
                             }
                         }
                         break;
@@ -283,7 +283,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                         showRechargeBeansDialog();
                     } else {
                         useBeansType = 2;
-                        showUseBeansDialog(useBeansNum,getResources().getString(R.string.dialog_use_beans_contact));
+                        showUseBeansDialog(useBeansNum, getResources().getString(R.string.dialog_use_beans_contact));
                     }
                 }
                 break;
@@ -443,7 +443,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         task = new TimerTask() {
             @Override
             public void run() {
-               runOnUiThread(() -> {
+                runOnUiThread(() -> {
                     likeDialog.dismiss();
                     if (task != null) {
                         task.cancel();  //将原任务从队列中移除
@@ -485,7 +485,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     /**
      * 显示使用嗨豆
      */
-    private void showUseBeansDialog(int beansNum,String hintValue) {
+    private void showUseBeansDialog(int beansNum, String hintValue) {
         DialogFactory.showUseBeansDialog(this, hintValue, beansNum);
     }
 
@@ -579,6 +579,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getDeleteUserSuccess(String msg) {
         showToast(msg);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_FRIEND_INFO));
+        finish();
     }
 
     /**
@@ -673,7 +675,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getHomeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
+        mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         //更新 我的 数据
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
@@ -688,7 +690,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         //启动单聊页面
         RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
     }
-
 
 
     private void initializeInjector() {

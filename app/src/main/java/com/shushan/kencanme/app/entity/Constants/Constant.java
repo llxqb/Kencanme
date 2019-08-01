@@ -40,4 +40,7 @@ public class Constant {
 
     //发起google支付
     public static final int GOOGLE_PAY_REQ = 10001;
+
+    //recyclerView item 中某一/某些控件刷新
+    public static final String ITEM_UPDATE  ="itemUpdate";
 }

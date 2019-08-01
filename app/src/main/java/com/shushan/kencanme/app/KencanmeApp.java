@@ -11,6 +11,7 @@ import com.shushan.kencanme.app.di.modules.AppModule;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessage;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
+import com.squareup.leakcanary.LeakCanary;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
@@ -57,6 +58,7 @@ public class KencanmeApp extends Application {
         mAppComponent.inject(this);//必须有
         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
 //        SophixManager.getInstance().queryAndLoadNewPatch();
+        initLeaks();
         //初始化融云
         initRongYun();
         //友盟init
@@ -64,6 +66,17 @@ public class KencanmeApp extends Application {
     }
 
 
+    /**
+     * 内存泄漏检查工具
+     */
+    private void initLeaks() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+    }
 
     /**
      * 初始化阿里移动热更新

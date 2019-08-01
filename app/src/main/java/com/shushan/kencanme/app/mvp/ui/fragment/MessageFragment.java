@@ -1,5 +1,6 @@
 package com.shushan.kencanme.app.mvp.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +16,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.shushan.kencanme.app.R;
+import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.ConversationListFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.message.MyFriendsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +48,13 @@ public class MessageFragment extends BaseFragment {
         return new MessageFragment();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_MESSAGE_INFO));
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).sendBroadcast(new Intent(ActivityConstant.UPDATE_FRIEND_INFO));
+        }
+    }
 
     @Nullable
     @Override

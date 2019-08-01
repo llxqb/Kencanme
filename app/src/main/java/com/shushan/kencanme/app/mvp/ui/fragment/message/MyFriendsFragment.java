@@ -1,5 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.fragment.message;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerMyFriendsFragmentComponent;
 import com.shushan.kencanme.app.di.modules.MainModule;
 import com.shushan.kencanme.app.di.modules.MyFriendsFragmentModule;
+import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.app.entity.response.MyFriendsResponse;
@@ -67,6 +70,21 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
         return view;
     }
 
+    @Override
+    public void onReceivePro(Context context, Intent intent) {
+        if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_FRIEND_INFO)) {
+            mSwipeLy.setRefreshing(true);
+            reqFriendList();
+        }
+        super.onReceivePro(context, intent);
+    }
+
+    @Override
+    public void addFilter() {
+        super.addFilter();
+        mFilter.addAction(ActivityConstant.UPDATE_FRIEND_INFO);
+    }
+
 
     @Override
     public void initView() {
@@ -95,7 +113,7 @@ public class MyFriendsFragment extends BaseFragment implements MyFriendsFragment
 
     @Override
     public void initData() {
-        reqFriendList();
+//        reqFriendList();
     }
 
     /**

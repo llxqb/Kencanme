@@ -26,12 +26,27 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
 
     private ImageLoaderHelper mImageLoaderHelper;
     private Context mContext;
+    List<HomeFragmentResponse.ListBean> mData;
 
     public HomeAdapter(Context context, @Nullable List<HomeFragmentResponse.ListBean> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.viewpager_item_layout, data);
+        mData = data;
         mContext = context;
         mImageLoaderHelper = imageLoaderHelper;
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);//播放填充满背景，不带黑色背景
+    }
+
+
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position, List payloads) {
+//        super.onBindViewHolder(holder, position, payloads);
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            String payload = payloads.get(0).toString();
+            ImageView homeLikeIv = holder.getView(R.id.home_like_iv);
+            mImageLoaderHelper.displayImage(mContext, R.mipmap.home_like, homeLikeIv, R.mipmap.home_like);
+        }
     }
 
 

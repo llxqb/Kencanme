@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,6 +16,8 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
     }
+
+
     signingConfigs {
         release {
             storeFile file(RELEASE_STORE_FILE)
@@ -108,8 +111,9 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'//android 权限
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'//RxBinding  使得点击事件更加一致性
     implementation 'com.google.code.gson:gson:2.8.5' //gson
-    //谷歌第三方登录
+    //谷歌第三方登录 和 谷歌支付
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-base:16.0.1'
     //视频加载库
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
     //图片加载框架 拍照选相册
@@ -125,12 +129,16 @@ dependencies {
     implementation project(':IMKit')
     implementation project(':IMLib')
     //Ahdi支付
-    implementation 'com.google.android.gms:play-services-base:16.0.1'
+
     implementation files('libs/BCAXCOWidget.aar')
     implementation files('libs/PaymentSdk.aar')
     //移动热更新
     implementation 'com.aliyun.ams:alicloud-android-hotfix:3.2.3'
-
+    //检查内存泄漏工具
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    //google Analytics
+//    implementation 'com.google.firebase:firebase-core:17.0.1'
 //    //友盟
 //    //友盟推送  友盟统计
 //    implementation 'com.umeng.umsdk:analytics:8.0.0'
@@ -139,3 +147,5 @@ dependencies {
 //    //PushSDK必须依赖utdid库，所以需要加入对应依赖
 //    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
 }
+
+//apply plugin: 'com.google.gms.google-services'

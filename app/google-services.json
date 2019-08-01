@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "701681623423",
+    "firebase_url": "https://kencanme.firebaseio.com",
+    "project_id": "kencanme",
+    "storage_bucket": "kencanme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701681623423:android:a9e39dff436d1fb4",
+        "android_client_info": {
+          "package_name": "com.shushan.kencanme.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701681623423-5f2pcodrkvtcguuij7lv8djisa4khphn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjunBWvRhKBP7mcC-gO87YrNu_u5TYuns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701681623423-5f2pcodrkvtcguuij7lv8djisa4khphn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "701681623423-ian5j86oq0pia6apmtemk48li5bqgj5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shushan.Teasing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

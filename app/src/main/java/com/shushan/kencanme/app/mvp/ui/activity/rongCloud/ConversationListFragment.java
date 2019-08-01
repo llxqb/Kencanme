@@ -68,6 +68,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     @Inject
     ConversationFragmentControl.ConversationFragmentPresenter mPresenter;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.conversitionlist_fragment, container, false);
@@ -92,7 +93,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MESSAGE_INFO)) {
             requestSystemMsgNew();
-        }else if(intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)){
+        } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
             // 充值后更新
             mLoginUser = mBuProcessor.getLoginUser();
         }
@@ -112,7 +113,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
 
     @Override
     public void initData() {
-        requestSystemMsgNew();
+//        requestSystemMsgNew();
     }
 
     /**
@@ -156,6 +157,8 @@ public class ConversationListFragment extends BaseFragment implements Conversati
         SystemMsgNewResponse.NewLikeBean likeBean = systemMsgNewResponse.getNew_like();
         SystemMsgNewResponse.NewMessageBean messageBean = systemMsgNewResponse.getNew_message();
         if (likeBean != null && likeBean.getCount() != 0) {
+            mNewPairingRl.setVisibility(View.VISIBLE);
+            mLineView.setVisibility(View.VISIBLE);
             if (AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex) == 3) {
                 mImageLoaderHelper.displayImage(getActivity(), likeBean.getTrait(), mNewPairingIv, Constant.LOADING_AVATOR);
             } else {

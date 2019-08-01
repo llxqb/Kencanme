@@ -68,6 +68,7 @@ public class RetrofitUtil {
                         .readTimeout(60, TimeUnit.SECONDS)
                         .writeTimeout(60 * 1000, TimeUnit.SECONDS);
 
+        okHttpClientBuilder.addInterceptor(new LogInterceptor());
 //        okHttpClientBuilder.addInterceptor(new Interceptor() {
 //            @Override
 //            public Response intercept(Chain chain) throws IOException {
@@ -123,6 +124,9 @@ public class RetrofitUtil {
 //                            org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 //        }
         okHttpClient = okHttpClientBuilder.build();
+
+
+
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(baseUrl);
         if (isToJson) {

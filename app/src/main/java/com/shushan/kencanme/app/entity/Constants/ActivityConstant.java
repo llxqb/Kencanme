@@ -23,4 +23,8 @@ public class ActivityConstant {
      * 支付完更新信息
      */
     public static final String PAY_SUCCESS_UPDATE_INFO = "pay_success_update_info";
+    /**
+     * 更新好友信息
+     */
+    public static final String UPDATE_FRIEND_INFO = "update_friend_info";
 }

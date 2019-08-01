@@ -28,6 +28,7 @@ import com.shushan.kencanme.app.di.components.DaggerHomeFragmentComponent;
 import com.shushan.kencanme.app.di.modules.HomeFragmentModule;
 import com.shushan.kencanme.app.di.modules.MainModule;
 import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
+import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.DialogBuyBean;
 import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.entity.request.BuyExposureTimeRequest;
@@ -195,6 +196,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
                         break;
                     case R.id.home_like_iv:
                         assert listBean != null;
+                        clickPos = position;
                         if (listBean.getIs_like() != 1) {
                             goLike(listBean.getUid());
                         } else {
@@ -380,8 +382,11 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             //相互喜欢
             showMatchSuccesDialog();
         }
-        listBean.setRelation(1);
-        mHomeAdapter.notifyItemChanged(clickPos);
+        //1、item 局部item刷新
+        //2、item 局部某一控件刷新控件
+//        listBean.setRelation(1);
+//        mHomeAdapter.notifyItemChanged(clickPos);
+        mHomeAdapter.notifyItemChanged(clickPos, Constant.ITEM_UPDATE);
         requestHomeUserInfo();
     }
 
