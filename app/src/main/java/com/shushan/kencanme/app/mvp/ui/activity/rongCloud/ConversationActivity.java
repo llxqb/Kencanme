@@ -277,7 +277,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     private void sendImgMsgDialog() {
         SendPhotoTypeDialog sendPhotoTypeDialog = new SendPhotoTypeDialog();
         sendPhotoTypeDialog.setListener(this);
-        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), sendPhotoTypeDialog, SendPhotoTypeDialog.TAG);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), sendPhotoTypeDialog, SendPhotoTypeDialog.TAG);
     }
 
 

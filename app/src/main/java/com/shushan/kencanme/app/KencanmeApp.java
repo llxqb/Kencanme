@@ -47,7 +47,7 @@ public class KencanmeApp extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //初始化热修复
-//        initHotfix();
+        initHotfix();
     }
 
     @Override
@@ -57,7 +57,8 @@ public class KencanmeApp extends Application {
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         mAppComponent.inject(this);//必须有
         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-//        SophixManager.getInstance().queryAndLoadNewPatch();
+        SophixManager.getInstance().queryAndLoadNewPatch();
+        //初始化内存泄漏检查工具
         initLeaks();
         //初始化融云
         initRongYun();
@@ -99,10 +100,13 @@ public class KencanmeApp extends Application {
                         // 补丁加载回调通知
                         if (code == PatchStatus.CODE_LOAD_SUCCESS) {
                             // 表明补丁加载成功
+//                            ToastUtil.showToast(mContext,"表明补丁加载成功");
                         } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
+//                            ToastUtil.showToast(mContext,"表明新补丁生效需要重启. 开发者可提示用户或者强制重启");
                             // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
                             // 建议: 用户可以监听进入后台事件, 然后调用killProcessSafely自杀，以此加快应用补丁，详见1.3.2.3
                         } else {
+//                            ToastUtil.showToast(mContext,"error()");
                             // 其它错误信息, 查看PatchStatus类说明
                         }
                     }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 
 android {
@@ -7,8 +8,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 20
-        versionName "1.0.2"
+        versionCode 21
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -111,15 +112,17 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'//android 权限
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'//RxBinding  使得点击事件更加一致性
     implementation 'com.google.code.gson:gson:2.8.5' //gson
-    //谷歌第三方登录 和 谷歌支付
+    //谷歌第三方登录 和 谷歌支付 和firebase分析   google 工具别升级 否则需要升级到 androidx支持包
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-base:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
     //视频加载库
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.4'
     //图片加载框架 拍照选相册
 //    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
     implementation project(':takephoto_library')
     //图片毛玻璃效果
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'jp.wasabeef:glide-transformations:3.1.1'
     //时间日期选择控件
     implementation 'com.contrarywind:Android-PickerView:4.1.8'
@@ -129,7 +132,6 @@ dependencies {
     implementation project(':IMKit')
     implementation project(':IMLib')
     //Ahdi支付
-
     implementation files('libs/BCAXCOWidget.aar')
     implementation files('libs/PaymentSdk.aar')
     //移动热更新
@@ -137,8 +139,7 @@ dependencies {
     //检查内存泄漏工具
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    //google Analytics
-//    implementation 'com.google.firebase:firebase-core:17.0.1'
+
 //    //友盟
 //    //友盟推送  友盟统计
 //    implementation 'com.umeng.umsdk:analytics:8.0.0'
@@ -148,4 +149,4 @@ dependencies {
 //    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
 }
 
-//apply plugin: 'com.google.gms.google-services'
+
