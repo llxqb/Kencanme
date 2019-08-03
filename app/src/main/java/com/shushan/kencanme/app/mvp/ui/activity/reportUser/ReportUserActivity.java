@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerReportUserComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -80,13 +79,10 @@ public class ReportUserActivity extends BaseActivity implements ReportUserContro
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mReportUserAdapter = new ReportUserAdapter(mList);
         mRecyclerView.setAdapter(mReportUserAdapter);
-
-        mReportUserAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                ReportUserListResponse.DataBean dataBean = (ReportUserListResponse.DataBean) adapter.getItem(position);
-                DataFraudActivity.start(ReportUserActivity.this, String.valueOf(dataBean.getId()), dataBean.getReason(), uid);
-            }
+        mReportUserAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            ReportUserListResponse.DataBean dataBean = (ReportUserListResponse.DataBean) adapter.getItem(position);
+            assert dataBean != null;
+            DataFraudActivity.start(ReportUserActivity.this, String.valueOf(dataBean.getId()), dataBean.getReason(), uid);
         });
     }
 
@@ -98,34 +94,8 @@ public class ReportUserActivity extends BaseActivity implements ReportUserContro
 
     @OnClick({R.id.back})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-//            case R.id.data_fraud:
-//                //头像资料作假
-//                DataFraudActivity.start(this, getResources().getString(R.string.DataFraudActivity_head_portraits),uid,"");
-//                break;
-//            case R.id.advertising_and_marketing:
-//                //广告、营销
-//                DataFraudActivity.start(this,  getResources().getString(R.string.ReportUserActivity_advertising),uid);
-//                break;
-//            case R.id.fraud:
-//                //诈骗、托儿
-//                DataFraudActivity.start(this,  getResources().getString(R.string.ReportUserActivity_Fraud),uid);
-//                break;
-//            case R.id.pornography_and_vulgarity:
-//                //色情低俗
-//                DataFraudActivity.start(this,  getResources().getString(R.string.ReportUserActivity_Pornography),uid);
-//                break;
-//            case R.id.language_uncivilized:
-//                //语言不文明
-//                DataFraudActivity.start(this,  getResources().getString(R.string.ReportUserActivity_Malicious),uid);
-//                break;
-//            case R.id.other:
-//                //其他
-//                DataFraudActivity.start(this,  getResources().getString(R.string.ReportUserActivity_Other),uid);
-//                break;
+        if (view.getId() == R.id.back) {
+            finish();
         }
     }
 

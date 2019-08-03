@@ -6,6 +6,7 @@
 
         <item name="actionModeStyle">@style/CustomActionModeStyle</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="CustomActionModeStyle" parent="Base.Widget.AppCompat.ActionMode">

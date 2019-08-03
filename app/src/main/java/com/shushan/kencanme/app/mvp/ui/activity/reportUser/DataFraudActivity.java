@@ -93,7 +93,6 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     private int maxPicNum = 8;
     private String uid;
     private String mReportUserId;
-    private String mReportUserTitle;
     /**
      * 上传成功后图片集合
      */
@@ -128,7 +127,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         if (getIntent() != null) {
             uid = getIntent().getStringExtra("uid");
             mReportUserId = getIntent().getStringExtra("reportUserId");
-            mReportUserTitle = getIntent().getStringExtra("reportUserTitle");
+            String mReportUserTitle = getIntent().getStringExtra("reportUserTitle");
             mTitleTv.setText(mReportUserTitle);
         }
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");

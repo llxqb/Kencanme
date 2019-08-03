@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="album_view">Pilih album foto</string>
+    <string name="image_view">Ketuk untuk memilih gambar</string>
+
+    <string name="add">ADD</string>
+    <string name="selected">terpilih</string>
+    <string name="limit_exceeded">Dapat memilih maksimum %d gambar</string>
+
+</resources>

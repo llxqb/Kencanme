@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rc_action_bar_back">Kembali</string>
+    <string name="rc_action_bar_ok">baik</string>
+
+    <string name="rc_plugin_location">Lokasi</string>
+    <string name="rc_plugin_image">Gambar</string>
+    <string name="rc_plugin_location_message">Kirim lokasi</string>
+    <string name="rc_plugin_location_sharing">Lokasi Real-time</string>
+    <string name="rc_audio_input">Tahan untuk Bicara</string>
+    <string name="rc_audio_input_hover">Lepaskan untuk Kirim</string>
+    <string name="rc_ext_send">Kirim</string>
+    <string name="rc_ext_exit_location_sharing_confirm">Akhir</string>
+    <string name="rc_ext_cancel">Membatalkan</string>
+    <string name="rc_location_fetching">Mengambil&#8230;&#8230;</string>
+    <string name="rc_location_fail">Gagal menemukan</string>
+    <string name="rc_location_temp_failed">Gagal menemukan, harap coba lagi nanti</string>
+    <string name="rc_location_sharing_exceed_max">Melebihi jumlah maksimum </string>
+    <string name="rc_you_are_sharing_location">Anda berbagi lokasi</string>
+    <string name="rc_other_is_sharing_location">%s berbagi lokasi</string>
+    <string name="rc_others_are_sharing_location">%d orang berbagi lokasi</string>
+    <string name="rc_ext_warning">Cepat</string>
+    <string name="rc_ext_exit_location_sharing">Akhiri Lokasi Waktu Nyata sekarang?</string>
+    <string name="rc_ext_location_permission_failed">Anda perlu memberikan izin lokasi di menu pengaturan</string>
+
+    <!-- PictureSelectorActivity -->
+    <string name="rc_picsel_toolbar">Gambar</string>
+    <string name="rc_picsel_toolbar_send">Kirim</string>
+    <string name="rc_picsel_toolbar_send_num">Kirim(%d/9)</string>
+    <string name="rc_picsel_pictype">Gambar</string>
+    <string name="rc_picsel_toolbar_preview">Pratinjau</string>
+    <string name="rc_picsel_toolbar_preview_num">Pratinjau(%d)</string>
+    <string name="rc_picsel_selected_max">Anda hanya dapat memilih paling banyak 9 gambar.</string>
+    <string name="rc_picsel_take_picture">Mengambil gambar</string>
+    <string name="rc_picsel_catalog_allpic">Semua gambar</string>
+    <string name="rc_picsel_catalog_number">%d</string>
+
+    <!-- PicturePreviewActivity -->
+    <string name="rc_picprev_origin">Gambar Penuh</string>
+    <string name="rc_picprev_origin_size">Gambar Penuh(%s)</string>
+    <string name="rc_picprev_select">Memilih</string>
+
+    <string name="rc_network_exception">Anomali jaringan, silakan coba lagi nanti</string>
+    <string name="rc_permission_grant_needed">Anda harus memberikan izin dalam pengaturan</string>
+    <string name="rc_permission_microphone">(Mikropon).</string>
+    <string name="rc_permission_microphone_and_camera">(Mikrofon, Kamera).</string>
+    <string name="rc_permission_camera">(Kamera).</string>
+    <string name="rc_android.settings.action.MANAGE_OVERLAY_PERMISSION">Draw Overlay</string>
+    <string name="rc_confirm">baik</string>
+    <string name="rc_cancel">Membatalkan</string>
+</resources>
