@@ -115,6 +115,7 @@
     <string name="CreatePersonalInfoActivity_birthday_is_empty">Birthday can not be empty</string>
     <string name="CreatePersonalInfoActivity_address_is_empty">City can not be empty</string>
     <string name="CreatePersonalInfoActivity_cover_is_empty">Cover can not be empty</string>
+    <string name="CreatePersonalInfoActivity_image_is_empty" >Image can not be empty</string>
     <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">Declaration of Friendship can not be empty</string>
     <!-- app hint语句 -->
     <string name="app_nick_hint">Please enter a nickname</string>

@@ -300,7 +300,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         createOrderRequest.type = "1";
         createOrderRequest.relation_id = relation_id;
         createOrderRequest.money = mVipinfoBean.getSpecial_price();
-        createOrderRequest.from = "Android";
+        createOrderRequest.from = Constant.FROM;
         mPresenter.onRequestCreateOrder(createOrderRequest);
     }
 

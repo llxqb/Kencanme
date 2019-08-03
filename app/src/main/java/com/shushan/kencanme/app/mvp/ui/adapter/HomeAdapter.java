@@ -80,7 +80,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
         }
         String mRecommendUserSexYearValue = item.getAge() + " " + mContext.getResources().getString(R.string.HomeViewPagerAdapter_years);
 
-        if (item.getActive_time() > 0) {
+        if (item.getActive_time() > 0 && item.getActive_time() <= 30) {
             helper.setVisible(R.id.active_time, true);
             String mActiveTimeValue = mContext.getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + item.getActive_time() + " " + mContext.getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
             helper.setText(R.id.active_time, mActiveTimeValue);

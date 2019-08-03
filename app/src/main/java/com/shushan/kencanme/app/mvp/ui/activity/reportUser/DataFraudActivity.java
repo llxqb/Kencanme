@@ -29,6 +29,7 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.ReportUserRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.ReportUserListResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.FraudPhotoAdapter;
 import com.shushan.kencanme.app.mvp.utils.LogUtils;
@@ -67,6 +68,8 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     ImageView mBack;
     @BindView(R.id.title_name)
     TextView mTitleName;
+    @BindView(R.id.title_tv)
+    TextView mTitleTv;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.pic_num_tv)
@@ -89,6 +92,8 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     //默认传8张
     private int maxPicNum = 8;
     private String uid;
+    private String mReportUserId;
+    private String mReportUserTitle;
     /**
      * 上传成功后图片集合
      */
@@ -97,8 +102,10 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
     ReportUserControl.PresenterReportUser mPresenter;
 
 
-    public static void start(Context context, String uid) {
+    public static void start(Context context, String reportUserId, String reportUserTitle, String uid) {
         Intent intent = new Intent(context, DataFraudActivity.class);
+        intent.putExtra("reportUserId", reportUserId);
+        intent.putExtra("reportUserTitle", reportUserTitle);
         intent.putExtra("uid", uid);
         context.startActivity(intent);
     }
@@ -120,6 +127,9 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
         mPicNumTv.setText(getResources().getString(R.string.DataFraudActivity_pic_num) + "(0/8)");
         if (getIntent() != null) {
             uid = getIntent().getStringExtra("uid");
+            mReportUserId = getIntent().getStringExtra("reportUserId");
+            mReportUserTitle = getIntent().getStringExtra("reportUserTitle");
+            mTitleTv.setText(mReportUserTitle);
         }
         File file = new File(getExternalCacheDir(), System.currentTimeMillis() + ".png");
         uri = Uri.fromFile(file);
@@ -219,12 +229,16 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
                     showToast(getResources().getString(R.string.DataFraudActivity_desc_is_null));
                     return;
                 }
-                for (int i = 1; i < photoAdapter.getItemCount(); i++) {
-                    TImage tImage = photoAdapter.getItem(i);
-                    assert tImage != null;
-                    Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
-                    String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
-                    uploadImage(path);
+                if (photoAdapter.getItemCount() > 1) {
+                    for (int i = 1; i < photoAdapter.getItemCount(); i++) {
+                        TImage tImage = photoAdapter.getItem(i);
+                        assert tImage != null;
+                        Bitmap bitmap = BitmapFactory.decodeFile(tImage.getCompressPath());
+                        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
+                        uploadImage(path);
+                    }
+                } else {
+                    showToast(getResources().getString(R.string.CreatePersonalInfoActivity_image_is_empty));
                 }
                 break;
         }
@@ -331,7 +345,7 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             ReportUserRequest reportUserRequest = new ReportUserRequest();
             reportUserRequest.token = mBuProcessor.getToken();
             reportUserRequest.uid = uid;
-            reportUserRequest.reason = "1";
+            reportUserRequest.reason = mReportUserId;
             LogUtils.e("mPicList:" + new Gson().toJson(mPicList));
             reportUserRequest.pics = new Gson().toJson(mPicList);
             if (!TextUtils.isEmpty(mDataFraudContentEv.getText())) {
@@ -339,6 +353,10 @@ public class DataFraudActivity extends BaseActivity implements TakePhoto.TakeRes
             }
             mPresenter.onRequestReportUser(reportUserRequest);
         }
+    }
+
+    @Override
+    public void reportUserListSuccess(ReportUserListResponse reportUserListResponse) {
     }
 
     /**

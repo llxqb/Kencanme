@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/report_user_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 诈骗、托儿-->
+    <TextView
+        android:id="@+id/report_user_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:background="@drawable/ripple_bg"
+        android:drawableEnd="@mipmap/next_step"
+        android:gravity="start|center_vertical"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_20"
+        android:textColor="@color/first_text_color"
+        android:textSize="@dimen/sp_14" />
+
+    <View style="@style/line_height_05" />
+</LinearLayout>

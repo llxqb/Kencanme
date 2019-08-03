@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.model;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.ReportUserRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
@@ -47,6 +48,12 @@ public class PersonalInfoModel {
         return mPersonalInfoApi.updateMyAlbum(mGson.toJson(updateAlbumRequest)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 举报原因列表
+     */
+    public Observable<ResponseData> reportUserListRequest(TokenRequest request) {
+        return mPersonalInfoApi.reportUserListRequest(mGson.toJson(request)).map(mTransform::transformListType);
+    }
     /**
      * 举报用户
      */

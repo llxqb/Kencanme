@@ -2,9 +2,12 @@ package com.shushan.kencanme.app.mvp.ui.activity.reportUser;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.ReportUserRequest;
+import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.ReportUserListResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -31,6 +34,26 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
         mReportUserView = ReportUserView;
     }
 
+    /**
+     * 举报原因列表
+     */
+    @Override
+    public void onRequestReportUserList(TokenRequest tokenRequest) {
+        mReportUserView.showLoading(mContext.getResources().getString(R.string.loading));
+        Disposable disposable = mPersonalInfoModel.reportUserListRequest(tokenRequest).compose(mReportUserView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::reportUserListSuccess, throwable -> mReportUserView.showErrMessage(throwable),
+                        () -> mReportUserView.dismissLoading());
+        mReportUserView.addSubscription(disposable);
+    }
+
+    private void reportUserListSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            ReportUserListResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), ReportUserListResponse.class);
+            mReportUserView.reportUserListSuccess(response);
+        } else {
+            mReportUserView.showToast(responseData.errorMsg);
+        }
+    }
 
     @Override
     public void onRequestReportUser(ReportUserRequest reportUserRequest) {

@@ -12,9 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         android:orientation="horizontal">
 
         <EditText
@@ -23,21 +23,25 @@
             android:layout_height="@dimen/dp_35"
             android:background="@drawable/label_search_bg1"
             android:gravity="start|center_vertical"
-            android:paddingEnd="@dimen/dp_10"
-            android:paddingStart="@dimen/dp_10"
             android:hint="@string/EditLabelActivity_tag_hint"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
             android:textColorHint="@color/text_hint_color"
             android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/add_tv"
-            android:layout_width="@dimen/dp_68"
-            android:layout_height="@dimen/dp_34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/label_search_bg2"
             android:gravity="center"
+            android:minWidth="@dimen/dp_68"
+            android:minHeight="@dimen/dp_34"
+            android:paddingStart="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_2"
             android:text="@string/EditLabelActivity_tag_add"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_15" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -55,7 +59,7 @@
         <Button
             android:id="@+id/save_btn"
             android:layout_width="@dimen/dp_228"
-            android:layout_height="@dimen/dp_35"
+            android:layout_height="@dimen/dp_40"
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@drawable/bg_blue2_round_20_selector"
             android:text="@string/Preserve"

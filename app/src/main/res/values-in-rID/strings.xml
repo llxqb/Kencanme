@@ -115,6 +115,7 @@
     <string name="CreatePersonalInfoActivity_birthday_is_empty">Ulang tahun tidak boleh kosong</string>
     <string name="CreatePersonalInfoActivity_address_is_empty">Kota tidak boleh kosong</string>
     <string name="CreatePersonalInfoActivity_cover_is_empty">Penutup tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_image_is_empty" >Gambar tidak boleh kosong</string>
     <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">Pernyataan kencan tidak boleh kosong</string>
     <!-- app hint语句 -->
     <string name="app_nick_hint">Silakan masukkan nama panggilan</string>

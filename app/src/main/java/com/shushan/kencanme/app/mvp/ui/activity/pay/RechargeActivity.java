@@ -243,7 +243,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         createOrderRequest.type = "2";
         createOrderRequest.relation_id = relation_id;
         createOrderRequest.money = price;
-        createOrderRequest.from = "Android";
+        createOrderRequest.from = Constant.FROM;
         mPresenter.onRequestCreateOrder(createOrderRequest);
     }
 

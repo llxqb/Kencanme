@@ -32,125 +32,130 @@
             android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 
-    <!-- 头像资料作假-->
-    <TextView
-        android:id="@+id/data_fraud"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/DataFraudActivity_head_portraits"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+        android:layout_height="wrap_content"/>
+    <!--&lt;!&ndash; 头像资料作假&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/data_fraud"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/DataFraudActivity_head_portraits"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
-    <!-- 广告、营销-->
-    <TextView
-        android:id="@+id/advertising_and_marketing"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/ReportUserActivity_advertising"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+    <!--&lt;!&ndash; 广告、营销&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/advertising_and_marketing"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/ReportUserActivity_advertising"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
-    <!-- 诈骗、托儿-->
-    <TextView
-        android:id="@+id/fraud"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/ReportUserActivity_Fraud"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+    <!--&lt;!&ndash; 诈骗、托儿&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/fraud"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/ReportUserActivity_Fraud"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
-    <!-- 色情低俗-->
-    <TextView
-        android:id="@+id/pornography_and_vulgarity"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/ReportUserActivity_Pornography"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+    <!--&lt;!&ndash; 色情低俗&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/pornography_and_vulgarity"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/ReportUserActivity_Pornography"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
-    <!-- 语言不文明-->
-    <TextView
-        android:id="@+id/language_uncivilized"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/ReportUserActivity_Malicious"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+    <!--&lt;!&ndash; 语言不文明&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/language_uncivilized"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/ReportUserActivity_Malicious"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
-    <!-- 语言不文明-->
-    <TextView
-        android:id="@+id/other"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
-        android:background="@drawable/ripple_bg"
-        android:drawableEnd="@mipmap/next_step"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp_20"
-        android:paddingStart="@dimen/dp_20"
-        android:text="@string/ReportUserActivity_Other"
-        android:textColor="@color/first_text_color"
-        android:textSize="@dimen/sp_14" />
+    <!--&lt;!&ndash; 语言不文明&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/other"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_60"-->
+        <!--android:background="@drawable/ripple_bg"-->
+        <!--android:drawableEnd="@mipmap/next_step"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingEnd="@dimen/dp_20"-->
+        <!--android:paddingStart="@dimen/dp_20"-->
+        <!--android:text="@string/ReportUserActivity_Other"-->
+        <!--android:textColor="@color/first_text_color"-->
+        <!--android:textSize="@dimen/sp_14" />-->
 
-    <View style="@style/line_height_05" />
+    <!--<View style="@style/line_height_05" />-->
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp_15"
-        android:gravity="bottom"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="@dimen/dp_15"-->
+        <!--android:gravity="bottom"-->
+        <!--android:orientation="vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ReportUserActivity_buttom_tv"
-            android:textColor="@color/color_blue_btn"
-            android:textSize="@dimen/sp_11" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/ReportUserActivity_buttom_tv"-->
+            <!--android:textColor="@color/color_blue_btn"-->
+            <!--android:textSize="@dimen/sp_11" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
-            android:text="@string/ReportUserActivity_buttom_tv_hint"
-            android:textColor="@color/color_80"
-            android:textSize="@dimen/sp_9" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/dp_8"-->
+            <!--android:text="@string/ReportUserActivity_buttom_tv_hint"-->
+            <!--android:textColor="@color/color_80"-->
+            <!--android:textSize="@dimen/sp_9" />-->
+    <!--</LinearLayout>-->
 
 
 </LinearLayout>

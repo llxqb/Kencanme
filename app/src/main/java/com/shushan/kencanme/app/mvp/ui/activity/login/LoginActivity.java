@@ -140,7 +140,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
         loginRequest.id = gId;
         loginRequest.deviceId = SystemUtils.getDeviceId(this);
         loginRequest.access_token = accessToken;
-        loginRequest.from = "Android";
+        loginRequest.from = Constant.FROM;
         mPresenterLogin.onRequestLogin(loginRequest);
     }
 
@@ -161,7 +161,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 showToast("facebook-token:" + result.getAccessToken().getToken());
                 facebookLoginRequest.access_token = result.getAccessToken().getToken();
             }
-            facebookLoginRequest.from = "Android";
+            facebookLoginRequest.from = Constant.FROM;
             facebookLoginRequest.deviceId = SystemUtils.getDeviceId(LoginActivity.this);
             mPresenterLogin.onRequestLoginFacebook(facebookLoginRequest);
 

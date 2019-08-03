@@ -40,7 +40,6 @@
             android:id="@+id/recommend_user_head_iv"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:layout_alignParentStart="true"
             app:civ_border_color="@color/white"
             app:civ_border_width="@dimen/dp_2"
             android:src="@mipmap/head_photo_loading" />
