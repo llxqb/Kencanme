@@ -52,7 +52,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                         case 1:
                             helper.setVisible(R.id.photo_hint_tv, false);
                             jzvdStd.setUp(item.getAlbum_url(), "");
-                            PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                            PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0,true);  //获取视频第一帧显示
                             break;
                         case 2:
                             helper.setVisible(R.id.photo_hint_tv, true);
@@ -64,7 +64,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                             } else {
                                 //显示第一帧
                                 jzvdStd.setUp(item.getAlbum_url(), "");
-                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0,true);  //获取视频第一帧显示
                             }
                             break;
                         case 3:
@@ -75,7 +75,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
                             } else {
                                 jzvdStd.setUp(item.getAlbum_url(), "");
-                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0,true);  //获取视频第一帧显示
                             }
                             break;
                     }

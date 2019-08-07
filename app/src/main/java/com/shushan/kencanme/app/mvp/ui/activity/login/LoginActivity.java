@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -123,9 +122,9 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
 
     //处理google回调
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.e("ddd", "handleSignInResult----" + result.isSuccess());
         dismissLoading();
-        if (result.isSuccess()) {
+        if (result!=null && result.isSuccess()) {
+//        Log.e("ddd", "handleSignInResult----" + result.isSuccess());
             GoogleSignInAccount account = result.getSignInAccount();
             //登录后台系统
             assert account != null;

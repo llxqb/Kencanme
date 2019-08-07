@@ -53,7 +53,6 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
@@ -167,6 +166,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
             //查询我的--主要是bean数量
+            mLoginUser = mBuProcessor.getLoginUser();
             requestHomeUserInfo();
         } else {
             JzvdStd.goOnPlayOnPause();
@@ -181,7 +181,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         StatusBarUtil.setTransparentForImageView(getActivity(), null);
         unbinder = ButterKnife.bind(this, view);
         initializeInjector();
-        LogUtils.e("onCreateView()");
         initView();
         initData();
         return view;
@@ -232,19 +231,17 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 MyAlbumResponse.DataBean dataBean = (MyAlbumResponse.DataBean) adapter.getItem(position);
-                switch (view.getId()) {
-                    case R.id.photo_item_rl:
-                        if (position == 0) {
-                            if (mAlbumAdapter.getItemCount() >= 13) {
-                                showToast(getResources().getString(R.string.album_num_max_12));
-                            } else {
-                                startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
-                            }
+                if (view.getId() == R.id.photo_item_rl) {
+                    if (position == 0) {
+                        if (mAlbumAdapter.getItemCount() >= 13) {
+                            showToast(getResources().getString(R.string.album_num_max_12));
                         } else {
-                            assert dataBean != null;
-                            LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
+                            startActivitys(UploadPhotoActivity.class);//上传图片  这里都是新增图片
                         }
-                        break;
+                    } else {
+                        assert dataBean != null;
+                        LookPhotoActivity.start(getActivity(), dataBean.getAlbum_url());//查看大图
+                    }
                 }
             }
         });
@@ -309,7 +306,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mCoverIv.setVisibility(View.GONE);
             mJzvdStd.setVisibility(View.VISIBLE);
             mJzvdStd.setUp(mLoginUser.cover, "");
-            PicUtils.loadVideoScreenshot(getActivity(), mLoginUser.cover, mJzvdStd.thumbImageView, 0);
+            PicUtils.loadVideoScreenshot(getActivity(), mLoginUser.cover, mJzvdStd.thumbImageView, 0,true);
         } else {
             mCoverIv.setVisibility(View.VISIBLE);
             mJzvdStd.setVisibility(View.GONE);

@@ -283,7 +283,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         mPhotoIvRl.setVisibility(View.GONE);
         mJzVideo.setUp(videoPath, "");
         //获取视频第一帧
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0);
+        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);
         mPersonalInfoRequest.cover = videoPath;
     }
 

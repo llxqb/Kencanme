@@ -64,7 +64,7 @@ public class LookPhotoActivity extends BaseActivity {
                 mPhotoIv.setVisibility(View.GONE);
                 mJzVideo.setVisibility(View.VISIBLE);
                 mJzVideo.setUp(path, "");
-                PicUtils.loadVideoScreenshot(this, path, mJzVideo.thumbImageView, 0);  //获取视频第一帧显示
+                PicUtils.loadVideoScreenshot(this, path, mJzVideo.thumbImageView, 0,true);  //获取视频第一帧显示
             } else {
                 mJzVideo.setVisibility(View.GONE);
                 mPhotoIv.setVisibility(View.VISIBLE);

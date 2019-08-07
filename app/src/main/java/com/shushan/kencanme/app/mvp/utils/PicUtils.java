@@ -57,9 +57,10 @@ public class PicUtils {
 
 
     /**
-     *  * 图片压缩方法一
-     *
+     * * 图片压缩方法一
+     * <p>
      * 计算 bitmap大小，如果超过64kb，则进行压缩
+     *
      * @param bitmap
      * @return
      */
@@ -80,17 +81,19 @@ public class PicUtils {
     }
 
 
-
     /**
      *   context 上下文
      *   uri 视频地址
      *   imageView 设置image
      *   frameTimeMicros 获取某一时间帧
+     *    placeholder:是否有默认图片
      */
     @SuppressLint("CheckResult")
-    public static void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros) {
+    public static void loadVideoScreenshot(final Context context, String uri, ImageView imageView, long frameTimeMicros, boolean placeholder) {
         RequestOptions requestOptions = RequestOptions.frameOf(frameTimeMicros);
-        requestOptions.placeholder(R.mipmap.loading_middle);
+        if (placeholder) {
+            requestOptions.placeholder(R.mipmap.loading_middle);
+        }
         requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
         requestOptions.transform(new BitmapTransformation() {
             @Override
@@ -156,11 +159,11 @@ public class PicUtils {
         MultipartBody.Part photo = MultipartBody.Part.createFormData("video", file.getName(), photoRequestBody);
         //添加参数用户名和密码，并且是文本类型
         Call<ResponseData> loadCall = service.uploadVideoRequest2(photo);
-        Log.e("ddd","photo:"+photo);
+        Log.e("ddd", "photo:" + photo);
         loadCall.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                Log.e("APP", response.body().resultCode+"");
+                Log.e("APP", response.body().resultCode + "");
             }
 
             @Override

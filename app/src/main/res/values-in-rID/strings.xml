@@ -355,4 +355,5 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="uniPin_payment" translatable="false">Pembayaran UniPin</string><!--UniPin支付 -->
     <string name="payment_fail" translatable="false">Pembelian gagal</string><!--购买失败 -->
     <string name="login_open_permission">Silakan buka izin</string><!--登录权限 -->
+    <string name="image_fail">Gambar gagal dimuat</string><!--图片加载失败 -->
 </resources>

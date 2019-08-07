@@ -351,7 +351,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mCoverIv.setVisibility(View.GONE);
             mJzvdStd.setVisibility(View.VISIBLE);
             mJzvdStd.setUp(recommendUserInfoResponse.getCover(), "");
-            PicUtils.loadVideoScreenshot(this, recommendUserInfoResponse.getCover(), mJzvdStd.thumbImageView, 0);
+            PicUtils.loadVideoScreenshot(this, recommendUserInfoResponse.getCover(), mJzvdStd.thumbImageView, 0,true);
         } else {
             mCoverIv.setVisibility(View.VISIBLE);
             mJzvdStd.setVisibility(View.GONE);
@@ -458,18 +458,20 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 去聊天
      */
     private void goChat() {
-        if (recommendUserInfoResponse.getRelation() == 2) {
-            //启动单聊页面
-            RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
-        } else {
-            if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+        if(recommendUserInfoResponse!=null){
+            if (recommendUserInfoResponse.getRelation() == 2) {
                 //启动单聊页面
-                RequestFreeChat requestFreeChat = new RequestFreeChat();
-                requestFreeChat.token = mBuProcessor.getToken();
-                requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
-                mPresenter.onRequestChatNum(requestFreeChat);
+                RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
             } else {
-                showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
+                if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+                    //启动单聊页面
+                    RequestFreeChat requestFreeChat = new RequestFreeChat();
+                    requestFreeChat.token = mBuProcessor.getToken();
+                    requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
+                    mPresenter.onRequestChatNum(requestFreeChat);
+                } else {
+                    showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
+                }
             }
         }
     }

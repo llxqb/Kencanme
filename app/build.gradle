@@ -8,8 +8,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 24
-        versionName "1.0.4"
+        versionCode 25
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容

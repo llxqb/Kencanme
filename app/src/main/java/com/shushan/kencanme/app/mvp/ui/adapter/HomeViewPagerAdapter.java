@@ -83,7 +83,7 @@ public class HomeViewPagerAdapter extends PagerAdapter {
             mJzVideo.setVisibility(View.VISIBLE);
             mViewpagerItemIv.setVisibility(View.GONE);
             mJzVideo.setUp(listBean.getCover(), "");
-            PicUtils.loadVideoScreenshot(mContext, listBean.getCover(), mJzVideo.thumbImageView, 0);
+            PicUtils.loadVideoScreenshot(mContext, listBean.getCover(), mJzVideo.thumbImageView, 0,true);
         } else {
             mJzVideo.setVisibility(View.GONE);
             mViewpagerItemIv.setVisibility(View.VISIBLE);

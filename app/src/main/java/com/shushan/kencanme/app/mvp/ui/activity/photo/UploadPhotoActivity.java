@@ -381,7 +381,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         mJzVideo.setVisibility(View.VISIBLE);
         mPhotoIv.setVisibility(View.GONE);
         mJzVideo.setUp(videoPath, "");
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0);  //获取视频第一帧显示
+        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);  //获取视频第一帧显示
 //        mPersonalInfoRequest.cover = videoPath;
     }
 

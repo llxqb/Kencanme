@@ -49,7 +49,7 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
                 helper.setVisible(R.id.photo_iv, false);
                 JzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
                 jzvdStd.setUp(item.getAlbum_url(), "");
-                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0);  //获取视频第一帧显示
+                PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0,true);  //获取视频第一帧显示
             } else {
                 helper.setVisible(R.id.album_jz_video, false);
                 helper.setVisible(R.id.photo_iv, true);

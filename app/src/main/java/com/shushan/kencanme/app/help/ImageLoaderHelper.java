@@ -151,11 +151,11 @@ public class ImageLoaderHelper extends GlideLoader {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                if (imageView.getScaleType() != ImageView.ScaleType.CENTER_CROP) {
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
+                int vw = imageView.getWidth() ;//imageView.getWidth()- imageView.getPaddingLeft() - imageView.getPaddingRight()
                 float scale = (float) vw / (float) resource.getIntrinsicWidth();
                 int vh = Math.round(resource.getIntrinsicHeight() * scale);
                 params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
@@ -169,6 +169,7 @@ public class ImageLoaderHelper extends GlideLoader {
 
 
     /**
+     * CustomizeMessageItemProvider使用到
      * 设置圆角毛玻璃效果
      * 静态方法
      */
@@ -187,7 +188,7 @@ public class ImageLoaderHelper extends GlideLoader {
     }
 
     /**
-     *
+     * CustomizeMessageItemProvider使用到
      */
     public static void displayImage2(View context, Object path, ImageView imageView, int loadPic) {
         RequestOptions options = new RequestOptions()
@@ -198,4 +199,5 @@ public class ImageLoaderHelper extends GlideLoader {
                 .dontAnimate();
         Glide.with(context).load(path).apply(options).into(imageView);
     }
+
 }

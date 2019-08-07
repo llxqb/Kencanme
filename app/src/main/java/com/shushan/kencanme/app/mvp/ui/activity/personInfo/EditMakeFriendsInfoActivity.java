@@ -131,7 +131,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
             mCoverIv.setVisibility(View.GONE);
             mJzVideo.setUp(mLoginUser.cover, "");
             mUploadHintTv.setVisibility(View.VISIBLE);
-            PicUtils.loadVideoScreenshot(this, mLoginUser.cover, mJzVideo.thumbImageView, 0);
+            PicUtils.loadVideoScreenshot(this, mLoginUser.cover, mJzVideo.thumbImageView, 0,true);
         } else {
             mJzVideo.setVisibility(View.GONE);
             mCoverIv.setVisibility(View.VISIBLE);
@@ -319,7 +319,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         mCoverIv.setVisibility(View.GONE);
         mJzVideo.setUp(videoPath, "");
         //获取视频第一帧
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0);
+        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);
         mLoginUser.cover = videoPath;
     }
 
