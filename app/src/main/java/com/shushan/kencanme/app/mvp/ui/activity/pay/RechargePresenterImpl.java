@@ -115,27 +115,27 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
     }
 
     /**
-     * APP支付成功上报
+     * APP支付成功上报--Google
      */
     @Override
     public void onPayFinishUpload(PayFinishUploadRequest payFinishUpload) {
         mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mReChargeBeansModel.onPayFinishUpload(payFinishUpload).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestUploadPaySuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                .subscribe(this::requestUploadPaySuccess, throwable -> mRechargeView.getPayFinishGoogleUploadThowable(),
                         () -> mRechargeView.dismissLoading());
         mRechargeView.addSubscription(disposable);
     }
 
     private void requestUploadPaySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mRechargeView.getPayFinishUploadSuccess();
+            mRechargeView.getPayFinishGoogleUploadSuccess();
 //            responseData.parseData(PayFinishUploadResponse.class);
 //            if (responseData.parsedData != null) {
 //                PayFinishUploadResponse response = (PayFinishUploadResponse) responseData.parsedData;
 //                mRechargeView.getPayFinishUploadSuccess(response);
 //            }
         } else {
-            mRechargeView.showToast(responseData.errorMsg);
+            mRechargeView.getPayFinishGoogleUploadFail(responseData.errorMsg);
         }
     }
 
@@ -171,7 +171,7 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
     public void onPayFinishAHDIUpload(PayFinishAHDIRequest payFinishAHDIRequest) {
         mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mReChargeBeansModel.onPayFinishAHDIUpload(payFinishAHDIRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mRechargeView.getPayFinishAHDIUploadThowable(),
                         () -> mRechargeView.dismissLoading());
         mRechargeView.addSubscription(disposable);
     }
@@ -180,7 +180,7 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
         if (responseData.resultCode == 0) {
             mRechargeView.getPayFinishAHDIUploadSuccess();
         } else {
-            mRechargeView.showToast(responseData.errorMsg);
+            mRechargeView.getPayFinishAHDIUploadFail(responseData.errorMsg);
         }
     }
 
@@ -215,9 +215,8 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
      */
     @Override
     public void onPayFinishUploadByUniPin(PayFinishByUniPinRequest payFinishByUniPinRequest) {
-        mRechargeView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mReChargeBeansModel.onPayFinishUploadByUniPin(payFinishByUniPinRequest).compose(mRechargeView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mRechargeView.showErrMessage(throwable),
+                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mRechargeView.getPayFinishUploadByUniPinThowable(),
                         () -> mRechargeView.dismissLoading());
         mRechargeView.addSubscription(disposable);
     }
@@ -226,7 +225,7 @@ public class RechargePresenterImpl implements RechargeControl.PresenterRecharge 
         if (responseData.resultCode == 0) {
             mRechargeView.getPayFinishUploadByUniPinSuccess();
         } else {
-            mRechargeView.showToast(mContext.getResources().getString(R.string.payment_fail));
+            mRechargeView.getPayFinishUploadByUniPinFail(mContext.getResources().getString(R.string.payment_fail));
         }
     }
 

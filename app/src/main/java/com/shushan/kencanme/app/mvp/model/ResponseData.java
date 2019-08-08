@@ -16,7 +16,7 @@ public class ResponseData {
 
     public ResponseData() {
         resultCode = 110;
-        errorMsg = "信息获取失败";
+        errorMsg = "fail";//信息获取失败
     }
 
     public ResponseData(JSONObject jsonObject) {

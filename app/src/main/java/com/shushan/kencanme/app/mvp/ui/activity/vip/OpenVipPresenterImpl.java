@@ -114,22 +114,22 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     }
 
     /**
-     * APP支付成功上报
+     * APP支付成功上报--Google
      */
     @Override
     public void onPayFinishUpload(PayFinishUploadRequest payFinishUpload) {
         mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mOpenVipModel.onPayFinishUpload(payFinishUpload).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestUploadPaySuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                .subscribe(this::requestUploadPaySuccess, throwable -> mOpenVipView.getPayFinishGoogleUploadThowable(),
                         () -> mOpenVipView.dismissLoading());
         mOpenVipView.addSubscription(disposable);
     }
 
     private void requestUploadPaySuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mOpenVipView.getPayFinishUploadSuccess();
+            mOpenVipView.getPayFinishGoogleUploadSuccess();
         } else {
-            mOpenVipView.showToast(responseData.errorMsg);
+            mOpenVipView.getPayFinishGoogleUploadFail(responseData.errorMsg);
         }
     }
 
@@ -153,7 +153,7 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
                 mOpenVipView.createOrderAHDISuccess(response);
             }
         } else {
-            mOpenVipView.showToast(responseData.errorMsg);
+            mOpenVipView.getPayFinishAHDIUploadFail(responseData.errorMsg);
         }
     }
 
@@ -164,7 +164,7 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
     public void onPayFinishAHDIUpload(PayFinishAHDIRequest payFinishAHDIRequest) {
         mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mOpenVipModel.onPayFinishAHDIUpload(payFinishAHDIRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                .subscribe(this::requestPayFinishAHDISuccess, throwable -> mOpenVipView.getPayFinishAHDIUploadThowable(),
                         () -> mOpenVipView.dismissLoading());
         mOpenVipView.addSubscription(disposable);
     }
@@ -208,9 +208,8 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
      */
     @Override
     public void onPayFinishUploadByUniPin(PayFinishByUniPinRequest payFinishByUniPinRequest) {
-        mOpenVipView.showLoading(mContext.getResources().getString(R.string.loading));
         Disposable disposable = mOpenVipModel.onPayFinishUploadByUniPin(payFinishByUniPinRequest).compose(mOpenVipView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mOpenVipView.showErrMessage(throwable),
+                .subscribe(this::requestPayFinishByUniPinSuccess, throwable -> mOpenVipView.getPayFinishUploadByUniPinThowable(),
                         () -> mOpenVipView.dismissLoading());
         mOpenVipView.addSubscription(disposable);
     }
@@ -219,7 +218,7 @@ public class OpenVipPresenterImpl implements OpenVipControl.PresenterOpenVip {
         if (responseData.resultCode == 0) {
             mOpenVipView.getPayFinishUploadByUniPinSuccess();
         } else {
-            mOpenVipView.showToast(mContext.getResources().getString(R.string.payment_fail));
+            mOpenVipView.getPayFinishUploadByUniPinFail(mContext.getResources().getString(R.string.payment_fail));
         }
     }
     

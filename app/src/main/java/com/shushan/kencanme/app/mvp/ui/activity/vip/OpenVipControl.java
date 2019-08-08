@@ -29,19 +29,27 @@ public class OpenVipControl {
 
         void createOrderSuccess(CreateOrderResponse createOrderResponse);
 
-        void getPayFinishUploadSuccess();
-
         void createOrderAHDISuccess(CreateOrderAHDIResponse createOrderAHDIResponse);
-
-        void getPayFinishAHDIUploadSuccess();
 
         void createOrderByUniPinSuccess(CreateOrderByUniPinResponse createOrderByUniPinResponse);
 
+        void getPayFinishGoogleUploadSuccess();
+        void getPayFinishGoogleUploadFail(String error);
+        void getPayFinishGoogleUploadThowable();
+
+        void getPayFinishAHDIUploadSuccess();
+        void getPayFinishAHDIUploadFail(String error);
+        void getPayFinishAHDIUploadThowable();
+
         void getPayFinishUploadByUniPinSuccess();
+        void getPayFinishUploadByUniPinFail(String error);
+        void getPayFinishUploadByUniPinThowable();
+
     }
 
     public interface PresenterOpenVip extends Presenter<OpenVipView> {
         void openVipListRequest(OpenVipRequest openVipRequest);
+
         /**
          * 创建订单
          */

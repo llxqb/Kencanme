@@ -74,5 +74,10 @@ public interface MainApi {
      */
     @POST("menggoda/operation/secret_chat")
     Observable<String> onRequestChatNum(@Body String request);
+    /**
+     * 上传设备接口  后台做统计功能
+     */
+    @POST("menggoda/index/update_deviceinfo")
+    Observable<String> onUploadDevice(@Body String request);
 
 }

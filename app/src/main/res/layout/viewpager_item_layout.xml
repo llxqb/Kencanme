@@ -34,7 +34,6 @@
         android:layout_marginStart="@dimen/dp_12"
         android:layout_marginBottom="@dimen/dp_30"
         android:background="@drawable/home_user_bg"
-        android:gravity="center_vertical"
         android:minWidth="@dimen/dp_150"
         android:paddingStart="@dimen/dp_6"
         android:paddingEnd="@dimen/dp_10">
@@ -44,6 +43,7 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             android:src="@mipmap/head_photo_loading"
+            android:layout_centerVertical="true"
             app:civ_border_color="@color/white"
             app:civ_border_width="@dimen/dp_2" />
 
@@ -52,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_2"
             android:layout_toEndOf="@id/recommend_user_head_iv"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_15" />
@@ -61,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_toEndOf="@id/recommend_user_name"
             android:background="@mipmap/home_gender_female"
             android:paddingStart="@dimen/dp_18"
@@ -75,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/recommend_user_name"
             android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_toEndOf="@id/recommend_user_head_iv"
             android:drawableStart="@mipmap/home_address"
             android:drawablePadding="@dimen/dp_3"
@@ -88,7 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/recommend_user_sex_year"
             android:layout_marginStart="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_6"
+            android:singleLine="true"
             android:layout_toEndOf="@id/recommend_user_location"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12" />

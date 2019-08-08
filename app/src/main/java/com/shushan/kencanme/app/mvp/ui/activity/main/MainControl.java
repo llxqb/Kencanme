@@ -2,6 +2,7 @@ package com.shushan.kencanme.app.mvp.ui.activity.main;
 
 
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
@@ -31,6 +32,11 @@ public class MainControl {
          * 查看用户嗨豆查看私密照片message_id
          */
         void onRequestMessageId(TokenRequest tokenRequest);
+
+        /**
+         * 上传设备接口  后台做统计功能
+         */
+        void onUploadDevice(UploadDeviceRequest uploadDeviceRequest);
     }
 
 }

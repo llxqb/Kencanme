@@ -24,6 +24,7 @@ public class RongCloudHelper {
      * @return RongIM  客户端核心类的实例。
      */
     public static void connect(String token) {
+        Log.e("ddd","--connect():"+token);
         /**
          * IMKit SDK调用第二步,建立与服务器的连接
          */

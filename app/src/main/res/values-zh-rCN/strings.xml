@@ -356,4 +356,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="payment_fail" translatable="false">Failed purchase</string><!--购买失败 -->
     <string name="login_open_permission">Please open the permission</string><!--登录权限 -->
     <string name="image_fail">Image failed to load</string><!--图片加载失败 -->
+    <string name="PayReportErrorDialog_error_info1">Successful payment but failed to upload, please re-upload</string><!--支付成功但上传失败，请重新上传 -->
+    <string name="PayReportErrorDialog_error_info2" >Order update failed, please try again</string><!--订单更新失败，请重试 -->
 </resources>

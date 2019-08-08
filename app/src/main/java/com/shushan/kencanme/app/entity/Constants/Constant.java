@@ -42,7 +42,7 @@ public class Constant {
     public static final int GOOGLE_PAY_REQ = 10001;
 
     //recyclerView item 中某一/某些控件刷新
-    public static final String ITEM_UPDATE  ="itemUpdate";
+    public static final String ITEM_UPDATE = "itemUpdate";
     //设备标识
-    public static final String FROM  ="Android";
+    public static final String FROM = "Android";
 }

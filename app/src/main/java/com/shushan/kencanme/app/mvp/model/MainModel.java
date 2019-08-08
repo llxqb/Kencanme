@@ -8,6 +8,7 @@ import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.app.entity.request.MyFriendsRequest;
 import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.network.networkapi.MainApi;
 
@@ -94,6 +95,12 @@ public class MainModel {
      */
     public Observable<ResponseData> onRequestChatNum(RequestFreeChat request) {
         return mMainApi.onRequestChatNum(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 上传设备接口  后台做统计功能
+     */
+    public Observable<ResponseData> onUploadDevice(UploadDeviceRequest request) {
+        return mMainApi.onUploadDevice(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

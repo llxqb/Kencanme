@@ -15,17 +15,19 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerMainComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
 import com.shushan.kencanme.app.di.modules.MainModule;
+import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
-import com.shushan.kencanme.app.help.RongCloudHelper;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 import com.shushan.kencanme.app.mvp.ui.adapter.MyFragmentAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MineFragment;
+import com.shushan.kencanme.app.mvp.utils.SystemUtils;
 import com.shushan.kencanme.app.mvp.views.MyNoScrollViewPager;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -93,21 +96,51 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initData() {
+        reqUploadDevice();
         reqMessageId();
     }
 
 
-
+    /**
+     * 连接融云
+     * 舍弃 RongCloudHelper类
+     */
     private void connectRongCloud() {
         String rToken = mSharePreferenceUtil.getData("ryToken");
-//        LogUtils.d("rToken:" + rToken);
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
-            RongCloudHelper.connect(rToken);
+            Log.d("ddd","rToken:" + rToken);
+//            RongCloudHelper.connect(rToken); 不能这样使用静态方法
+            RongIM.connect(rToken, new RongIMClient.ConnectCallback() {
+                /**
+                 * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    Log.e("ddd","--onTokenIncorrect");
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.e("ddd","--onSuccess" + userid);
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.e("ddd","--onError" + errorCode);
+                }
+            });
         }
         //同步与服务器信息 new CustomerUserInfoProvider(rongId, mBuProcessor.getLoginUser())
         RongIM.setUserInfoProvider(this, true);
-
     }
 
     @Override
@@ -151,6 +184,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     /**
+     * 上传设备接口  后台做统计功能
+     */
+    private void reqUploadDevice(){
+        UploadDeviceRequest uploadDeviceRequest = new UploadDeviceRequest();
+        uploadDeviceRequest.token = mBuProcessor.getToken();
+        uploadDeviceRequest.deviceId = SystemUtils.getDeviceId(this);
+        uploadDeviceRequest.platform =  Constant.FROM;
+        mPresenter.onUploadDevice(uploadDeviceRequest);
+    }
+
+    /**
      * 请求使用嗨豆查看私密照片message_id
      */
     private void reqMessageId() {
@@ -165,6 +209,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mSharePreferenceUtil.saveObjData("messageIdList", messageIdResponse.getData());
         CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
+
+
 
     /**
      * 获取融云列表用户头像和昵称

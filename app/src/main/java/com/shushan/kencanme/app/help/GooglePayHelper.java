@@ -93,6 +93,11 @@ public class GooglePayHelper {
     }
 
     /**
+     * 是否要先消耗再购买
+     * false 只消耗
+     */
+    private boolean isToBuy;
+    /**
      * 查询库存的回调
      */
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -104,8 +109,9 @@ public class GooglePayHelper {
             }
             Purchase purchase = inventory.getPurchase(sku);
             Log.e(TAG, "查询商品信息成功 purchase:" + purchase);
-//            Log.e(TAG, "getSkuDetails" + inventory.getSkuDetails(sku));
+            Log.e(TAG, "getSkuDetails " + inventory.getSkuDetails(sku));
             if (purchase != null) {
+                isToBuy = true;
                 //库存存在用户购买的产品，先去消耗
                 expendGoods(inventory.getPurchase(sku));
             } else {
@@ -162,6 +168,10 @@ public class GooglePayHelper {
         Log.e(TAG, "消耗商品回调 ");
         if (result.isSuccess()) {
             Log.e(TAG, "消耗商品回调 --成功");
+            if (isToBuy) {
+                isToBuy = false;
+                buyGoods();
+            }
         } else {
             Log.e(TAG, "消耗商品回调 --失败" + result);
         }

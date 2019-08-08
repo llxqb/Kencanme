@@ -58,7 +58,7 @@ public class RecommendUserInfoResponse{
     private int vip;
     private int vip_time;
     private int svip;
-    private int height;
+    private String height;
     private String weight;
     private String bust;
     private String occupation;
@@ -164,11 +164,11 @@ public class RecommendUserInfoResponse{
         this.svip = svip;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 

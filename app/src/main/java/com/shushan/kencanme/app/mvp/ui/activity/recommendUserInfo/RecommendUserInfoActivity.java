@@ -289,10 +289,12 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 break;
             case R.id.recommend_like_iv:
                 //0没有关系1喜欢2互相喜欢（好友）3黑名单  喜欢了不可以取消喜欢
-                if (recommendUserInfoResponse.getRelation() == 0) {
-                    likeIv();
-                } else if (recommendUserInfoResponse.getRelation() == 1 || recommendUserInfoResponse.getRelation() == 2) {
-                    showToast(getResources().getString(R.string.already_like));
+                if(recommendUserInfoResponse!=null){
+                    if (recommendUserInfoResponse.getRelation() == 0) {
+                        likeIv();
+                    } else if (recommendUserInfoResponse.getRelation() == 1 || recommendUserInfoResponse.getRelation() == 2) {
+                        showToast(getResources().getString(R.string.already_like));
+                    }
                 }
                 break;
             case R.id.recommend_chat_iv:
@@ -351,7 +353,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mCoverIv.setVisibility(View.GONE);
             mJzvdStd.setVisibility(View.VISIBLE);
             mJzvdStd.setUp(recommendUserInfoResponse.getCover(), "");
-            PicUtils.loadVideoScreenshot(this, recommendUserInfoResponse.getCover(), mJzvdStd.thumbImageView, 0,true);
+            PicUtils.loadVideoScreenshot(this, recommendUserInfoResponse.getCover(), mJzvdStd.thumbImageView, 0, true);
         } else {
             mCoverIv.setVisibility(View.VISIBLE);
             mJzvdStd.setVisibility(View.GONE);
@@ -365,12 +367,12 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
         }
         String mSexYearTvValue = recommendUserInfoResponse.getAge() + " years";
-        if (recommendUserInfoResponse.getActive_time() > 0) {
+        if (recommendUserInfoResponse.getActive_time() > 0 && recommendUserInfoResponse.getActive_time() <= 30) {
             mRecommendActiveTime.setVisibility(View.VISIBLE);
-            String activeTimeValue = "active " + recommendUserInfoResponse.getActive_time() + " min age";
+            String activeTimeValue = getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + recommendUserInfoResponse.getActive_time() + " " + getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
             mRecommendActiveTime.setText(activeTimeValue);
         } else {
-            mRecommendActiveTime.setVisibility(View.INVISIBLE);
+            mRecommendActiveTime.setVisibility(View.GONE);
         }
         mRecommendUserSexYear.setText(mSexYearTvValue);
         mRecommendDesc.setText(recommendUserInfoResponse.getDeclaration());
@@ -379,8 +381,8 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mPhotoAlbumTv.setVisibility(View.GONE);
         //个人信息
         mRecommendUserLocation.setText(recommendUserInfoResponse.getCity());
-        String mUserHeightValue = recommendUserInfoResponse.getHeight() != 0 ? getResources().getString(R.string.Height) + recommendUserInfoResponse.getHeight() + "cm" : getResources().getString(R.string.Height);
-        String mUserWeightValue = !TextUtils.isEmpty(recommendUserInfoResponse.getWeight()) ? getResources().getString(R.string.Weight) + recommendUserInfoResponse.getWeight() + "kg" : getResources().getString(R.string.Weight);
+        String mUserHeightValue = (!TextUtils.isEmpty(recommendUserInfoResponse.getHeight()) && !recommendUserInfoResponse.getHeight().equals("0")) ? getResources().getString(R.string.Height) + recommendUserInfoResponse.getHeight() + "cm" : getResources().getString(R.string.Height);
+        String mUserWeightValue = (TextUtils.isEmpty(recommendUserInfoResponse.getWeight()) && !recommendUserInfoResponse.getWeight().equals("0")) ? getResources().getString(R.string.Weight) + recommendUserInfoResponse.getWeight() + "kg" : getResources().getString(R.string.Weight);
         String mUserChestValue = getResources().getString(R.string.Chest) + recommendUserInfoResponse.getBust();
         String mUserBirthdayValue = getResources().getString(R.string.Birthday) + DateUtil.getStrTime(Long.parseLong(recommendUserInfoResponse.getBirthday()), "yyyy/MM/dd");
         String mUserProfessionalValue = getResources().getString(R.string.Professional) + recommendUserInfoResponse.getOccupation();
@@ -458,7 +460,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 去聊天
      */
     private void goChat() {
-        if(recommendUserInfoResponse!=null){
+        if (recommendUserInfoResponse != null) {
             if (recommendUserInfoResponse.getRelation() == 2) {
                 //启动单聊页面
                 RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());

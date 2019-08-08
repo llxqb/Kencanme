@@ -33,11 +33,18 @@ public class RechargeControl {
 
         void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
 
-        void getPayFinishUploadSuccess();
+        void getPayFinishGoogleUploadSuccess();
+        void getPayFinishGoogleUploadFail(String error);
+        void getPayFinishGoogleUploadThowable();
+
 
         void getPayFinishAHDIUploadSuccess();
+        void getPayFinishAHDIUploadFail(String error);
+        void getPayFinishAHDIUploadThowable();
 
         void getPayFinishUploadByUniPinSuccess();
+        void getPayFinishUploadByUniPinFail(String error);
+        void getPayFinishUploadByUniPinThowable();
     }
 
     public interface PresenterRecharge extends Presenter<RechargeView> {

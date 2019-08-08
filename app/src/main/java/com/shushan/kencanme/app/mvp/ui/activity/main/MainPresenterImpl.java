@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
 import com.shushan.kencanme.app.entity.response.UserInfoByRidResponse;
@@ -64,6 +65,7 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
      */
     private UserInfoByRidRequest mUserInfoByRidRequest;
     private UserInfo userInfo = null;
+
     @Override
     public UserInfo onRequestUserInfoByRid(UserInfoByRidRequest userInfoByRidRequest) {
         mUserInfoByRidRequest = userInfoByRidRequest;
@@ -76,7 +78,7 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
                     @Override
                     public void onNext(ResponseData responseData) {
                         mMainView.dismissLoading();
-                        userInfo= requestUserInfoByRidSuccess(responseData);
+                        userInfo = requestUserInfoByRidSuccess(responseData);
                     }
 
                     @Override
@@ -123,6 +125,28 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
         if (responseData.resultCode == 0) {
             MessageIdResponse response = new Gson().fromJson(responseData.mJsonObject.toString(), MessageIdResponse.class);
             mMainView.messageIdSuccess(response);
+        } else {
+            mMainView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 上传设备接口  后台做统计功能
+     */
+    @Override
+    public void onUploadDevice(UploadDeviceRequest uploadDeviceRequest) {
+        Disposable disposable = mMainModel.onUploadDevice(uploadDeviceRequest).compose(mMainView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::uploadDeviceSuccess, throwable -> mMainView.showErrMessage(throwable),
+                        () -> mMainView.dismissLoading());
+        mMainView.addSubscription(disposable);
+    }
+
+    /**
+     * 上传设备接口 返回
+     */
+    private void uploadDeviceSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+//            mMainView.uploadDeviceSuccess();
         } else {
             mMainView.showToast(responseData.errorMsg);
         }

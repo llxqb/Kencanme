@@ -116,14 +116,16 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             handleSignInResult(result);
         } else {
             //facebook回调  64206
-            FacebookLoginHelper.mFaceBookCallBack.onActivityResult(requestCode, resultCode, data);
+            if (faceBookLoginManager != null) {
+                faceBookLoginManager.mFaceBookCallBack.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 
     //处理google回调
     private void handleSignInResult(GoogleSignInResult result) {
         dismissLoading();
-        if (result!=null && result.isSuccess()) {
+        if (result != null && result.isSuccess()) {
 //        Log.e("ddd", "handleSignInResult----" + result.isSuccess());
             GoogleSignInAccount account = result.getSignInAccount();
             //登录后台系统

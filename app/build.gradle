@@ -8,8 +8,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 25
-        versionName "1.0.5"
+        versionCode 26
+        versionName "1.0.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -34,7 +34,7 @@ android {
     buildTypes {
         release {
             debuggable false //发布时候设置false   true为可调式，false为不可调试
-            minifyEnabled false //true 为开启混淆
+//            minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
             aaptOptions.cruncherEnabled = false
             aaptOptions.useNewCruncher = false
