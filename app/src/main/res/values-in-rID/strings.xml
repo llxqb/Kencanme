@@ -77,7 +77,7 @@
     <string name="Weight">Berat:&#160;</string>
     <string name="Chest">Ukuran Bra:&#160;</string>
     <string name="Birthday">Tanggal Lahir:&#160;</string>
-    <string name="Professional">Pekerjaan:&#160;</string>
+    <string name="Professional">Karier:&#160;</string>
 
 
     <!-- EditContactWayActivity-->
@@ -131,8 +131,8 @@
     <string name="EditPersonalInfoActivity_Chest_hint">Silakan masukkan pengukuran Anda</string>
     <string name="EditPersonalInfoActivity_Birthday">Tanggal Lahir</string>
     <string name="EditPersonalInfoActivity_Birthday_hint">Silakan masukkan Ulang Tahun Anda</string>
-    <string name="EditPersonalInfoActivity_Occupation">Career</string>
-    <string name="EditPersonalInfoActivity_Occupation_hint">Silakan masukkan Pekerjaan Anda</string>
+    <string name="EditPersonalInfoActivity_Occupation">Karier</string>
+    <string name="EditPersonalInfoActivity_Occupation_hint">Silakan isi pekerjaan Anda</string>
     <!--UploadPhotoActivity -->
     <string name="UploadPhotoActivity_upload_pic_or_video_hint">Unggah foto atau video yang jelas</string>
     <string name="UploadPhotoActivity_upload_pic_hint">Silakan pilih jenis foto</string>

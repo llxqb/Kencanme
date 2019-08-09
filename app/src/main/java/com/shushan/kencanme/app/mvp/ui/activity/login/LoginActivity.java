@@ -139,7 +139,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     private void appGoogleLogin(String gId, String accessToken) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.id = gId;
-        loginRequest.deviceId = SystemUtils.getDeviceId(this);
+        loginRequest.deviceId = SystemUtils.getUUID(this,mSharePreferenceUtil);
         loginRequest.access_token = accessToken;
         loginRequest.from = Constant.FROM;
         mPresenterLogin.onRequestLogin(loginRequest);
@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
                 facebookLoginRequest.access_token = result.getAccessToken().getToken();
             }
             facebookLoginRequest.from = Constant.FROM;
-            facebookLoginRequest.deviceId = SystemUtils.getDeviceId(LoginActivity.this);
+            facebookLoginRequest.deviceId = SystemUtils.getUUID(LoginActivity.this,mSharePreferenceUtil);
             mPresenterLogin.onRequestLoginFacebook(facebookLoginRequest);
 
         });

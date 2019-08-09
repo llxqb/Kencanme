@@ -422,7 +422,9 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     protected void onDestroy() {
         mSharePreferenceUtil.setData("chatType", 0);//设为默认聊天类型
-        KencanmeApp.mCustomizeMessageItemProvider.setListenerNoll();
+        if(KencanmeApp.mCustomizeMessageItemProvider!=null){
+            KencanmeApp.mCustomizeMessageItemProvider.setListenerNoll();
+        }
         super.onDestroy();
     }
 

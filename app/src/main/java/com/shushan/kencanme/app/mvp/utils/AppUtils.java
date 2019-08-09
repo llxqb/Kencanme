@@ -19,24 +19,24 @@ public class AppUtils {
     public static boolean isLimitLike(int userType, int todayLikeNum) {
         switch (userType) {
             case 1:
-                if (todayLikeNum > 20) {
+                if (todayLikeNum >= 20) {
                     return false;
                 }
                 break;
             case 2:
-                if (todayLikeNum > 40) {
+                if (todayLikeNum >= 40) {
                     return false;
                 }
                 break;
             case 3:
                 break;
             case 4:
-                if (todayLikeNum > 40) {
+                if (todayLikeNum >= 40) {
                     return false;
                 }
                 break;
             case 5:
-                if (todayLikeNum > 60) {
+                if (todayLikeNum >= 60) {
                     return false;
                 }
                 break;
@@ -110,19 +110,19 @@ public class AppUtils {
             case 1:
                 return false;
             case 2:
-                if (todaySendMsgNum > 10) {
+                if (todaySendMsgNum >= 10) {
                     return false;
                 }
                 break;
             case 3:
                 return true;
             case 4:
-                if (todaySendMsgNum > 10) {
+                if (todaySendMsgNum >= 10) {
                     return false;
                 }
                 break;
             case 5:
-                if (todaySendMsgNum > 20) {
+                if (todaySendMsgNum >= 20) {
                     return false;
                 }
                 break;

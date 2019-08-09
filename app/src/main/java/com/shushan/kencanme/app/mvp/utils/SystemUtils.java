@@ -11,11 +11,14 @@ import android.location.LocationManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.util.UUID;
 
 /**
  * Created by li.liu on 2018/10/16.
@@ -126,7 +129,6 @@ public class SystemUtils {
     }
 
 
-
     /**
      * 检查GPS是否开启
      */
@@ -138,35 +140,48 @@ public class SystemUtils {
         return isOpen;
     }
 
+    /**
+     * 获取设备的唯一id
+     * 由于ANDROID_ID的值相对稳定和可靠，并且不需要申请权限，所以我们获取设备的唯一标识应该使用这个值，同时我们应该考虑到一些极端情况和安全问题。
+     * 获取UUID
+     * P.S android 6.0以上 context.getSystemService 获取都失效
+     */
+    public static String getUUID(Context context, SharePreferenceUtil mSharePreferenceUtil) {
+        String uuid = getDeviceUUid(context);
+        if (TextUtils.isEmpty(uuid)) {
+            uuid = getAppUUid(mSharePreferenceUtil);
+        }
+        return uuid;
+    }
 
     /**
-     * 获取设备id
+     * 构造UUID，防止直接暴露ANDROID_ID
      */
-//    @SuppressLint("HardwareIds")
-//    public static String getDeviceId(Context context){
-//        String  deviceId = null;
-//        if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-//            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-//            deviceId = Objects.requireNonNull(tm).ge();
-//        }
-//        return deviceId;
-//    }
+    private static String getDeviceUUid(Context context) {
+        String androidId = getAndroidId(context);
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) androidId.hashCode() << 32));
+        return deviceUuid.toString();
+    }
 
-    public static String getDeviceId(Context context) {
-        String deviceId = "";
-        try {
-            deviceId = getLocalMac(context).replace(":", "");
-        } catch (Exception e) {
-            e.printStackTrace();
+    // Android Id
+    private static String getAndroidId(Context context) {
+        @SuppressLint("HardwareIds") String androidId = Settings.Secure.getString(
+                context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return androidId;
+    }
+
+    /**
+     * 考虑极端情况，我们自己生成一个应用级别的UUID
+     * 这种情况我们需要将生成的UUID保存到SharedPreference中，只要应用不被卸载或者清除数据，这个值就不会变
+     */
+    private static String getAppUUid(SharePreferenceUtil mSharePreferenceUtil) {
+        String uuid = mSharePreferenceUtil.getData("app_uuid");
+        if (TextUtils.isEmpty(uuid)) {
+            uuid = UUID.randomUUID().toString();
+            //这里需要保存到SharedPreference中
+            mSharePreferenceUtil.setData("app_uuid", uuid);
         }
-        if (deviceId == null || "".equals(deviceId)) {
-            try {
-                deviceId = getAndroidId(context);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return deviceId;
+        return uuid;
     }
 
     // Mac地址
@@ -177,13 +192,6 @@ public class SystemUtils {
         assert wifi != null;
         WifiInfo info = wifi.getConnectionInfo();
         return info.getMacAddress();
-    }
-
-    // Android Id
-    private static String getAndroidId(Context context) {
-        @SuppressLint("HardwareIds") String androidId = Settings.Secure.getString(
-                context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        return androidId;
     }
 
 

@@ -203,30 +203,28 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 mAlbumBean = albumAdapter.getItem(position);
-                switch (view.getId()) {
-                    case R.id.photo_item_rl:
-                        assert mAlbumBean != null;
-                        //type 1:普通图片 2：vip可查看 3：嗨豆图片  state:0 未查看 1：已查看
-                        if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
+                if (view.getId() == R.id.photo_item_rl) {
+                    assert mAlbumBean != null;
+                    //type 1:普通图片 2：vip可查看 3：嗨豆图片  state:0 未查看 1：已查看
+                    if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
+                        LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
+                    } else if (mAlbumBean.getAlbum_type() == 2) {
+                        if (AppUtils.isVip(mLoginUser.userType)) {
                             LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
-                        } else if (mAlbumBean.getAlbum_type() == 2) {
-                            if (AppUtils.isVip(mLoginUser.userType)) {
-                                LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
-                            } else {
-                                showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_album));
-                            }
-                        } else if (mAlbumBean.getAlbum_type() == 3) {
-                            //使用hi-bean查看
-                            if (mAlbumBean.getCost() > mLoginUser.beans) {
-                                //去充值
-                                showRechargeBeansDialog();
-                            } else {
-                                //去使用
-                                useBeansType = 1;
-                                showUseBeansDialog(mAlbumBean.getCost(), getResources().getString(R.string.dialog_use_beans_album));
-                            }
+                        } else {
+                            showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_album));
                         }
-                        break;
+                    } else if (mAlbumBean.getAlbum_type() == 3) {
+                        //使用hi-bean查看
+                        if (mAlbumBean.getCost() > mLoginUser.beans) {
+                            //去充值
+                            showRechargeBeansDialog();
+                        } else {
+                            //去使用
+                            useBeansType = 1;
+                            showUseBeansDialog(mAlbumBean.getCost(), getResources().getString(R.string.dialog_use_beans_album));
+                        }
+                    }
                 }
             }
         });
@@ -289,7 +287,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 break;
             case R.id.recommend_like_iv:
                 //0没有关系1喜欢2互相喜欢（好友）3黑名单  喜欢了不可以取消喜欢
-                if(recommendUserInfoResponse!=null){
+                if (recommendUserInfoResponse != null) {
                     if (recommendUserInfoResponse.getRelation() == 0) {
                         likeIv();
                     } else if (recommendUserInfoResponse.getRelation() == 1 || recommendUserInfoResponse.getRelation() == 2) {
@@ -360,7 +358,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mImageLoaderHelper.displayMatchImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
         }
         mImageLoaderHelper.displayImage(this, recommendUserInfoResponse.getTrait(), mHeadIcon, Constant.LOADING_AVATOR);
-        mRecommendUsername.setText(recommendUserInfoResponse.getNickname());
+        mRecommendUsername.setText(recommendUserInfoResponse.getNickname().replace("\n", ""));
         if (recommendUserInfoResponse.getSex() == 1) {
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_male);
         } else {
@@ -380,7 +378,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         if (recommendUserInfoResponse.getAlbum().size() == 0)
             mPhotoAlbumTv.setVisibility(View.GONE);
         //个人信息
-        mRecommendUserLocation.setText(recommendUserInfoResponse.getCity());
+        mRecommendUserLocation.setText(recommendUserInfoResponse.getCity().replace("\n", ""));
         String mUserHeightValue = (!TextUtils.isEmpty(recommendUserInfoResponse.getHeight()) && !recommendUserInfoResponse.getHeight().equals("0")) ? getResources().getString(R.string.Height) + recommendUserInfoResponse.getHeight() + "cm" : getResources().getString(R.string.Height);
         String mUserWeightValue = (TextUtils.isEmpty(recommendUserInfoResponse.getWeight()) && !recommendUserInfoResponse.getWeight().equals("0")) ? getResources().getString(R.string.Weight) + recommendUserInfoResponse.getWeight() + "kg" : getResources().getString(R.string.Weight);
         String mUserChestValue = getResources().getString(R.string.Chest) + recommendUserInfoResponse.getBust();

@@ -74,7 +74,7 @@ public class ConversationListFragment extends BaseFragment implements Conversati
         View view = inflater.inflate(R.layout.conversitionlist_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         initializeInjector();
-        io.rong.imkit.fragment.ConversationListFragment fragment = (io.rong.imkit.fragment.ConversationListFragment) getChildFragmentManager().findFragmentById(R.id.conversationlist);
+        io.rong.imkit.fragment.ConversationListFragment mConversationListFragment = (io.rong.imkit.fragment.ConversationListFragment) getChildFragmentManager().findFragmentById(R.id.conversationlist);
         Uri uri = Uri.parse("rong://" + Objects.requireNonNull(getActivity()).getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
@@ -82,8 +82,9 @@ public class ConversationListFragment extends BaseFragment implements Conversati
                 .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
                 .build();
-        assert fragment != null;
-        fragment.setUri(uri);
+        assert mConversationListFragment != null;
+        mConversationListFragment.setUri(uri);
+        mConversationListFragment.onRestoreUI();
         initView();
         initData();
         return view;

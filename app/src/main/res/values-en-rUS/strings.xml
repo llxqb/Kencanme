@@ -131,8 +131,8 @@
     <string name="EditPersonalInfoActivity_Chest_hint">Please enter your Chest</string>
     <string name="EditPersonalInfoActivity_Birthday">Birthday</string>
     <string name="EditPersonalInfoActivity_Birthday_hint">Please enter your Birthday</string>
-    <string name="EditPersonalInfoActivity_Occupation">Occupation</string>
-    <string name="EditPersonalInfoActivity_Occupation_hint">Please enter your Occupation</string>
+    <string name="EditPersonalInfoActivity_Occupation">Career</string>
+    <string name="EditPersonalInfoActivity_Occupation_hint">Please fill in your occupation</string>
     <!--UploadPhotoActivity -->
     <string name="UploadPhotoActivity_upload_pic_or_video_hint">Please upload vivid photos or videos</string>
     <string name="UploadPhotoActivity_upload_pic_hint">Please select a photo type</string>

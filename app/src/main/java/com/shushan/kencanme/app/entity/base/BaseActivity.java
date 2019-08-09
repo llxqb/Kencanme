@@ -1,6 +1,5 @@
 package com.shushan.kencanme.app.entity.base;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +20,6 @@ import com.shushan.kencanme.app.di.components.AppComponent;
 import com.shushan.kencanme.app.entity.user.BuProcessor;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.help.ImageLoaderHelper;
-import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.app.mvp.utils.SharePreferenceUtil;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.ToastUtil;
@@ -156,20 +154,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public Context getContext() {
         return this;
-    }
-
-
-    /**
-     * 退出登录
-     */
-    public void exitLogin(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
-        intent.putExtra("exitLogin", true);
-        context.startActivity(intent);
-        mSharePreferenceUtil.clearData();
-        ((Activity) context).finish();
     }
 
     /**

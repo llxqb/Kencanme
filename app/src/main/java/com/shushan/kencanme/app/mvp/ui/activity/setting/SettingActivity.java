@@ -1,5 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.setting;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -21,6 +23,7 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
+import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.PushSexAdapter;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.TwoWayRattingBar;
@@ -33,6 +36,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * desc:设置
@@ -229,6 +233,20 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
     @Override
     public void commonDialogBtnOkListener() {
         exitLogin(this);
+    }
+
+    /**
+     * 退出登录
+     */
+    public void exitLogin(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
+        intent.putExtra("exitLogin", true);
+        context.startActivity(intent);
+        mSharePreferenceUtil.clearData();
+        RongIM.getInstance().logout();
+        ((Activity) context).finish();
     }
 
     /**

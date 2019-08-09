@@ -19,7 +19,6 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.help.ImageLoaderHelper;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
-import com.shushan.kencanme.app.mvp.utils.ToastUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 
 import java.util.List;
@@ -93,7 +92,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         assert e != null;
-                        ToastUtil.showToast(mContext, mContext.getResources().getString(R.string.image_fail));
+//                        ToastUtil.showToast(mContext, mContext.getResources().getString(R.string.image_fail));
                         gifImageView.setVisibility(View.GONE);
                         return false;
                     }
@@ -107,7 +106,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
                 .into(mViewpagerItemIv);
 
 
-        helper.setText(R.id.recommend_user_name, item.getNickname());
+        String nickName = item.getNickname().replace("\n", "");
+        helper.setText(R.id.recommend_user_name, nickName);
         mImageLoaderHelper.displayImage(mContext, item.getTrait(), mRecommendUserHeadIv, Constant.LOADING_SMALL);
         if (item.getSex() == 1) {
             //1男2女
@@ -126,7 +126,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
         }
 
         helper.setText(R.id.recommend_user_sex_year, mRecommendUserSexYearValue)
-                .setText(R.id.recommend_user_location, item.getCity());
+                .setText(R.id.recommend_user_location, item.getCity().replace("\n", ""));
         if (item.getRelation() == 0) {
             mImageLoaderHelper.displayImage(mContext, R.mipmap.home_liked, homeLikeIv, R.mipmap.home_liked);
         } else {

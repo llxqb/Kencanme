@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             Log.e("ddd", "loginUser:" + new Gson().toJson(mBuProcessor.getLoginUser()));
             initData();
         }
+        connectRongCloud();
+
         List<Fragment> fragments = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
         MessageFragment messageFragment = MessageFragment.newInstance();
@@ -91,7 +93,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mMainViewpager.setOffscreenPageLimit(fragments.size());
         mMainViewpager.setAdapter(adapter);
         mMainBottomNavigation.setOnNavigationItemSelectedListener(this);
-        connectRongCloud();
     }
 
     @Override
@@ -109,7 +110,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         String rToken = mSharePreferenceUtil.getData("ryToken");
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
-            Log.d("ddd","rToken:" + rToken);
+            Log.d("ddd", "rToken:" + rToken);
 //            RongCloudHelper.connect(rToken); 不能这样使用静态方法
             RongIM.connect(rToken, new RongIMClient.ConnectCallback() {
                 /**
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                  */
                 @Override
                 public void onTokenIncorrect() {
-                    Log.e("ddd","--onTokenIncorrect");
+                    Log.e("ddd", "--onTokenIncorrect");
                 }
 
                 /**
@@ -126,7 +127,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                  */
                 @Override
                 public void onSuccess(String userid) {
-                    Log.e("ddd","--onSuccess" + userid);
+                    Log.e("ddd", "--onSuccess" + userid);
                 }
 
                 /**
@@ -135,7 +136,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.e("ddd","--onError" + errorCode);
+                    Log.e("ddd", "--onError" + errorCode);
                 }
             });
         }
@@ -186,11 +187,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     /**
      * 上传设备接口  后台做统计功能
      */
-    private void reqUploadDevice(){
+    private void reqUploadDevice() {
         UploadDeviceRequest uploadDeviceRequest = new UploadDeviceRequest();
         uploadDeviceRequest.token = mBuProcessor.getToken();
-        uploadDeviceRequest.deviceId = SystemUtils.getDeviceId(this);
-        uploadDeviceRequest.platform =  Constant.FROM;
+        uploadDeviceRequest.deviceId = SystemUtils.getUUID(this,mSharePreferenceUtil);
+        uploadDeviceRequest.platform = Constant.FROM;
         mPresenter.onUploadDevice(uploadDeviceRequest);
     }
 
@@ -209,7 +210,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mSharePreferenceUtil.saveObjData("messageIdList", messageIdResponse.getData());
         CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
-
 
 
     /**
