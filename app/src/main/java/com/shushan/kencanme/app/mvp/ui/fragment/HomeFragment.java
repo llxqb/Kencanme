@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.shushan.kencanme.app.KencanmeApp;
 import com.shushan.kencanme.app.R;
@@ -47,7 +46,6 @@ import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
 import com.shushan.kencanme.app.mvp.ui.adapter.HomeAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.ClickUtil;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
@@ -354,7 +352,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        LogUtils.e("userBean:" + new Gson().toJson(userBean));
+//        LogUtils.e("userBean:" + new Gson().toJson(userBean));
         mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         setExposureData(userBean.getNow_time());
     }
