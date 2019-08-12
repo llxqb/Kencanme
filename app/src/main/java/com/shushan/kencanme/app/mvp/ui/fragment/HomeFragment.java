@@ -144,7 +144,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
         mFilter.addAction(ActivityConstant.PAY_SUCCESS_UPDATE_INFO);
     }
 
-
     @SuppressLint("CheckResult")
     @Override
     public void initView() {
