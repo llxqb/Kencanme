@@ -29,8 +29,10 @@ public class LogInterceptor implements Interceptor {
         assert response.body() != null;
         okhttp3.MediaType mediaType = response.body().contentType();
         String content = response.body().string();
-        Log.i("LogInterceptor","\nURL:" + response.request().url() + "（耗时" + (endTime - startTime) + "ms)" + " \nREQEUST BODY:" + bodyToString(request)+
-                 "\nResponse BODY:" + content);//+ "\nResponse HEAD:" + response.headers() +
+//        Log.i("LogInterceptor","\nURL:" + response.request().url() + "（耗时" + (endTime - startTime) + "ms)" +
+//                 "\nResponse BODY:" + content);//+ "\nResponse HEAD:" + response.headers() +
+        Log.i("LogInterceptor","\nURL:" + response.request().url() + "（耗时" + (endTime - startTime) + "ms)" + " \nRequest BODY:" + bodyToString(request)+
+                "\nResponse BODY:" + content);//+ "\nResponse HEAD:" + response.headers() +
         return response.newBuilder()
                 .body(okhttp3.ResponseBody.create(mediaType, content))
                 .build();

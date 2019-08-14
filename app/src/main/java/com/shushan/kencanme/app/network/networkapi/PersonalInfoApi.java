@@ -29,7 +29,7 @@ public interface PersonalInfoApi {
     @POST("menggoda/upload/video")
     Observable<String> uploadVideoRequest(@Part MultipartBody.Part video);
     /**
-     * 上传文件
+     * 上传文件---测试使用
      */
     @Multipart
     @POST("menggoda/upload/video")

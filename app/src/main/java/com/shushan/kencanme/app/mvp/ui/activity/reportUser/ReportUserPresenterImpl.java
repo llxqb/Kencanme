@@ -8,6 +8,7 @@ import com.shushan.kencanme.app.entity.request.ReportUserRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.ReportUserListResponse;
+import com.shushan.kencanme.app.entity.response.UploadImageResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -85,8 +86,11 @@ public class ReportUserPresenterImpl implements ReportUserControl.PresenterRepor
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-//            responseData.parseData(UploadImageResponse.class);
-            mReportUserView.uploadImageSuccess(responseData.result);
+            responseData.parseData(UploadImageResponse.class);
+            if (responseData.parsedData != null) {
+                UploadImageResponse response = (UploadImageResponse) responseData.parsedData;
+                mReportUserView.uploadImageSuccess(response.getUrl());
+            }
         } else {
             mReportUserView.showToast(responseData.errorMsg);
         }

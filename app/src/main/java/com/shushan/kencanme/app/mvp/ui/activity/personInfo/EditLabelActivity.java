@@ -25,6 +25,7 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
@@ -191,7 +192,7 @@ public class EditLabelActivity extends BaseActivity implements PersonalInfoContr
 
 
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
 
     }
 

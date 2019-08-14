@@ -31,6 +31,11 @@ public class UpdateAlbumRequest implements Parcelable{
      */
     public boolean isVideo;
 
+    /**
+     * 鉴黄追踪第三方taskId
+     */
+    public String taskId;
+
     public UpdateAlbumRequest() {
     }
 
@@ -41,6 +46,7 @@ public class UpdateAlbumRequest implements Parcelable{
         id = in.readInt();
         cost = in.readInt();
         isVideo = in.readByte() != 0;
+        taskId = in.readString();
     }
 
     @Override
@@ -51,6 +57,7 @@ public class UpdateAlbumRequest implements Parcelable{
         dest.writeInt(id);
         dest.writeInt(cost);
         dest.writeByte((byte) (isVideo ? 1 : 0));
+        dest.writeString(taskId);
     }
 
     @Override

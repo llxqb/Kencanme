@@ -28,6 +28,7 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
@@ -172,6 +173,9 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
                     UpdatePersonalInfoRequest personalInfoResponse = LoginUtils.tranPersonalInfoResponse(mLoginUser);
                     personalInfoResponse.nickname = mUserNameEv.getText().toString();
                     personalInfoResponse.declaration = mDeclarationEv.getText().toString();
+                    if(!TextUtils.isEmpty(taskId)){
+                        personalInfoResponse.taskId = taskId;
+                    }
                     mPresenter.updatePersonalInfo(personalInfoResponse);
                 }
                 break;
@@ -266,7 +270,11 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
 
     private void uploadImage(String filename) {
         UploadImage uploadImage = new UploadImage();
-        uploadImage.dir = String.valueOf(Constant.PIC_AVATOR);//1头像2封面3相册
+        if(photoOrVideo==0){
+            uploadImage.dir = String.valueOf(Constant.PIC_AVATOR);//1头像2封面3相册
+        }else {
+            uploadImage.dir = String.valueOf(Constant.PIC_COVER);//1头像2封面3相册
+        }
         uploadImage.file = filename;
         mPresenter.uploadImage(uploadImage);
     }
@@ -312,15 +320,20 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         finish();
     }
 
+    /**
+     * 鉴黄追踪第三方taskId
+     */
+    String taskId;
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
         mUploadHintTv.setVisibility(View.VISIBLE);
         mJzVideo.setVisibility(View.VISIBLE);
         mCoverIv.setVisibility(View.GONE);
-        mJzVideo.setUp(videoPath, "");
+        mJzVideo.setUp(uploadVideoResponse.getUrl(), "");
         //获取视频第一帧
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);
-        mLoginUser.cover = videoPath;
+        PicUtils.loadVideoScreenshot(this, uploadVideoResponse.getUrl(), mJzVideo.thumbImageView, 0,true);
+        mLoginUser.cover = uploadVideoResponse.getUrl();
+        taskId = uploadVideoResponse.getTaskId();
     }
 
 

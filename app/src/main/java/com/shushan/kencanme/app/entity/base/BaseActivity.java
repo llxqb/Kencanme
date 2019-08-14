@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -123,6 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showErrMessage(Throwable e) {
         dismissLoading();
         String mErrMessage;
+        Log.d("LogInterceptor", "e:" + e.toString());
         if (e instanceof HttpException || e instanceof ConnectException) {
             mErrMessage = getString(R.string.text_check_internet);
         } else {

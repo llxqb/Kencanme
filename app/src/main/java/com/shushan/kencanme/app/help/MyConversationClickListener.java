@@ -1,7 +1,12 @@
 package com.shushan.kencanme.app.help;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+
+import com.google.gson.Gson;
+import com.shushan.kencanme.app.mvp.ui.activity.recommendUserInfo.RecommendUserInfoActivity;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
@@ -11,8 +16,20 @@ import io.rong.imlib.model.UserInfo;
 /**
  * 融云会话点击监听
  */
-public class MyConversationClickListener implements RongIM.ConversationClickListener{
+public class MyConversationClickListener implements RongIM.ConversationClickListener {
     private String TAG = "MyConversationClickListener";
+    /**
+     * 我们服务器用户id 用于跳转用户详情
+     */
+    private int uid;
+    private String rUserId;
+
+    public MyConversationClickListener(int uid, String rUserId) {
+        this.uid = uid;
+        this.rUserId = rUserId;
+    }
+
+
     /**
      * 当点击用户头像后执行
      *
@@ -24,7 +41,13 @@ public class MyConversationClickListener implements RongIM.ConversationClickList
      */
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String targetId) {
-        return false;
+        Log.d("LogInterceptor", "userInfo:" + new Gson().toJson(userInfo) + " rUserId:" + rUserId);
+        if (!TextUtils.isEmpty(rUserId) && !rUserId.equals(userInfo.getUserId())) {
+            RecommendUserInfoActivity.start(context, uid);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

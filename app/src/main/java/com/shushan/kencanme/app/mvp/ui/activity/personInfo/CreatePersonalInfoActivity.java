@@ -18,6 +18,7 @@ import com.shushan.kencanme.app.di.modules.PersonalInfoModule;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
@@ -177,7 +178,7 @@ public class CreatePersonalInfoActivity extends BaseActivity implements Personal
 
 
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
 
     }
 

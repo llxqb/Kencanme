@@ -44,6 +44,10 @@ public class UpdatePersonalInfoRequest implements Parcelable{
      * 性别 1男2女
      */
     public int sex;
+    /**
+     * 鉴黄追踪第三方taskId
+     */
+    public String taskId;
 
 
     protected UpdatePersonalInfoRequest(Parcel in) {
@@ -63,6 +67,7 @@ public class UpdatePersonalInfoRequest implements Parcelable{
         pushing_large_age = in.readString();
         pushing_gender = in.readInt();
         sex = in.readInt();
+        taskId = in.readString();
     }
 
     @Override
@@ -83,6 +88,7 @@ public class UpdatePersonalInfoRequest implements Parcelable{
         dest.writeString(pushing_large_age);
         dest.writeInt(pushing_gender);
         dest.writeInt(sex);
+        dest.writeString(taskId);
     }
 
     @Override

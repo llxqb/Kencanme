@@ -5,37 +5,18 @@ package com.shushan.kencanme.app.entity.response;
  */
 public class UploadImageResponse {
 
+
     /**
-     * error : 0
-     * msg : success
-     * data : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190611/5cff965473abf.png
+     * url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/album/20190528/f52548e6d2f2d157cbdffdcd3b42e911.png
      */
 
-    private int error;
-    private String msg;
-    private String data;
+    private String url;
 
-    public int getError() {
-        return error;
+    public String getUrl() {
+        return url;
     }
 
-    public void setError(int error) {
-        this.error = error;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

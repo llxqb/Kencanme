@@ -6,6 +6,7 @@ import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.FeedbackProblemRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
+import com.shushan.kencanme.app.entity.response.UploadImageResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
 import com.shushan.kencanme.app.mvp.model.SettingModel;
@@ -63,13 +64,16 @@ public class SettingPresenterImpl implements SettingControl.PresenterSetting {
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-//            responseData.parseData(UploadImageResponse.class);
-            mSettingView.uploadImageSuccess(responseData.result);
+            responseData.parseData(UploadImageResponse.class);
+            if (responseData.parsedData != null) {
+                UploadImageResponse response = (UploadImageResponse) responseData.parsedData;
+                mSettingView.uploadImageSuccess(response.getUrl());
+            }
         } else {
             mSettingView.showToast(responseData.errorMsg);
         }
     }
-    
+
     /**
      * 问题反馈
      */

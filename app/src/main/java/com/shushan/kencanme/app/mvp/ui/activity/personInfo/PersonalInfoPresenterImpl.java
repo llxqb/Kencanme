@@ -8,6 +8,8 @@ import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadImageResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.PersonalInfoModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -84,9 +86,12 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
     }
 
     private void requestVideoSuccess(ResponseData responseData) {
-        mPersonalInfoView.dismissLoading();
         if (responseData.resultCode == 0) {
-            mPersonalInfoView.uploadVideoSuccess(responseData.result);
+            responseData.parseData(UploadVideoResponse.class);
+            if (responseData.parsedData != null) {
+                UploadVideoResponse response = (UploadVideoResponse) responseData.parsedData;
+                mPersonalInfoView.uploadVideoSuccess(response);
+            }
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }
@@ -94,7 +99,11 @@ public class PersonalInfoPresenterImpl implements PersonalInfoControl.PresenterP
 
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            mPersonalInfoView.uploadImageSuccess(responseData.result);
+            responseData.parseData(UploadImageResponse.class);
+            if (responseData.parsedData != null) {
+                UploadImageResponse response = (UploadImageResponse) responseData.parsedData;
+                mPersonalInfoView.uploadImageSuccess(response.getUrl());
+            }
         } else {
             mPersonalInfoView.showToast(responseData.errorMsg);
         }

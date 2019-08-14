@@ -25,6 +25,7 @@ import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
 import com.shushan.kencanme.app.entity.response.ContactWay2;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.adapter.ContactWayAdapter;
@@ -205,7 +206,7 @@ public class EditContactWayActivity extends BaseActivity implements PhotoDialog.
     }
 
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
 
     }
 

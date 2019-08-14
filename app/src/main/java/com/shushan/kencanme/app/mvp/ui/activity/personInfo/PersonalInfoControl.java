@@ -6,6 +6,7 @@ import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.app.mvp.presenter.Presenter;
 
@@ -19,7 +20,7 @@ public class PersonalInfoControl {
     public interface PersonalInfoView extends LoadDataView {
         void updateSuccess(String msg);
 
-        void uploadVideoSuccess(String videoPath);
+        void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse);
 
         void uploadImageSuccess(String picPath);
 

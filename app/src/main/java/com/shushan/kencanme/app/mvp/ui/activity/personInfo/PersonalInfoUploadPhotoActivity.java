@@ -29,6 +29,7 @@ import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
 import com.shushan.kencanme.app.mvp.utils.LogUtils;
@@ -132,6 +133,9 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
             case R.id.complete_btn:
                 if (isValidEmpty()) {
                     mPersonalInfoRequest.declaration = mDeclarationEv.getText().toString();
+                    if(!TextUtils.isEmpty(taskId)){
+                        mPersonalInfoRequest.taskId = taskId;
+                    }
                     mPresenter.updatePersonalInfo(mPersonalInfoRequest);
                 }
                 break;
@@ -276,15 +280,19 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         return takePhoto;
     }
 
-
+    /**
+     * 鉴黄追踪第三方taskId
+     */
+    String taskId;
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
         mJzVideo.setVisibility(View.VISIBLE);
         mPhotoIvRl.setVisibility(View.GONE);
-        mJzVideo.setUp(videoPath, "");
+        mJzVideo.setUp(uploadVideoResponse.getUrl(), "");
         //获取视频第一帧
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);
-        mPersonalInfoRequest.cover = videoPath;
+        PicUtils.loadVideoScreenshot(this, uploadVideoResponse.getUrl(), mJzVideo.thumbImageView, 0,true);
+        mPersonalInfoRequest.cover = uploadVideoResponse.getUrl();
+        taskId = uploadVideoResponse.getTaskId();
     }
 
 

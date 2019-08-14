@@ -31,6 +31,7 @@ import com.shushan.kencanme.app.entity.request.UpdateAlbumRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.PersonalInfoControl;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
@@ -184,6 +185,9 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
                     updateAlbumRequest.album_type = picType;
                     updateAlbumRequest.album_url = photoUrl;
                     updateAlbumRequest.isVideo = TranTools.isVideo(photoUrl);
+                    if(!TextUtils.isEmpty(taskId)){
+                        updateAlbumRequest.taskId = taskId;
+                    }
                     if (dataBean != null) {
                         updateAlbumRequest.id = dataBean.getId(); //从我的--相册跳转过来   进行图片修改更新   否则是增加图片
                     }
@@ -374,14 +378,19 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     public void updateSuccess(String response) {
     }
 
+    /**
+     * 鉴黄追踪第三方taskId
+     */
+    String taskId;
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
 //        Log.e("ddd", "videoPath:" + videoPath);
-        photoUrl = videoPath;
+        photoUrl = uploadVideoResponse.getUrl();
         mJzVideo.setVisibility(View.VISIBLE);
         mPhotoIv.setVisibility(View.GONE);
-        mJzVideo.setUp(videoPath, "");
-        PicUtils.loadVideoScreenshot(this, videoPath, mJzVideo.thumbImageView, 0,true);  //获取视频第一帧显示
+        mJzVideo.setUp(uploadVideoResponse.getUrl(), "");
+        PicUtils.loadVideoScreenshot(this, uploadVideoResponse.getUrl(), mJzVideo.thumbImageView, 0,true);  //获取视频第一帧显示
+        taskId = uploadVideoResponse.getTaskId();
 //        mPersonalInfoRequest.cover = videoPath;
     }
 

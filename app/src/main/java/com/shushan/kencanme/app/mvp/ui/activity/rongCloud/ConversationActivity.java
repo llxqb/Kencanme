@@ -132,8 +132,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public void initView() {
         chatType = mSharePreferenceUtil.getIntData("chatType");//在线客服
 //        mCommonRightIv.setVisibility(View.VISIBLE);
-        //设置融云会话点击监听
-        RongIM.setConversationClickListener(new MyConversationClickListener());
+
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
         //注册自定义消息接收
@@ -223,7 +222,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         if (chatType == 1) {//客服
             return message;
         } else {
-            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse!=null && mUserRelationResponse.getState() != 2) {
+            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
                 //男非VIP 和beans=0  和 不是好友关系
                 DialogFactory.showRechargeBeansDialog2(this);
             } else {
@@ -247,7 +246,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
         if (chatType != 1) {
-            if (mLoginUser.userType == 1 && mUserRelationResponse!=null &&mUserRelationResponse.getState() != 2) {
+            if (mLoginUser.userType == 1 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
                 UseBeansDialogFlag = 1;
                 useBeansToChat("4", 1);
             }
@@ -382,7 +381,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
         HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mBuProcessor.setLoginUser( LoginUtils.upDateLoginUser(mLoginUser,userBean));
+        mBuProcessor.setLoginUser(LoginUtils.upDateLoginUser(mLoginUser, userBean));
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(ActivityConstant.UPDATE_USER_INFO));
     }
 
@@ -393,6 +392,9 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse) {
         onRequestUserReleate();
         chatUid = String.valueOf(userInfoByRidResponse.getUid());
+        //设置融云会话点击监听
+        String rUserId = mSharePreferenceUtil.getData("rUserId");
+        RongIM.setConversationClickListener(new MyConversationClickListener(userInfoByRidResponse.getUid(), rUserId));
     }
 
     /**
@@ -422,7 +424,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     protected void onDestroy() {
         mSharePreferenceUtil.setData("chatType", 0);//设为默认聊天类型
-        if(KencanmeApp.mCustomizeMessageItemProvider!=null){
+        if (KencanmeApp.mCustomizeMessageItemProvider != null) {
             KencanmeApp.mCustomizeMessageItemProvider.setListenerNoll();
         }
         super.onDestroy();

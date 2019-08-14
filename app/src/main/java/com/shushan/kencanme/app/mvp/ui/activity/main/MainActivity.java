@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         String rToken = mSharePreferenceUtil.getData("ryToken");
         //连接融云
         if (!TextUtils.isEmpty(rToken)) {
-            Log.d("ddd", "rToken:" + rToken);
+//            Log.d("ddd", "rToken:" + rToken);
 //            RongCloudHelper.connect(rToken); 不能这样使用静态方法
             RongIM.connect(rToken, new RongIMClient.ConnectCallback() {
                 /**
@@ -128,6 +128,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 @Override
                 public void onSuccess(String userid) {
                     Log.e("ddd", "--onSuccess" + userid);
+                    //保存融云userid
+                    mSharePreferenceUtil.setData("rUserId",userid);
                 }
 
                 /**

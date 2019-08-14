@@ -49,7 +49,10 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
     private void requestImageSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
             responseData.parseData(UploadImageResponse.class);
-            mConversationView.uploadImageSuccess(responseData.result);
+            if (responseData.parsedData != null) {
+                UploadImageResponse response = (UploadImageResponse) responseData.parsedData;
+                mConversationView.uploadImageSuccess(response.getUrl());
+            }
         } else {
             mConversationView.uploadImageFail(responseData.errorMsg);
         }

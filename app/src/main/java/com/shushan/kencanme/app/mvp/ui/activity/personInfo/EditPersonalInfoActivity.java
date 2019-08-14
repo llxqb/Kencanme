@@ -22,6 +22,7 @@ import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.UpdatePersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
+import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
@@ -191,7 +192,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements PersonalIn
 
 
     @Override
-    public void uploadVideoSuccess(String videoPath) {
+    public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
     }
 
     @Override
