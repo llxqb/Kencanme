@@ -53,13 +53,13 @@ public class MyAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, B
                 JzvdStd jzvdStd = helper.getView(R.id.album_jz_video);
                 jzvdStd.setUp(item.getAlbum_url(), "");
                 PicUtils.loadVideoScreenshot(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, 0, true);  //获取视频第一帧显示
-                if (item.getState() == 0) {
+                if (item.getStatus() == 0) {
                     mCornerLabelView.setVisibility(View.GONE);
-                } else if (item.getState() == 1) {
+                } else if (item.getStatus() == 1) {
                     mCornerLabelView.setVisibility(View.VISIBLE);
                     mCornerLabelView.setText1(mContext.getResources().getString(R.string.video_review));
                     mCornerLabelView.setFillColor(mContext.getResources().getColor(R.color.app_color));
-                } else if (item.getState() == 2) {
+                } else if (item.getStatus() == 2) {
                     mCornerLabelView.setVisibility(View.VISIBLE);
                     mCornerLabelView.setText1(mContext.getResources().getString(R.string.video_review_no_passed));
                     mCornerLabelView.setFillColor(mContext.getResources().getColor(R.color.red_color_btn));

@@ -23,6 +23,7 @@ import java.net.ConnectException;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.net.ssl.SSLHandshakeException;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,7 +74,7 @@ public abstract class BaseFragment extends Fragment {
     public void showErrMessage(Throwable e) {
         dismissLoading();
         String mErrMessage;
-        if (e instanceof HttpException || e instanceof ConnectException) {
+        if (e instanceof HttpException || e instanceof ConnectException || e instanceof SSLHandshakeException) {
             mErrMessage = getString(R.string.text_check_internet);
         } else {
             mErrMessage = getString(R.string.text_wait_try);

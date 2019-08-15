@@ -48,8 +48,8 @@ import com.shushan.kencanme.app.mvp.ui.activity.photo.UploadPhotoActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.setting.SettingActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.app.mvp.ui.adapter.AlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
+import com.shushan.kencanme.app.mvp.ui.adapter.MineFragmentUserAlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
@@ -153,7 +153,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
     List<ContactWay> contactWayList;//联系方式集合
     List<String> labelList;//联系方式集合
-    private AlbumAdapter mAlbumAdapter;
+    private MineFragmentUserAlbumAdapter mAlbumAdapter;
     private MimeContactWayAdapter mimeContactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
     private LoginUser mLoginUser;
@@ -227,7 +227,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     public void initView() {
         mLoginUser = mBuProcessor.getLoginUser();
         mAlbumRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        mAlbumAdapter = new AlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
+        mAlbumAdapter = new MineFragmentUserAlbumAdapter(getActivity(), photoBeanList, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(mAlbumAdapter);
         mAlbumRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
@@ -257,7 +257,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
 
     @Override
     public void initData() {
-        setUserInfo();
         MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
         myAlbumRequest.token = mBuProcessor.getToken();
         mPresenter.onRequestMyAlbum(myAlbumRequest);

@@ -6,9 +6,9 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Desc: //增加、更新我的相册 返回 Response
+ * Desc:用户详情  中我的相册返回数据
  */
-public class MyAlbumResponse {
+public class UserInfoAlbumResponse {
 
     /**
      * error : 0
@@ -50,16 +50,22 @@ public class MyAlbumResponse {
          * album_url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190613/5d02066162657.png
          * album_type : 1
          * cost : 0
-         * status:   0正常1审核中2审核不通过
+         * state:   0 未查看 1已查看
          */
 
         private int id;
         private String album_url;
         private int album_type;
         private int cost;
-        private int status;
+        private int state;
 
+        public int getState() {
+            return state;
+        }
 
+        public void setState(int state) {
+            this.state = state;
+        }
 
         public DataBean() {
         }
@@ -69,7 +75,7 @@ public class MyAlbumResponse {
             album_url = in.readString();
             album_type = in.readInt();
             cost = in.readInt();
-            status = in.readInt();
+            state = in.readInt();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -83,14 +89,6 @@ public class MyAlbumResponse {
                 return new DataBean[size];
             }
         };
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
 
         public int getId() {
             return id;
@@ -135,7 +133,7 @@ public class MyAlbumResponse {
             dest.writeString(album_url);
             dest.writeInt(album_type);
             dest.writeInt(cost);
-            dest.writeInt(status);
+            dest.writeInt(state);
         }
     }
 }

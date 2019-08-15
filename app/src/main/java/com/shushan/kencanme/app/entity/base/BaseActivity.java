@@ -28,6 +28,7 @@ import com.shushan.kencanme.app.mvp.utils.ToastUtil;
 import java.net.ConnectException;
 
 import javax.inject.Inject;
+import javax.net.ssl.SSLHandshakeException;
 
 import cn.jzvd.Jzvd;
 import io.reactivex.ObservableTransformer;
@@ -125,7 +126,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         dismissLoading();
         String mErrMessage;
         Log.d("LogInterceptor", "e:" + e.toString());
-        if (e instanceof HttpException || e instanceof ConnectException) {
+        if (e instanceof HttpException || e instanceof ConnectException || e instanceof SSLHandshakeException) {
             mErrMessage = getString(R.string.text_check_internet);
         } else {
             mErrMessage = getString(R.string.text_wait_try);

@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -79,6 +80,8 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
                     public void onNext(ResponseData responseData) {
                         mMainView.dismissLoading();
                         userInfo = requestUserInfoByRidSuccess(responseData);
+                        //刷新用户信息  可以刷新会话列表
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
                     }
 
                     @Override

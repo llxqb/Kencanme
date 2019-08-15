@@ -34,8 +34,8 @@ import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.LikeResponse;
-import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.app.entity.response.RecommendUserInfoResponse;
+import com.shushan.kencanme.app.entity.response.UserInfoAlbumResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.pay.RechargeActivity;
@@ -43,7 +43,7 @@ import com.shushan.kencanme.app.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.reportUser.ReportUserActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.app.mvp.ui.adapter.AlbumAdapter;
+import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserAlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
@@ -127,9 +127,9 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     RelativeLayout mContactRl;
     @BindView(R.id.label_tv)
     TextView mLabelTv;
-    private List<MyAlbumResponse.DataBean> albumInfoLists = new ArrayList<>();
+    private List<UserInfoAlbumResponse.DataBean> albumInfoLists = new ArrayList<>();
     private List<ContactWay> contactWayList = new ArrayList<>();
-    private AlbumAdapter albumAdapter;
+    private RecommendUserAlbumAdapter albumAdapter;
     private MimeContactWayAdapter contactWayAdapter;
     private RecommendUserLabelAdapter recommendUserLabelAdapter;
     private int mUid;
@@ -142,7 +142,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      * 1 使用嗨豆查看相册
      * 2 使用嗨豆查看联系方式
      */
-    private MyAlbumResponse.DataBean mAlbumBean;
+    private UserInfoAlbumResponse.DataBean mAlbumBean;
     /**
      * 使用beans 查看相册和联系方式
      * 1:查看相册
@@ -206,7 +206,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 if (view.getId() == R.id.photo_item_rl) {
                     assert mAlbumBean != null;
                     //type 1:普通图片 2：vip可查看 3：嗨豆图片  state:0 未查看 1：已查看
-                    if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getLookStatus() == 1) {
+                    if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
                         LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
                     } else if (mAlbumBean.getAlbum_type() == 2) {
                         if (AppUtils.isVip(mLoginUser.userType)) {
@@ -234,7 +234,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         //图片adapter
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         mAlbumRecyclerView.setLayoutManager(gridLayoutManager);
-        albumAdapter = new AlbumAdapter(this, albumInfoLists, mImageLoaderHelper);
+        albumAdapter = new RecommendUserAlbumAdapter(this, albumInfoLists, mImageLoaderHelper);
         mAlbumRecyclerView.setAdapter(albumAdapter);
         //联系方式adapter
         mContactWayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -306,12 +306,12 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         recommendUserInfoResponse = response;
         setUserData(response);
         for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
-            MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
+            UserInfoAlbumResponse.DataBean dataBean = new UserInfoAlbumResponse.DataBean();
             dataBean.setId(albumBean.getId());
             dataBean.setAlbum_url(albumBean.getAlbum_url());
             dataBean.setAlbum_type(albumBean.getAlbum_type());
             dataBean.setCost(albumBean.getCost());
-            dataBean.setLookStatus(albumBean.getState());
+            dataBean.setState(albumBean.getState());
             albumInfoLists.add(dataBean);
         }
         albumAdapter.setNewData(albumInfoLists);
@@ -654,7 +654,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      */
     @Override
     public void getAlbumByBeansSuccess(String msg) {
-        mAlbumBean.setLookStatus(1);
+        mAlbumBean.setState(1);
         albumAdapter.notifyDataSetChanged();
         requestHomeUserInfo();
     }

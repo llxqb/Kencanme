@@ -23,14 +23,14 @@ import java.util.List;
 import cn.jzvd.Jzvd;
 
 /**
- * Mime/RecommendUserInfoActivity  页面 MyAlbumAdapter
+ * RecommendUserInfoActivity  页面 MyAlbumAdapter
  */
-public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, BaseViewHolder> {
+public class MineFragmentUserAlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, BaseViewHolder> {
 
     private ImageLoaderHelper mImageLoaderHelper;
     private Context mContext;
 
-    public AlbumAdapter(Context context, @Nullable List<MyAlbumResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
+    public MineFragmentUserAlbumAdapter(Context context, @Nullable List<MyAlbumResponse.DataBean> data, ImageLoaderHelper imageLoaderHelper) {
         super(R.layout.item_album, data);
         mContext = context;
         mImageLoaderHelper = imageLoaderHelper;
@@ -53,13 +53,13 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                     helper.setVisible(R.id.album_jz_video, true);
                     helper.setVisible(R.id.photo_iv, false);
                     //是否显示审核状态角标
-                    if (item.getState() == 0) {
+                    if (item.getStatus() == 0) {
                         mCornerLabelView.setVisibility(View.GONE);
-                    } else if (item.getState() == 1) {
+                    } else if (item.getStatus() == 1) {
                         mCornerLabelView.setVisibility(View.VISIBLE);
                         mCornerLabelView.setText1(mContext.getResources().getString(R.string.video_review));
                         mCornerLabelView.setFillColor(mContext.getResources().getColor(R.color.app_color));
-                    } else if (item.getState() == 2) {
+                    } else if (item.getStatus() == 2) {
                         mCornerLabelView.setVisibility(View.VISIBLE);
                         mCornerLabelView.setText1(mContext.getResources().getString(R.string.video_review_no_passed));
                         mCornerLabelView.setFillColor(mContext.getResources().getColor(R.color.red_color_btn));
@@ -87,7 +87,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
                             helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_Beans_video));
-                            if (mContext instanceof RecommendUserInfoActivity && item.getLookStatus() == 0) {
+                            if (mContext instanceof RecommendUserInfoActivity ) {
                                 jzvdStd.setUp(item.getAlbum_url(), "");
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), jzvdStd.thumbImageView, Constant.LOADING_SMALL);
                             } else {
@@ -118,7 +118,7 @@ public class AlbumAdapter extends BaseQuickAdapter<MyAlbumResponse.DataBean, Bas
                         case 3:
                             helper.setVisible(R.id.photo_hint_tv, true);
                             helper.setText(R.id.photo_hint_tv, mContext.getString(R.string.AlbumAdapter_Beans_photo));
-                            if (mContext instanceof RecommendUserInfoActivity && item.getLookStatus() == 0) {
+                            if (mContext instanceof RecommendUserInfoActivity) {
                                 mImageLoaderHelper.displayGlassImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
                             } else {
                                 mImageLoaderHelper.displayImage(mContext, item.getAlbum_url(), imageView, Constant.LOADING_SMALL);
