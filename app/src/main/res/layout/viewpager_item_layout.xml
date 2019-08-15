@@ -7,14 +7,13 @@
     android:background="#000000">
 
 
-    <ImageView
+    <com.shushan.kencanme.app.mvp.views.ResizableImageView
         android:id="@+id/viewpager_item_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:scaleType="centerCrop" />
+        android:visibility="gone" />
 
     <cn.jzvd.JzvdStd
         android:id="@+id/jz_video"
@@ -42,8 +41,8 @@
             android:id="@+id/recommend_user_head_iv"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@mipmap/head_photo_loading"
             android:layout_centerVertical="true"
+            android:src="@mipmap/head_photo_loading"
             app:civ_border_color="@color/white"
             app:civ_border_width="@dimen/dp_2" />
 
@@ -90,8 +89,8 @@
             android:layout_below="@id/recommend_user_sex_year"
             android:layout_marginStart="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_6"
-            android:singleLine="true"
             android:layout_toEndOf="@id/recommend_user_location"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12" />
 

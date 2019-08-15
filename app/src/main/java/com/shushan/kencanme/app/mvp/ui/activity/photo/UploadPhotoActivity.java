@@ -137,7 +137,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         if (getIntent() != null) {
             dataBean = getIntent().getParcelableExtra("dataBean");
         }
-
     }
 
     @Override
@@ -384,7 +383,6 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     String taskId;
     @Override
     public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
-//        Log.e("ddd", "videoPath:" + videoPath);
         photoUrl = uploadVideoResponse.getUrl();
         mJzVideo.setVisibility(View.VISIBLE);
         mPhotoIv.setVisibility(View.GONE);
@@ -400,7 +398,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
         photoUrl = picPath;
         mJzVideo.setVisibility(View.GONE);
         mPhotoIv.setVisibility(View.VISIBLE);
-        mImageLoaderHelper.displayMatchImage(this, picPath, mPhotoIv, Constant.LOADING_MIDDLE);
+        mImageLoaderHelper.displayImage(this, picPath, mPhotoIv, Constant.LOADING_MIDDLE);
 //        mPersonalInfoRequest.cover = picPath;
     }
 

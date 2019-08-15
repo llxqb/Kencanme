@@ -41,6 +41,7 @@ public class PersonalInfoResponse implements Parcelable {
      * album : [{"id":9,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/3f9a8da5fae43abaee47d8f248ab1162.mp4","album_type":3,"cost":5},{"id":11,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0302fbed536.png","album_type":2,"cost":0},{"id":13,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190614/b7002fe81d9e1dc43f92c116f95c9dbd.mp4","album_type":3,"cost":8},{"id":14,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030d28409de.png","album_type":1,"cost":0},{"id":17,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030fa70cb4d.png","album_type":1,"cost":0},{"id":18,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d031012d7ddf.png","album_type":3,"cost":5},{"id":19,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03122d1254c.png","album_type":2,"cost":0},{"id":21,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0315e970293.png","album_type":1,"cost":0},{"id":24,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03264968790.png","album_type":1,"cost":0},{"id":25,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0326d82ff92.png","album_type":2,"cost":0}]
      * pushing_small_age : 18
      * pushing_large_age : 30
+     * state : 0   0正常1审核中2审核不通过
      */
 
     private int uid;
@@ -71,6 +72,7 @@ public class PersonalInfoResponse implements Parcelable {
     private List<String> label;
     private List<ContactWay> contact;
     private List<AlbumBean> album;
+    private int state;
 
     protected PersonalInfoResponse(Parcel in) {
         uid = in.readInt();
@@ -98,6 +100,7 @@ public class PersonalInfoResponse implements Parcelable {
         trait = in.readString();
         pushing_small_age = in.readString();
         pushing_large_age = in.readString();
+        state = in.readInt();
         contact = in.createTypedArrayList(ContactWay.CREATOR);
     }
 
@@ -301,6 +304,14 @@ public class PersonalInfoResponse implements Parcelable {
         return pushing_small_age;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public void setPushing_small_age(String pushing_small_age) {
         this.pushing_small_age = pushing_small_age;
     }
@@ -369,6 +380,7 @@ public class PersonalInfoResponse implements Parcelable {
         dest.writeString(trait);
         dest.writeString(pushing_small_age);
         dest.writeString(pushing_large_age);
+        dest.writeInt(state);
         dest.writeTypedList(contact);
     }
 

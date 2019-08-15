@@ -41,6 +41,7 @@ public class LoginUtils {
         loginUser.contact = new Gson().toJson(personalInfoResponse.getContact());
         loginUser.label = new Gson().toJson(personalInfoResponse.getLabel());
         loginUser.userType =  AppUtils.userType(personalInfoResponse.getSvip(), personalInfoResponse.getVip(), personalInfoResponse.getSex());
+        loginUser.state = personalInfoResponse.getState();
         return loginUser;
     }
 

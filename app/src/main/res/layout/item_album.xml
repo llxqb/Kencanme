@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/photo_item_rl"
     android:layout_width="@dimen/dp_84"
     android:layout_height="@dimen/dp_84">
@@ -22,15 +23,25 @@
         android:scaleType="centerCrop"
         android:src="@mipmap/report_add_photo" />
 
+    <com.shushan.kencanme.app.mvp.views.CornerLabelView
+        android:id="@+id/cornerLabelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/dp_5"
+        android:visibility="gone"
+        app:clvFillColor="@color/app_color"
+        app:clvFlags="right"
+        app:clvText1Height="@dimen/sp_8" />
 
     <ImageView
         android:id="@+id/photo_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/dp_4"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_4"
         android:padding="@dimen/dp_4"
         android:src="@mipmap/delete"
         android:visibility="gone" />

@@ -5,9 +5,9 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
-import com.shushan.kencanme.app.entity.request.TokenRequest;
-import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.MainModel;
 import com.shushan.kencanme.app.mvp.model.ResponseData;
@@ -52,29 +52,32 @@ public class MineFragmentPresenterImpl implements MineFragmentControl.mineFragme
         }
     }
 
+
     /**
-     * 获取个人信息（首页）
+     * 请求个人信息(我的)
      */
     @Override
-    public void onRequestHomeUserInfo(TokenRequest tokenRequest) {
+    public void onRequestPersonalInfo(PersonalInfoRequest personalInfoRequest) {
         mMineView.showLoading(mContext.getResources().getString(R.string.loading));
-        Disposable disposable = mMineFragmentModel.onRequestHomeUserInfo(tokenRequest).compose(mMineView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
-                .subscribe(this::requestHomeUserInfoSuccess, throwable -> mMineView.showErrMessage(throwable),
+        Disposable disposable = mMineFragmentModel.onRequestPersonalInfo(personalInfoRequest).compose(mMineView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestPersonalInfoSuccess, throwable -> mMineView.showErrMessage(throwable),
                         () -> mMineView.dismissLoading());
         mMineView.addSubscription(disposable);
     }
 
-    private void requestHomeUserInfoSuccess(ResponseData responseData) {
+    private void requestPersonalInfoSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-            responseData.parseData(HomeUserInfoResponse.class);
+            responseData.parseData(PersonalInfoResponse.class);
             if (responseData.parsedData != null) {
-                HomeUserInfoResponse response = (HomeUserInfoResponse) responseData.parsedData;
-                mMineView.homeUserInfoSuccess(response);
+                PersonalInfoResponse response = (PersonalInfoResponse) responseData.parsedData;
+                mMineView.personalInfoSuccess(response);
             }
         } else {
             mMineView.showToast(responseData.errorMsg);
         }
     }
+    
+    
     
     @Override
     public void onCreate() {

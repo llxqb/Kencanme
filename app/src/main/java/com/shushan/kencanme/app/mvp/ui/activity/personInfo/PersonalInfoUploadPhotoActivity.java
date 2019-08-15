@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerPersonalInfoComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -32,7 +31,6 @@ import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.response.UploadVideoResponse;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.main.MainActivity;
-import com.shushan.kencanme.app.mvp.utils.LogUtils;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.views.dialog.PhotoDialog;
@@ -48,7 +46,6 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -176,7 +173,6 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
      */
     @Override
     public void personalInfoSuccess(PersonalInfoResponse response) {
-        LogUtils.d("response:" + new Gson().toJson(response));
         //保存用户信息
         mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
         startActivitys(MainActivity.class);
@@ -191,7 +187,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         PhotoDialog photoDialog = PhotoDialog.newInstance();
         photoDialog.setListener(this);
         photoDialog.setData("Select video or photo", "Video", "Photo");
-        DialogFactory.showDialogFragment(Objects.requireNonNull(this).getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
+        DialogFactory.showDialogFragment(getSupportFragmentManager(), photoDialog, PhotoDialog.TAG);
     }
 
 
@@ -347,15 +343,15 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
         public void afterTextChanged(Editable s) {
             selectionStart = mDeclarationEv.getSelectionStart();
             selectionEnd = mDeclarationEv.getSelectionEnd();
-            int worldTextNum = s.length();
+            String worldTextNum = s.length()+"/80";
             if (s.length() > 80) {
                 showToast(getResources().getString(R.string.DataFraudActivity_only_80_word));
                 s.delete(selectionStart - 1, selectionEnd);
                 int tempSelection = selectionStart;
-                mUploadPhotoWorldLimitText.setText(worldTextNum + "/80");
+                mUploadPhotoWorldLimitText.setText(worldTextNum);
                 mDeclarationEv.setSelection(tempSelection);
             } else {
-                mUploadPhotoWorldLimitText.setText(worldTextNum + "/80");
+                mUploadPhotoWorldLimitText.setText(worldTextNum);
             }
         }
     };

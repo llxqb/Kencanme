@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,16 +13,17 @@
         layout="@layout/common_toolbar"
         android:visibility="gone" />
 
-
-    <ImageView
+    <com.shushan.kencanme.app.mvp.views.ResizableImageView
         android:id="@+id/photo_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop" />
+        android:layout_centerVertical="true" />
 
     <cn.jzvd.JzvdStd
         android:id="@+id/jz_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:visibility="gone" />
-</LinearLayout>
+
+</RelativeLayout>

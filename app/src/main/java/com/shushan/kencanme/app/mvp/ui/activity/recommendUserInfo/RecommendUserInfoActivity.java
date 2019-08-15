@@ -206,7 +206,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
                 if (view.getId() == R.id.photo_item_rl) {
                     assert mAlbumBean != null;
                     //type 1:普通图片 2：vip可查看 3：嗨豆图片  state:0 未查看 1：已查看
-                    if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getState() == 1) {
+                    if (mAlbumBean.getAlbum_type() == 1 || mAlbumBean.getLookStatus() == 1) {
                         LookPhotoActivity.start(RecommendUserInfoActivity.this, mAlbumBean.getAlbum_url());
                     } else if (mAlbumBean.getAlbum_type() == 2) {
                         if (AppUtils.isVip(mLoginUser.userType)) {
@@ -304,7 +304,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @Override
     public void getRecommendUserInfoSuccess(RecommendUserInfoResponse response) {
         recommendUserInfoResponse = response;
-//        LogUtils.e("response:" + new Gson().toJson(response));
         setUserData(response);
         for (RecommendUserInfoResponse.AlbumBean albumBean : response.getAlbum()) {
             MyAlbumResponse.DataBean dataBean = new MyAlbumResponse.DataBean();
@@ -312,7 +311,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             dataBean.setAlbum_url(albumBean.getAlbum_url());
             dataBean.setAlbum_type(albumBean.getAlbum_type());
             dataBean.setCost(albumBean.getCost());
-            dataBean.setState(albumBean.getState());
+            dataBean.setLookStatus(albumBean.getState());
             albumInfoLists.add(dataBean);
         }
         albumAdapter.setNewData(albumInfoLists);
@@ -355,7 +354,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         } else {
             mCoverIv.setVisibility(View.VISIBLE);
             mJzvdStd.setVisibility(View.GONE);
-            mImageLoaderHelper.displayMatchImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
+            mImageLoaderHelper.displayImage(this, recommendUserInfoResponse.getCover(), mCoverIv, Constant.LOADING_MIDDLE);
         }
         mImageLoaderHelper.displayImage(this, recommendUserInfoResponse.getTrait(), mHeadIcon, Constant.LOADING_AVATOR);
         mRecommendUsername.setText(recommendUserInfoResponse.getNickname().replace("\n", ""));
@@ -395,7 +394,6 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
         } else {
             unlikedBg();
         }
-
     }
 
     private void likedBg() {
@@ -656,7 +654,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      */
     @Override
     public void getAlbumByBeansSuccess(String msg) {
-        mAlbumBean.setState(1);
+        mAlbumBean.setLookStatus(1);
         albumAdapter.notifyDataSetChanged();
         requestHomeUserInfo();
     }

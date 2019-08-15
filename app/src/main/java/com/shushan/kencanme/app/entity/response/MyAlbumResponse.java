@@ -50,6 +50,8 @@ public class MyAlbumResponse {
          * album_url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190613/5d02066162657.png
          * album_type : 1
          * cost : 0
+         * state:   0正常1审核中2审核不通过
+         * lookStatus: 照片    0 未查看 1：已查看  只在用户详情adapter中使用
          */
 
         private int id;
@@ -57,6 +59,8 @@ public class MyAlbumResponse {
         private int album_type;
         private int cost;
         private int state;
+        //+++
+        private int lookStatus;
 
         public int getState() {
             return state;
@@ -64,6 +68,14 @@ public class MyAlbumResponse {
 
         public void setState(int state) {
             this.state = state;
+        }
+
+        public int getLookStatus() {
+            return lookStatus;
+        }
+
+        public void setLookStatus(int lookStatus) {
+            this.lookStatus = lookStatus;
         }
 
         public DataBean() {
@@ -75,6 +87,7 @@ public class MyAlbumResponse {
             album_type = in.readInt();
             cost = in.readInt();
             state = in.readInt();
+            lookStatus = in.readInt();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -133,6 +146,7 @@ public class MyAlbumResponse {
             dest.writeInt(album_type);
             dest.writeInt(cost);
             dest.writeInt(state);
+            dest.writeInt(lookStatus);
         }
     }
 }

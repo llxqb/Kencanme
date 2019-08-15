@@ -32,10 +32,10 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.Constants.ServerConstant;
 import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
-import com.shushan.kencanme.app.entity.request.TokenRequest;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
-import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
+import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.EditContactWayActivity;
@@ -58,6 +58,7 @@ import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
+import com.shushan.kencanme.app.mvp.views.CornerLabelView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -108,6 +109,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     ImageView mCoverIv;
     @BindView(R.id.jz_video)
     JzvdStd mJzvdStd;
+    @BindView(R.id.cornerLabelView)
+    CornerLabelView mCornerLabelView;
     @BindView(R.id.user_location)
     TextView mUserLocation;
     @BindView(R.id.user_height)
@@ -165,9 +168,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
-            //查询我的--主要是bean数量
-            mLoginUser = mBuProcessor.getLoginUser();
-            requestHomeUserInfo();
+            //查询我的，之前查询我的接口全部可以删除掉
+            requestPersonalInfo();
         } else {
             JzvdStd.goOnPlayOnPause();
         }
@@ -190,8 +192,8 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_USER_INFO)) {
-            mLoginUser = mBuProcessor.getLoginUser();
-            setUserInfo();
+            //查询-我的-接口
+            requestPersonalInfo();
         } else if (intent.getAction() != null && (intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM) || intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM_FROM_MYALBUM))) {
             //更新我的相册
             MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
@@ -262,12 +264,13 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     }
 
     /**
-     * 查询我的（首页）
+     * 查询 我的
+     * 更新用户数据，这个能够查询用户上传的视频状态
      */
-    private void requestHomeUserInfo() {
-        TokenRequest tokenRequest = new TokenRequest();
-        tokenRequest.token = mBuProcessor.getToken();
-        mPresenter.onRequestHomeUserInfo(tokenRequest);
+    private void requestPersonalInfo() {
+        PersonalInfoRequest personalInfoRequest = new PersonalInfoRequest();
+        personalInfoRequest.token = mBuProcessor.getToken();
+        mPresenter.onRequestPersonalInfo(personalInfoRequest);
     }
 
     /**
@@ -303,14 +306,25 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             mLabelHintTv.setVisibility(View.GONE);
         }
         if (TranTools.isVideo(mLoginUser.cover)) {
+            if (mLoginUser.state == 0) {
+                mCornerLabelView.setVisibility(View.GONE);
+            } else if (mLoginUser.state == 1) {
+                mCornerLabelView.setVisibility(View.VISIBLE);
+                mCornerLabelView.setText1(getResources().getString(R.string.video_review));
+                mCornerLabelView.setFillColor(getResources().getColor(R.color.app_color));
+            } else if (mLoginUser.state == 2) {
+                mCornerLabelView.setVisibility(View.VISIBLE);
+                mCornerLabelView.setText1(getResources().getString(R.string.video_review_no_passed));
+                mCornerLabelView.setFillColor(getResources().getColor(R.color.red_color_btn));
+            }
             mCoverIv.setVisibility(View.GONE);
             mJzvdStd.setVisibility(View.VISIBLE);
             mJzvdStd.setUp(mLoginUser.cover, "");
-            PicUtils.loadVideoScreenshot(getActivity(), mLoginUser.cover, mJzvdStd.thumbImageView, 0,true);
+            PicUtils.loadVideoScreenshot(getActivity(), mLoginUser.cover, mJzvdStd.thumbImageView, 0, true);
         } else {
             mCoverIv.setVisibility(View.VISIBLE);
             mJzvdStd.setVisibility(View.GONE);
-            mImageLoaderHelper.displayMatchImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
+            mImageLoaderHelper.displayImage(getActivity(), mLoginUser.cover, mCoverIv, Constant.LOADING_MIDDLE);
         }
         mImageLoaderHelper.displayImage(getActivity(), mLoginUser.trait, mAvatar, Constant.LOADING_AVATOR);
 
@@ -426,13 +440,11 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     }
 
     @Override
-    public void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse) {
-        HomeUserInfoResponse.UserBean userBean = homeUserInfoResponse.getUser();
-        mLoginUser = LoginUtils.upDateLoginUser(mLoginUser, userBean);
-        mBuProcessor.setLoginUser(mLoginUser);
-        //设置嗨豆信息
-        mHiBeansNumTv.setText(String.valueOf(mLoginUser.beans));
-//        setUserInfo();
+    public void personalInfoSuccess(PersonalInfoResponse response) {
+        //保存用户信息
+        mBuProcessor.setLoginUser(LoginUtils.tranLoginUser(response));
+        mLoginUser = mBuProcessor.getLoginUser();
+        setUserInfo();
     }
 
 

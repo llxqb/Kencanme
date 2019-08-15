@@ -80,4 +80,10 @@ public interface MainApi {
     @POST("menggoda/index/update_deviceinfo")
     Observable<String> onUploadDevice(@Body String request);
 
+    /**
+     * 请求个人信息（我的）
+     */
+    @POST("menggoda/user")
+    Observable<String> onRequestPersonalInfo(@Body String request);
+
 }

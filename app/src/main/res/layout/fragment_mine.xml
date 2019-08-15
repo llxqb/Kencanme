@@ -37,6 +37,17 @@
                     android:layout_height="match_parent"
                     android:visibility="gone" />
 
+                <com.shushan.kencanme.app.mvp.views.CornerLabelView
+                    android:id="@+id/cornerLabelView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    app:clvFillColor="@color/app_color"
+                    app:clvFlags="right"
+                    android:visibility="gone"
+                    app:clvPaddingCenter="@dimen/dp_16"
+                    app:clvText1Height="@dimen/sp_10" />
+
                 <com.shushan.kencanme.app.mvp.views.CircleImageView
                     android:id="@+id/avatar"
                     android:layout_width="@dimen/dp_45"

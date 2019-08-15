@@ -359,4 +359,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="image_fail" translatable="false">Image failed to load</string><!--图片加载失败 -->
     <string name="PayReportErrorDialog_error_info1" translatable="false">Successful payment but failed to upload, please re-upload</string><!--支付成功但上传失败，请重新上传 -->
     <string name="PayReportErrorDialog_error_info2" translatable="false">Order update failed, please try again</string><!--订单更新失败，请重试 -->
+    <string name="video_review" translatable="false">under review</string><!--视频审核中-->
+    <string name="video_review_no_passed" translatable="false">Audit not passed</string><!--视频审核不通过-->
 </resources>

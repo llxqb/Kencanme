@@ -303,6 +303,12 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     @Override
     public void sendOrdinaryPhotoBtnOKListener() {
         isSendPic = true;
+//        //上传图片到服务器
+//        UploadImage uploadImage = new UploadImage();
+//        uploadImage.dir = String.valueOf(Constant.PIC_MESSAGE);//1头像2封面3相册
+//        Bitmap bitmap = BitmapFactory.decodeFile(imgMsg.getLocalUri().getEncodedPath());
+//        uploadImage.file = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
+//        mPresenter.uploadImage(uploadImage);
         ConversationUtil.sendImgMessage(mTargetId, mConversationType, imgMsg);
     }
 

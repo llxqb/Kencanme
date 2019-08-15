@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -20,6 +21,7 @@ import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.help.ImageLoaderHelper;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
+import com.shushan.kencanme.app.mvp.views.ResizableImageView;
 
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
         if (item == null) return;
         helper.addOnClickListener(R.id.home_like_iv).addOnClickListener(R.id.home_message_iv).addOnClickListener(R.id.recommend_user_rl).addOnClickListener(R.id.home_item_rl);
         JzvdStd mJzVideo = helper.getView(R.id.jz_video);
-        ImageView mViewpagerItemIv = helper.getView(R.id.viewpager_item_iv);
+        ResizableImageView mViewpagerItemIv = helper.getView(R.id.viewpager_item_iv);
         ImageView homeLikeIv = helper.getView(R.id.home_like_iv);
         ImageView mRecommendUserHeadIv = helper.getView(R.id.recommend_user_head_iv);
         GifImageView gifImageView = helper.getView(R.id.app_loading);
@@ -82,9 +84,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
         } else {
             mJzVideo.setVisibility(View.GONE);
             helper.setVisible(R.id.viewpager_item_iv, true);
-            mImageLoaderHelper.displayMatchImage(mContext, coverValue, mViewpagerItemIv, Constant.LOADING_BIG);
+            mImageLoaderHelper.displayImage(mContext, coverValue, mViewpagerItemIv, Constant.LOADING_BIG);
         }
-
 
         Glide.with(mContext)
                 .load(coverValue)
@@ -93,6 +94,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         assert e != null;
 //                        ToastUtil.showToast(mContext, mContext.getResources().getString(R.string.image_fail));
+                        Log.e("LogInterceptor", "e:" + e.toString()+"  coverValue:" + coverValue);
                         gifImageView.setVisibility(View.GONE);
                         return false;
                     }

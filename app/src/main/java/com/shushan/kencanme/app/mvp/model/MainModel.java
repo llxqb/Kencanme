@@ -6,6 +6,7 @@ import com.shushan.kencanme.app.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.app.entity.request.LikeRequest;
 import com.shushan.kencanme.app.entity.request.MyAlbumRequest;
 import com.shushan.kencanme.app.entity.request.MyFriendsRequest;
+import com.shushan.kencanme.app.entity.request.PersonalInfoRequest;
 import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
@@ -103,4 +104,10 @@ public class MainModel {
         return mMainApi.onUploadDevice(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
+    /**
+     * 请求个人信息（我的）
+     */
+    public Observable<ResponseData> onRequestPersonalInfo(PersonalInfoRequest request) {
+        return mMainApi.onRequestPersonalInfo(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
 }

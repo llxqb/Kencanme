@@ -358,4 +358,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="image_fail">Gambar gagal dimuat</string><!--图片加载失败 -->
     <string name="PayReportErrorDialog_error_info1">Pembayaran berhasil tetapi gagal mengunggah, harap unggah kembali</string><!--支付成功但上传失败，请重新上传 -->
     <string name="PayReportErrorDialog_error_info2" >Pembaruan pesanan gagal, silakan coba lagi</string><!--订单更新失败，请重试 -->
+    <string name="video_review" >Sedang ditinjau</string><!--视频审核中-->
+    <string name="video_review_no_passed" translatable="false">Audit gagal</string><!--视频审核不通过-->
 </resources>

@@ -33,7 +33,9 @@ import com.shushan.kencanme.app.entity.user.LoginUser;
 import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
+import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
+import com.shushan.kencanme.app.mvp.views.CornerLabelView;
 import com.shushan.kencanme.app.mvp.views.dialog.PhotoDialog;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -86,6 +88,8 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     TextView mSaveTv;
     @BindView(R.id.cover_iv)
     ImageView mCoverIv;
+    @BindView(R.id.cornerLabelView)
+    CornerLabelView mCornerLabelView;
     @BindView(R.id.jz_video)
     JzvdStd mJzVideo;
     private TakePhoto takePhoto;
@@ -127,12 +131,23 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void initData() {
         mLoginUser = mBuProcessor.getLoginUser();
-        if (mLoginUser.cover.trim().contains(".mp4")) {
+        if (TranTools.isVideo(mLoginUser.cover)) {
+            if (mLoginUser.state == 0) {
+                mCornerLabelView.setVisibility(View.GONE);
+            } else if (mLoginUser.state == 1) {
+                mCornerLabelView.setVisibility(View.VISIBLE);
+                mCornerLabelView.setText1(getResources().getString(R.string.video_review));
+                mCornerLabelView.setFillColor(getResources().getColor(R.color.app_color));
+            } else if (mLoginUser.state == 2) {
+                mCornerLabelView.setVisibility(View.VISIBLE);
+                mCornerLabelView.setText1(getResources().getString(R.string.video_review_no_passed));
+                mCornerLabelView.setFillColor(getResources().getColor(R.color.red_color_btn));
+            }
             mJzVideo.setVisibility(View.VISIBLE);
             mCoverIv.setVisibility(View.GONE);
             mJzVideo.setUp(mLoginUser.cover, "");
             mUploadHintTv.setVisibility(View.VISIBLE);
-            PicUtils.loadVideoScreenshot(this, mLoginUser.cover, mJzVideo.thumbImageView, 0,true);
+            PicUtils.loadVideoScreenshot(this, mLoginUser.cover, mJzVideo.thumbImageView, 0, true);
         } else {
             mJzVideo.setVisibility(View.GONE);
             mCoverIv.setVisibility(View.VISIBLE);
@@ -173,7 +188,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
                     UpdatePersonalInfoRequest personalInfoResponse = LoginUtils.tranPersonalInfoResponse(mLoginUser);
                     personalInfoResponse.nickname = mUserNameEv.getText().toString();
                     personalInfoResponse.declaration = mDeclarationEv.getText().toString();
-                    if(!TextUtils.isEmpty(taskId)){
+                    if (!TextUtils.isEmpty(taskId)) {
                         personalInfoResponse.taskId = taskId;
                     }
                     mPresenter.updatePersonalInfo(personalInfoResponse);
@@ -270,9 +285,9 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
 
     private void uploadImage(String filename) {
         UploadImage uploadImage = new UploadImage();
-        if(photoOrVideo==0){
+        if (photoOrVideo == 0) {
             uploadImage.dir = String.valueOf(Constant.PIC_AVATOR);//1头像2封面3相册
-        }else {
+        } else {
             uploadImage.dir = String.valueOf(Constant.PIC_COVER);//1头像2封面3相册
         }
         uploadImage.file = filename;
@@ -324,6 +339,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
      * 鉴黄追踪第三方taskId
      */
     String taskId;
+
     @Override
     public void uploadVideoSuccess(UploadVideoResponse uploadVideoResponse) {
         mUploadHintTv.setVisibility(View.VISIBLE);
@@ -331,7 +347,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
         mCoverIv.setVisibility(View.GONE);
         mJzVideo.setUp(uploadVideoResponse.getUrl(), "");
         //获取视频第一帧
-        PicUtils.loadVideoScreenshot(this, uploadVideoResponse.getUrl(), mJzVideo.thumbImageView, 0,true);
+        PicUtils.loadVideoScreenshot(this, uploadVideoResponse.getUrl(), mJzVideo.thumbImageView, 0, true);
         mLoginUser.cover = uploadVideoResponse.getUrl();
         taskId = uploadVideoResponse.getTaskId();
     }

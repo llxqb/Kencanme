@@ -108,6 +108,11 @@ public class LoginUser implements Serializable {
      * 5：女VIP
      */
     public int userType;
+    /**
+     * 封面视频上传状态
+     * 0正常1审核中2审核不通过
+     */
+    public int state;
 
 
 }

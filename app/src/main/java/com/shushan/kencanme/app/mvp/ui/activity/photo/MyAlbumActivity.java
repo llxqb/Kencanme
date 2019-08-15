@@ -73,7 +73,7 @@ public class MyAlbumActivity extends BaseActivity implements CommonDialog.Common
     @Override
     public void onReceivePro(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_MY_ALBUM)) {
-            //更新我的相册
+            //查看我的相册
             MyAlbumRequest myAlbumRequest = new MyAlbumRequest();
             myAlbumRequest.token = mBuProcessor.getToken();
             mPresenter.onRequestMyAlbum(myAlbumRequest);

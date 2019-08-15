@@ -16,6 +16,7 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
+import com.shushan.kencanme.app.mvp.views.ResizableImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,10 +32,9 @@ public class LookPhotoActivity extends BaseActivity {
     @BindView(R.id.common_title_tv)
     TextView mCommonTitleTv;
     @BindView(R.id.photo_iv)
-    ImageView mPhotoIv;
+    ResizableImageView mPhotoIv;
     @BindView(R.id.jz_video)
     JzvdStd mJzVideo;
-
 
     public static void start(Context context, String path) {
         Intent intent = new Intent(context, LookPhotoActivity.class);
@@ -57,7 +57,6 @@ public class LookPhotoActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
         if (getIntent() != null) {
             String path = getIntent().getStringExtra("path");
             if (TranTools.isVideo(path)) {
@@ -68,7 +67,7 @@ public class LookPhotoActivity extends BaseActivity {
             } else {
                 mJzVideo.setVisibility(View.GONE);
                 mPhotoIv.setVisibility(View.VISIBLE);
-                mImageLoaderHelper.displayMatchImage(this, path, mPhotoIv, Constant.LOADING_BIG);
+                mImageLoaderHelper.displayImage(this, path, mPhotoIv, Constant.LOADING_BIG);
             }
         }
     }
@@ -76,11 +75,6 @@ public class LookPhotoActivity extends BaseActivity {
     @Override
     public void initData() {
     }
-
-//    @OnClick(R.id.photo_iv)
-//    public void onViewClicked() {
-//        finish();
-//    }
 
     private void initializeInjector() {
         DaggerLookPhotoComponent.builder().appComponent(getAppComponent())
