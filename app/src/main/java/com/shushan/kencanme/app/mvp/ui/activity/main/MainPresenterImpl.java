@@ -8,6 +8,7 @@ import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
+import com.shushan.kencanme.app.entity.response.UploadDeviceResponse;
 import com.shushan.kencanme.app.entity.response.UserInfoByRidResponse;
 import com.shushan.kencanme.app.help.RetryWithDelay;
 import com.shushan.kencanme.app.mvp.model.MainModel;
@@ -149,7 +150,11 @@ public class MainPresenterImpl implements MainControl.PresenterMain {
      */
     private void uploadDeviceSuccess(ResponseData responseData) {
         if (responseData.resultCode == 0) {
-//            mMainView.uploadDeviceSuccess();
+            responseData.parseData(UploadDeviceResponse.class);
+            if (responseData.parsedData != null) {
+                UploadDeviceResponse response = (UploadDeviceResponse) responseData.parsedData;
+                mMainView.getDeviceInfoSuccess(response);
+            }
         } else {
             mMainView.showToast(responseData.errorMsg);
         }

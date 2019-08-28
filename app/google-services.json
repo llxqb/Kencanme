@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "701681623423-23e483jte4e4964a4nb8jbl62589fu8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shushan.kencanme.app",
+            "certificate_hash": "ed1bb09c93e393472d8491d36b45fd480a544724"
+          }
+        },
+        {
           "client_id": "701681623423-5f2pcodrkvtcguuij7lv8djisa4khphn.apps.googleusercontent.com",
           "client_type": 3
         }

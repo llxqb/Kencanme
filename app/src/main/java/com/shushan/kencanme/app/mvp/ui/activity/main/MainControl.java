@@ -5,6 +5,7 @@ import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
+import com.shushan.kencanme.app.entity.response.UploadDeviceResponse;
 import com.shushan.kencanme.app.mvp.presenter.LoadDataView;
 import com.shushan.kencanme.app.mvp.presenter.Presenter;
 
@@ -19,6 +20,8 @@ public class MainControl {
 
         // void homeUserInfoSuccess(HomeUserInfoResponse homeUserInfoResponse);
         void messageIdSuccess(MessageIdResponse messageIdResponse);
+
+        void getDeviceInfoSuccess(UploadDeviceResponse uploadDeviceResponse);
     }
 
     public interface PresenterMain extends Presenter<MainView> {

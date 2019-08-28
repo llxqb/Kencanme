@@ -366,4 +366,6 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="video_review_no_passed">Audit gagal</string><!--视频审核不通过-->
     <string name="message_hi_content"> temeni aku ngobrol donk</string><!--聊天 打招呼内容-->
     <string name="back_purchase_cancel">Dan melewatkan kesempatan ini?</string>
+    <string name="version_update_hint1" translatable="false">Menemukan versi baru&#160;</string><!--版本更新 提示-->
+    <string name="version_update_hint2" translatable="false">&#160;, buka pembaruann?</string><!--版本更新 提示-->
 </resources>

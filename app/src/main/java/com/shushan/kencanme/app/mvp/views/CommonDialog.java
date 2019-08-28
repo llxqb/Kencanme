@@ -179,7 +179,7 @@ public class CommonDialog extends BaseDialogFragment {
                 closeCommonDialog();
                 break;
             case R.id.common_dialog_layout:
-                closeCommonDialog();
+//                closeCommonDialog();
                 break;
         }
     }

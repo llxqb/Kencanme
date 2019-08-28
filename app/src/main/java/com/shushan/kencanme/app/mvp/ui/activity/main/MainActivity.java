@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -21,6 +22,8 @@ import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadDeviceRequest;
 import com.shushan.kencanme.app.entity.request.UserInfoByRidRequest;
 import com.shushan.kencanme.app.entity.response.MessageIdResponse;
+import com.shushan.kencanme.app.entity.response.UploadDeviceResponse;
+import com.shushan.kencanme.app.help.DialogFactory;
 import com.shushan.kencanme.app.mvp.ui.activity.login.LoginActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.rongCloud.CustomizeMessageItemProvider;
 import com.shushan.kencanme.app.mvp.ui.adapter.MyFragmentAdapter;
@@ -28,6 +31,7 @@ import com.shushan.kencanme.app.mvp.ui.fragment.HomeFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MessageFragment;
 import com.shushan.kencanme.app.mvp.ui.fragment.MineFragment;
 import com.shushan.kencanme.app.mvp.utils.SystemUtils;
+import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.MyNoScrollViewPager;
 
 import java.util.ArrayList;
@@ -45,7 +49,7 @@ import io.rong.imlib.model.UserInfo;
  * Kencanme 印尼社交app
  * author:liuli
  */
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, RongIM.UserInfoProvider {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, RongIM.UserInfoProvider, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.main_bottom_navigation)
     BottomNavigationView mMainBottomNavigation;
@@ -211,6 +215,32 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         CustomizeMessageItemProvider.setMessageList(messageIdResponse.getData());
     }
 
+    @Override
+    public void getDeviceInfoSuccess(UploadDeviceResponse uploadDeviceResponse) {
+        if (Integer.parseInt(uploadDeviceResponse.getVersionCode()) > SystemUtils.getVersionCode(this)) {
+            versionUpdateDialog(uploadDeviceResponse.getVersionName());
+        }
+    }
+
+    private void versionUpdateDialog(String versionName) {
+        String versionNameValue = getResources().getString(R.string.version_update_hint1) + versionName + getResources().getString(R.string.version_update_hint2);
+        DialogFactory.showCommonDialog(this, versionNameValue, Constant.DIALOG_FIVE);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+        updateApp();
+    }
+
+    /**
+     * 到google play 更新app
+     */
+    private void updateApp() {
+        String packageName = getPackageName();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + packageName));
+        startActivity(intent);
+    }
 
     /**
      * 获取融云列表用户头像和昵称
@@ -262,4 +292,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             finish();
         }
     }
+
+
 }

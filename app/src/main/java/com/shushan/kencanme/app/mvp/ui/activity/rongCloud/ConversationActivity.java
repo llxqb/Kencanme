@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -118,6 +117,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     boolean hiLayoutIsShow;
     String hiLayoutKey;//记录hiLayout 布局key
+    boolean isClickHiBtn;
     /**
      * 1: 赚嗨豆
      * 2：使用嗨豆
@@ -169,7 +169,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             }
         }
         hiLayoutKey = mSharePreferenceUtil.getData("hi_layout_key");
-        Log.e("ddd", "mTargetId:" + mTargetId + "  hi_layout_key:" + hiLayoutKey);
+//        Log.e("ddd", "mTargetId:" + mTargetId + "  hi_layout_key:" + hiLayoutKey);
         if (!TextUtils.isEmpty(hiLayoutKey)) {
             hiLayoutIsShow = !hiLayoutKey.contains(mTargetId);
         } else {
@@ -192,6 +192,8 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         boolean chatTopHintRl = mSharePreferenceUtil.getBooleanData("chat_top_rl");
         if (chatType == 1 || chatTopHintRl) {
             mChatTopHintRl.setVisibility(View.GONE);
+        }else {
+            mChatTopHintRl.setVisibility(View.VISIBLE);
         }
     }
 
@@ -213,6 +215,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 break;
             case R.id.hi_iv:
                 if (mLoginUser.userType == 1) {
+                    isClickHiBtn = true;
                     onRequestHiNum();
                 } else {
                     //发送打招呼消息 hi
@@ -276,14 +279,10 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         if (chatType == 1) {//客服
             return message;
         } else {
-            if (mLoginUser.userType == 1) {
-                if (!hiLayoutIsShow && mLoginUser.beans == 0 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
-                    //男非VIP 和beans=0  和 不是好友关系
-                    rechargeBeansDialogType = 1;
-                    DialogFactory.showRechargeBeansDialog2(this);
-                } else {
-                    return message;
-                }
+            if (mLoginUser.userType == 1 && !hiIsShow() && mLoginUser.beans == 0 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
+                //男非VIP 和beans=0  和 不是好友关系
+                rechargeBeansDialogType = 1;
+                DialogFactory.showRechargeBeansDialog2(this);
             } else {
                 MessageContent messageContent = message.getContent();
                 if (messageContent instanceof ImageMessage) {//图片消息
@@ -306,7 +305,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
         mHiLayoutRl.setVisibility(View.GONE);
         if (chatType != 1) {
-            if (hiLayoutIsShow) {//免费打招呼
+            if (hiLayoutIsShow && isClickHiBtn) {//免费打招呼
                 hiLayoutIsShow = false;
             } else {
                 if (mLoginUser.userType == 1 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
@@ -320,6 +319,17 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
             }
         }
         return false;
+    }
+
+    /**
+     * 判断hiLayout是否显示 和 hiLayout显示是否是点击hi发送按钮
+     */
+    private boolean hiIsShow() {
+        if (!hiLayoutIsShow) {
+            return false;
+        } else {
+            return isClickHiBtn;
+        }
     }
 
     /**

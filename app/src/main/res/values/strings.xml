@@ -367,4 +367,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="video_review_no_passed" translatable="false">Audit not passed</string><!--视频审核不通过-->
     <string name="message_hi_content" translatable="false">chat with me</string><!--聊天 打招呼内容-->
     <string name="back_purchase_cancel" translatable="false">Give up the chance?</string><!--放弃购买 提示-->
+    <string name="version_update_hint1" translatable="false">Found a new version&#160;</string><!--版本更新 提示-->
+    <string name="version_update_hint2" translatable="false">&#160;, go to update?</string><!--版本更新 提示-->
 </resources>
