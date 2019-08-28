@@ -119,13 +119,14 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
         }
         String mRecommendUserSexYearValue = item.getAge() + " " + mContext.getResources().getString(R.string.HomeViewPagerAdapter_years);
 
-        if (item.getActive_time() > 0 && item.getActive_time() <= 30) {
-            helper.setVisible(R.id.active_time, true);
-            String mActiveTimeValue = mContext.getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + item.getActive_time() + " " + mContext.getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
-            helper.setText(R.id.active_time, mActiveTimeValue);
-        } else {
-            helper.setVisible(R.id.active_time, false);
-        }
+//        if (item.getActive_time() > 0 && item.getActive_time() <= 30) {
+//            helper.setVisible(R.id.active_time, true);
+//            String mActiveTimeValue = mContext.getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + item.getActive_time() + " " + mContext.getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
+//            helper.setText(R.id.active_time, mActiveTimeValue);
+//        } else {
+//            helper.setVisible(R.id.active_time, false);
+//        }
+        helper.setText(R.id.active_time, "online");//修改活跃时间都为online
 
         helper.setText(R.id.recommend_user_sex_year, mRecommendUserSexYearValue)
                 .setText(R.id.recommend_user_location, item.getCity().replace("\n", ""));

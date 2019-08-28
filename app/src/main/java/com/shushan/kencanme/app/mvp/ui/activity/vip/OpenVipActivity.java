@@ -49,6 +49,7 @@ import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.Purchase;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
+import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.PayReportErrorDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.PaySelectDialog;
 
@@ -66,7 +67,8 @@ import io.rong.imlib.model.CSCustomServiceInfo;
 /**
  * 购买/打开 会员
  */
-public class OpenVipActivity extends BaseActivity implements OpenVipControl.OpenVipView, GooglePayHelper.BuyFinishListener, PaySelectDialog.payChoiceDialogListener, PayReportErrorDialog.PayReportDialogListener {
+public class OpenVipActivity extends BaseActivity implements OpenVipControl.OpenVipView, GooglePayHelper.BuyFinishListener, PaySelectDialog.payChoiceDialogListener,
+        PayReportErrorDialog.PayReportDialogListener, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.back)
     ImageView mBack;
@@ -195,7 +197,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.line_customer:
                 //在线客服
@@ -611,6 +613,19 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
         reqVipListRequest();
     }
 
+    @Override
+    public void onBackPressed() {
+        showBackDialog();
+    }
+
+    private void showBackDialog() {
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.back_purchase_cancel), Constant.DIALOG_FIVE);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+        super.onBackPressed();
+    }
 
     @Override
     protected void onDestroy() {
@@ -623,5 +638,6 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
                 .openVipModule(new OpenVipModule(OpenVipActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 }

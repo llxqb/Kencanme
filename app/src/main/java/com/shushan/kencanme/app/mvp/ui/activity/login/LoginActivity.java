@@ -125,8 +125,8 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     //处理google回调
     private void handleSignInResult(GoogleSignInResult result) {
         dismissLoading();
+//        Log.e("ddd", "handleSignInResult----" + new Gson().toJson(result));
         if (result != null && result.isSuccess()) {
-//        Log.e("ddd", "handleSignInResult----" + result.isSuccess());
             GoogleSignInAccount account = result.getSignInAccount();
             //登录后台系统
             assert account != null;
@@ -139,7 +139,7 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
     private void appGoogleLogin(String gId, String accessToken) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.id = gId;
-        loginRequest.deviceId = SystemUtils.getUUID(this,mSharePreferenceUtil);
+        loginRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
         loginRequest.access_token = accessToken;
         loginRequest.from = Constant.FROM;
         mPresenterLogin.onRequestLogin(loginRequest);
@@ -159,11 +159,11 @@ public class LoginActivity extends BaseActivity implements LoginControl.LoginVie
             //登录成功
             FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest();
             if (result != null) {
-                showToast("facebook-token:" + result.getAccessToken().getToken());
+//                showToast("facebook-token:" + result.getAccessToken().getToken());
                 facebookLoginRequest.access_token = result.getAccessToken().getToken();
             }
             facebookLoginRequest.from = Constant.FROM;
-            facebookLoginRequest.deviceId = SystemUtils.getUUID(LoginActivity.this,mSharePreferenceUtil);
+            facebookLoginRequest.deviceId = SystemUtils.getUUID(LoginActivity.this, mSharePreferenceUtil);
             mPresenterLogin.onRequestLoginFacebook(facebookLoginRequest);
 
         });

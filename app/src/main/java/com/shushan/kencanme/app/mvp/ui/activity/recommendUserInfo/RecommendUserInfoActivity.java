@@ -29,7 +29,6 @@ import com.shushan.kencanme.app.entity.request.LikeRequest;
 import com.shushan.kencanme.app.entity.request.LookAlbumByBeansRequest;
 import com.shushan.kencanme.app.entity.request.LookContactTypeRequest;
 import com.shushan.kencanme.app.entity.request.RecommendUserInfoRequest;
-import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.ContactWay;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
@@ -43,8 +42,8 @@ import com.shushan.kencanme.app.mvp.ui.activity.photo.LookPhotoActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.register.EarnBeansActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.reportUser.ReportUserActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.vip.OpenVipActivity;
-import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserAlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
+import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserAlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
@@ -364,13 +363,15 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
             mRecommendUserSexYear.setBackgroundResource(R.mipmap.message_gender_female);
         }
         String mSexYearTvValue = recommendUserInfoResponse.getAge() + " years";
-        if (recommendUserInfoResponse.getActive_time() > 0 && recommendUserInfoResponse.getActive_time() <= 30) {
-            mRecommendActiveTime.setVisibility(View.VISIBLE);
-            String activeTimeValue = getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + recommendUserInfoResponse.getActive_time() + " " + getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
-            mRecommendActiveTime.setText(activeTimeValue);
-        } else {
-            mRecommendActiveTime.setVisibility(View.GONE);
-        }
+//        if (recommendUserInfoResponse.getActive_time() > 0 && recommendUserInfoResponse.getActive_time() <= 30) {
+//            mRecommendActiveTime.setVisibility(View.VISIBLE);
+//            String activeTimeValue = getResources().getString(R.string.HomeViewPagerAdapter_active) + " " + recommendUserInfoResponse.getActive_time() + " " + getResources().getString(R.string.HomeViewPagerAdapter_minute_ago);
+//            mRecommendActiveTime.setText(activeTimeValue);
+//        } else {
+//            mRecommendActiveTime.setVisibility(View.GONE);
+//        }
+        mRecommendActiveTime.setText("online");
+
         mRecommendUserSexYear.setText(mSexYearTvValue);
         mRecommendDesc.setText(recommendUserInfoResponse.getDeclaration());
         //相册信息
@@ -457,20 +458,22 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
      */
     private void goChat() {
         if (recommendUserInfoResponse != null) {
-            if (recommendUserInfoResponse.getRelation() == 2) {
-                //启动单聊页面
-                RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
-            } else {
-                if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
-                    //启动单聊页面
-                    RequestFreeChat requestFreeChat = new RequestFreeChat();
-                    requestFreeChat.token = mBuProcessor.getToken();
-                    requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
-                    mPresenter.onRequestChatNum(requestFreeChat);
-                } else {
-                    showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
-                }
-            }
+            //启动单聊页面
+            RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
+//            if (recommendUserInfoResponse.getRelation() == 2) {
+//                //启动单聊页面
+//                RongIM.getInstance().startPrivateChat(this, recommendUserInfoResponse.getRongyun_userid(), recommendUserInfoResponse.getNickname());
+//            } else {
+//                if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+//                    //启动单聊页面
+//                    RequestFreeChat requestFreeChat = new RequestFreeChat();
+//                    requestFreeChat.token = mBuProcessor.getToken();
+//                    requestFreeChat.secret_id = String.valueOf(recommendUserInfoResponse.getUid());
+//                    mPresenter.onRequestChatNum(requestFreeChat);
+//                } else {
+//                    showOpenVipDialog(getResources().getString(R.string.dialog_open_vip_chat));
+//                }
+//            }
         }
     }
 

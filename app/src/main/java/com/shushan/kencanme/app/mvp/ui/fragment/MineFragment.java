@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,8 @@ import com.shushan.kencanme.app.entity.response.ContactWay;
 import com.shushan.kencanme.app.entity.response.MyAlbumResponse;
 import com.shushan.kencanme.app.entity.response.PersonalInfoResponse;
 import com.shushan.kencanme.app.entity.user.LoginUser;
+import com.shushan.kencanme.app.help.DialogFactory;
+import com.shushan.kencanme.app.mvp.ui.activity.loveMe.LoveMePeopleActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.pay.RechargeActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.EditContactWayActivity;
 import com.shushan.kencanme.app.mvp.ui.activity.personInfo.EditLabelActivity;
@@ -52,12 +55,14 @@ import com.shushan.kencanme.app.mvp.ui.adapter.MimeContactWayAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.MineFragmentUserAlbumAdapter;
 import com.shushan.kencanme.app.mvp.ui.adapter.RecommendUserLabelAdapter;
 import com.shushan.kencanme.app.mvp.ui.fragment.mine.MineFragmentControl;
+import com.shushan.kencanme.app.mvp.utils.AppUtils;
 import com.shushan.kencanme.app.mvp.utils.DateUtil;
 import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
+import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.CornerLabelView;
 
 import java.lang.reflect.Type;
@@ -80,7 +85,7 @@ import io.rong.imlib.model.CSCustomServiceInfo;
  * 我的
  */
 
-public class MineFragment extends BaseFragment implements MineFragmentControl.MineView {
+public class MineFragment extends BaseFragment implements MineFragmentControl.MineView, CommonDialog.CommonDialogListener {
     @BindView(R.id.mine_set_up)
     ImageView mMineSetUp;
     @BindView(R.id.line_customer)
@@ -149,6 +154,20 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     ImageView mSVipIcon;
     @BindView(R.id.desc_tv)
     TextView mDescTv;
+    @BindView(R.id.new_pairing_hint_tv)
+    TextView mNewPairingHintTv;
+    @BindView(R.id.new_pairing_iv)
+    CircleImageView mNewPairingIv;
+    @BindView(R.id.new_pairing_num_tv)
+    TextView mNewPairingNumTv;
+    @BindView(R.id.new_pairing_tv)
+    TextView mNewPairingTv;
+    @BindView(R.id.new_pairing_rl)
+    RelativeLayout mNewPairingRl;
+    @BindView(R.id.new_pairing_line_view)
+    View mNewPairingLineView;
+    @BindView(R.id.total_love_you_num_tv)
+    TextView mTotalLoveYouNumTv;
     //我的照片
     private List<MyAlbumResponse.DataBean> photoBeanList = new ArrayList<>();
     List<ContactWay> contactWayList;//联系方式集合
@@ -371,11 +390,30 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
         mUserWeight.setText(mUserWeightValue);
         mUserChest.setText(mUserChestValue);
         mUserProfessional.setText(mUserProfessionalValue);
+
+        //显示最新匹配 布局
+        if (mLoginUser.newLikeState != 0) {
+            mNewPairingRl.setVisibility(View.VISIBLE);
+            mTotalLoveYouNumTv.setVisibility(View.GONE);
+            if (AppUtils.userType(mLoginUser.svip, mLoginUser.vip, mLoginUser.sex) == 3) {
+                mImageLoaderHelper.displayImage(getActivity(), mLoginUser.newLikeTrait, mNewPairingIv, Constant.LOADING_AVATOR);
+            } else {
+                mImageLoaderHelper.displayGlassImage(getActivity(), mLoginUser.newLikeTrait, mNewPairingIv, Constant.LOADING_AVATOR);
+            }
+            mNewPairingNumTv.setText(String.valueOf(mLoginUser.newLikeCount));
+            String mNewPairingTvValue = getResources().getString(R.string.ConversationListFragment_add) + " <font color = '#FF2D5B'>" + mLoginUser.newLikeCount + "</font> " + getResources().getString(R.string.ConversationListFragment_new_like_people_hint);
+            mNewPairingTv.setText(Html.fromHtml(mNewPairingTvValue));
+        } else {
+            mNewPairingRl.setVisibility(View.GONE);
+            mTotalLoveYouNumTv.setVisibility(View.VISIBLE);
+            String loveYouNumValue = getResources().getString(R.string.MineFragment_total) + " <font color = '#FF2D5B'>" + mLoginUser.newLikeCount + "</font> " + getResources().getString(R.string.MineFragment_love_you_people_num);
+            mTotalLoveYouNumTv.setText(Html.fromHtml(loveYouNumValue));
+        }
     }
 
 
-    @OnClick({R.id.mine_set_up, R.id.line_customer, R.id.edit_personal_info_fab, R.id.barn_hi_beans, R.id.recharge, R.id.vip_time_rl, R.id.album_tv,
-            R.id.personal_info_tv, R.id.contact_way_tv, R.id.label_tv})
+    @OnClick({R.id.mine_set_up, R.id.line_customer, R.id.edit_personal_info_fab, R.id.barn_hi_beans, R.id.recharge, R.id.vip_time_rl, R.id.new_pairing_rl,
+            R.id.total_love_you_num_tv, R.id.album_tv, R.id.personal_info_tv, R.id.contact_way_tv, R.id.label_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mine_set_up:
@@ -398,6 +436,22 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
             case R.id.vip_time_rl:
                 startActivitys(OpenVipActivity.class);
                 break;
+            case R.id.new_pairing_rl:
+                //新配对
+                if (mLoginUser.userType == 3) {
+                    LoveMePeopleActivity.start(getActivity(),"2");
+                } else {
+                    showSuperVipDialog();
+                }
+                break;
+            case R.id.total_love_you_num_tv:
+                //所有喜欢你的人
+                if (mLoginUser.userType == 3) {
+                    LoveMePeopleActivity.start(getActivity(),"3");
+                } else {
+                    showSuperVipDialog();
+                }
+                break;
             case R.id.album_tv:
                 MyAlbumActivity.start(getActivity(), photoBeanList);
                 break;
@@ -415,10 +469,22 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     }
 
     /**
+     * 提示开通超级vip
+     */
+    private void showSuperVipDialog() {
+        DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat_like));
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+        startActivitys(OpenVipActivity.class);
+    }
+
+    /**
      * 启动客户服聊天界面。
      * param customerServiceId 要与之聊天的客服 Id。
      * param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
-     * param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+     * param customServiceInfo 当前使用客服者的用户信息。{@link CSCustomServiceInfo}
      */
     private void contactCustomer() {
         //进入客服
@@ -459,5 +525,6 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
                 .mineFragmentModule(new MineFragmentModule(this))
                 .build().inject(this);
     }
+
 
 }

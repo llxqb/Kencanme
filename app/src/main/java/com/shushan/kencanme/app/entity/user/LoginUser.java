@@ -114,5 +114,18 @@ public class LoginUser implements Serializable {
      */
     public int state;
 
+    /**
+     *新增喜欢我的人
+     */
+    public int newLikeCount;
+    /**
+     * 最新喜欢我的人头像
+     */
+    public String newLikeTrait;
+    /**
+     * 1有新增喜欢的人 0没有
+     */
+    public int newLikeState;
+
 
 }

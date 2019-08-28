@@ -44,8 +44,6 @@ import io.rong.imlib.model.UserInfo;
 /**
  * Kencanme 印尼社交app
  * author:liuli
- * 希望你替换自己的github账号，项目目前基本上没有bug
- * 还有公司之前项目很坑，能别碰就别碰
  */
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, MainControl.MainView, RongIM.UserInfoProvider {
 
@@ -129,7 +127,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 public void onSuccess(String userid) {
                     Log.e("ddd", "--onSuccess" + userid);
                     //保存融云userid
-                    mSharePreferenceUtil.setData("rUserId",userid);
+                    mSharePreferenceUtil.setData("rUserId", userid);
                 }
 
                 /**
@@ -192,7 +190,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private void reqUploadDevice() {
         UploadDeviceRequest uploadDeviceRequest = new UploadDeviceRequest();
         uploadDeviceRequest.token = mBuProcessor.getToken();
-        uploadDeviceRequest.deviceId = SystemUtils.getUUID(this,mSharePreferenceUtil);
+        uploadDeviceRequest.deviceId = SystemUtils.getUUID(this, mSharePreferenceUtil);
         uploadDeviceRequest.platform = Constant.FROM;
         mPresenter.onUploadDevice(uploadDeviceRequest);
     }

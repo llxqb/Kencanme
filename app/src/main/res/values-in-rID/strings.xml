@@ -115,7 +115,7 @@
     <string name="CreatePersonalInfoActivity_birthday_is_empty">Ulang tahun tidak boleh kosong</string>
     <string name="CreatePersonalInfoActivity_address_is_empty">Kota tidak boleh kosong</string>
     <string name="CreatePersonalInfoActivity_cover_is_empty">Penutup tidak boleh kosong</string>
-    <string name="CreatePersonalInfoActivity_image_is_empty" >Gambar tidak boleh kosong</string>
+    <string name="CreatePersonalInfoActivity_image_is_empty">Gambar tidak boleh kosong</string>
     <string name="PersonalInfoUploadPhotoActivity_declaration_is_empty">Pernyataan kencan tidak boleh kosong</string>
     <!-- app hint语句 -->
     <string name="app_nick_hint">Silakan masukkan nama panggilan</string>
@@ -218,6 +218,8 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="MineFragment_The_Label">Label</string>
     <string name="MineFragment_The_Label_hint">tambahkan tag saya</string>
     <string name="MineFragment_beans">Hai Koin:</string>
+    <string name="MineFragment_total">Sebanyak&#160; </string>
+    <string name="MineFragment_love_you_people_num">&#160; orang menyukaimu</string>
     <!--HomeFragment -->
     <string name="HomeFragment_Super_exposure_hint">Super Eksposur ! Waktu tersisa: </string>
     <string name="HomeFragment_Super_exposure_content_hint">Pencarian super !Dalam 30 menit jumlah pengguna yang melihat anda 10 kali lebih banyak !  </string>
@@ -282,6 +284,8 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="RechargeBeansDialog_no_beans_hint">Anda tidak punya cukup Hai Koin!</string>
     <string name="PhotoDialog_title_hint">Pilih video atau foto</string>
     <string name="RechargeBeansDialog_beans_or_vip_hint">Hai Koin anda tidak cukup. Anda juga bisa Free Chat dengan Super VIP</string>
+    <string name="RechargeBeansDialog_beans_or_vip_hint2">Tidak ada penggunaan gratis hari ini. Daftarkan untuk VIP atau gunakan Hai Koin untuk mengobrol</string>
+    <string name="RechargeBeansDialog_use_beans">Use 1 Hai Koin</string>
     <string name="Video">Video</string>
     <string name="Photo">Foto</string>
     <!-- 加入黑名单-->
@@ -350,14 +354,16 @@ Sebelum berbicara dan mengobrol, pihak lain harus menyukai anda, Sehingga anda b
     <string name="online_customer">Hubungi layanan pelanggan</string><!--MineFragment -->
     <string name="already_like">Sudah suka</string><!--已喜欢 -->
 
-    <string name="google_payment" translatable="false">Pembayaran Google</string><!--google支付 -->
-    <string name="ahdi_payment" translatable="false">Pembayaran AHDI</string><!--AHDI支付 -->
-    <string name="uniPin_payment" translatable="false">Pembayaran UniPin</string><!--UniPin支付 -->
-    <string name="payment_fail" translatable="false">Pembelian gagal</string><!--购买失败 -->
+    <string name="google_payment">Pembayaran Google</string><!--google支付 -->
+    <string name="ahdi_payment">Pembayaran AHDI</string><!--AHDI支付 -->
+    <string name="uniPin_payment">Pembayaran UniPin</string><!--UniPin支付 -->
+    <string name="payment_fail">Pembelian gagal</string><!--购买失败 -->
     <string name="login_open_permission">Silakan buka izin</string><!--登录权限 -->
     <string name="image_fail">Gambar gagal dimuat</string><!--图片加载失败 -->
     <string name="PayReportErrorDialog_error_info1">Pembayaran berhasil tetapi gagal mengunggah, harap unggah kembali</string><!--支付成功但上传失败，请重新上传 -->
-    <string name="PayReportErrorDialog_error_info2" >Pembaruan pesanan gagal, silakan coba lagi</string><!--订单更新失败，请重试 -->
-    <string name="video_review" >Sedang ditinjau</string><!--视频审核中-->
-    <string name="video_review_no_passed" translatable="false">Audit gagal</string><!--视频审核不通过-->
+    <string name="PayReportErrorDialog_error_info2">Pembaruan pesanan gagal, silakan coba lagi</string><!--订单更新失败，请重试 -->
+    <string name="video_review">Sedang ditinjau</string><!--视频审核中-->
+    <string name="video_review_no_passed">Audit gagal</string><!--视频审核不通过-->
+    <string name="message_hi_content"> temeni aku ngobrol donk</string><!--聊天 打招呼内容-->
+    <string name="back_purchase_cancel">Dan melewatkan kesempatan ini?</string>
 </resources>

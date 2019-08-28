@@ -134,7 +134,8 @@ public class ConversationListFragment extends BaseFragment implements Conversati
                 //查看谁喜欢过我
 //                startActivitys(LoveMePeopleActivity.class);
                 if (mLoginUser.userType == 3) {
-                    startActivitys(LoveMePeopleActivity.class);
+//                    startActivitys(LoveMePeopleActivity.class);
+                    LoveMePeopleActivity.start(getActivity(),"2");
                 } else {
                     showSuperVipDialog();
                 }
@@ -154,9 +155,9 @@ public class ConversationListFragment extends BaseFragment implements Conversati
 
     @Override
     public void getSystemMsgNewInfoSuccess(SystemMsgNewResponse systemMsgNewResponse) {
-//        LogUtils.e("systemMsgNewResponse:" + new Gson().toJson(systemMsgNewResponse));
         SystemMsgNewResponse.NewLikeBean likeBean = systemMsgNewResponse.getNew_like();
         SystemMsgNewResponse.NewMessageBean messageBean = systemMsgNewResponse.getNew_message();
+//        LogUtils.e("LogInterceptor:" + "messageBean:" + new Gson().toJson(messageBean));
         if (likeBean != null && likeBean.getCount() != 0) {
             mNewPairingRl.setVisibility(View.VISIBLE);
             mLineView.setVisibility(View.VISIBLE);
@@ -179,7 +180,9 @@ public class ConversationListFragment extends BaseFragment implements Conversati
             if (!TextUtils.isEmpty(messageBean.getDetail())) {
                 mSystemMsgHintTv.setText(messageBean.getDetail());
             }
-            mSystemMsgTimeTv.setText(DateUtil.getStrTime(messageBean.getCreate_time(), "MM-dd"));
+            if (messageBean.getCreate_time() != 0) {
+                mSystemMsgTimeTv.setText(DateUtil.getStrTime(messageBean.getCreate_time(), "MM-dd"));
+            }
         }
     }
 

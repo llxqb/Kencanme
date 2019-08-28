@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.model;
 
 import com.google.gson.Gson;
+import com.shushan.kencanme.app.entity.request.HiNumRequest;
 import com.shushan.kencanme.app.entity.request.SystemMsgRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
@@ -76,6 +77,12 @@ public class MessageModel {
      */
     public Observable<ResponseData> onRequestUserRelation(UserInfoByRidRequest request) {
         return mMessageApi.onRequestUserRelation(mGson.toJson(request)).map(mTransform::transformCommon);
+    }
+    /**
+     * 聊天打招呼接口
+     */
+    public Observable<ResponseData> onRequestHiNum(HiNumRequest request) {
+        return mMessageApi.onRequestHiNum(mGson.toJson(request)).map(mTransform::transformCommon);
     }
 
 }

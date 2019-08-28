@@ -46,6 +46,7 @@ import com.shushan.kencanme.app.mvp.utils.LoginUtils;
 import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.IabHelper;
 import com.shushan.kencanme.app.mvp.utils.googlePayUtils.Purchase;
+import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.PayReportErrorDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.PaySelectDialog;
 
@@ -67,7 +68,8 @@ import io.rong.imlib.model.CSCustomServiceInfo;
  * 2、Ahdi支付
  * 3、UniPin支付
  */
-public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView, GooglePayHelper.BuyFinishListener, PaySelectDialog.payChoiceDialogListener, PayReportErrorDialog.PayReportDialogListener {
+public class RechargeActivity extends BaseActivity implements RechargeControl.RechargeView, GooglePayHelper.BuyFinishListener, PaySelectDialog.payChoiceDialogListener,
+        PayReportErrorDialog.PayReportDialogListener, CommonDialog.CommonDialogListener {
 
     @BindView(R.id.common_back)
     ImageView mCommonBack;
@@ -160,7 +162,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.common_iv_right:
                 contactCustomer();
@@ -546,6 +548,22 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
         mCurrentHiBeansNum.setText(String.valueOf(mLoginUser.beans));
     }
 
+
+    @Override
+    public void onBackPressed() {
+        showBackDialog();
+    }
+
+    private void showBackDialog() {
+        DialogFactory.showCommonDialog(this, getResources().getString(R.string.back_purchase_cancel), Constant.DIALOG_FIVE);
+    }
+
+    @Override
+    public void commonDialogBtnOkListener() {
+        super.onBackPressed();
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -558,6 +576,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
                 .rechargeBeansModule(new RechargeBeansModule(RechargeActivity.this, this))
                 .activityModule(new ActivityModule(this)).build().inject(this);
     }
+
 
 
 }

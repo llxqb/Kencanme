@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import com.shushan.kencanme.app.di.modules.ConversationModule;
 import com.shushan.kencanme.app.entity.Constants.ActivityConstant;
 import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
+import com.shushan.kencanme.app.entity.request.HiNumRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.request.UseBeansRequest;
@@ -74,6 +77,15 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     TextView mChatTopHintBtn;
     @BindView(R.id.chat_top_hint_rl)
     RelativeLayout mChatTopHintRl;
+    /**
+     * 默认进来显示打招呼hi布局
+     */
+    @BindView(R.id.hi_layout_rl)
+    RelativeLayout mHiLayoutRl;
+    @BindView(R.id.hi_iv)
+    ImageView mHiIv;
+    @BindView(R.id.hi_message_tv)
+    TextView mHiMessageTv;
     private LoginUser mLoginUser;
     String mTargetId;
     /**
@@ -99,6 +111,18 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      * 0:用户聊天  1:客服聊天
      */
     private int chatType;
+    /**
+     * hiLayoutIsShow 是否显示hiLayout 布局
+     * true : 免费打招呼
+     * false: 使用嗨豆
+     */
+    boolean hiLayoutIsShow;
+    String hiLayoutKey;//记录hiLayout 布局key
+    /**
+     * 1: 赚嗨豆
+     * 2：使用嗨豆
+     */
+    private int rechargeBeansDialogType;
     @Inject
     ConversationControl.PresenterConversation mPresenter;
 
@@ -132,7 +156,6 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     public void initView() {
         chatType = mSharePreferenceUtil.getIntData("chatType");//在线客服
 //        mCommonRightIv.setVisibility(View.VISIBLE);
-
         //设置融云会话发送消息监听
         RongIM.getInstance().setSendMessageListener(this);
         //注册自定义消息接收
@@ -145,7 +168,20 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 onRequestUserInfoByRid();
             }
         }
+        hiLayoutKey = mSharePreferenceUtil.getData("hi_layout_key");
+        Log.e("ddd", "mTargetId:" + mTargetId + "  hi_layout_key:" + hiLayoutKey);
+        if (!TextUtils.isEmpty(hiLayoutKey)) {
+            hiLayoutIsShow = !hiLayoutKey.contains(mTargetId);
+        } else {
+            hiLayoutIsShow = true;
+        }
 
+        if (!hiLayoutIsShow || chatType == 1) {
+            mHiLayoutRl.setVisibility(View.GONE);
+        } else {
+            mHiLayoutRl.setVisibility(View.VISIBLE);
+            mHiMessageTv.setText(getResources().getString(R.string.message_hi_content));
+        }
     }
 
     @Override
@@ -160,7 +196,7 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     }
 
 
-    @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right})
+    @OnClick({R.id.common_back, R.id.chat_top_hint_btn, R.id.common_iv_right, R.id.hi_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.common_back:
@@ -175,7 +211,25 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
                 commonChoiceDialog.setListener(this);
                 DialogFactory.showDialogFragment(this.getSupportFragmentManager(), commonChoiceDialog, CommonChoiceDialog.TAG);
                 break;
+            case R.id.hi_iv:
+                if (mLoginUser.userType == 1) {
+                    onRequestHiNum();
+                } else {
+                    //发送打招呼消息 hi
+                    ConversationUtil.sendTextMessage(mTargetId, mConversationType, mHiMessageTv.getText().toString());
+                }
+                break;
         }
+    }
+
+    /**
+     * 免费打招呼
+     */
+    private void onRequestHiNum() {
+        HiNumRequest hiNumRequest = new HiNumRequest();
+        hiNumRequest.token = mLoginUser.token;
+        hiNumRequest.call_id = chatUid;
+        mPresenter.onRequestHiNum(hiNumRequest);
     }
 
     /**
@@ -222,9 +276,14 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
         if (chatType == 1) {//客服
             return message;
         } else {
-            if (mLoginUser.userType == 1 && mLoginUser.beans == 0 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
-                //男非VIP 和beans=0  和 不是好友关系
-                DialogFactory.showRechargeBeansDialog2(this);
+            if (mLoginUser.userType == 1) {
+                if (!hiLayoutIsShow && mLoginUser.beans == 0 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
+                    //男非VIP 和beans=0  和 不是好友关系
+                    rechargeBeansDialogType = 1;
+                    DialogFactory.showRechargeBeansDialog2(this);
+                } else {
+                    return message;
+                }
             } else {
                 MessageContent messageContent = message.getContent();
                 if (messageContent instanceof ImageMessage) {//图片消息
@@ -245,10 +304,19 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
+        mHiLayoutRl.setVisibility(View.GONE);
         if (chatType != 1) {
-            if (mLoginUser.userType == 1 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
-                UseBeansDialogFlag = 1;
-                useBeansToChat("4", 1);
+            if (hiLayoutIsShow) {//免费打招呼
+                hiLayoutIsShow = false;
+            } else {
+                if (mLoginUser.userType == 1 && mUserRelationResponse != null && mUserRelationResponse.getState() != 2) {
+                    UseBeansDialogFlag = 1;
+                    useBeansToChat("4", 1);//嗨豆聊天
+                }
+            }
+            //保存会话id
+            if (!hiLayoutKey.contains(mTargetId)) {
+                mSharePreferenceUtil.setData("hi_layout_key", hiLayoutKey + "/" + mTargetId);//记录会话id
             }
         }
         return false;
@@ -412,6 +480,28 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
     }
 
     /**
+     * 聊天打招呼接口
+     */
+    @Override
+    public void getHiNumSuccess() {
+        //发送打招呼消息 hi
+        hiLayoutIsShow = true;
+        ConversationUtil.sendTextMessage(mTargetId, mConversationType, mHiMessageTv.getText().toString());
+    }
+
+    @Override
+    public void getHiNumFail(String msg) {
+        showToast(msg);
+        if (mLoginUser.beans > 0) {
+            rechargeBeansDialogType = 2;
+            DialogFactory.showRechargeBeansDialog3(this);
+        } else {
+            rechargeBeansDialogType = 1;
+            DialogFactory.showRechargeBeansDialog2(this);
+        }
+    }
+
+    /**
      * 成为VIP
      */
     @Override
@@ -424,7 +514,13 @@ public class ConversationActivity extends BaseActivity implements CommonChoiceDi
      */
     @Override
     public void rechargeBeansDialogBtnListener() {
-        startActivitys(RechargeActivity.class);
+        if (rechargeBeansDialogType == 2) {
+            //发送打招呼消息 hi
+            hiLayoutIsShow = false;
+            ConversationUtil.sendTextMessage(mTargetId, mConversationType, mHiMessageTv.getText().toString());
+        } else {
+            startActivitys(RechargeActivity.class);
+        }
     }
 
     @Override

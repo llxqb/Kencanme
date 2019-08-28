@@ -1,6 +1,7 @@
 package com.shushan.kencanme.app.mvp.ui.activity.rongCloud;
 
 
+import com.shushan.kencanme.app.entity.request.HiNumRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.request.UseBeansRequest;
@@ -28,6 +29,10 @@ public class ConversationControl {
         void getUserInfoSuccess(UserInfoByRidResponse userInfoByRidResponse);
 
         void getUserRelationSuccess(UserRelationResponse userRelationResponse);
+
+        void getHiNumSuccess();
+
+        void getHiNumFail(String msg);
 
     }
 
@@ -59,6 +64,11 @@ public class ConversationControl {
          * 根据融云第三方id获取关系
          */
         void onRequestUserRelation(UserInfoByRidRequest userInfoByRidRequest);
+
+        /**
+         * 免费打招呼数
+         */
+        void onRequestHiNum(HiNumRequest hiNumRequest);
 
     }
 

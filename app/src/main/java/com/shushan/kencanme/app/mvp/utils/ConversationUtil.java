@@ -11,6 +11,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 /**
  */
@@ -74,6 +75,29 @@ public class ConversationUtil {
             @Override
             public void onProgress(Message message, int progress) {
                 //发送进度
+            }
+        });
+    }
+    /**
+     * 发送文字消息
+     */
+    public static void sendTextMessage(String mTargetId, Conversation.ConversationType mConversationType, String text) {
+        TextMessage myTextMessage = TextMessage.obtain(text);
+        Message myMessage = Message.obtain(mTargetId, mConversationType, myTextMessage);
+        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+                //消息本地数据库存储成功的回调
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                //消息通过网络发送成功的回调
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                //消息发送失败的回调
             }
         });
     }

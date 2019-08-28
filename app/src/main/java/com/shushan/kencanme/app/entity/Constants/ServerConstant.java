@@ -14,5 +14,5 @@ public class ServerConstant {
     //融云生产环境客服id
     public static final String RY_CUSTOMER_ID="KEFU156220684625258";
     //google 登录 web端 key
-    public static final String GOOGLE_LOGIN_KEY="611870031660-5f4t1bf30j1gj80cbkcvci0r0og9kcor.apps.googleusercontent.com";
+    public static final String GOOGLE_LOGIN_KEY="701681623423-5f2pcodrkvtcguuij7lv8djisa4khphn.apps.googleusercontent.com";
 }

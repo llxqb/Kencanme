@@ -3,6 +3,7 @@ package com.shushan.kencanme.app.mvp.ui.activity.rongCloud;
 import android.content.Context;
 
 import com.shushan.kencanme.app.R;
+import com.shushan.kencanme.app.entity.request.HiNumRequest;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.request.UploadImage;
 import com.shushan.kencanme.app.entity.request.UseBeansRequest;
@@ -142,6 +143,25 @@ public class ConversationPresenterImpl implements ConversationControl.PresenterC
             }
         } else {
             mConversationView.showToast(responseData.errorMsg);
+        }
+    }
+
+    /**
+     * 聊天打招呼接口
+     */
+    @Override
+    public void onRequestHiNum(HiNumRequest hiNumRequest) {
+        Disposable disposable = mMessageModel.onRequestHiNum(hiNumRequest).compose(mConversationView.applySchedulers()).retryWhen(new RetryWithDelay(3, 3000))
+                .subscribe(this::requestHiNumSuccess, throwable -> mConversationView.showErrMessage(throwable),
+                        () -> mConversationView.dismissLoading());
+        mConversationView.addSubscription(disposable);
+    }
+
+    private void requestHiNumSuccess(ResponseData responseData) {
+        if (responseData.resultCode == 0) {
+            mConversationView.getHiNumSuccess();
+        } else {
+            mConversationView.getHiNumFail(responseData.errorMsg);
         }
     }
 

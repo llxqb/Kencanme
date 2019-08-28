@@ -15,11 +15,11 @@ public class PersonalInfoResponse implements Parcelable {
     /**
      * uid : 6
      * nickname : yuu234
-     * cover : https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/9ac885d2a646c393ba6bad6c7a8513f3.mp4
+     * cover : http://test.shushanbao.com/Public/uploads/video/20190813/c60958742adadc212e19e25b7ef84616.mp4
      * sex : 1
-     * birthday : 2014/06/14
+     * birthday : 677991628
      * city : yy123
-     * declaration : yyyyy123
+     * declaration : yyyyy123hhhhkkk
      * vip : 0
      * vip_time : 0
      * svip : 0
@@ -27,21 +27,26 @@ public class PersonalInfoResponse implements Parcelable {
      * weight : 72
      * bust : 35D
      * occupation : 护士
-     * label : []
-     * beans : 0
-     * contact : [{"contactName":"google","contactValue":""},{"contactName":"google","contactValue":""},{"contactName":"google"}]
-     * token : 7f6a2acf8aa4b8e85210ffc73866db58
-     * age : 49
+     * label : ["ffgggg","hhhhh","uuuu"]
+     * beans : 534
+     * contact : [{"email":"ttttgvhn","name":"google"},{"email":"yikbbh","name":"facebook"},{"email":"whatsapp@163.com","name":"WhatsApp"}]
+     * token : 9f58679b1886b6adb0b01695edba9be4
+     * age : 28
      * forbidden : 0
-     * pushing_age : 18-30
+     * pushing_age : 18-50
      * pushing_gender : 2
-     * exposure : 0
-     * last_login_time : 1560498405
-     * trait : https://menggoda.oss-ap-southeast-5.aliyuncs.com/trait/20190613/5d01ba17036ed.png
-     * album : [{"id":9,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/3f9a8da5fae43abaee47d8f248ab1162.mp4","album_type":3,"cost":5},{"id":11,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0302fbed536.png","album_type":2,"cost":0},{"id":13,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190614/b7002fe81d9e1dc43f92c116f95c9dbd.mp4","album_type":3,"cost":8},{"id":14,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030d28409de.png","album_type":1,"cost":0},{"id":17,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d030fa70cb4d.png","album_type":1,"cost":0},{"id":18,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d031012d7ddf.png","album_type":3,"cost":5},{"id":19,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03122d1254c.png","album_type":2,"cost":0},{"id":21,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0315e970293.png","album_type":1,"cost":0},{"id":24,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d03264968790.png","album_type":1,"cost":0},{"id":25,"album_url":"https://menggoda.oss-ap-southeast-5.aliyuncs.com/cover/20190614/5d0326d82ff92.png","album_type":2,"cost":0}]
-     * pushing_small_age : 18
-     * pushing_large_age : 30
+     * exposure : 3
+     * last_login_time : 1566891395
+     * trait : http://test.shushanbao.com/Public/uploads/trait/1565841604.jpg
+     * lang : en_us
+     * code : APUYG78
+     * platform : Android
+     * is_own : 0
      * state : 0   0正常1审核中2审核不通过
+     * album : [{"id":5334,"album_url":"http://test.shushanbao.com/Public/uploads/video/20190813/4884115b8a6cc665a175461dc2390511.mp4","album_type":1,"cost":0,"status":0},{"id":5335,"album_url":"http://test.shushanbao.com/Public/uploads/cover/1565692374.jpg","album_type":3,"cost":5,"status":0}]
+     * pushing_small_age : 18
+     * pushing_large_age : 50
+     * new_like : {"count":5,"trait":null,"state":1}
      */
 
     private int uid;
@@ -54,7 +59,7 @@ public class PersonalInfoResponse implements Parcelable {
     private int vip;
     private int vip_time;
     private int svip;
-    private int height;
+    private String height;
     private String weight;
     private String bust;
     private String occupation;
@@ -67,12 +72,17 @@ public class PersonalInfoResponse implements Parcelable {
     private int exposure;
     private int last_login_time;
     private String trait;
+    private String lang;
+    private String code;
+    private String platform;
+    private int is_own;
+    private int state;
     private String pushing_small_age;
     private String pushing_large_age;
+    private NewLikeBean new_like;
     private List<String> label;
-    private List<ContactWay> contact;
+    private List<ContactBean> contact;
     private List<AlbumBean> album;
-    private int state;
 
     protected PersonalInfoResponse(Parcel in) {
         uid = in.readInt();
@@ -85,7 +95,7 @@ public class PersonalInfoResponse implements Parcelable {
         vip = in.readInt();
         vip_time = in.readInt();
         svip = in.readInt();
-        height = in.readInt();
+        height = in.readString();
         weight = in.readString();
         bust = in.readString();
         occupation = in.readString();
@@ -98,10 +108,14 @@ public class PersonalInfoResponse implements Parcelable {
         exposure = in.readInt();
         last_login_time = in.readInt();
         trait = in.readString();
+        lang = in.readString();
+        code = in.readString();
+        platform = in.readString();
+        is_own = in.readInt();
+        state = in.readInt();
         pushing_small_age = in.readString();
         pushing_large_age = in.readString();
-        state = in.readInt();
-        contact = in.createTypedArrayList(ContactWay.CREATOR);
+        label = in.createStringArrayList();
     }
 
     public static final Creator<PersonalInfoResponse> CREATOR = new Creator<PersonalInfoResponse>() {
@@ -196,11 +210,11 @@ public class PersonalInfoResponse implements Parcelable {
         this.svip = svip;
     }
 
-    public int getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
@@ -300,8 +314,36 @@ public class PersonalInfoResponse implements Parcelable {
         this.trait = trait;
     }
 
-    public String getPushing_small_age() {
-        return pushing_small_age;
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public int getIs_own() {
+        return is_own;
+    }
+
+    public void setIs_own(int is_own) {
+        this.is_own = is_own;
     }
 
     public int getState() {
@@ -310,6 +352,10 @@ public class PersonalInfoResponse implements Parcelable {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getPushing_small_age() {
+        return pushing_small_age;
     }
 
     public void setPushing_small_age(String pushing_small_age) {
@@ -324,6 +370,14 @@ public class PersonalInfoResponse implements Parcelable {
         this.pushing_large_age = pushing_large_age;
     }
 
+    public NewLikeBean getNew_like() {
+        return new_like;
+    }
+
+    public void setNew_like(NewLikeBean new_like) {
+        this.new_like = new_like;
+    }
+
     public List<String> getLabel() {
         return label;
     }
@@ -332,11 +386,11 @@ public class PersonalInfoResponse implements Parcelable {
         this.label = label;
     }
 
-    public List<ContactWay> getContact() {
+    public List<ContactBean> getContact() {
         return contact;
     }
 
-    public void setContact(List<ContactWay> contact) {
+    public void setContact(List<ContactBean> contact) {
         this.contact = contact;
     }
 
@@ -365,7 +419,7 @@ public class PersonalInfoResponse implements Parcelable {
         dest.writeInt(vip);
         dest.writeInt(vip_time);
         dest.writeInt(svip);
-        dest.writeInt(height);
+        dest.writeString(height);
         dest.writeString(weight);
         dest.writeString(bust);
         dest.writeString(occupation);
@@ -378,24 +432,92 @@ public class PersonalInfoResponse implements Parcelable {
         dest.writeInt(exposure);
         dest.writeInt(last_login_time);
         dest.writeString(trait);
+        dest.writeString(lang);
+        dest.writeString(code);
+        dest.writeString(platform);
+        dest.writeInt(is_own);
+        dest.writeInt(state);
         dest.writeString(pushing_small_age);
         dest.writeString(pushing_large_age);
-        dest.writeInt(state);
-        dest.writeTypedList(contact);
+        dest.writeStringList(label);
+    }
+
+    public static class NewLikeBean {
+        /**
+         * count : 5
+         * trait : null
+         * state : 1
+         */
+
+        private int count;
+        private String trait;
+        private int state;
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public String getTrait() {
+            return trait;
+        }
+
+        public void setTrait(String trait) {
+            this.trait = trait;
+        }
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
+    }
+
+    public static class ContactBean {
+        /**
+         * email : ttttgvhn
+         * name : google
+         */
+
+        private String email;
+        private String name;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
     public static class AlbumBean {
         /**
-         * id : 9
-         * album_url : https://menggoda.oss-ap-southeast-5.aliyuncs.com/video/20190613/3f9a8da5fae43abaee47d8f248ab1162.mp4
-         * album_type : 3
-         * cost : 5
+         * id : 5334
+         * album_url : http://test.shushanbao.com/Public/uploads/video/20190813/4884115b8a6cc665a175461dc2390511.mp4
+         * album_type : 1
+         * cost : 0
+         * status : 0
          */
 
         private int id;
         private String album_url;
         private int album_type;
         private int cost;
+        private int status;
 
         public int getId() {
             return id;
@@ -427,6 +549,14 @@ public class PersonalInfoResponse implements Parcelable {
 
         public void setCost(int cost) {
             this.cost = cost;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 }

@@ -33,7 +33,6 @@ import com.shushan.kencanme.app.entity.base.BaseFragment;
 import com.shushan.kencanme.app.entity.request.BuyExposureTimeRequest;
 import com.shushan.kencanme.app.entity.request.HomeFragmentRequest;
 import com.shushan.kencanme.app.entity.request.LikeRequest;
-import com.shushan.kencanme.app.entity.request.RequestFreeChat;
 import com.shushan.kencanme.app.entity.request.TokenRequest;
 import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.entity.response.HomeUserInfoResponse;
@@ -125,8 +124,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
             mSwipeLy.setRefreshing(true);
             requestHomeData();
         } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.UPDATE_HOME_LIKE_INFO)) {
-            listBean.setRelation(1);
-            mHomeAdapter.notifyItemChanged(clickPos);
+            if(listBean!=null){
+                listBean.setRelation(1);
+                mHomeAdapter.notifyItemChanged(clickPos);
+            }
             requestHomeUserInfo();
         } else if (intent.getAction() != null && intent.getAction().equals(ActivityConstant.PAY_SUCCESS_UPDATE_INFO)) {
             // 充值后更新
@@ -282,20 +283,22 @@ public class HomeFragment extends BaseFragment implements HomeFragmentControl.Ho
      * 去聊天
      */
     public void goChat() {
-        if (listBean.getRelation() == 2) {//好友
-            //启动单聊页面
-            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
-        } else {//非好友
-            if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
-                //先走统计接口  记录免费聊天次数
-                RequestFreeChat requestFreeChat = new RequestFreeChat();
-                requestFreeChat.token = mBuProcessor.getToken();
-                requestFreeChat.secret_id = String.valueOf(listBean.getUid());
-                mPresenter.onRequestChatNum(requestFreeChat);
-            } else {
-                DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
-            }
-        }
+        //启动单聊页面   取消密聊规则
+        RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
+//        if (listBean.getRelation() == 2) {//好友
+//            //启动单聊页面
+//            RongIM.getInstance().startPrivateChat(Objects.requireNonNull(getActivity()), listBean.getRongyun_userid(), listBean.getNickname());
+//        } else {//非好友
+//            if (AppUtils.isLimitMsg(mLoginUser.userType, mLoginUser.today_chat)) {
+//                //先走统计接口  记录免费聊天次数
+//                RequestFreeChat requestFreeChat = new RequestFreeChat();
+//                requestFreeChat.token = mBuProcessor.getToken();
+//                requestFreeChat.secret_id = String.valueOf(listBean.getUid());
+//                mPresenter.onRequestChatNum(requestFreeChat);
+//            } else {
+//                DialogFactory.showOpenVipDialogFragment(getActivity(), this, getResources().getString(R.string.dialog_open_vip_chat));
+//            }
+//        }
     }
 
     /**

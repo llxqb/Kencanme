@@ -250,11 +250,20 @@ public class DialogFactory {
     }
 
     /**
-     * 消耗嗨豆或者成为VIP
+     * 赚嗨豆或者成为VIP
      */
     public static void showRechargeBeansDialog2(Activity context) {
         RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
         rechargeBeansDialog.setContent(context.getResources().getString(R.string.RechargeBeansDialog_beans_or_vip_hint),context.getResources().getString(R.string.dialog_style2_hint),context.getResources().getString(R.string.recharge));
+        rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
+        DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
+    }
+    /**
+     * 消耗嗨豆或者成为VIP
+     */
+    public static void showRechargeBeansDialog3(Activity context) {
+        RechargeBeansDialog rechargeBeansDialog = RechargeBeansDialog.newInstance();
+        rechargeBeansDialog.setContent(context.getResources().getString(R.string.RechargeBeansDialog_beans_or_vip_hint2),context.getResources().getString(R.string.dialog_style2_hint),context.getResources().getString(R.string.RechargeBeansDialog_use_beans));
         rechargeBeansDialog.setListener((RechargeBeansDialog.RechargeDialogListener) context);
         DialogFactory.showDialogFragment(((BaseActivity) context).getSupportFragmentManager(), rechargeBeansDialog, RechargeBeansDialog.TAG);
     }

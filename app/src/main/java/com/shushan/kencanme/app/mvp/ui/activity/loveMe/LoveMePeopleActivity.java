@@ -63,8 +63,15 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
     private LoginUser mLoginUser;
     private MyFriendsResponse.ListBean listBean;
     private Dialog likeDialog;
+    private String reqType;
     @Inject
     LoveMePeopleControl.PresenterLoveMePeople mPresenter;
+
+    public static void start(Context context, String reqType) {
+        Intent intent = new Intent(context, LoveMePeopleActivity.class);
+        intent.putExtra("reqType", reqType);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,24 +111,22 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 listBean = (MyFriendsResponse.ListBean) adapter.getItem(position);
-                switch (view.getId()) {
-                    case R.id.like_iv:
-                        if (!listBean.isLike) {
-                            likeDialog = DialogFactory.showLikeDialog(LoveMePeopleActivity.this);
-                            likeDialog.show();
-                            setLikeRemainTime();
-                            //能进来就是超级vip,超级VIP可以不用判断了
+                if (view.getId() == R.id.like_iv) {
+                    if (!listBean.isLike) {
+                        likeDialog = DialogFactory.showLikeDialog(LoveMePeopleActivity.this);
+                        likeDialog.show();
+                        setLikeRemainTime();
+                        //能进来就是超级vip,超级VIP可以不用判断了
 //                            if (AppUtils.isLimitLike(mLoginUser.userType, mLoginUser.today_like)) {
 //                            } else {
 //                                DialogFactory.showOpenVipDialog(LoveMePeopleActivity.this, getResources().getString(R.string.dialog_open_vip_like));
 //                            }
-                            LikeRequest likeRequest = new LikeRequest();
-                            likeRequest.token = mBuProcessor.getToken();
-                            assert listBean != null;
-                            likeRequest.likeid = listBean.getUid();
-                            mPresenter.onRequestLike(likeRequest);
-                        }
-                        break;
+                        LikeRequest likeRequest = new LikeRequest();
+                        likeRequest.token = mBuProcessor.getToken();
+                        assert listBean != null;
+                        likeRequest.likeid = listBean.getUid();
+                        mPresenter.onRequestLike(likeRequest);
+                    }
                 }
             }
         });
@@ -149,11 +154,15 @@ public class LoveMePeopleActivity extends BaseActivity implements LoveMePeopleCo
 
     @Override
     public void initData() {
+        if (getIntent() != null) {
+            reqType = getIntent().getStringExtra("reqType");
+        }
         MyFriendsRequest myFriendsRequest = new MyFriendsRequest();
         myFriendsRequest.token = mBuProcessor.getToken();
-        myFriendsRequest.type = "2";//1好友 2喜欢
+        myFriendsRequest.type = reqType;//1好友 2最近喜欢  3所有喜欢你的人
         mPresenter.onRequestMyFriendList(myFriendsRequest);
     }
+
 
     @OnClick({R.id.common_back, R.id.common_iv_right})
     public void onViewClicked(View view) {

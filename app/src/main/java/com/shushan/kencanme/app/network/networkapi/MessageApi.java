@@ -47,4 +47,9 @@ public interface MessageApi {
      */
     @POST("menggoda/user/rongyun_relation")
     Observable<String> onRequestUserRelation(@Body String request);
+    /**
+     * 聊天打招呼接口
+     */
+    @POST("menggoda/operation/call")
+    Observable<String> onRequestHiNum(@Body String request);
 }

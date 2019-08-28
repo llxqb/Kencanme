@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- 不是中、英、印尼语显示-->
     <!--&#160;  表示空格-->
     <!--网络相关 -->
@@ -218,6 +218,8 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="MineFragment_The_Label" translatable="false">The Label</string>
     <string name="MineFragment_The_Label_hint" translatable="false">add my tags</string>
     <string name="MineFragment_beans" translatable="false">Hey Beans:</string>
+    <string name="MineFragment_total" translatable="false">A total of&#160;</string>
+    <string name="MineFragment_love_you_people_num" translatable="false">&#160;  people like you</string>
     <!--HomeFragment -->
     <string name="HomeFragment_Super_exposure_hint" translatable="false">Super exposure! Counting down: </string>
     <string name="HomeFragment_Super_exposure_content_hint" translatable="false">Pairs! 10 times more exposure over others in 30 minutes </string>
@@ -282,6 +284,8 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="RechargeBeansDialog_no_beans_hint" translatable="false">Hey, you don\'t have enough beans!</string>
     <string name="PhotoDialog_title_hint" translatable="false">Select video or photo</string>
     <string name="RechargeBeansDialog_beans_or_vip_hint" translatable="false">You don\'t have enough Heybeans? Register for super VIP chat for free</string>
+    <string name="RechargeBeansDialog_beans_or_vip_hint2" translatable="false">No free usage today. Register for VIP or use Heybeans to chat</string>
+    <string name="RechargeBeansDialog_use_beans" translatable="false">Use 1 Heybeans</string>
     <string name="Video" translatable="false">Video</string>
     <string name="Photo" translatable="false">Photo</string>
     <!-- 加入黑名单-->
@@ -361,4 +365,6 @@ Don\'t release your choose. no body konw your choice unless you like each other.
     <string name="PayReportErrorDialog_error_info2" translatable="false">Order update failed, please try again</string><!--订单更新失败，请重试 -->
     <string name="video_review" translatable="false">under review</string><!--视频审核中-->
     <string name="video_review_no_passed" translatable="false">Audit not passed</string><!--视频审核不通过-->
+    <string name="message_hi_content" translatable="false">chat with me</string><!--聊天 打招呼内容-->
+    <string name="back_purchase_cancel" translatable="false">Give up the chance?</string><!--放弃购买 提示-->
 </resources>

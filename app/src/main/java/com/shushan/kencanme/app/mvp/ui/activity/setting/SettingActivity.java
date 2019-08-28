@@ -1,6 +1,5 @@
 package com.shushan.kencanme.app.mvp.ui.activity.setting;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,7 +132,7 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
                     float minValue = (float) (Integer.parseInt(loginUser.pushing_small_age) - 18) / 32;
                     mTwoWayRattingBar.setLeftProgress(minValue, mTwoWayRattingBar.getWidth(), true);
                 }
-                if(loginUser.pushing_large_age.equals("50+")){
+                if (loginUser.pushing_large_age.equals("50+")) {
                     loginUser.pushing_large_age = "50";
                 }
                 if (Integer.parseInt(loginUser.pushing_large_age) > 0) {
@@ -239,14 +238,17 @@ public class SettingActivity extends BaseActivity implements TwoWayRattingBar.On
      * 退出登录
      */
     public void exitLogin(Context context) {
+        String hiLayoutKey = mSharePreferenceUtil.getData("hi_layout_key");
+        mSharePreferenceUtil.clearData();
+        //不清除会话id, 用来记录打招呼消息id ，设置切换用户不改变打招呼消息状态
+        mSharePreferenceUtil.setData("hi_layout_key", hiLayoutKey);//记录会话id
+        RongIM.getInstance().logout();
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//表示 不创建新的实例activity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//表示 移除该activity上面的activity
         intent.putExtra("exitLogin", true);
         context.startActivity(intent);
-        mSharePreferenceUtil.clearData();
-        RongIM.getInstance().logout();
-        ((Activity) context).finish();
+        finish();
     }
 
     /**
