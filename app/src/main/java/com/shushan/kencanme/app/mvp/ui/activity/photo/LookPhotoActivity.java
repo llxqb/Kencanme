@@ -16,12 +16,12 @@ import com.shushan.kencanme.app.entity.Constants.Constant;
 import com.shushan.kencanme.app.entity.base.BaseActivity;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
+import com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd;
 import com.shushan.kencanme.app.mvp.views.ResizableImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jzvd.JzvdStd;
 
 /**
  * desc:查看照片大图 或者是全屏看视频
@@ -34,7 +34,7 @@ public class LookPhotoActivity extends BaseActivity {
     @BindView(R.id.photo_iv)
     ResizableImageView mPhotoIv;
     @BindView(R.id.jz_video)
-    JzvdStd mJzVideo;
+    NoFullScreenJzvdStd mJzVideo;
 
     public static void start(Context context, String path) {
         Intent intent = new Intent(context, LookPhotoActivity.class);

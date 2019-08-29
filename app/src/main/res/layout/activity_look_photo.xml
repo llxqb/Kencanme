@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true" />
 
-    <cn.jzvd.JzvdStd
+    <com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd
         android:id="@+id/jz_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -53,6 +53,7 @@ import com.shushan.kencanme.app.mvp.utils.StatusBarUtil;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
+import com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd;
 import com.shushan.kencanme.app.mvp.views.dialog.CommonChoiceDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.MatchSuccessDialog;
 import com.shushan.kencanme.app.mvp.views.dialog.MessageUseBeansDialog;
@@ -85,7 +86,7 @@ public class RecommendUserInfoActivity extends BaseActivity implements Recommend
     @BindView(R.id.cover_iv)
     ImageView mCoverIv;
     @BindView(R.id.jz_video)
-    JzvdStd mJzvdStd;
+    NoFullScreenJzvdStd mJzvdStd;
     @BindView(R.id.recommend_username)
     TextView mRecommendUsername;
     @BindView(R.id.recommend_user_sex_year)

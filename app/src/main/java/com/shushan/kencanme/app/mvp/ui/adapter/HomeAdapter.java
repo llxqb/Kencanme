@@ -21,12 +21,12 @@ import com.shushan.kencanme.app.entity.response.HomeFragmentResponse;
 import com.shushan.kencanme.app.help.ImageLoaderHelper;
 import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
+import com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd;
 import com.shushan.kencanme.app.mvp.views.ResizableImageView;
 
 import java.util.List;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -64,7 +64,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeFragmentResponse.ListBean,
     protected void convert(BaseViewHolder helper, HomeFragmentResponse.ListBean item) {
         if (item == null) return;
         helper.addOnClickListener(R.id.home_like_iv).addOnClickListener(R.id.home_message_iv).addOnClickListener(R.id.recommend_user_rl).addOnClickListener(R.id.home_item_rl);
-        JzvdStd mJzVideo = helper.getView(R.id.jz_video);
+        NoFullScreenJzvdStd mJzVideo = helper.getView(R.id.jz_video);
         ResizableImageView mViewpagerItemIv = helper.getView(R.id.viewpager_item_iv);
         ImageView homeLikeIv = helper.getView(R.id.home_like_iv);
         ImageView mRecommendUserHeadIv = helper.getView(R.id.recommend_user_head_iv);

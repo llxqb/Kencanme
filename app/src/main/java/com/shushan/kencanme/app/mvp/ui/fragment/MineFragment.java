@@ -64,6 +64,7 @@ import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 import com.shushan.kencanme.app.mvp.views.CommonDialog;
 import com.shushan.kencanme.app.mvp.views.CornerLabelView;
+import com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class MineFragment extends BaseFragment implements MineFragmentControl.Mi
     @BindView(R.id.cover_iv)
     ImageView mCoverIv;
     @BindView(R.id.jz_video)
-    JzvdStd mJzvdStd;
+    NoFullScreenJzvdStd mJzvdStd;
     @BindView(R.id.cornerLabelView)
     CornerLabelView mCornerLabelView;
     @BindView(R.id.user_location)

@@ -15,7 +15,7 @@
         android:layout_centerVertical="true"
         android:visibility="gone" />
 
-    <cn.jzvd.JzvdStd
+    <com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd
         android:id="@+id/jz_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

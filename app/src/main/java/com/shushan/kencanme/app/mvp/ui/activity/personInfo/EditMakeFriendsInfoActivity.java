@@ -36,6 +36,7 @@ import com.shushan.kencanme.app.mvp.utils.PicUtils;
 import com.shushan.kencanme.app.mvp.utils.TranTools;
 import com.shushan.kencanme.app.mvp.views.CircleImageView;
 import com.shushan.kencanme.app.mvp.views.CornerLabelView;
+import com.shushan.kencanme.app.mvp.views.NoFullScreenJzvdStd;
 import com.shushan.kencanme.app.mvp.views.dialog.PhotoDialog;
 
 import org.devio.takephoto.app.TakePhoto;
@@ -91,7 +92,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @BindView(R.id.cornerLabelView)
     CornerLabelView mCornerLabelView;
     @BindView(R.id.jz_video)
-    JzvdStd mJzVideo;
+    NoFullScreenJzvdStd mJzVideo;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private Uri uri;
