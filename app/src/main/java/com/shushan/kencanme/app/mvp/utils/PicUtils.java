@@ -82,6 +82,12 @@ public class PicUtils {
 
 
     /**
+     * 适配压缩
+     */
+    public static void videoCompressL(){
+    }
+
+    /**
      *   context 上下文
      *   uri 视频地址
      *   imageView 设置image

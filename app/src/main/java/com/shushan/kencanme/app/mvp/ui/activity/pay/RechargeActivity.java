@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahdi.sdk.payment.AhdiPay;
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerRechargeComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -103,6 +105,11 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
      * 支付类型 1：Google   2:AHDI  3:Unipin
      */
     private int mPayType;
+    /**
+     * 上传fb sdk
+     * 支付金额
+     */
+    private String payMoney;
     @Inject
     RechargeControl.PresenterRecharge mPresenter;
     private String errorInfo1;
@@ -215,6 +222,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     @Override
     public void payType(int payType) {
         mPayType = payType;
+        payMoney = beansinfoBean.getPrice();
         switch (payType) {
             case 1:
                 GooglePayChoose();
@@ -312,6 +320,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     public void getPayFinishGoogleUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
     /**
@@ -377,6 +386,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     public void getPayFinishAHDIUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
     /**
@@ -454,6 +464,7 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     public void getPayFinishUploadByUniPinSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
     private int UnipinPayNum = 1;
@@ -546,6 +557,20 @@ public class RechargeActivity extends BaseActivity implements RechargeControl.Re
     private void updateUi() {
         mLoginUser = mBuProcessor.getLoginUser();
         mCurrentHiBeansNum.setText(String.valueOf(mLoginUser.beans));
+    }
+
+    /**
+     * 记录facebook 支付成功后数据
+     * This function assumes logger is an instance of AppEventsLogger and has been
+     * created using AppEventsLogger.newLogger() call.
+     */
+    public void logAddPaymentInfoEvent(boolean success) {
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        Bundle params = new Bundle();
+        params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, "USD");
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "购买嗨豆");
+        params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, success ? 1 : 0);
+        logger.logEvent(AppEventsConstants.EVENT_NAME_PURCHASED, Double.parseDouble(payMoney), params);
     }
 
 

@@ -270,7 +270,7 @@ public class EditMakeFriendsInfoActivity extends BaseActivity implements TakePho
     @Override
     public void takeSuccess(TResult result) {
         bitmap = BitmapFactory.decodeFile(result.getImage().getCompressPath());
-        String path = PicUtils.convertIconToString(bitmap);
+        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
         uploadImage(path);
     }
 

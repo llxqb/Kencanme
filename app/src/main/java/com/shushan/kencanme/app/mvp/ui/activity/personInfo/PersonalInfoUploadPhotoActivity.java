@@ -223,7 +223,7 @@ public class PersonalInfoUploadPhotoActivity extends BaseActivity implements Tak
     @Override
     public void takeSuccess(TResult result) {
         bitmap = BitmapFactory.decodeFile(result.getImage().getCompressPath());
-        String path = PicUtils.convertIconToString(bitmap);
+        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
         uploadImage(path);
     }
 

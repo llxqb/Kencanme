@@ -8,8 +8,8 @@ android {
         applicationId "com.shushan.kencanme.app"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 34
-        versionName "1.1.2"
+        versionCode 36
+        versionName "1.1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true//as3.0对vector兼容
         //as3.0对butterknife兼容
@@ -51,7 +51,7 @@ android {
 //            debuggable true //发布时候设置false   true为可调式，false为不可调试
             minifyEnabled false //true 为开启混淆
             zipAlignEnabled true//Zipalign优化
-            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL
+            buildConfigField 'String', 'KENCANME_BASE_URL', KENCANME_BASE_URL_DEBUG
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -140,6 +140,8 @@ dependencies {
     //检查内存泄漏工具
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    //facebook sdk
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
 
 //    //友盟
 //    //友盟推送  友盟统计

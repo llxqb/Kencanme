@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.gson.Gson;
 import com.shushan.kencanme.app.di.components.AppComponent;
 import com.shushan.kencanme.app.di.components.DaggerAppComponent;
@@ -53,8 +55,16 @@ public class KencanmeApp extends Application {
         initRongYun();
         //友盟init
         initUM();
+        logActivatedAppEvent();
     }
 
+    /**
+     * 记录facebook活跃用户
+     */
+    public void logActivatedAppEvent () {
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);
+    }
 
     /**
      * 内存泄漏检查工具

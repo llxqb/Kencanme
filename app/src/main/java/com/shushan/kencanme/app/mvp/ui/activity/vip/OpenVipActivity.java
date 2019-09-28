@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ahdi.sdk.payment.AhdiPay;
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
 import com.shushan.kencanme.app.R;
 import com.shushan.kencanme.app.di.components.DaggerOpenVipComponent;
 import com.shushan.kencanme.app.di.modules.ActivityModule;
@@ -129,6 +131,11 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     OpenVipControl.PresenterOpenVip mPresenter;
     private String errorInfo1;
     private String errorInfo2;
+    /**
+     * 上传fb sdk
+     * 支付金额
+     */
+    private String payMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,6 +282,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     @Override
     public void payType(int payType) {
         mPayType = payType;
+        payMoney = mVipinfoBean.getSpecial_price();
         switch (payType) {
             case 1:
                 GooglePayChoose();
@@ -371,6 +379,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void getPayFinishGoogleUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
 
@@ -436,6 +445,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void getPayFinishAHDIUploadSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
     @Override
@@ -508,6 +518,7 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void getPayFinishUploadByUniPinSuccess() {
         //查询用户信息-->更新用户信息(我的-首页接口)
         requestHomeUserInfo();
+        logAddPaymentInfoEvent(true);
     }
 
     private int UnipinPayNum = 1;
@@ -626,6 +637,22 @@ public class OpenVipActivity extends BaseActivity implements OpenVipControl.Open
     public void commonDialogBtnOkListener() {
         super.onBackPressed();
     }
+
+    /**
+     * 记录facebook 支付成功后数据
+     * This function assumes logger is an instance of AppEventsLogger and has been
+     * created using AppEventsLogger.newLogger() call.
+     */
+    public void logAddPaymentInfoEvent(boolean success) {
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        Bundle params = new Bundle();
+        params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, "USD");
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "购买vip");
+        params.putInt(AppEventsConstants.EVENT_PARAM_SUCCESS, success ? 1 : 0);
+        logger.logEvent(AppEventsConstants.EVENT_NAME_PURCHASED, Double.parseDouble(payMoney), params);
+
+    }
+
 
     @Override
     protected void onDestroy() {

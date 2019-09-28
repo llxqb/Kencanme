@@ -304,7 +304,7 @@ public class UploadPhotoActivity extends BaseActivity implements TakePhoto.TakeR
     @Override
     public void takeSuccess(TResult result) {
         Bitmap bitmap = BitmapFactory.decodeFile(result.getImage().getCompressPath());
-        String path = PicUtils.convertIconToString(bitmap);
+        String path = PicUtils.convertIconToString(PicUtils.ImageCompressL(bitmap));
         uploadImage(path);
     }
 
