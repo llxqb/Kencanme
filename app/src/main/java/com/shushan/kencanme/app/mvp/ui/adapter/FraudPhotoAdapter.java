@@ -41,8 +41,8 @@ public class FraudPhotoAdapter extends BaseQuickAdapter<TImage, BaseViewHolder> 
             helper.setVisible(R.id.photo_delete, true);
         }
         if (item != null) {
-            Log.e("ddd","getOriginalPath="+item.getOriginalPath());
-            Bitmap bitmap = BitmapFactory.decodeFile(item.getOriginalPath());
+            Log.e("ddd","getOriginalPath="+item.getCompressPath());
+            Bitmap bitmap = BitmapFactory.decodeFile(item.getCompressPath());
             imageView.setImageBitmap(bitmap);
         }
     }

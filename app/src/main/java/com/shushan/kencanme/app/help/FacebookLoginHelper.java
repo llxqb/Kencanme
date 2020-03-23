@@ -15,7 +15,7 @@ import com.umeng.facebook.login.LoginResult;
 import java.util.Collections;
 
 public class FacebookLoginHelper {
-    public  CallbackManager mFaceBookCallBack;
+    public CallbackManager mFaceBookCallBack;
     //    private static FacebookLoginHelper sInstance;
     private OnLoginSuccessListener loginSuccessListener;
 
